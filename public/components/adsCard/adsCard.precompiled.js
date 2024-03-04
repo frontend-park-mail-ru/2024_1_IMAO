@@ -1,0 +1,17 @@
+(function() {
+  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+templates['adsCard.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return "<div class=\"ProductCard\">\n    <div class=\"SpanScHitemj\">\n        <div class=\"Link\">\n            <div class=\"Figure\">\n                <div class=\"DivScJvfpsw\">\n                    <div class=\"DivScBnfank\">\n                        <img class=\"Img\" src=\"#\" />\n                    </div>\n                    <div class=\"DivScDxqqip\">\n                        <div class=\"Ellipse2\"></div>\n                        <div class=\"Ellipse3\"></div>\n                        <div class=\"Ellipse4\"></div>\n                    </div>\n                </div>\n                <div class=\"DivScHfjcge\">\n                    <div class=\"DivScBiudwx\">\n                        <div class=\"PScCoxwqc\">\n                            <div class=\"SpanScFlhmoe\">\n                                <div class=\"000\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"price") || (depth0 != null ? lookupProperty(depth0,"price") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"price","hash":{},"data":data,"loc":{"start":{"line":19,"column":49},"end":{"line":19,"column":58}}}) : helper)))
+    + " ₽</div>\n                            </div>\n                        </div>\n                        <div class=\"Button\">\n\n                            <div class=\"VectorArch\"><img class= ImgArch src=\"image2.svg\" /></div>\n                            <div class=\"DivH2dD80ef6c9\">\n                                <div class=\"DivScFtsljv\">\n                                    <div class=\"DivScQvkrw\">\n                                        <div class=\"Svg\">\n                                            <div class=\"Vector\"><img src=\"image.svg\" /></div>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"Figcaption\">\n                        <div class=\"SpanScCoxwqc\">\n                            <div class=\"WiFi\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"title") || (depth0 != null ? lookupProperty(depth0,"title") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data,"loc":{"start":{"line":38,"column":46},"end":{"line":38,"column":55}}}) : helper)))
+    + "</div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
+},"useData":true});
+})();
