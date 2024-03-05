@@ -27,10 +27,14 @@ templates['authForm.hbs'] = template({"1":function(container,depth0,helpers,part
     + ((stack1 = lookupProperty(helpers,"each").call(alias1,(depth0 != null ? lookupProperty(depth0,"inputs") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":48,"column":4},"end":{"line":52,"column":13}}})) != null ? stack1 : "")
     + "<button type=\"submit\" class=\"btn-primary\">"
     + alias4(((helper = (helper = lookupProperty(helpers,"buttonText") || (depth0 != null ? lookupProperty(depth0,"buttonText") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"buttonText","hash":{},"data":data,"loc":{"start":{"line":53,"column":42},"end":{"line":53,"column":56}}}) : helper)))
-    + "</button>\n<p class=\"label\">Есть аккаунт? <a href=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"url") || (depth0 != null ? lookupProperty(depth0,"url") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"url","hash":{},"data":data,"loc":{"start":{"line":54,"column":40},"end":{"line":54,"column":47}}}) : helper)))
+    + "</button>\n<p class=\"label\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"askText") || (depth0 != null ? lookupProperty(depth0,"askText") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"askText","hash":{},"data":data,"loc":{"start":{"line":54,"column":17},"end":{"line":54,"column":28}}}) : helper)))
+    + " <a href=\""
+    + alias4(((helper = (helper = lookupProperty(helpers,"url") || (depth0 != null ? lookupProperty(depth0,"url") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"url","hash":{},"data":data,"loc":{"start":{"line":54,"column":38},"end":{"line":54,"column":45}}}) : helper)))
     + "\" data-url=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"url") || (depth0 != null ? lookupProperty(depth0,"url") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"url","hash":{},"data":data,"loc":{"start":{"line":54,"column":59},"end":{"line":54,"column":66}}}) : helper)))
-    + "\">Авторизируйтесь</a></p>\n</form>\n</div>\n</div>";
+    + alias4(((helper = (helper = lookupProperty(helpers,"url") || (depth0 != null ? lookupProperty(depth0,"url") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"url","hash":{},"data":data,"loc":{"start":{"line":54,"column":57},"end":{"line":54,"column":64}}}) : helper)))
+    + "\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"anchorText") || (depth0 != null ? lookupProperty(depth0,"anchorText") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"anchorText","hash":{},"data":data,"loc":{"start":{"line":54,"column":66},"end":{"line":54,"column":80}}}) : helper)))
+    + "</a></p>\n</form>\n</div>\n</div>";
 },"useData":true});
 })();

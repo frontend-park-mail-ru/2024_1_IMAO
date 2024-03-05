@@ -2,24 +2,14 @@
 
 import { Ajax } from "./modules/ajax.js";
 import { MakeTree } from "./modules/makeTree.js";
-import { CONFIG_HEADER, initHeaderConf} from "./components/header.js";
 import { Login } from "./pages/login/login.js";
 import { Signup } from "./pages/signup/signup.js";
 import { ROUTES , locationResolver} from "./routes/routes.js";
-import { renderAdsCardTamplate } from "./components/adsCard/adsCard.js";
+import { Main } from "./pages/main/main.js";
+import { Header } from "./components/header/header.js";
 
 const make = new MakeTree();
 const ajax = new Ajax();
-
-initHeaderConf(
-    CONFIG_HEADER,
-    {
-        renderDefault, 
-        renderLogin, 
-        renderSignup, 
-        renderMain,
-    },
-);
 
 const rootElement = document.getElementById('root');
 const headerElement = document.createElement('header');
@@ -32,67 +22,28 @@ ROUTES.init('loginPage', renderLogin);
 ROUTES.init('signupPage', renderSignup);
 ROUTES.init('mainPage', renderMain);
 
-
-function renderHeader(){
-    make.makeTree(headerElement, mainElement, CONFIG_HEADER)
-}
-
-function renderDefault(){
-    mainElement.innerHTML = '';
-    const element = document.createElement('div');
-
-    element.innerHTML = "страница пока не добавлена";
-
-    return element;
-}
-
 function renderLogin(){
     mainElement.innerHTML = '';
-    const form = document.createElement('div');
-    const login = new Login(form);
+    const page = document.createElement('div');
+    const login = new Login(page);
     login.render();
-    return form;
+    return page;
 }
 
 function renderSignup(){
     mainElement.innerHTML = '';
-    const form = document.createElement('div');
-    const signup = new Signup(form);
+    const page = document.createElement('div');
+    const signup = new Signup(page);
     signup.render();
-    return form;
+    return page;
 }
 
 function renderMain(){
     mainElement.innerHTML = '';
-
-    const element = document.createElement('div');
-
-    element.innerHTML = "страница размещения объявления";
-
-    ajax.get(
-        ROUTES.main,
-        (ads) => {
-            const adverts = ads['adverts']
-            if (adverts && Array.isArray(adverts)) {
-              const div = document.createElement('div');
-              element.appendChild(div);
-
-              console.log(adverts);
-    
-              adverts.forEach((inner) => {
-                console.log(inner);
-                const {description, id, image, location, price, title, user_id} = inner;
-                const block = document.createElement('div');
-                block.style.display = 'inline-block';
-                block.style.padding = '50px';
-                block.innerHTML += renderAdsCardTamplate(title, price);
-                div.appendChild(block);
-              });
-            }
-        }
-    )
-
-    return element;
+    const page = document.createElement('div');
+    const main = new Main(page);
+    main.render();
+    return page;
 }
 
 window.addEventListener('load', () => {
@@ -103,5 +54,6 @@ window.addEventListener('load', () => {
     }
 });
 
-renderHeader();
+const header = new Header(headerElement);
+header.render();
 // mainElement.appendChild(renderMain());

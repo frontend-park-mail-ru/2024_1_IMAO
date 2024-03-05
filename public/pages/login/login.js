@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 import { renderAuthForm } from "../../components/authForm/authForm.js";
 import { Ajax } from "../../modules/ajax.js";
@@ -7,7 +7,7 @@ import { ROUTES, locationResolver } from "../../routes/routes.js";
 const ajax = new Ajax();
 
 export class Login{
-    #parent
+    #parent;
 
     constructor(parent) {
         this.#parent = parent;
@@ -23,8 +23,8 @@ export class Login{
         const anchor = this.#parent.getElementsByTagName('a')[0]
 
         anchor.addEventListener('click', (ev) => {
-            ev.preventDefault();
-            locationResolver(anchor.dataset.url, this.#parent);
+            const main = document.getElementsByTagName('main')[0];
+            locationResolver(anchor.dataset.url, main);
         })
 
 
@@ -41,7 +41,9 @@ export class Login{
                 (body) => {
                     if(body?.session_id) {
                       alert('Успешная авторизация!');
-                      document.cookie = `session_id=${body.session_id}; path=/; expires=${new Date(Date.now() + 1000 * 60 * 10)}`
+                      document.cookie = `session_id=${body.session_id}; path=/; expires=${new Date(Date.now() + 1000 * 60 * 10)}`;
+                      const main = document.getElementsByTagName('main')[0];
+                      locationResolver(ROUTES.mainPage.href, main);
                       return;
                     }
                     alert('НЕВЕРНЫЙ ЕМЕЙЛ ИЛИ ПАРОЛЬ');
@@ -64,7 +66,9 @@ export class Login{
             },
         ];
         const buttonText = 'Войти';
-        const url = ROUTES.signupPage.href
-        this.#parent.innerHTML = template({title, inputs, buttonText, url});
+        const url = ROUTES.signupPage.href;
+        const askText = 'Нет аккаунта?';
+        const anchorText = 'Зарегистрируйтесь';
+        this.#parent.innerHTML = template({title, inputs, buttonText, url, askText, anchorText});
     }
 }

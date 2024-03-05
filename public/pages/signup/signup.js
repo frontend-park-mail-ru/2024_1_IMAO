@@ -1,13 +1,13 @@
-'use strict'
+'use strict';
 
 import { renderAuthForm } from "../../components/authForm/authForm.js";
 import { Ajax } from "../../modules/ajax.js";
-import { ROUTES } from "../../routes/routes.js";
+import { ROUTES, locationResolver} from "../../routes/routes.js";
 
 const ajax = new Ajax();
 
 export class Signup{
-    #parent
+    #parent;
 
     constructor(parent) {
         this.#parent = parent;
@@ -20,7 +20,12 @@ export class Signup{
 
     #addListeners(){
         const form = this.#parent.getElementsByClassName('form')[0]
-        console.log(form)
+        const anchor = this.#parent.getElementsByTagName('a')[0]
+
+        anchor.addEventListener('click', (ev) => {
+            const main = document.getElementsByTagName('main')[0];
+            locationResolver(anchor.dataset.url, main);
+        })
 
         form.addEventListener('submit', (ev) => {
             ev.preventDefault();
@@ -36,7 +41,9 @@ export class Signup{
                 (body) => {
                     if(body?.session_id) {
                       alert('Успешная Регистрация!');
-                      document.cookie = `session_id=${body.session_id}; path=/; expires=${new Date(Date.now() + 1000 * 60 * 10)}`
+                      document.cookie = `session_id=${body.session_id}; path=/; expires=${new Date(Date.now() + 1000 * 60 * 10)}`;
+                      const main = document.getElementsByTagName('main')[0];
+                      locationResolver(anchor.dataset.url, main);
                       return;
                     }
                     alert('НЕВЕРНЫЙ ЕМЕЙЛ ИЛИ ПАРОЛЬ');
@@ -63,6 +70,9 @@ export class Signup{
             },
         ];
         const buttonText = 'Зарегистрироваться';
-        this.#parent.innerHTML = template({title, inputs, buttonText});
+        const url = ROUTES.loginPage.href;
+        const askText = 'Есть аккаунт?';
+        const anchorText = 'Авторизируйтесь';
+        this.#parent.innerHTML = template({title, inputs, buttonText, url, askText, anchorText});
     }
 }

@@ -1,4 +1,4 @@
-'use script'
+'use strict';
 
 export const ROUTES = {
     main: '/',
@@ -22,11 +22,10 @@ export const ROUTES = {
 }
 
 export function locationResolver(href, parant){
-    Object.entries(ROUTES).forEach((el) => {
-        const location = el[1]?.href;
-        console.log(location);
+    Object.entries(ROUTES).forEach(([_, route]) => {
+        const location = route?.href;
         if(location == href){
-            parant.appendChild(el[1].render());
+            parant.appendChild(route.render());
         }
     })
 }

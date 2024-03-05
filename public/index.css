@@ -1,10 +1,11 @@
 @import "components/authForm/style.css";
-@import "components/adsCard/adsCard.css";
+@import "components/adsCard/style.css";
+@import "components/header/style.css";
 
 body {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
-  }
+}
 
 #root{
     font-size: medium;
@@ -14,27 +15,18 @@ body {
 }
 
 header {
-    display: flex;
     flex-shrink: 0;
-    position: relative;
-    background-color: blanchedalmond;
-    max-height: 7%;
-    justify-content:space-around;
-    padding: 1% 5% 1% 5%;
-}
+   
+} 
 
  main {
+    display:inline;
+    text-align: center;
     flex-grow: 1;
-    margin: 5% 10%;
+    margin: 2% 5%;
 }
 
-/* main form input{
-    display:block;
-    font-size: large;
-    margin: 5%;
-} */ 
-
-header form{
+/* header form{
     display: inline-flex;
     justify-self:stretch;
     min-width: 40%;
@@ -48,4 +40,4 @@ header img {
     object-fit: cover;
     height: 40px;
   
-}
+} */
