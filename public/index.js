@@ -1,14 +1,12 @@
 'use strict';
 
 import { Ajax } from "./modules/ajax.js";
-import { MakeTree } from "./modules/makeTree.js";
 import { Login } from "./pages/login/login.js";
 import { Signup } from "./pages/signup/signup.js";
 import { ROUTES , locationResolver} from "./routes/routes.js";
 import { Main } from "./pages/main/main.js";
 import { Header } from "./components/header/header.js";
 
-const make = new MakeTree();
 const ajax = new Ajax();
 
 const rootElement = document.getElementById('root');
