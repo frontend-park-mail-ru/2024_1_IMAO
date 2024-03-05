@@ -1,6 +1,9 @@
 'use strict';
 
-import { ROUTES, locationResolver } from "../../routes/routes.js";
+import { Ajax } from "../../modules/ajax.js";
+import { ROUTES, locationResolver, auth } from "../../routes/routes.js";
+
+const ajax = new Ajax();
 
 export class Header{
     #parent;
@@ -28,13 +31,31 @@ export class Header{
             })
         }
 
+        const logoutBtn = this.#parent.getElementsByClassName('logout')[0];
+
+        if (logoutBtn === undefined){
+            return;
+        }
+
+        logoutBtn.addEventListener('click', (ev) => {
+            ajax.post(
+                ROUTES.logout,
+                null,
+                (body) => {
+                    const main = document.getElementsByTagName('main')[0];
+                    locationResolver(ROUTES.mainPage.href, main);
+                }
+            );
+        });
+
+
     }    
     
     #renderTamplate(){
         const template = Handlebars.templates['header.hbs'];
         const urlMain = ROUTES.mainPage.href;
         const urlLogin = ROUTES.loginPage.href;
-        const flag = true;
+        const flag = auth.is_auth;
         this.#parent.innerHTML = template({urlMain, urlLogin, flag});
     }
 }

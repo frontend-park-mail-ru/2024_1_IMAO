@@ -1,6 +1,8 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['header.hbs'] = template({"1":function(container,depth0,helpers,partials,data) {
+    return "      <div class=\"dropdown\">\n        <img class=\"profile-icon\" src=\"img_avatar.png\">\n        <div class=\"dropdown-content dropdown-content-right\">\n        <a href=\"#\">Профиль</a>\n        <a href=\"#\" class=\"logout\">Выйти</a>\n        </div>\n       </div>\n";
+},"3":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -8,13 +10,11 @@ templates['header.hbs'] = template({"1":function(container,depth0,helpers,partia
         return undefined
     };
 
-  return "      <a class=\"btn-secondary\" href=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"urlLogin") || (depth0 != null ? lookupProperty(depth0,"urlLogin") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"urlLogin","hash":{},"data":data,"loc":{"start":{"line":21,"column":37},"end":{"line":21,"column":49}}}) : helper)))
+  return "       <a class=\"btn-secondary\" href=\""
+    + alias4(((helper = (helper = lookupProperty(helpers,"urlLogin") || (depth0 != null ? lookupProperty(depth0,"urlLogin") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"urlLogin","hash":{},"data":data,"loc":{"start":{"line":29,"column":38},"end":{"line":29,"column":50}}}) : helper)))
     + "\" data-url=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"urlLogin") || (depth0 != null ? lookupProperty(depth0,"urlLogin") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"urlLogin","hash":{},"data":data,"loc":{"start":{"line":21,"column":61},"end":{"line":21,"column":73}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"urlLogin") || (depth0 != null ? lookupProperty(depth0,"urlLogin") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"urlLogin","hash":{},"data":data,"loc":{"start":{"line":29,"column":62},"end":{"line":29,"column":74}}}) : helper)))
     + "\">Войти</a>\n";
-},"3":function(container,depth0,helpers,partials,data) {
-    return "       <div class=\"dropdown\">\n        <img class=\"profile-icon\" src=\"img_avatar.png\">\n        <div class=\"dropdown-content dropdown-content-right\">\n        <a href=\"#\">Профиль</a>\n        <a href=\"#\">Выйти</a>\n        </div>\n       </div>\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {

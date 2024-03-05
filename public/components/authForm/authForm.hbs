@@ -42,16 +42,18 @@
     <span class="text-secondary icon-text">Покупки со скидкой по безопасной сделке</span>
     </div>
 </li>
-</ul>      <div class="signup-main">
+</ul>      
+<div class="signup-main">
 <h1 class="form-h1">{{title}}</h1>
 <form class="form">
     {{#each inputs}}
     <div class="form-input">
-        <input type="{{this.type}}" placeholder="{{this.placeholder}}">
+        <input name="{{this.name}}" type="{{this.type}}" placeholder="{{this.placeholder}}">
     </div>
     {{/each}}
 <button type="submit" class="btn-primary">{{buttonText}}</button>
 <p class="label">{{askText}} <a href="{{url}}" data-url="{{url}}">{{anchorText}}</a></p>
 </form>
+<div class="error"></div>
 </div>
 </div>

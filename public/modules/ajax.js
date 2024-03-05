@@ -10,10 +10,10 @@ export class Ajax{
     post(url, body, callback){
        	const init = {
 			method: this.#post,
-			headers: { 'Content-type': 'application/json'},
+			// headers: {'Content-type': contentType},
 			mode: 'cors',
 			credentials: 'include',
-			body: JSON.stringify(body),
+			body: body,
 		}
 
 		this.#ajax(this.#fullAdress(url), callback, init, arguments);

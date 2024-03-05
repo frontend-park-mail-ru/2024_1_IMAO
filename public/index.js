@@ -56,4 +56,5 @@ window.addEventListener('load', () => {
 
 const header = new Header(headerElement);
 header.render();
+locationResolver(ROUTES.mainPage, mainElement);
 // mainElement.appendChild(renderMain());

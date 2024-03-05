@@ -18,14 +18,14 @@
       <input type="text" placeholder="Search..">
       <a class="btn-primary" href="#" >Разместить объявление</a>
       {{#if flag}}
-      <a class="btn-secondary" href="{{urlLogin}}" data-url="{{urlLogin}}">Войти</a>
-      {{^}}
-       <div class="dropdown">
+      <div class="dropdown">
         <img class="profile-icon" src="img_avatar.png">
         <div class="dropdown-content dropdown-content-right">
         <a href="#">Профиль</a>
-        <a href="#">Выйти</a>
+        <a href="#" class="logout">Выйти</a>
         </div>
        </div>
+      {{^}}
+       <a class="btn-secondary" href="{{urlLogin}}" data-url="{{urlLogin}}">Войти</a>
        {{/if}}
     </div> 
