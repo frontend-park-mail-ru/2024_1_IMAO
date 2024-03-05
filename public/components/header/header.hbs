@@ -1,31 +1,29 @@
 <div class="navbar">
-    
-       <a class="brand" href="{{urlMain}}" data-url="{{urlMain}}">
-        <img class="logo"  src="vol4ok.svg">
+    <a class="brand" href="{{urlMain}}" data-url="{{urlMain}}">
+        <img class="logo" src="vol4ok.svg">
         <span class="name">ВОЛЧОК</span>
-        </a>
-       
-      <div class="dropdown">
-	<button class="dropbtn">Категории
-	  <i class="fa fa-caret-down"></i>
-	</button>
-	<div class="dropdown-content">
-	  <a href="#">Link 1</a>
-	  <a href="#">Link 2</a>
-	  <a href="#">Link 3</a>
-	</div>
-      </div>
-      <input type="text" placeholder="Search..">
-      <a class="btn-primary" href="#" >Разместить объявление</a>
-      {{#if flag}}
-      <div class="dropdown">
-        <img class="profile-icon" src="img_avatar.png">
-        <div class="dropdown-content dropdown-content-right">
-        <a href="#">Профиль</a>
-        <a href="#" class="logout">Выйти</a>
+    </a>
+    <div class="dropdown">
+        <button class="dropbtn">Категории
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
         </div>
-       </div>
-      {{^}}
-       <a class="btn-secondary" href="{{urlLogin}}" data-url="{{urlLogin}}">Войти</a>
-       {{/if}}
-    </div> 
+    </div>
+    <input type="text" placeholder="Search..">
+    <a class="btn-primary" href="#" >Разместить объявление</a>
+    {{#if flag}}
+        <div class="dropdown">
+            <img class="profile-icon" src="img_avatar.png">
+            <div class="dropdown-content dropdown-content-right">
+                <a href="#">Профиль</a>
+                <a href="#" class="logout">Выйти</a>
+            </div>
+        </div>
+    {{^}}
+        <a class="btn-secondary" href="{{urlLogin}}" data-url="{{urlLogin}}">Войти</a>
+    {{/if}}
+</div> 

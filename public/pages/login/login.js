@@ -9,28 +9,55 @@ const ajax = new Ajax();
 
 const authError = 'Неверный логин или пароль!';
 
+/** Class representing a login page. */
 export class Login{
     #parent;
 
+    /**
+     * Initialize a login page.
+     * @param {HTMLElement} parent - The container for a login page.
+     */
     constructor(parent) {
         this.#parent = parent;
     }
 
+    /**
+     * Render the login page.
+     */
     render(){
         this.#renderTamplate();
         this.#addListeners();
     }
 
+    /**
+     * Add event listeners for a login page.
+     */
     #addListeners(){
-        const form = this.#parent.getElementsByClassName('form')[0]
-        const anchor = this.#parent.getElementsByTagName('a')[0]
+        const anchor = this.#parent.getElementsByTagName('a')[0];
 
+        this.#addSignupFollowListener(anchor);
+
+        const form = this.#parent.getElementsByClassName('form')[0];
+
+        this.#addFormListener(form);
+    }  
+
+    /**
+     * Add event listeners for a signup follow.
+     * @param {HTMLElement} anchor - The signup follow element.
+     */
+    #addSignupFollowListener(anchor){
         anchor.addEventListener('click', (ev) => {
             const main = document.getElementsByTagName('main')[0];
             locationResolver(anchor.dataset.url, main);
-        })
+        });
+    }
 
-
+    /**
+     * Add event listeners for a login form.
+     * @param {HTMLElement} form - The form element.
+     */
+    #addFormListener(form){
         form.addEventListener('submit', (ev) => {
             ev.preventDefault();
 
@@ -43,17 +70,10 @@ export class Login{
 
             const email = inputs[0].trim();
             const password = inputs[1];
-            console.log(password)
 
             const divError = this.#parent.getElementsByClassName('error')[0];
             
-            if (!validateEmail(email)) {
-                divError.innerHTML = emailError;
-                return;
-            }
-
-            if (!validatePassword(password)) {
-                divError.innerHTML = passwordError;
+            if (!this.#validateData(email, password, divError)) {
                 return;
             }
     
@@ -61,19 +81,41 @@ export class Login{
                 ROUTES.login,
                 data,
                 (body) => {
-                    console.log(body)
                     if(body?.isAuth === true) {
-                      alert('Успешная авторизация!')
-                      const main = document.getElementsByTagName('main')[0];
-                      locationResolver(ROUTES.mainPage.href, main);
-                      return;
+                        const main = document.getElementsByTagName('main')[0];
+                        locationResolver(ROUTES.mainPage.href, main);
+                        return;
                     }
                     divError.innerHTML = authError;
                 },
             );
-          })
-    }    
+        });
+    }
     
+    /**
+     * Validates form data.
+     * @param {string} email
+     * @param {string} password 
+     * @param {HTMLElement} divError 
+     * @returns {boolean} - Complete validation or not.
+     */
+    #validateData(email, password, divError){
+        if (!validateEmail(email)) {
+            divError.innerHTML = emailError;
+            return false;
+        }
+
+        if (!validatePassword(password)) {
+            divError.innerHTML = passwordError;
+            return false;
+        }
+
+        return true;
+    }
+    
+    /**
+     * Render a tamlate for a login page.
+     */
     #renderTamplate(){
         const template = renderAuthForm();
         const title = 'Вход в «Волчок»';
@@ -81,7 +123,7 @@ export class Login{
             {
                 name: 'email',
                 type: 'email',
-                placeholder: 'Электронная почта',
+                placeholder: 'Электронная *почта',
             },
             {
                 name: 'password',

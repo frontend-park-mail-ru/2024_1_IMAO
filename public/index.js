@@ -1,11 +1,11 @@
 'use strict';
 
+import { ROUTES , locationResolver} from "./routes/routes.js";
 import { Ajax } from "./modules/ajax.js";
+import { Header } from "./components/header/header.js";
+import { Main } from "./pages/main/main.js";
 import { Login } from "./pages/login/login.js";
 import { Signup } from "./pages/signup/signup.js";
-import { ROUTES , locationResolver} from "./routes/routes.js";
-import { Main } from "./pages/main/main.js";
-import { Header } from "./components/header/header.js";
 
 const ajax = new Ajax();
 
@@ -20,6 +20,10 @@ ROUTES.init('loginPage', renderLogin);
 ROUTES.init('signupPage', renderSignup);
 ROUTES.init('mainPage', renderMain);
 
+/**
+ * Return login page.
+ * @returns {HTMLElement} - The login page.
+ */
 function renderLogin(){
     mainElement.innerHTML = '';
     const page = document.createElement('div');
@@ -28,6 +32,10 @@ function renderLogin(){
     return page;
 }
 
+/**
+ * Return signup page.
+ * @returns {HTMLElement} - The signup page.
+ */
 function renderSignup(){
     mainElement.innerHTML = '';
     const page = document.createElement('div');
@@ -36,6 +44,10 @@ function renderSignup(){
     return page;
 }
 
+/**
+ * Return main page.
+ * @returns {HTMLElement} - The main page.
+ */
 function renderMain(){
     mainElement.innerHTML = '';
     const page = document.createElement('div');
@@ -54,5 +66,6 @@ window.addEventListener('load', () => {
 
 const header = new Header(headerElement);
 header.render();
-locationResolver(ROUTES.mainPage, mainElement);
-// mainElement.appendChild(renderMain());
+if(window.location.hash === '' ) {
+    locationResolver(ROUTES.mainPage.href, mainElement);
+}

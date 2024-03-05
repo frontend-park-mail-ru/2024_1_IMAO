@@ -16,7 +16,6 @@ body {
 
 header {
     flex-shrink: 0;
-   
 } 
 
  main {
@@ -26,18 +25,7 @@ header {
     margin: 2% 5%;
 }
 
-/* header form{
-    display: inline-flex;
-    justify-self:stretch;
-    min-width: 40%;
+.cards-div{
+    display: inline-block;
+    padding: 1%;
 }
-
-header form input[type='text']{
-    min-width: 80%;
-}
-
-header img {
-    object-fit: cover;
-    height: 40px;
-  
-} */
