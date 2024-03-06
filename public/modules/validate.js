@@ -15,7 +15,7 @@ export function isString(input) {
 }
 
 /**
- * Returns true if parameter is a string.
+ * Throws TypeError if parameter is not a string.
  * @param {object} input - object to be checked.
  * @throws {TypeRrror} when parameter is not a string.
  */

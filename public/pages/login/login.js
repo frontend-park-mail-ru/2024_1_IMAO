@@ -104,12 +104,7 @@ export class Login{
 			divError.innerHTML = emailError;
 			return false;
 		}
-
-		if (!validatePassword(password)) {
-			divError.innerHTML = passwordError;
-			return false;
-		}
-
+		
 		return true;
 	}
 
@@ -123,7 +118,7 @@ export class Login{
 			{
 				name: 'email',
 				type: 'email',
-				placeholder: 'Электронная *почта',
+				placeholder: 'Электронная почта',
 			},
 			{
 				name: 'password',
