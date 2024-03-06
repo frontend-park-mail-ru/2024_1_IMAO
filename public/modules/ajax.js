@@ -13,32 +13,31 @@ export class Ajax{
 	 * @param {URLSearchParams} body - The request body.
 	 * @param {function} callback - The callback function.
 	 */
-    post(url, body, callback){
-       	const init = {
+	post(url, body, callback){
+		const init = {
 			method: POST,
-			// headers: {'Content-type': contentType},
 			mode: 'cors',
 			credentials: 'include',
 			body: body,
 		}
 
 		this.#ajax(this.#fullAdress(url), callback, init, arguments);
-    }
+	}
 
 	/**
 	 * Make a GET request.
 	 * @param {string} url - The request path.
 	 * @param {function} callback - The callback function.
 	 */
-    get(url, callback){
-        const init = {
+	get(url, callback){
+		const init = {
 			method: GET,
 			mode: "cors",
 			credentials: 'include',
 		}
-		
+
 		this.#ajax(this.#fullAdress(url), callback, init, arguments);
-    }
+	}
 
 	/**
 	 * Make a full adress to API.
@@ -55,8 +54,8 @@ export class Ajax{
 	 * @param {function} callback - The callback function.
 	 * @param {object} init - Options of the request.
 	 */
-    #ajax(url, callback, init) {
-        fetch(url, init)
+	#ajax(url, callback, init) {
+		fetch(url, init)
 			.then(response => {
 				if(response.ok){
 					return response.json()
@@ -64,8 +63,8 @@ export class Ajax{
 					console.log(`${response.status} ERROR: ${response.statusText}`)
 				}
 			})
-			.then(data => callback(data)) 
+
+			.then(data => callback(data))
 			.catch(err => alert(err));
-    
-    }
+	}
 }
