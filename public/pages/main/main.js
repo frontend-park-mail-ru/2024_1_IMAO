@@ -8,47 +8,47 @@ const ajax = new Ajax();
 
 /** Class representing a main page. */
 export class Main{
-    #parent;
+	#parent;
 
-    /**
-     * Initialize a main page.
-     * @param {HTMLElement} parent - The container for a main page.
-     */
-    constructor(parent) {
-        this.#parent = parent;
-    }
+	/**
+	 * Initialize a main page.
+	 * @param {HTMLElement} parent - The container for a main page.
+	 */
+	constructor(parent) {
+		this.#parent = parent;
+	}
 
-    /**
-     * Render the main page.
-     */
-    render(){
-        this.#renderTamplate();
-    }
-    
-    /**
-     * Render a tamlate for a main page.
-     */
-    #renderTamplate(){
-        const title = document.createElement('h1');
-        title.innerHTML = 'Все объявления';
-        this.#parent.appendChild(title)
+	/**
+	 * Render the main page.
+	 */
+	render(){
+		this.#renderTamplate();
+	}
 
-        ajax.get(
-            ROUTES.main,
-            (ads) => {
-                const adverts = ads['adverts']
-                if (!(adverts && Array.isArray(adverts))) {
-                    return;
-                }
+	/**
+	 * Render a tamlate for a main page.
+	 */
+	#renderTamplate(){
+		const title = document.createElement('h1');
+		title.innerHTML = 'Все объявления';
+		this.#parent.appendChild(title)
 
-                adverts.forEach((inner) => {
-                    const {price, title} = inner;
-                    const div = document.createElement('div');
-                    div.classList.add('cards-div');
-                    div.innerHTML += renderAdsCardTamplate(title, price);
-                    this.#parent.appendChild(div);
-                });
-            },
-        );
-    }
+		ajax.get(
+			ROUTES.main,
+			(ads) => {
+				const adverts = ads['adverts']
+				if (!(adverts && Array.isArray(adverts))) {
+					return;
+				}
+
+				adverts.forEach((inner) => {
+					const {price, title} = inner;
+					const div = document.createElement('div');
+					div.classList.add('cards-div');
+					div.innerHTML += renderAdsCardTamplate(title, price);
+					this.#parent.appendChild(div);
+				});
+			},
+		);
+	}
 }

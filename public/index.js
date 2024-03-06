@@ -25,11 +25,11 @@ ROUTES.init('mainPage', renderMain);
  * @returns {HTMLElement} - The login page.
  */
 function renderLogin(){
-    mainElement.innerHTML = '';
-    const page = document.createElement('div');
-    const login = new Login(page);
-    login.render();
-    return page;
+	mainElement.innerHTML = '';
+	const page = document.createElement('div');
+	const login = new Login(page);
+	login.render();
+	return page;
 }
 
 /**
@@ -37,11 +37,11 @@ function renderLogin(){
  * @returns {HTMLElement} - The signup page.
  */
 function renderSignup(){
-    mainElement.innerHTML = '';
-    const page = document.createElement('div');
-    const signup = new Signup(page);
-    signup.render();
-    return page;
+	mainElement.innerHTML = '';
+	const page = document.createElement('div');
+	const signup = new Signup(page);
+	signup.render();
+	return page;
 }
 
 /**
@@ -49,23 +49,23 @@ function renderSignup(){
  * @returns {HTMLElement} - The main page.
  */
 function renderMain(){
-    mainElement.innerHTML = '';
-    const page = document.createElement('div');
-    const main = new Main(page);
-    main.render();
-    return page;
+	mainElement.innerHTML = '';
+	const page = document.createElement('div');
+	const main = new Main(page);
+	main.render();
+	return page;
 }
 
 window.addEventListener('load', () => {
-    const location = window.location.hash;
+	const location = window.location.hash;
 
-    if (location) {
-        locationResolver(location, mainElement);
-    }
+	if (location) {
+		locationResolver(location, mainElement);
+	}
 });
 
 const header = new Header(headerElement);
 header.render();
 if(window.location.hash === '' ) {
-    locationResolver(ROUTES.mainPage.href, mainElement);
+	locationResolver(ROUTES.mainPage.href, mainElement);
 }

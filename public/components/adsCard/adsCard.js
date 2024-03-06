@@ -7,6 +7,6 @@
  * @returns {Handlebars.TemplateDelegate} - The template of card.
  */
 export function renderAdsCardTamplate(title, price){
-    const template = Handlebars.templates['adsCard.hbs'];
-    return template({title, price});
+	const template = Handlebars.templates['adsCard.hbs'];
+	return template({title, price});
 }

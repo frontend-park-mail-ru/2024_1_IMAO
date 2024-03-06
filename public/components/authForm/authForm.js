@@ -5,5 +5,5 @@
  * @returns {HandlebarsTemplates} - The template function.
  */
 export function renderAuthForm() {
-    return Handlebars.templates['authForm.hbs'];
+	return Handlebars.templates['authForm.hbs'];
 }
