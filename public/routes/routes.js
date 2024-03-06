@@ -97,5 +97,5 @@ export function locationResolver(href, parant){
 				parant.appendChild(route.render());
 			}
 		});
-	}, 20);
+	}, 400);
 }
