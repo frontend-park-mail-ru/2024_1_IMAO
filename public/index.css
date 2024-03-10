@@ -30,6 +30,7 @@ main {
 .main-page {
     font-family: "Roboto", Open Sans;
     width: 1219px;
+    margin: 2%;
 }
 
 .page-content {
