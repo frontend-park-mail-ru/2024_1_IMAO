@@ -43,7 +43,8 @@
 
 .signup {
     width: 720px;
-    height: 456px;
+    /* height: 456px; */
+    height: 520px;
     border-radius: 10px;
     overflow: hidden;
     display: flex;
