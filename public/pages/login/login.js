@@ -11,33 +11,36 @@ const authError = 'Неверный логин или пароль!';
 
 /** Class representing a login page. */
 export class Login{
-	#parent;
+	#element;
 
 	/**
 	 * Initialize a login page.
-	 * @param {HTMLElement} parent - The container for a login page.
 	 */
-	constructor(parent) {
-		this.#parent = parent;
+	constructor() {
+		this.#element = document.createElement('div');
+		this.#element.classList.add('auth-page');
 	}
 
 	/**
 	 * Render the login page.
+	 * @returns {Element} - The element of login page.
 	 */
 	render(){
 		this.#renderTamplate();
 		this.#addListeners();
+
+		return this.#element;
 	}
 
 	/**
 	 * Add event listeners for a login page.
 	 */
 	#addListeners(){
-		const anchor = this.#parent.getElementsByTagName('a')[0];
+		const anchor = this.#element.getElementsByTagName('a')[0];
 
 		this.#addSignupFollowListener(anchor);
 
-		const form = this.#parent.getElementsByClassName('form')[0];
+		const form = this.#element.getElementsByClassName('form')[0];
 
 		this.#addFormListener(form);
 	}
@@ -71,7 +74,7 @@ export class Login{
 			const email = inputs[0].trim();
 			const password = inputs[1];
 
-			const divError = this.#parent.getElementsByClassName('error')[0];
+			const divError = this.#element.getElementsByClassName('error')[0];
 
 			if (!this.#validateData(email, password, divError)) {
 				return;
@@ -130,6 +133,6 @@ export class Login{
 		const url = ROUTES.signupPage.href;
 		const askText = 'Нет аккаунта?';
 		const anchorText = 'Зарегистрируйтесь';
-		this.#parent.innerHTML = template({title, inputs, buttonText, url, askText, anchorText});
+		this.#element.innerHTML = template({title, inputs, buttonText, url, askText, anchorText});
 	}
 }

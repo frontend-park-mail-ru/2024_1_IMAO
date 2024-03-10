@@ -5,6 +5,7 @@
     transition: 0.3s;
     border-radius: 10px;
     position: relative;
+    display: inline-block;
 }
 
 .card img {

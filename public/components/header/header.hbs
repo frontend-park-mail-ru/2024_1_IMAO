@@ -1,11 +1,11 @@
 <div class="navbar">
-    <a class="brand" href="{{urlMain}}" data-url="{{urlMain}}">
-        <img class="logo" src="vol4ok.svg">
-        <span class="name">ВОЛЧОК</span>
-    </a>
+    <img class="logo" src="vol4ok.svg">	
+    <a class="name">ВОЛЧОК</a>
+	
     <div class="dropdown">
-        <button class="dropbtn">Категории
-            <i class="fa fa-caret-down"></i>
+        <button class="dropbtn">
+            <i class="fa fa-list-ul"></i>
+	    Категории
         </button>
         <div class="dropdown-content">
             <a href="#">Link 1</a>
@@ -13,7 +13,11 @@
             <a href="#">Link 3</a>
         </div>
     </div>
-    <input type="text" placeholder="Search..">
+    <form class="search">
+        <i class="fa fa-search"></i>
+        <input type="text" placeholder="Поиск по объявлениям" name="search">
+	<button type="submit">Найти</button>
+    </form>
     <a class="btn-primary" href="#" >Разместить объявление</a>
     {{#if flag}}
         <div class="dropdown">

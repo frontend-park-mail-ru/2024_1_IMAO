@@ -92,7 +92,7 @@ export function locationResolver(href, parant){
 		Object.entries(ROUTES).forEach(([_, route]) => {
 			const location = route?.href;
 
-			if(location == href){
+			if(location == href) {
 				window.location.hash = location;
 				parant.appendChild(route.render());
 			}

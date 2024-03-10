@@ -10,10 +10,8 @@ import { Signup } from "./pages/signup/signup.js";
 const ajax = new Ajax();
 
 const rootElement = document.getElementById('root');
-const headerElement = document.createElement('header');
 const mainElement = document.createElement('main');
 
-rootElement.appendChild(headerElement);
 rootElement.appendChild(mainElement);
 
 ROUTES.init('loginPage', renderLogin);
@@ -24,36 +22,30 @@ ROUTES.init('mainPage', renderMain);
  * Return login page.
  * @returns {HTMLElement} - The login page.
  */
-function renderLogin(){
+function renderLogin() {
 	mainElement.innerHTML = '';
-	const page = document.createElement('div');
-	const login = new Login(page);
-	login.render();
-	return page;
+	const login = new Login();
+	return login.render();;
 }
 
 /**
  * Return signup page.
  * @returns {HTMLElement} - The signup page.
  */
-function renderSignup(){
+function renderSignup() {
 	mainElement.innerHTML = '';
-	const page = document.createElement('div');
-	const signup = new Signup(page);
-	signup.render();
-	return page;
+	const signup = new Signup();
+	return signup.render();;
 }
 
 /**
  * Return main page.
  * @returns {HTMLElement} - The main page.
  */
-function renderMain(){
+function renderMain() {
 	mainElement.innerHTML = '';
-	const page = document.createElement('div');
-	const main = new Main(page);
-	main.render();
-	return page;
+	const main = new Main();
+	return main.render();
 }
 
 window.addEventListener('load', () => {
@@ -64,8 +56,6 @@ window.addEventListener('load', () => {
 	}
 });
 
-const header = new Header(headerElement);
-header.render();
 if(window.location.hash === '' ) {
 	locationResolver(ROUTES.mainPage.href, mainElement);
 }
