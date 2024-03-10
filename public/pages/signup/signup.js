@@ -12,33 +12,36 @@ const userAlreadyExistError = 'Такой пользователь уже сущ
 
 /** Class representing a signup page. */
 export class Signup{
-	#parent;
+	#element;
 
 	/**
 	 * Initialize a signup page.
-	 * @param {HTMLElement} parent - The container for a signup page.
 	 */
 	constructor(parent) {
-		this.#parent = parent;
+		this.#element = document.createElement('div');
+		this.#element.classList.add('auth-page');
 	}
 
 	/**
 	 * Render the signup page.
+	 * @returns {Element} - The element of signup page.
 	 */
 	render(){
 		this.#renderTamplate();
 		this.#addListeners();
+
+		return this.#element;
 	}
 
 	/**
 	 * Add event listeners for a signup page.
 	 */
 	#addListeners(){
-		const anchor = this.#parent.getElementsByTagName('a')[0];
+		const anchor = this.#element.getElementsByTagName('a')[0];
 
 		this.#addLoginFollowListener(anchor);
 
-		const form = this.#parent.getElementsByClassName('form')[0];
+		const form = this.#element.getElementsByClassName('form')[0];
 
 		this.#addFormListener(form);
 	}
@@ -73,7 +76,7 @@ export class Signup{
 			const password = inputs[1];
 			const password_repeat = inputs[2];
 
-			const divError = this.#parent.getElementsByClassName('error')[0];
+			const divError = this.#element.getElementsByClassName('error')[0];
 
 			if (!this.#validateData(email, password, password_repeat, divError)){
 				return;
@@ -148,6 +151,6 @@ export class Signup{
 		const url = ROUTES.loginPage.href;
 		const askText = 'Есть аккаунт?';
 		const anchorText = 'Авторизируйтесь';
-		this.#parent.innerHTML = template({title, inputs, buttonText, url, askText, anchorText});
+		this.#element.innerHTML = template({title, inputs, buttonText, url, askText, anchorText});
 	}
 }

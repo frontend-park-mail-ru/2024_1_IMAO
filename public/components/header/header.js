@@ -7,33 +7,35 @@ const ajax = new Ajax();
 
 /** Class representing a header component. */
 export class Header{
-	#parent;
+	#element;
 
 	/**
 	 * Initialize a header.
-	 * @param {HTMLElement} parent - The container for a header.
 	 */
-	constructor(parent) {
-		this.#parent = parent;
+	constructor() {
+		this.#element = document.createElement('header');
 	}
 
 	/**
 	 * Render the header.
+	 * @returns {Element} - The element of header.
 	 */
-	render(){
+	render() {
 		this.#renderTamplate();
 		this.#addListeners();
+
+		return this.#element;
 	}
 
 	/**
 	 * Add event listeners for a header.
 	 */
 	#addListeners(){
-		const anchors = this.#parent.getElementsByTagName('a');
+		const anchors = this.#element.getElementsByTagName('a');
 
 		this.#addButtonsListeners(anchors);
 
-		const logoutBtn = this.#parent.getElementsByClassName('logout')[0];
+		const logoutBtn = this.#element.getElementsByClassName('logout')[0];
 
 		this.#addLogoutListener(logoutBtn);
 	}
@@ -84,6 +86,6 @@ export class Header{
 		const urlMain = ROUTES.mainPage.href;
 		const urlLogin = ROUTES.loginPage.href;
 		const flag = auth.is_auth;
-		this.#parent.innerHTML = template({urlMain, urlLogin, flag});
+		this.#element.innerHTML = template({urlMain, urlLogin, flag});
 	}
 }
