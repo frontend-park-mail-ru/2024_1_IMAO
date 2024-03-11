@@ -1,19 +1,13 @@
 'use strict';
 
-import { ROUTES , locationResolver} from "./routes/routes.js";
-import { Ajax } from "./modules/ajax.js";
-import { Header } from "./components/header/header.js";
-import { Main } from "./pages/main/main.js";
-import { Login } from "./pages/login/login.js";
-import { Signup } from "./pages/signup/signup.js";
-
-const ajax = new Ajax();
+import {ROUTES, locationResolver} from './routes/routes.js';
+import {Main} from './pages/main/main.js';
+import {Login} from './pages/login/login.js';
+import {Signup} from './pages/signup/signup.js';
 
 const rootElement = document.getElementById('root');
-const headerElement = document.createElement('header');
 const mainElement = document.createElement('main');
 
-rootElement.appendChild(headerElement);
 rootElement.appendChild(mainElement);
 
 ROUTES.init('loginPage', renderLogin);
@@ -22,50 +16,49 @@ ROUTES.init('mainPage', renderMain);
 
 /**
  * Return login page.
- * @returns {HTMLElement} - The login page.
+ * @return {HTMLElement} - The login page.
  */
-function renderLogin(){
-	mainElement.innerHTML = '';
-	const page = document.createElement('div');
-	const login = new Login(page);
-	login.render();
-	return page;
+function renderLogin() {
+  mainElement.innerHTML = '';
+  const login = new Login();
+  return login.render(); ;
 }
 
 /**
  * Return signup page.
- * @returns {HTMLElement} - The signup page.
+ * @return {HTMLElement} - The signup page.
  */
-function renderSignup(){
-	mainElement.innerHTML = '';
-	const page = document.createElement('div');
-	const signup = new Signup(page);
-	signup.render();
-	return page;
+function renderSignup() {
+  mainElement.innerHTML = '';
+  const signup = new Signup();
+  return signup.render(); ;
 }
 
 /**
  * Return main page.
- * @returns {HTMLElement} - The main page.
+ * @return {HTMLElement} - The main page.
  */
-function renderMain(){
-	mainElement.innerHTML = '';
-	const page = document.createElement('div');
-	const main = new Main(page);
-	main.render();
-	return page;
+function renderMain() {
+  mainElement.innerHTML = '';
+  const main = new Main();
+  return main.render();
 }
 
-window.addEventListener('load', () => {
-	const location = window.location.hash;
+/**
+ * Changing page via url.
+ * @param {HTMLElement} container - The container to render.
+ */
+function changePage(container) {
+  const location = window.location.hash;
 
-	if (location) {
-		locationResolver(location, mainElement);
-	}
-});
+  if (location) {
+    locationResolver(location, container);
+  }
+};
 
-const header = new Header(headerElement);
-header.render();
-if(window.location.hash === '' ) {
-	locationResolver(ROUTES.mainPage.href, mainElement);
+window.addEventListener('popstate', () => changePage(mainElement));
+window.addEventListener('load', () => changePage(mainElement));
+
+if (window.location.hash === '' ) {
+  locationResolver(ROUTES.mainPage.href, mainElement);
 }

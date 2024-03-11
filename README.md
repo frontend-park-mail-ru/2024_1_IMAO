@@ -35,5 +35,5 @@ npm install
 
 ### Запуск сервера на Node.js
 ```
-node server
+npm start
 ```
