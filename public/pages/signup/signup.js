@@ -65,6 +65,8 @@ export class Signup {
   #addFormListener(form) {
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
+      const submit = form.querySelector('[type="submit"]');
+      submit.disabled = true;
 
       const data = new URLSearchParams();
       const inputs = [];
@@ -80,6 +82,7 @@ export class Signup {
       const divError = this.#element.getElementsByClassName('error')[0];
 
       if (!this.#validateData(email, password, passwordRepeat, divError)) {
+        submit.disabled = false;
         return;
       }
 
@@ -92,6 +95,7 @@ export class Signup {
               locationResolver(ROUTES.mainPage.href, main);
               return;
             }
+            submit.disabled = false;
             divError.innerHTML = userAlreadyExistError;
           },
       );

@@ -63,6 +63,8 @@ export class Login {
   #addFormListener(form) {
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
+      const submit = form.querySelector('[type="submit"]');
+      submit.disabled = true;
 
       const data = new URLSearchParams();
       const inputs = [];
@@ -77,6 +79,7 @@ export class Login {
       const divError = this.#element.getElementsByClassName('error')[0];
 
       if (!this.#validateData(email, password, divError)) {
+        submit.disabled = false;
         return;
       }
 
@@ -89,6 +92,7 @@ export class Login {
               locationResolver(ROUTES.mainPage.href, main);
               return;
             }
+            submit.disabled = false;
             divError.innerHTML = authError;
           },
       );
