@@ -3,7 +3,9 @@ module.exports = {
     'browser': true,
     'es2021': true,
   },
-  'extends': 'google',
+  'extends': [
+    'google',
+  ],
   'overrides': [
     {
       'env': {
@@ -21,6 +23,12 @@ module.exports = {
     'ecmaVersion': 'latest',
     'sourceType': 'module',
   },
+  'ignorePatterns': ['*.precompiled.js', '**/handlebars/*.js'],
   'rules': {
+    'semi': ['error', 'always'],
+    'no-console': 'error',
   },
+  'plugins': [
+    'prettier',
+  ],
 };

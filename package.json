@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "prestart": "handlebars public/components/adsCard/adsCard.hbs -f public/components/adsCard/adsCard.precompiled.js && handlebars public/components/authForm/authForm.hbs -f public/components/authForm/authForm.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js",
-    "start": "node server"
+    "start": "node server",
+    "precommit": "npx lint-staged",
+    "eslint": "npx eslint 'public/**/*.{js,jsx,ts,tsx}'",
+    "prepare": "husky install"
   },
   "author": "IMAO",
   "license": "MIT",
@@ -17,5 +20,19 @@
     "handlebars": "^4.7.8",
     "morgan": "^1.10.0",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5"
+  },
+  "lint-staged": {
+    "*.{js, jsx}": [
+      "eslint --max-warnings=0",
+      "git add"
+    ]
   }
 }
