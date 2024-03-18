@@ -37,3 +37,8 @@ npm install
 ```
 npm start
 ```
+
+### Запуск линтера
+```
+npm run eslint
+```

@@ -21,7 +21,7 @@ ROUTES.init('mainPage', renderMain);
 function renderLogin() {
   mainElement.innerHTML = '';
   const login = new Login();
-  return login.render(); ;
+  return login.render();
 }
 
 /**

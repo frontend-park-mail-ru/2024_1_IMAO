@@ -58,11 +58,8 @@ export class Ajax {
         .then((response) => {
           if (response.ok) {
             return response.json();
-          } else {
-            console.log(`${response.status} ERROR: ${response.statusText}`);
           }
         })
-
         .then((data) => callback(data))
         .catch((err) => alert(err));
   }
