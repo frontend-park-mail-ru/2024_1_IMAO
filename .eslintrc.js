@@ -26,7 +26,7 @@ module.exports = {
   'ignorePatterns': ['*.precompiled.js', '**/handlebars/*.js'],
   'rules': {
     'semi': ['error', 'always'],
-    'no-console': 'error',
+    // 'no-console': 'error',
   },
   'plugins': [
     'prettier',

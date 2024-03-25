@@ -1,9 +1,8 @@
 'use strict';
 
-import {Ajax} from '../../modules/ajax.js';
-import {ROUTES, locationResolver, auth} from '../../routes/routes.js';
-
-const ajax = new Ajax();
+import ajax from '../../modules/ajax.js';
+import {ROUTES, auth} from '../../routes/routes.js';
+import router from '../../router/router.js';
 
 /** Class representing a header component. */
 export class Header {
@@ -51,8 +50,7 @@ export class Header {
       }
 
       anchor.addEventListener('click', (ev) => {
-        const main = document.getElementsByTagName('main')[0];
-        locationResolver(anchor.dataset.url, main);
+        router.pushPage(ev, anchor.dataset.url);
       });
     }
   }
@@ -71,8 +69,7 @@ export class Header {
           ROUTES.logout,
           null,
           (body) => {
-            const main = document.getElementsByTagName('main')[0];
-            locationResolver(ROUTES.mainPage.href, main);
+            router.go(router.routes.mainPage.href);
           },
       );
     });
@@ -83,8 +80,8 @@ export class Header {
    */
   #renderTamplate() {
     const template = Handlebars.templates['header.hbs'];
-    const urlMain = ROUTES.mainPage.href;
-    const urlLogin = ROUTES.loginPage.href;
+    const urlMain = router.routes.mainPage.href;
+    const urlLogin = router.routes.loginPage.href;
     const flag = auth.is_auth;
     this.#element.innerHTML = template({urlMain, urlLogin, flag});
   }

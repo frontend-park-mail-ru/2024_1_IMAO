@@ -1,11 +1,10 @@
 'use strict';
 
 import {renderAuthForm} from '../../components/authForm/authForm.js';
-import {Ajax} from '../../modules/ajax.js';
+import ajax from '../../modules/ajax.js';
 import {emailError, validateEmail} from '../../modules/validate.js';
-import {ROUTES, locationResolver} from '../../routes/routes.js';
-
-const ajax = new Ajax();
+import {ROUTES} from '../../routes/routes.js';
+import router from '../../router/router.js';
 
 const authError = 'Неверный логин или пароль!';
 
@@ -51,8 +50,7 @@ export class Login {
    */
   #addSignupFollowListener(anchor) {
     anchor.addEventListener('click', (ev) => {
-      const main = document.getElementsByTagName('main')[0];
-      locationResolver(anchor.dataset.url, main);
+      router.pushPage(ev, anchor.dataset.url);
     });
   }
 
@@ -66,15 +64,14 @@ export class Login {
       const submit = form.querySelector('[type="submit"]');
       submit.disabled = true;
 
-      const data = new URLSearchParams();
       const inputs = [];
       for (const pair of new FormData(form)) {
-        data.append(pair[0], pair[1]);
         inputs.push(pair[1]);
       }
 
       const email = inputs[0].trim();
       const password = inputs[1];
+      const data = {email, password};
 
       const divError = this.#element.getElementsByClassName('error')[0];
 
@@ -88,8 +85,7 @@ export class Login {
           data,
           (body) => {
             if (body?.isAuth === true) {
-              const main = document.getElementsByTagName('main')[0];
-              locationResolver(ROUTES.mainPage.href, main);
+              router.go(router.routes.mainPage.href);
               return;
             }
             submit.disabled = false;
@@ -134,7 +130,7 @@ export class Login {
         },
       ],
       buttonText: 'Войти',
-      url: ROUTES.signupPage.href,
+      url: router.routes.signupPage.href,
       askText: 'Нет аккаунта?',
       anchorText: 'Зарегистрируйтесь',
     };

@@ -1,11 +1,11 @@
 'use strict';
 
-const OUTER_API = 'http://127.0.0.1:8080';
+const OUTER_API = 'http://127.0.0.1:8080/api';
 const GET = 'GET';
 const POST = 'POST';
 
 /** Class implements AJAX requests. */
-export class Ajax {
+class Ajax {
   /**
    * Make a POST request.
    * @param {string} url - The request path.
@@ -17,7 +17,7 @@ export class Ajax {
       method: POST,
       mode: 'cors',
       credentials: 'include',
-      body: body,
+      body: JSON.stringify(body),
     };
 
     await this.#ajax(this.#fullAdress(url), callback, init);
@@ -64,3 +64,5 @@ export class Ajax {
         .catch((err) => alert(err));
   }
 }
+
+export default new Ajax();

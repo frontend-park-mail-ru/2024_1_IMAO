@@ -1,12 +1,11 @@
 'use strict';
 
 import {renderAuthForm} from '../../components/authForm/authForm.js';
-import {Ajax} from '../../modules/ajax.js';
+import ajax from '../../modules/ajax.js';
 import {validateEmail, validatePassword} from '../../modules/validate.js';
 import {emailError, passwordError} from '../../modules/validate.js';
-import {ROUTES, locationResolver} from '../../routes/routes.js';
-
-const ajax = new Ajax();
+import {ROUTES} from '../../routes/routes.js';
+import router from '../../router/router.js';
 
 const passwordMatchError = 'Пароли не совпадают!';
 const userAlreadyExistError = 'Такой пользователь уже существует!';
@@ -53,8 +52,7 @@ export class Signup {
    */
   #addLoginFollowListener(anchor) {
     anchor.addEventListener('click', (ev) => {
-      const main = document.getElementsByTagName('main')[0];
-      locationResolver(anchor.dataset.url, main);
+      router.pushPage(ev, anchor.dataset.url);
     });
   }
 
@@ -68,16 +66,15 @@ export class Signup {
       const submit = form.querySelector('[type="submit"]');
       submit.disabled = true;
 
-      const data = new URLSearchParams();
       const inputs = [];
       for (const pair of new FormData(form)) {
-        data.append(pair[0], pair[1]);
         inputs.push(pair[1]);
       }
 
       const email = inputs[0].trim();
       const password = inputs[1];
       const passwordRepeat = inputs[2];
+      const data = {email, password, passwordRepeat};
 
       const divError = this.#element.getElementsByClassName('error')[0];
 
@@ -91,8 +88,7 @@ export class Signup {
           data,
           (body) => {
             if (body?.isAuth === true) {
-              const main = document.getElementsByTagName('main')[0];
-              locationResolver(ROUTES.mainPage.href, main);
+              router.go(router.routes.mainPage);
               return;
             }
             submit.disabled = false;
@@ -153,7 +149,7 @@ export class Signup {
         },
       ],
       buttonText: 'Зарегистрироваться',
-      url: ROUTES.loginPage.href,
+      url: router.routes.loginPage.href,
       askText: 'Есть аккаунт?',
       anchorText: 'Авторизируйтесь',
     };

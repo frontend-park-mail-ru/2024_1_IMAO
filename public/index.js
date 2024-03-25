@@ -1,18 +1,45 @@
 'use strict';
 
-import {ROUTES, locationResolver} from './routes/routes.js';
+import {ROUTES, auth} from './routes/routes.js';
 import {Main} from './pages/main/main.js';
 import {Login} from './pages/login/login.js';
 import {Signup} from './pages/signup/signup.js';
+import router from './router/router.js';
 
+router.initialize(auth, ROUTES.checkAuth);
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
 
 rootElement.appendChild(mainElement);
 
-ROUTES.init('loginPage', renderLogin);
-ROUTES.init('signupPage', renderSignup);
-ROUTES.init('mainPage', renderMain);
+router.init('loginPage', logoutRequired(renderLogin));
+router.init('signupPage', logoutRequired(renderSignup));
+router.init('mainPage', renderMain);
+
+
+// ROUTES.init('loginPage', logoutRequired(renderLogin));
+// ROUTES.init('signupPage', logoutRequired(renderSignup));
+// ROUTES.init('mainPage', renderMain);
+
+// router.register('/', renderMain);
+// router.register('/login', renderLogin);
+// router.register('/signup', renderSignup);
+
+/**
+ * logout Required Decorator.
+ * @param {HTMLElement} render
+ * @return {function}
+ */
+function logoutRequired(render) {
+  return function() {
+    if (auth.is_auth === true) {
+      history.pushState({page: '/'}, 'main', '/');
+      document.title = 'main';
+      return renderMain();
+    }
+    return render();
+  };
+};
 
 /**
  * Return login page.
@@ -44,21 +71,8 @@ function renderMain() {
   return main.render();
 }
 
-/**
- * Changing page via url.
- * @param {HTMLElement} container - The container to render.
- */
-function changePage(container) {
-  const location = window.location.hash;
+window.addEventListener('popstate', (event) => {
+  router.popPage(event, mainElement);
+});
 
-  if (location) {
-    locationResolver(location, container);
-  }
-};
-
-window.addEventListener('popstate', () => changePage(mainElement));
-window.addEventListener('load', () => changePage(mainElement));
-
-if (window.location.hash === '' ) {
-  locationResolver(ROUTES.mainPage.href, mainElement);
-}
+router.popPage(window.event, mainElement);

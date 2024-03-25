@@ -1,36 +1,34 @@
 'use strict';
 
-import {Header} from '../components/header/header.js';
-import {Ajax} from '../modules/ajax.js';
-
-const ajax = new Ajax();
-
 /**
  * List of routes for internal and API requests.
  */
 export const ROUTES = {
-  main: '/',
-  login: '/login',
-  logout: '/logout',
-  signup: '/signup',
-  checkAuth: '/check_auth',
-  mainPage: {
-    href: '#/',
-  },
-  loginPage: {
-    href: '#/login',
-  },
-  signupPage: {
-    href: '#/signup',
-  },
-  /**
-   * Init a page render function for route.
-   * @param {object} route - The object with _Page postfix.
-   * @param {HTMLElement} render - The rendered page.
-   */
-  init: (route, render) => {
-    ROUTES[route].render = render;
-  },
+  main: '/adverts',
+  login: '/auth/login',
+  logout: '/auth/logout',
+  signup: '/auth/signup',
+  checkAuth: '/auth/check_auth',
+  // mainPage: {
+  //   href: '/',
+  //   name: 'main',
+  // },
+  // loginPage: {
+  //   href: '/login',
+  //   name: 'login',
+  // },
+  // signupPage: {
+  //   href: '/signup',
+  //   name: 'signup',
+  // },
+  // /**
+  //  * Init a page render function for route.
+  //  * @param {object} route - The object with _Page postfix.
+  //  * @param {HTMLElement} render - The rendered page.
+  //  */
+  // init: (route, render) => {
+  //   ROUTES[route].render = render;
+  // },
 };
 
 /**
@@ -40,61 +38,67 @@ export const auth = {
   is_auth: false,
 };
 
-/**
- * List of logout required pages.
- */
-const logoutPages = [ROUTES.loginPage.href, ROUTES.signupPage.href];
+// const checkAuth = async () => {
+//   await ajax.get(
+//       ROUTES.checkAuth,
+//       (body) => {
+//         if (body.isAuth === auth.is_auth) {
+//           return;
+//         }
 
-/**
- * Redirect to mein page if current page is logout required.
- * @param {string} href - The route to check.
- * @return {boolean} - Is logout required or not.
- */
-const logoutRequired = (href) => {
-  if (logoutPages.includes(href) && auth.is_auth === true) {
-    const main = document.getElementsByTagName('main')[0];
-    locationResolver(ROUTES.mainPage.href, main);
-    return true;
-  }
-  return false;
-};
+//         auth.is_auth = body.isAuth;
+//         const headerElement = document.getElementsByTagName('header')[0];
+//         const header = new Header(headerElement);
+//         header.render();
+//       },
+//   );
+// };
 
-/**
-   Checking if user logged in and changeing auth state.
-*/
-const checkAuth = async () => {
-  await ajax.get(
-      ROUTES.checkAuth,
-      (body) => {
-        if (body.isAuth === auth.is_auth) {
-          return;
-        }
+// /**
+//  * Router.
+//  * @param {string} href - The route to follow.
+//  * @param {HTMLElement} parant - The container for a page.
+//  */
+// const locationResolver = async (href, parant) => {
+//   await checkAuth();
 
-        auth.is_auth = body.isAuth;
-        const headerElement = document.getElementsByTagName('header')[0];
-        const header = new Header(headerElement);
-        header.render();
-      },
-  );
-};
+//   Object.entries(ROUTES).forEach(([_, route]) => {
+//     const location = route?.href;
 
-/**
- * Router.
- * @param {string} href - The route to follow.
- * @param {HTMLElement} parant - The container for a page.
- */
-export async function locationResolver(href, parant) {
-  await checkAuth();
+//     if (location == href) {
+//       document.title = route.name;
+//       parant.appendChild(route.render());
+//     }
+//   });
+// };
 
-  if (logoutRequired(href)) {
-    return;
-  }
-  Object.entries(ROUTES).forEach(([_, route]) => {
-    const location = route?.href;
+// /**
+//  * Changing page via url.
+//  * @param {Event} event
+//  * @param {HTMLElement} container - The container to render.
+//  */
+// export function popPage(event, container) {
+//   let location = window.location.pathname;
 
-    if (location == href) {
-      window.location.hash = location;
-      parant.appendChild(route.render());
-    }
-  });
-}
+//   if (event?.state) {
+//     location = event.state.page;
+//   }
+
+//   if (location) {
+//     locationResolver(location, container);
+//   }
+// };
+
+// /**
+//  *
+//  * @param {*} event
+//  * @param {*} href
+//  */
+// export function pushPage(event, href) {
+//   event.preventDefault();
+//   history.pushState({page: href}, href, href);
+//   const main = document.getElementsByTagName('main')[0];
+//   locationResolver(href, main);
+// }
+
+

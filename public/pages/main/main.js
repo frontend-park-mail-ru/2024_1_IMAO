@@ -1,11 +1,9 @@
 'use strict';
 
 import {renderAdsCardTamplate} from '../../components/adsCard/adsCard.js';
-import {Ajax} from '../../modules/ajax.js';
+import ajax from '../../modules/ajax.js';
 import {ROUTES} from '../../routes/routes.js';
 import {Header} from '../../components/header/header.js';
-
-const ajax = new Ajax();
 
 /** Class representing a main page. */
 export class Main {
