@@ -1,9 +1,8 @@
 'use strict';
 
 import {renderAuthForm} from '../../components/authForm/authForm.js';
-import ajax from '../../modules/ajax.js';
 import {emailError, validateEmail} from '../../modules/validate.js';
-import {ROUTES} from '../../routes/routes.js';
+import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
 const authError = 'Неверный логин или пароль!';
@@ -81,7 +80,7 @@ export class Login {
       }
 
       ajax.post(
-          ROUTES.login,
+          ajax.routes.login,
           data,
           (body) => {
             if (body?.isAuth === true) {

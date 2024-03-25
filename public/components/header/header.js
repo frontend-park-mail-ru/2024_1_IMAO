@@ -1,7 +1,6 @@
 'use strict';
 
 import ajax from '../../modules/ajax.js';
-import {ROUTES, auth} from '../../routes/routes.js';
 import router from '../../router/router.js';
 
 /** Class representing a header component. */
@@ -66,10 +65,10 @@ export class Header {
 
     logoutBtn.addEventListener('click', (ev) => {
       ajax.post(
-          ROUTES.logout,
+          ajax.routes.logout,
           null,
           (body) => {
-            router.go(router.routes.mainPage.href);
+            this.#renderTamplate();
           },
       );
     });
@@ -82,7 +81,7 @@ export class Header {
     const template = Handlebars.templates['header.hbs'];
     const urlMain = router.routes.mainPage.href;
     const urlLogin = router.routes.loginPage.href;
-    const flag = auth.is_auth;
+    const flag = router.auth.is_auth;
     this.#element.innerHTML = template({urlMain, urlLogin, flag});
   }
 }

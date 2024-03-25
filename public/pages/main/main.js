@@ -2,8 +2,6 @@
 
 import {renderAdsCardTamplate} from '../../components/adsCard/adsCard.js';
 import ajax from '../../modules/ajax.js';
-import {ROUTES} from '../../routes/routes.js';
-import {Header} from '../../components/header/header.js';
 
 /** Class representing a main page. */
 export class Main {
@@ -11,10 +9,12 @@ export class Main {
 
   /**
    * Initialize a main page.
+   * @param {*} header
    */
-  constructor() {
+  constructor(header) {
     this.#element = document.createElement('div');
     this.#element.classList.add('main-page');
+    this.header = header;
   }
 
   /**
@@ -31,8 +31,7 @@ export class Main {
    * Render a tamlate for a main page.
    */
   #renderTamplate() {
-    const header = new Header();
-    this.#element.appendChild(header.render());
+    this.#element.appendChild(this.header.render());
 
     const content = document.createElement('div');
     content.classList.add('page-content');
@@ -43,7 +42,7 @@ export class Main {
     content.appendChild(title);
 
     ajax.get(
-        ROUTES.main,
+        ajax.routes.main,
         (ads) => {
           const adverts = ads['adverts'];
           if (!(adverts && Array.isArray(adverts))) {

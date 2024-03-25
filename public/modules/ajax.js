@@ -1,11 +1,19 @@
 'use strict';
 
-const OUTER_API = 'http://127.0.0.1:8080/api';
 const GET = 'GET';
 const POST = 'POST';
 
 /** Class implements AJAX requests. */
 class Ajax {
+  /**
+   *
+   * @param {*} auth
+   * @param {*} routes
+   */
+  initialize(auth, routes) {
+    this.auth = auth;
+    this.routes = routes;
+  }
   /**
    * Make a POST request.
    * @param {string} url - The request path.
@@ -39,12 +47,28 @@ class Ajax {
   }
 
   /**
+   *
+   */
+  async checkAuth() {
+    await this.get(
+        this.routes.checkAuth,
+        (body) => {
+          if (body.isAuth === this.auth.is_auth) {
+            return;
+          }
+
+          this.auth.is_auth = body.isAuth;
+        },
+    );
+  };
+
+  /**
    * Make a full adress to API.
    * @param {string} route - The relative request path.
    * @return {string} - The full request path.
    */
   #fullAdress(route) {
-    return (OUTER_API + route);
+    return (this.routes.api + route);
   }
 
   /**

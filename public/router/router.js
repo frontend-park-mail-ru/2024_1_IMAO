@@ -1,40 +1,16 @@
 'use strict';
 
-import ajax from '../modules/ajax.js';
-import {Header} from '../components/header/header.js';
-
 /** */
 class Router {
   /**
    *
-   */
-  constructor() {
-    this.routes = {
-      mainPage: {
-        href: '/',
-        name: 'main',
-      },
-      loginPage: {
-        href: '/login',
-        name: 'login',
-      },
-      signupPage: {
-        href: '/signup',
-        name: 'signup',
-      },
-    };
-
-    this.auth = null;
-  }
-
-  /**
-   *
    * @param {*} auth
-   * @param {*} checkAuthRoute
+   * @param {*} routes
    */
-  initialize(auth, checkAuthRoute) {
+  initialize(auth, routes) {
     this.auth = auth;
-    this.checkAuthRoute = checkAuthRoute;
+    this.routes = routes;
+    this.listeners = {};
   }
 
   /**
@@ -46,24 +22,6 @@ class Router {
     this.routes[route].render = render;
   }
 
-  /**
-   *
-   */
-  async #checkAuth() {
-    await ajax.get(
-        this.checkAuthRoute,
-        (body) => {
-          if (body.isAuth === this.auth.is_auth) {
-            return;
-          }
-
-          this.auth.is_auth = body.isAuth;
-          const headerElement = document.getElementsByTagName('header')[0];
-          const header = new Header(headerElement);
-          header.render();
-        },
-    );
-  };
 
   /**
  * Router.
@@ -71,7 +29,7 @@ class Router {
  * @param {HTMLElement} parant - The container for a page.
  */
   async #locationResolver(href, parant) {
-    await this.#checkAuth();
+    await this.emit('checkAuth');
 
     Object.entries(this.routes).forEach(([_, route]) => {
       const location = route?.href;
@@ -120,6 +78,28 @@ class Router {
     history.replaceState({page: href}, href, href);
     const main = document.getElementsByTagName('main')[0];
     this.#locationResolver(href, main);
+  }
+  /**
+   *
+   * @param {*} event
+   * @param {*} callback
+   */
+  on(event, callback) {
+    if (this.listeners[event] === undefined) {
+      this.listeners[event] = [];
+    }
+    this.listeners[event].push(callback);
+  }
+
+  /**
+   *
+   * @param {*} event
+   * @param {*} data
+   */
+  async emit(event, data) {
+    for (const listener of this.listeners[event]) {
+      await listener(data);
+    }
   }
 };
 

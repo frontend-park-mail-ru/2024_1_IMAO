@@ -1,12 +1,16 @@
 'use strict';
 
-import {ROUTES, auth} from './routes/routes.js';
+import {API_ROUTES, PAGES_ROUTES, AUTH} from './config/config.js';
+import {Header} from './components/header/header.js';
 import {Main} from './pages/main/main.js';
 import {Login} from './pages/login/login.js';
 import {Signup} from './pages/signup/signup.js';
+import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
-router.initialize(auth, ROUTES.checkAuth);
+router.initialize(AUTH, PAGES_ROUTES);
+ajax.initialize(AUTH, API_ROUTES);
+
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
 
@@ -16,14 +20,10 @@ router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
 router.init('mainPage', renderMain);
 
+router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
-// ROUTES.init('loginPage', logoutRequired(renderLogin));
-// ROUTES.init('signupPage', logoutRequired(renderSignup));
-// ROUTES.init('mainPage', renderMain);
+const header = new Header();
 
-// router.register('/', renderMain);
-// router.register('/login', renderLogin);
-// router.register('/signup', renderSignup);
 
 /**
  * logout Required Decorator.
@@ -32,7 +32,7 @@ router.init('mainPage', renderMain);
  */
 function logoutRequired(render) {
   return function() {
-    if (auth.is_auth === true) {
+    if (AUTH.is_auth === true) {
       history.pushState({page: '/'}, 'main', '/');
       document.title = 'main';
       return renderMain();
@@ -67,7 +67,7 @@ function renderSignup() {
  */
 function renderMain() {
   mainElement.innerHTML = '';
-  const main = new Main();
+  const main = new Main(header);
   return main.render();
 }
 

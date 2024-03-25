@@ -1,11 +1,11 @@
 'use strict';
 
 import {renderAuthForm} from '../../components/authForm/authForm.js';
-import ajax from '../../modules/ajax.js';
 import {validateEmail, validatePassword} from '../../modules/validate.js';
 import {emailError, passwordError} from '../../modules/validate.js';
-import {ROUTES} from '../../routes/routes.js';
+import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
+
 
 const passwordMatchError = 'Пароли не совпадают!';
 const userAlreadyExistError = 'Такой пользователь уже существует!';
@@ -84,7 +84,7 @@ export class Signup {
       }
 
       ajax.post(
-          ROUTES.signup,
+          ajax.routes.signup,
           data,
           (body) => {
             if (body?.isAuth === true) {
