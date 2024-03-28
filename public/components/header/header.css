@@ -1,3 +1,89 @@
+.pre-header {
+    width: 100%;
+    height: 32px;
+    background: white;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+.internal-div {
+    flex: 1 1 0;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-nav {
+    flex: 1 1 0;
+    height: 16px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.location-label {
+    width: 113px;
+    height: 15px;
+    color: #858585;
+    font-size: 12px;
+    font-family: Open Sans;
+    font-weight: 400;
+    line-height: 15.96px;
+    letter-spacing: 0.20px;
+    word-wrap: break-word;
+}
+
+.location-value {
+    display: flex;
+    gap: 2px;
+}
+
+.location-icon, .like-icon, .cart-icon {
+    width: 16px;
+    height: 16px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.location-name, .like-text, .cart-text {
+    color: #333333;
+    font-size: 12px;
+    font-family: Open Sans;
+    font-weight: 400;
+    text-decoration: underline;
+    line-height: 16px;
+    letter-spacing: 0.20px;
+    word-wrap: break-word;
+}
+
+.section-nav-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.like-action {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.cart-action {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+
+
+/* ---------- */
+
 *:focus {
     outline: none;
 }

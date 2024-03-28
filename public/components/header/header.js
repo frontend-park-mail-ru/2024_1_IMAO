@@ -5,13 +5,13 @@ import router from '../../router/router.js';
 
 /** Class representing a header component. */
 export class Header {
-  #element;
+  #header;
 
   /**
    * Initialize a header.
    */
   constructor() {
-    this.#element = document.createElement('header');
+    this.#header = document.createElement('header');
   }
 
   /**
@@ -19,21 +19,20 @@ export class Header {
    * @return {Element} - The element of header.
    */
   render() {
-    this.#renderTamplate();
+    this.#renderHeaderTamplate('aboba');
     this.#addListeners();
-
-    return this.#element;
+    return this.#header;
   }
 
   /**
    * Add event listeners for a header.
    */
   #addListeners() {
-    const anchors = this.#element.getElementsByTagName('a');
+    const anchors = this.#header.getElementsByTagName('a');
 
     this.#addButtonsListeners(anchors);
 
-    const logoutBtn = this.#element.getElementsByClassName('logout')[0];
+    const logoutBtn = this.#header.getElementsByClassName('logout')[0];
 
     this.#addLogoutListener(logoutBtn);
   }
@@ -68,20 +67,23 @@ export class Header {
           ajax.routes.logout,
           null,
           (body) => {
-            this.#renderTamplate();
+            this.#renderHeaderTamplate();
           },
       );
     });
   }
 
   /**
-   * Render a tamlate for a header.
-   */
-  #renderTamplate() {
+ * Renders a template for a header.
+ * @private
+ * @param {string} location - The location to be displayed in the header.
+ * @return {void}
+ */
+  #renderHeaderTamplate(location) {
     const template = Handlebars.templates['header.hbs'];
     const urlMain = router.routes.mainPage.href;
     const urlLogin = router.routes.loginPage.href;
     const flag = router.auth.is_auth;
-    this.#element.innerHTML = template({urlMain, urlLogin, flag});
+    this.#header.innerHTML = template({urlMain, urlLogin, flag, location});
   }
 }
