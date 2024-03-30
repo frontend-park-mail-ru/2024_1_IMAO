@@ -6,7 +6,7 @@
  * @param {string | number} price - The price of the product.
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export function renderAdsCardTamplate(title, price) {
+export function renderAdsCardTemplate(title, price) {
   const template = Handlebars.templates['adsCard.hbs'];
   return template({title, price});
 }

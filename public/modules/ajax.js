@@ -28,7 +28,7 @@ class Ajax {
       body: JSON.stringify(body),
     };
 
-    await this.#ajax(this.#fullAdress(url), callback, init);
+    await this.#ajax(url, callback, init);
   }
 
   /**
@@ -43,7 +43,7 @@ class Ajax {
       credentials: 'include',
     };
 
-    await this.#ajax(this.#fullAdress(url), callback, init);
+    await this.#ajax(url, callback, init);
   }
 
   /**
@@ -61,15 +61,6 @@ class Ajax {
         },
     );
   };
-
-  /**
-   * Make a full adress to API.
-   * @param {string} route - The relative request path.
-   * @return {string} - The full request path.
-   */
-  #fullAdress(route) {
-    return (this.routes.api + route);
-  }
 
   /**
    * Make scheme of the AJAX request.

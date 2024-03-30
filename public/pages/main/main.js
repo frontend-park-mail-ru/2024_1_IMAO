@@ -1,6 +1,6 @@
 'use strict';
 
-import {renderAdsCardTamplate} from '../../components/adsCard/adsCard.js';
+import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
 import ajax from '../../modules/ajax.js';
 
 /** Class representing a main page. */
@@ -22,15 +22,15 @@ export class Main {
    * @return {Element} - The element of main page.
    */
   render() {
-    this.#renderTamplate();
+    this.#renderTemplate();
 
     return this.#element;
   }
 
   /**
-   * Render a tamlate for a main page.
+   * Render a template for a main page.
    */
-  #renderTamplate() {
+  #renderTemplate() {
     this.#element.appendChild(this.header.render());
 
     const content = document.createElement('div');
@@ -44,7 +44,8 @@ export class Main {
     ajax.get(
         ajax.routes.main,
         (ads) => {
-          const adverts = ads['adverts'];
+          const items = ads['items'];
+          const adverts = items['adverts'];
           if (!(adverts && Array.isArray(adverts))) {
             return;
           }
@@ -54,7 +55,7 @@ export class Main {
 
           adverts.forEach((inner) => {
             const {price, title} = inner;
-            cardsContainer.innerHTML += renderAdsCardTamplate(title, price);
+            cardsContainer.innerHTML += renderAdsCardTemplate(title, price);
           });
 
           content.appendChild(cardsContainer);
