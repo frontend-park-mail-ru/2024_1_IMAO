@@ -30,11 +30,11 @@ main {
 .main-page {
     font-family: "Roboto", Open Sans;
     width: 1219px;
-    margin: 2%;
+    margin: 1% 2%;
 }
 
 .page-content {
-    margin-top: 80px;
+    margin-top: 2%;
 }
 
 .cards-container {
