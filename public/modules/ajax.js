@@ -14,9 +14,10 @@ class Ajax {
     this.auth = auth;
     this.routes = routes;
   }
+
   /**
    * Make a POST request.
-   * @param {string} url - The request path.
+   * @param {URL} url - The request path.
    * @param {URLSearchParams} body - The request body.
    * @param {function} callback - The callback function.
    */
@@ -33,7 +34,7 @@ class Ajax {
 
   /**
    * Make a GET request.
-   * @param {string} url - The request path.
+   * @param {URL} url - The request path.
    * @param {function} callback - The callback function.
    */
   async get(url, callback) {
@@ -64,7 +65,7 @@ class Ajax {
 
   /**
    * Make scheme of the AJAX request.
-   * @param {string} url - The relative request path.
+   * @param {URL} url - The relative request path.
    * @param {function} callback - The callback function.
    * @param {object} init - Options of the request.
    */
