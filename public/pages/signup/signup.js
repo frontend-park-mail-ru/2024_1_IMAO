@@ -88,7 +88,7 @@ export class Signup {
           data,
           (body) => {
             if (body?.isAuth === true) {
-              router.go(router.routes.mainPage);
+              router.go(router.routes.mainPage.href);
               return;
             }
             submit.disabled = false;

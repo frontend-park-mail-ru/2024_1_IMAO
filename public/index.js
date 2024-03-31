@@ -5,6 +5,7 @@ import {Header} from './components/header/header.js';
 import {Main} from './pages/main/main.js';
 import {Login} from './pages/login/login.js';
 import {Signup} from './pages/signup/signup.js';
+import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
@@ -18,6 +19,7 @@ rootElement.appendChild(mainElement);
 
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
+router.init('merchantsPage', renderMerchantsPage);
 router.init('mainPage', renderMain);
 
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
@@ -59,6 +61,16 @@ function renderSignup() {
   mainElement.innerHTML = '';
   const signup = new Signup();
   return signup.render(); ;
+}
+
+/**
+ * Return merchant's page.
+ * @return {HTMLElement} - The merchant's page.
+ */
+function renderMerchantsPage() {
+  mainElement.innerHTML = '';
+  const merchantsPage = new MerchantsPage(header);
+  return merchantsPage.render(); ;
 }
 
 /**

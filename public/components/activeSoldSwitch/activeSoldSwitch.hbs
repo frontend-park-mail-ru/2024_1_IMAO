@@ -1,0 +1,39 @@
+{{#unless switched}}
+    <div class="ActiveSoldSwitch">
+        <div class="ActiveSoldList">
+            <div class="ActiveSoldSelectedButton">
+                <div class="Active">
+                    <div class="ActiveSoldInsideTextDiv">
+                        <div class="ActiveSoldGrayText">Активные {{activeAds}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ButtonMargin">
+                <div class="ActiveSoldNoSelectedButton">
+                    <div class="ActiveSoldInsideTextDiv">
+                        <div class="ActiveSoldBlackText">Проданные {{soldAds}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{else}}
+    <div class="ActiveSoldSwitch">
+        <div class="ActiveSoldList">
+            <div class="ActiveSoldNoSelectedButton cursor-hand-hover">
+                <div class="Active">
+                    <div class="ActiveSoldInsideTextDiv">
+                        <div class="ActiveSoldBlackText">Активные {{activeAds}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ButtonMargin">
+                <div class="ActiveSoldSelectedButton cursor-hand-hover">
+                    <div class="ActiveSoldInsideTextDiv">
+                        <div class="ActiveSoldGrayText">Проданные {{soldAds}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/unless}}

@@ -19,7 +19,7 @@ export class Header {
    * @return {Element} - The element of header.
    */
   render() {
-    this.#renderHeaderTamplate('aboba');
+    this.#renderHeaderTamplate('Москва');
     this.#addListeners();
     return this.#header;
   }

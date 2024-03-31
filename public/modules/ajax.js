@@ -28,12 +28,12 @@ class Ajax {
       body: JSON.stringify(body),
     };
 
-    await this.#ajax(this.#fullAdress(url), callback, init);
+    await this.#ajax(url, callback, init);
   }
 
   /**
    * Make a GET request.
-   * @param {string} url - The request path.
+   * @param {URL} url - The request path.
    * @param {function} callback - The callback function.
    */
   async get(url, callback) {
@@ -43,7 +43,7 @@ class Ajax {
       credentials: 'include',
     };
 
-    await this.#ajax(this.#fullAdress(url), callback, init);
+    await this.#ajax(url, callback, init);
   }
 
   /**
@@ -62,18 +62,9 @@ class Ajax {
     );
   };
 
-  /**
-   * Make a full adress to API.
-   * @param {string} route - The relative request path.
-   * @return {string} - The full request path.
-   */
-  #fullAdress(route) {
-    return (this.routes.api + route);
-  }
-
-  /**
+    /**
    * Make scheme of the AJAX request.
-   * @param {string} url - The relative request path.
+   * @param {URL} url - The relative request path.
    * @param {function} callback - The callback function.
    * @param {object} init - Options of the request.
    */

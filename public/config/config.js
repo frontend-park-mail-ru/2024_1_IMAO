@@ -1,15 +1,16 @@
 'use strict';
 
+const api = 'http://localhost:8080/api';
+
 /**
  * Routes for API.
  */
 export const API_ROUTES = {
-  api: 'http://127.0.0.1:8080/api',
-  main: '/adverts',
-  login: '/auth/login',
-  logout: '/auth/logout',
-  signup: '/auth/signup',
-  checkAuth: '/auth/check_auth',
+  main: new URL('/api/adverts/', api),
+  login: new URL('/api/auth/login', api),
+  logout: new URL('/api/auth/logout', api),
+  signup: new URL('/api/auth/signup', api),
+  checkAuth: new URL('/api/auth/check_auth', api),
 };
 
 /**
@@ -27,6 +28,10 @@ export const PAGES_ROUTES = {
   signupPage: {
     href: '/signup',
     name: 'signup',
+  },
+  merchantsPage: {
+    href: '/merchant',
+    name: 'merchant',
   },
 };
 

@@ -1,6 +1,10 @@
 @import "components/authForm/authForm.css";
 @import "components/adsCard/adsCard.css";
-@import "components/header/header.css";
+@import "components/header/header.css"; 
+@import "components/merchantCard/merchantCard.css";
+@import "components/activeSoldSwitch/activeSoldSwitch.css"; 
+@import "components/merchantPageTitle/merchantPageTitle.css"; 
+@import "components/ratingBar/ratingBar.css";
 
 body {
     padding: 0;
@@ -30,11 +34,24 @@ main {
 .main-page {
     font-family: "Roboto", Open Sans;
     width: 1219px;
-    margin: 2%;
+    margin: 1% 2%;
 }
 
 .page-content {
-    margin-top: 80px;
+    margin-top: 2%;
+}
+
+.merchant-page-content {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.merchant-page-right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .cards-container {
@@ -42,4 +59,20 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: 16px 36px;
+}
+
+.cards-container-merchant {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+}
+
+.cursor-hand-hover:hover {
+    cursor: pointer;
+}
+
+.text-underline-hover:hover {
+    text-decoration: underline;
 }
