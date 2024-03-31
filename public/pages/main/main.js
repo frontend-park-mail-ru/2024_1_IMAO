@@ -6,6 +6,7 @@ import ajax from '../../modules/ajax.js';
 /** Class representing a main page. */
 export class Main {
   #element;
+  #isBottomReached;
 
   /**
    * Initialize a main page.
@@ -15,6 +16,7 @@ export class Main {
     this.#element = document.createElement('div');
     this.#element.classList.add('main-page');
     this.header = header;
+    this.#isBottomReached = false;
   }
 
   /**
@@ -39,15 +41,18 @@ export class Main {
    * Add event listener for scrolling main page.
    */
   #addScrollListener() {
-    window.addEventListener('scroll', () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.body.scrollHeight;
+    const scrollHandler = () => {
+      const position = window.scrollY;
+      const winHeight = window.innerHeight;
+      const docHeight = document.body.scrollHeight;
 
-      if (scrollPosition + windowHeight >= documentHeight) {
+      if (position + winHeight >= docHeight && !this.#isBottomReached) {
         this.#renderTemplate();
+        this.#isBottomReached = true;
       }
-    });
+    };
+
+    window.addEventListener('scroll', scrollHandler);
   }
 
   /**
@@ -102,6 +107,7 @@ export class Main {
           });
 
           content.appendChild(cardsContainer);
+          this.#isBottomReached = false;
         },
     );
   }
