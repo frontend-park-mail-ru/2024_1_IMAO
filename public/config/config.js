@@ -7,6 +7,7 @@ const api = 'http://127.0.0.1:8080';
  */
 export const API_ROUTES = {
   main: new URL('/api/adverts/', api),
+  adPage: new URL('/api/adverts/Moskva/Test/1', api),
   login: new URL('/api/auth/login', api),
   logout: new URL('/api/auth/logout', api),
   signup: new URL('/api/auth/signup', api),
@@ -28,6 +29,10 @@ export const PAGES_ROUTES = {
   signupPage: {
     href: '/signup',
     name: 'signup',
+  },
+  adPage: {
+    href: '/advert',
+    name: 'advert',
   },
 };
 

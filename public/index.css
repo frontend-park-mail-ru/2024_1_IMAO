@@ -1,6 +1,7 @@
 @import "components/authForm/authForm.css";
 @import "components/adsCard/adsCard.css";
 @import "components/header/header.css";
+@import "components/adPath/adPath.css";
 
 body {
     padding: 0;

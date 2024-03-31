@@ -37,3 +37,8 @@
 .card .container {
     padding: 2px 16px;
 }
+
+.container p {
+    text-decoration: none;
+    color: black;
+}

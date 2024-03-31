@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "handlebars public/components/adsCard/adsCard.hbs -f public/components/adsCard/adsCard.precompiled.js && handlebars public/components/authForm/authForm.hbs -f public/components/authForm/authForm.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js",
+    "prestart": "handlebars public/components/adsCard/adsCard.hbs -f public/components/adsCard/adsCard.precompiled.js && handlebars public/components/authForm/authForm.hbs -f public/components/authForm/authForm.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js && handlebars public/components/adPath/adPath.hbs -f public/components/adPath/adPath.precompiled.js",
     "start": "node server",
     "precommit": "npx lint-staged",
     "eslint": "npx eslint 'public/**/*.{js,jsx,ts,tsx}'",

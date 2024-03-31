@@ -88,8 +88,8 @@ export class Main {
 
     ajax.get(
         ajax.routes.main,
-        (ads) => {
-          const adverts = ads['items'];
+        (body) => {
+          const adverts = body['items'];
           if (!(adverts && Array.isArray(adverts))) {
             return;
           }
@@ -102,8 +102,10 @@ export class Main {
           }
 
           adverts.forEach((inner) => {
-            const {price, title, id} = inner;
-            cardsContainer.innerHTML += renderAdsCardTemplate(title, price, id);
+            const {price, title, id, city, category} = inner;
+            const path = city + '/' + category + '/' + id;
+            cardsContainer.innerHTML +=
+              renderAdsCardTemplate(title, price, id, path);
           });
 
           content.appendChild(cardsContainer);
