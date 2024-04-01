@@ -75,4 +75,11 @@ main {
 
 .text-underline-hover:hover {
     text-decoration: underline;
+    text-decoration-color: #7092FE;
+    color: #7092FE;
+}
+
+a, a:visited {
+    color: inherit;
+    text-decoration: none;
 }

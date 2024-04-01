@@ -6,6 +6,7 @@ import ajax from '../../modules/ajax.js';
 /** Class representing a main page. */
 export class Main {
   #element;
+  #isBottomReached;
 
   /**
    * Initialize a main page.
@@ -15,6 +16,7 @@ export class Main {
     this.#element = document.createElement('div');
     this.#element.classList.add('main-page');
     this.header = header;
+    this.#isBottomReached = false;
   }
 
   /**
@@ -28,10 +30,10 @@ export class Main {
     return this.#element;
   }
 
-   /**
+  /**
    * Add event listeners for the main page.
    */
-   #addListeners() {
+  #addListeners() {
     this.#addScrollListener();
   }
 
@@ -39,19 +41,22 @@ export class Main {
    * Add event listener for scrolling main page.
    */
   #addScrollListener() {
-    window.addEventListener('scroll', () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.body.scrollHeight;
+    const scrollHandler = () => {
+      const position = window.scrollY;
+      const winHeight = window.innerHeight;
+      const docHeight = document.body.scrollHeight;
 
-      if (scrollPosition + windowHeight >= documentHeight) {
+      if (position + winHeight >= docHeight && !this.#isBottomReached) {
         this.#renderTemplate();
+        this.#isBottomReached = true;
       }
-    });
+    };
+
+    window.addEventListener('scroll', scrollHandler);
   }
 
   /**
-   * Render a temlate for a main page.
+   * Render a template for a main page.
    */
   #renderTemplate() {
     const alreadyRendered = document.querySelector('.page-content') != null;
@@ -83,25 +88,28 @@ export class Main {
 
     ajax.get(
         ajax.routes.main,
-        (ads) => {
-          const items = ads['items'];
+        (body) => {
+          const adverts = body['items'];
           if (!(adverts && Array.isArray(adverts))) {
             return;
           }
 
           const cardsContainer = !alreadyRendered ?
-          document.createElement('div') :
-          document.querySelector('.cards-container');
-        if (!alreadyRendered) {
-          cardsContainer.classList.add('cards-container');
-        }
+            document.createElement('div') :
+            document.querySelector('.cards-container');
+          if (!alreadyRendered) {
+            cardsContainer.classList.add('cards-container');
+          }
 
           adverts.forEach((inner) => {
-            const {price, title, id} = inner;
-            cardsContainer.innerHTML += renderAdsCardTemplate(title, price, id);
+            const {price, title, id, city, category} = inner;
+            const path = city + '/' + category + '/' + id;
+            cardsContainer.innerHTML +=
+              renderAdsCardTemplate(title, price, id, path);
           });
 
           content.appendChild(cardsContainer);
+          this.#isBottomReached = false;
         },
     );
   }

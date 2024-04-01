@@ -1,6 +1,6 @@
 'use strict';
 
-import {API_ROUTES, PAGES_ROUTES, AUTH} from './config/config.js';
+import {API_ROUTES, PAGES_ROUTES, AUTH, API} from './config/config.js';
 import {Header} from './components/header/header.js';
 import {Main} from './pages/main/main.js';
 import {Login} from './pages/login/login.js';
@@ -11,6 +11,7 @@ import router from './router/router.js';
 
 router.initialize(AUTH, PAGES_ROUTES);
 ajax.initialize(AUTH, API_ROUTES);
+//ajax.initialize(AUTH, API);
 
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
@@ -88,3 +89,6 @@ window.addEventListener('popstate', (event) => {
 });
 
 router.popPage(window.event, mainElement);
+
+
+

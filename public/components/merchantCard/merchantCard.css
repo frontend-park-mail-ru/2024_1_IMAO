@@ -249,6 +249,10 @@
     align-items: center;
 }
 
+.subscribe-button:hover {
+    background: #ecf0fe;
+}
+
 .button-text {
     display: inline-flex;
     flex-direction: column;

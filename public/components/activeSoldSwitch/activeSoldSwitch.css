@@ -16,7 +16,7 @@
     display: inline-flex;
 }
 
-.ActiveSoldSelectedButton {
+.activeSoldSelectedButton {
     align-self: stretch;
     padding-top: 8.20px;
     padding-bottom: 2px;
@@ -59,7 +59,7 @@
     display: inline-flex;
 }
 
-.ActiveSoldNoSelectedButton {
+.activeSoldNoSelectedButton {
     padding-top: 8.20px;
     padding-bottom: 1.81px;
     justify-content: center;

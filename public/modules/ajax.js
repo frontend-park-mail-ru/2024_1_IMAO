@@ -1,5 +1,7 @@
 'use strict';
 
+import {buildUrl} from '../../modules/parsePathParams.js';
+
 const GET = 'GET';
 const POST = 'POST';
 
@@ -14,6 +16,7 @@ class Ajax {
     this.auth = auth;
     this.routes = routes;
   }
+
   /**
    * Make a POST request.
    * @param {string} url - The request path.
@@ -36,14 +39,16 @@ class Ajax {
    * @param {URL} url - The request path.
    * @param {function} callback - The callback function.
    */
-  async get(url, callback) {
+  async get(url, callback, params ) {
     const init = {
       method: GET,
       mode: 'cors',
       credentials: 'include',
     };
-
-    await this.#ajax(url, callback, init);
+    
+    console.log(url.pathname);
+    await this.#ajax(buildUrl(url, params), callback, init);
+    console.log(url.pathname);
   }
 
   /**

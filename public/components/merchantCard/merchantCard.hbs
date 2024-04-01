@@ -23,7 +23,7 @@
     </div>
 
     {{#if isProfileVerified}}
-    <div class="profile-card">
+    <a class="profile-card" href="https://docs.google.com/document/d/1bMqtefaH_Lw5A0UaoYnuNrN_bBG9JdPVySsgkeyYIcs/edit">
         <div class="profile-icon-container">
             <div class="verified-profile-icon">
                 <div class="icon-group">
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="profile-info cursor-hand-hover">
+        <div class="profile-info">
             <div class="profile-status">
                 <div>Подтвержденный профиль</div>
             </div>
@@ -51,42 +51,42 @@
                 </div>
             </div>
         </div>
-    </div>
+    </a>
     {{/if}}
 
-    <div class="subscribe-button">
+    <a class="subscribe-button">
         <div class="button-text">
             <div>Подписаться</div>
         </div>
-    </div>
+    </a>
 
     <div class="statistics-container">
-        <div class="statistics-item">
+        <a class="statistics-item">
             <div class="statistics-button">
                 <div class="button-number">{{reviewCount}}</div>
                 <div class="button-label">отзыв</div>
             </div>
-        </div>
-        <div class="statistics-item">
+        </a>
+        <a class="statistics-item">
             <div class="statistics-button">
                 <div class="button-number">{{subscribersCount}}</div>
                 <div class="button-label">подписчик</div>
             </div>
-        </div>
-        <div class="statistics-item">
+        </a>
+        <a class="statistics-item">
             <div class="statistics-button">
                 <div class="button-number">{{subscribtionsCount}}</div>
                 <div class="button-label">подписок</div>
             </div>
-        </div>
+        </a>
     </div>
 
-    <div class="action-buttons-container">
-        <div class="action-button">
+    <div class="action-buttons-container ">
+        <a class="action-button text-underline-hover" href="https://www.dnd.su">
             <div>Заблокировать</div>
-        </div>
-        <div class="action-button">
+        </a>
+        <a class="action-button text-underline-hover" href="https://www.dnd.su">
             <div>Сообщить о нарушении</div>
-        </div>
+        </a>
     </div>
 </div>
