@@ -27,7 +27,7 @@ export class Signup {
    * @return {Element} - The element of signup page.
    */
   render() {
-    this.#renderTamplate();
+    this.#renderTemplate();
     this.#addListeners();
 
     return this.#element;
@@ -83,8 +83,10 @@ export class Signup {
         return;
       }
 
+      const apiRoute = ajax.routes.AUTH.SIGNUP;
+
       ajax.post(
-          ajax.routes.signup,
+          apiRoute,
           data,
           (body) => {
             if (body?.isAuth === true) {
@@ -126,9 +128,9 @@ export class Signup {
   }
 
   /**
-   * Render a tamlate for a signup page.
+   * Render a template for a signup page.
    */
-  #renderTamplate() {
+  #renderTemplate() {
     const templateParams = {
       title: 'Регистрация в «Волчок»',
       inputs: [

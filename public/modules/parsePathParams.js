@@ -1,15 +1,17 @@
 'use strict';
 
+import {serverHost} from '../config/config.js';
+
 /**
  * Function parses path params.
- * @param {string} path
- * @param {string} url
- * @return {string}
+ * @param {URL} routerUrl - URL from the router.
+ * @param {URL} userUrl - URL recieved from user.
+ * @return {object}
  */
-export function parsePathParams(path, url) {
+export function parsePathParams(routerUrl, userUrl) {
   const params = {};
-  const pathParts = path.split('/');
-  const urlParts = url.split('/');
+  const pathParts = routerUrl.pathname.split('/');
+  const urlParts = userUrl.pathname.split('/');
 
   for (let i = 0; i < pathParts.length; i++) {
     const part = pathParts[i];
@@ -25,19 +27,30 @@ export function parsePathParams(path, url) {
 
 /**
  *
- * @param {*} path
- * @param {*} params
- * @return {string}
+ * @param {URL} url
+ * @param {Object} params
+ * @return {URL}
  */
-export function buildUrl(path, params) {
-  let url = path.pathname;
-  console.log(url);
+export function buildURL(url, params) {
+  let path = url.pathname;
+
   for (const paramName in params) {
     if (params.hasOwnProperty(paramName)) {
-      url = url.replace(':' + paramName, params[paramName]);
+      path = path.replace(':' + paramName, params[paramName]);
     }
   }
-  path.pathname = url;
-  const pathDub = path;
-  return pathDub;
+
+  const retURL = new URL(path, url.origin);
+  retURL.search = url.search;
+  return retURL;
+}
+
+/**
+ * Turns browser location into URL object.
+ * @param {string} location - Browser location.
+ * @return {URL} - URL object from location.
+ */
+export function getURLFromLocation(location) {
+  const path = location.split(serverHost).join('');
+  return new URL(path, serverHost);
 }

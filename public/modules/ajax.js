@@ -1,6 +1,6 @@
 'use strict';
 
-import {buildUrl} from '../../modules/parsePathParams.js';
+import {buildURL} from './parsePathParams.js';
 
 const GET = 'GET';
 const POST = 'POST';
@@ -47,9 +47,7 @@ class Ajax {
       credentials: 'include',
     };
 
-    console.log(url.pathname);
-    await this.#ajax(buildUrl(url, params), callback, init);
-    console.log(url.pathname);
+    await this.#ajax(buildURL(url, params), callback, init);
   }
 
   /**
@@ -57,7 +55,7 @@ class Ajax {
    */
   async checkAuth() {
     await this.get(
-        this.routes.checkAuth,
+        this.routes.AUTH.CHECKAUTH,
         (body) => {
           if (body.isAuth === this.auth.is_auth) {
             return;

@@ -1,0 +1,23 @@
+.adPath {
+    padding: 0; 
+    margin: 0;
+    font-size: 14px;
+}
+
+.adPath li {
+    display: inline;
+    
+}
+
+.adPath li:not(:first-child)::before {
+    content: "•";
+    margin: 0 0.5%;
+}
+
+.adPath li a {
+    text-decoration: none;
+}
+
+.adPath li:not(:last-child) a {
+    color: #4365d4;
+}

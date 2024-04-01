@@ -1,31 +1,12 @@
 'use strict';
 
-const api = 'http://localhost:8080/api';
+const api = 'http://127.0.0.1:8080';
+export const serverHost = 'http://127.0.0.1:8008';
 
 /**
  * Routes for API.
  */
 export const API_ROUTES = {
-  main: new URL('/api/adverts/', api),
-  login: new URL('/api/auth/login', api),
-  logout: new URL('/api/auth/logout', api),
-  signup: new URL('/api/auth/signup', api),
-  checkAuth: new URL('/api/auth/check_auth', api),
-  getProfile: new URL('/api/profile/:id', api),
-  getProfile1: new URL('/api/profile/1', api),
-};
-
-// export const API_ROUTES = {
-//   main: '/api/adverts/',
-//   login: '/api/auth/login',
-//   logout: '/api/auth/logout',
-//   signup: '/api/auth/signup',
-//   checkAuth: '/api/auth/check_auth',
-//   getProfile: '/api/profile/:id',
-//   getProfile1: '/api/profile/1'
-// };
-
-export const API = {
   AUTH: {
     LOGIN: new URL('/api/auth/login', api),
     CHECKAUTH: new URL('/api/auth/check_auth', api),
@@ -59,20 +40,24 @@ export const API = {
  */
 export const PAGES_ROUTES = {
   mainPage: {
-    href: '/',
+    href: new URL('/', serverHost),
     name: 'main',
+    re: new RegExp('^\/$'),
   },
   loginPage: {
-    href: '/login',
+    href: new URL('/login', serverHost),
     name: 'login',
+    re: new RegExp('^\/login$'),
   },
   signupPage: {
-    href: '/signup',
+    href: new URL('/signup', serverHost),
     name: 'signup',
+    re: new RegExp('^\/signup$'),
   },
-  merchantsPage: {
-    href: '/merchant',
-    name: 'merchant',
+  adPage: {
+    href: new URL('/:city/:category/:id', serverHost),
+    name: 'advert',
+    re: new RegExp('^\/[a-zA-Z]+\/[a-zA-Z]+\/\d+$'),
   },
 };
 
