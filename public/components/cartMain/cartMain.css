@@ -1,0 +1,103 @@
+/* Основные стили страницы */
+.cart-page {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #FAFAFA;
+  display: flex;
+  justify-content: center;
+  }
+  
+  .cart-page__container {
+  width: 1215px;
+  height: 685px;
+  position: absolute;
+  }
+  
+  /* Стили для корзины */
+  .basket {
+  width: 1215px;
+  height: 58px;
+  position: absolute;
+  left: 1px;
+  top: 0;
+  }
+  
+  .basket__title {
+  width: 160px;
+  height: 36px;
+  position: absolute;
+  left: 0;
+  top: 12px;
+  color: #222222;
+  font-size: 2em;
+  /* font-family: 'Fira Sans', sans-serif; */
+  font-weight: 500;
+  line-height: 36px;
+  }
+  
+  .basket__quantity {
+  width: 21px;
+  height: 36px;
+  position: absolute;
+  left: 120px;
+  top: 13px;
+  color: #858585;
+  font-size: 24px;
+  /* font-family: 'Fira Sans', sans-serif; */
+  font-weight: 300;
+  line-height: 36px;
+  }
+  
+  /* Стили для основного содержимого */
+  .main-content {
+  width: 1232px;
+  height: 449px;
+  position: absolute;
+  left: 1px;
+  top: 58px;
+  }
+  
+  .selection-panel {
+  width: 880px;
+  padding: 15px;
+  position: absolute;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
+  background: white;
+  border-radius: 20px;
+  justify-content: center;
+  }
+  
+  .selection-panel__checkbox {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  display: inline-block;
+  }
+  
+  .selection-panel__option {
+  width: 90px;
+  height: 20px;
+  color: black;
+  font-size: 14px;
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+  display: inline-block;
+  }
+  
+  .selection-panel__action {
+  width: 307px;
+  height: 20px;
+  color: #7092FE;
+  font-size: 15px;
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 400;
+  line-height: 20.63px;
+  text-decoration: none;
+  display: inline-block;
+  }
+
+.selection-panel__action:hover {
+  color: #426cf3;
+}

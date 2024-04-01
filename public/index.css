@@ -1,6 +1,9 @@
 @import "components/authForm/authForm.css";
 @import "components/adsCard/adsCard.css";
 @import "components/header/header.css";
+@import "components/cartMain/cartMain.css";
+@import "components/cartBlock/cartBlock.css";
+@import "components/sidebar/sidebar.css";
 
 body {
     padding: 0;
@@ -42,4 +45,10 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: 16px 36px;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
 }

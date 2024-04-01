@@ -11,6 +11,9 @@ export const API_ROUTES = {
   logout: new URL('/api/auth/logout', api),
   signup: new URL('/api/auth/signup', api),
   checkAuth: new URL('/api/auth/check_auth', api),
+  cartList: new URL('/api/cart/list', api),
+  cartAppend: new URL('/api/cart/append', api),
+  cartDelete: new URL('/api/cart/delete', api),
 };
 
 /**
@@ -19,15 +22,19 @@ export const API_ROUTES = {
 export const PAGES_ROUTES = {
   mainPage: {
     href: '/',
-    name: 'main',
+    name: 'Волчок - доска объявлений',
   },
   loginPage: {
     href: '/login',
-    name: 'login',
+    name: 'Волчок - вход',
   },
   signupPage: {
     href: '/signup',
-    name: 'signup',
+    name: 'Волчок - регистрация',
+  },
+  cartPage: {
+    href: '/cart',
+    name: 'Волчок - корзина',
   },
 };
 

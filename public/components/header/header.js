@@ -35,6 +35,8 @@ export class Header {
     const logoutBtn = this.#header.getElementsByClassName('logout')[0];
 
     this.#addLogoutListener(logoutBtn);
+
+    // const cartButton = this.#header.querySelector('.cart-action');
   }
 
   /**
@@ -83,7 +85,14 @@ export class Header {
     const template = Handlebars.templates['header.hbs'];
     const urlMain = router.routes.mainPage.href;
     const urlLogin = router.routes.loginPage.href;
+    const urlCart = router.routes.cartPage.href;
     const flag = router.auth.is_auth;
-    this.#header.innerHTML = template({urlMain, urlLogin, flag, location});
+    this.#header.innerHTML = template({
+      urlMain,
+      urlLogin,
+      urlCart,
+      flag,
+      location,
+    });
   }
 }
