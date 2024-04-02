@@ -1,7 +1,7 @@
 'use strict';
 
 
-export function renderActiveSoldSwitchTemplate(switched, activeAds, soldAds) {
+export function renderActiveSoldSwitchTemplate(items) {
   const template = Handlebars.templates['activeSoldSwitch.hbs'];
-  return template({switched, activeAds, soldAds});
+  return template({items});
 }

@@ -1,39 +1,26 @@
-{{#unless switched}}
-    <div class="ActiveSoldSwitch">
-        <div class="ActiveSoldList">
-            <a class="activeSoldSelectedButton">
-                <div class="Active">
-                    <div class="ActiveSoldInsideTextDiv">
-                        <div class="ActiveSoldGrayText">Активные {{activeAds}}</div>
-                    </div>
+
+<div class="ActiveSoldSwitch">
+    <div class="ActiveSoldList">
+        {{#each items}}
+        {{!-- <a class="activeSoldSelectedButton">
+            <div class="Active">
+                <div class="ActiveSoldInsideTextDiv">
+                    <div class="ActiveSoldGrayText">{{categoryLabel}} {{count}}</div>
                 </div>
-            </a>
-            <div class="ButtonMargin">
-                <a class="activeSoldNoSelectedButton">
-                    <div class="ActiveSoldInsideTextDiv">
-                        <div class="ActiveSoldBlackText">Проданные {{soldAds}}</div>
-                    </div>
-                </a>
             </div>
-        </div>
-    </div>
-{{else}}
-    <div class="ActiveSoldSwitch">
-        <div class="ActiveSoldList">
-            <a class="activeSoldNoSelectedButton">
-                <div class="Active">
-                    <div class="ActiveSoldInsideTextDiv">
-                        <div class="ActiveSoldBlackText">Активные {{activeAds}}</div>
-                    </div>
+        </a> --}}
+        <div class="ActiveSoldNoSelectedButton">
+            <label class="Active">
+                <div class="ActiveSoldInsideTextDiv">
+                        <input  type="radio" name="radio"/>
+                        <span  class="ActiveSoldBlackText">{{categoryLabel}} {{count}}</span>
                 </div>
-            </a>
-            <div class="ButtonMargin">
-                <a class="activeSoldSelectedButton">
-                    <div class="ActiveSoldInsideTextDiv">
-                        <div class="ActiveSoldGrayText">Проданные {{soldAds}}</div>
-                    </div>
-                </a>
-            </div>
+            </label>
         </div>
+        
+        {{/each}}
     </div>
-{{/unless}}
+</div>
+    
+
+

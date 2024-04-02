@@ -106,25 +106,27 @@ export class MerchantsPage {
         (body) => {
           const profile = body['profile'];
 
+          const merchantsName = profile.merchantsName;
+          const location = profile.city.translation;
+          const registrationDate = FormatDate(profile.regTime);
+          const isProfileVerified = profile.approved;
+          const ratingValue = profile.rating;
+          const reviewCount = profile.reactionsCount;
+          const subscribersCount = profile.subersCount ;
+          const subscribtionsCount = profile.subonsCount;
+
           this.#element.appendChild(this.header.render());
     
           const merchantPageTitle = document.createElement('div');
           merchantPageTitle.classList.add('merchant-page-title');
-          merchantPageTitle.innerHTML += renderMerchantPageTitleTemplate ('Абубакар', urlMain);
+          merchantPageTitle.innerHTML += renderMerchantPageTitleTemplate (merchantsName, urlMain);
           this.#element.appendChild(merchantPageTitle);
       
           const merchantPageContent = document.createElement('div');
           merchantPageContent.classList.add('merchant-page-content');
           this.#element.appendChild(merchantPageContent);
       
-          const merchantsName = 'Абубакар';
-          const location = profile.city.translation;
-          const registrationDate = FormatDate(profile.regTime);
-          const isProfileVerified = profile.approved;
-          const ratingValue = profile.rating;
-          const reviewCount = profile.reactionsCount;
-          const subscribersCount = '123' ;
-          const subscribtionsCount = '123';
+          
           const merchantsCardContainer = StringToHtmlElement(renderMerchantCardTemplate(merchantsName, location, registrationDate, isProfileVerified, reviewCount, subscribersCount, subscribtionsCount));
       
           merchantPageContent.appendChild(merchantsCardContainer);
@@ -141,7 +143,11 @@ export class MerchantsPage {
       
           const merchantsPageRightSectionSwitch = document.createElement('div');
           merchantsPageRightSectionSwitch.classList.add('merchant-page-right-section-switch');
-          merchantsPageRightSectionSwitch.innerHTML += renderActiveSoldSwitchTemplate (false, '333', '111');
+          const itemes  = [
+           { categoryLabel : 'Активные', count : '25' },
+           { categoryLabel : 'Проданные', count : '5' }
+          ];
+          merchantsPageRightSectionSwitch.innerHTML += renderActiveSoldSwitchTemplate (itemes);
           merchantsPageRightSection.appendChild(merchantsPageRightSectionSwitch);
           
           console.log(profile)
