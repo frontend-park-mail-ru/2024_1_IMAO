@@ -93,7 +93,7 @@ function renderCart() {
   // appendButton.classList.add('btn-success');
   // empty.appendChild(appendButton);
   // appendButton.addEventListener('click', (ev) => {
-  //   const advertID = 13;
+  //   const advertID = 2;
   //   ajax.post(
   //       ajax.routes.cartAppend,
   //       {advertID},

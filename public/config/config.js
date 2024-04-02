@@ -12,7 +12,7 @@ export const API_ROUTES = {
   signup: new URL('/api/auth/signup', api),
   checkAuth: new URL('/api/auth/check_auth', api),
   cartList: new URL('/api/cart/list', api),
-  cartAppend: new URL('/api/cart/append', api),
+  cartAppend: new URL('/api/cart/change', api),
   cartDelete: new URL('/api/cart/delete', api),
 };
 
