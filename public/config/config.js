@@ -16,10 +16,10 @@ export const API_ROUTES = {
   ADVERT: {
     CREATE_ADVERT: new URL('/api/adverts/create', api),
     EDIT_ADVERT: new URL('/api/adverts/edit', api),
-    GET_ADS_LIST: new URL('/api/adverts/', api),
+    GET_ADS_LIST: new URL('/api/adverts/:city', api),
     GET_ADS_LIST_BY_CITY: new URL('/api/adverts/:city', api),
     GET_ADS_LIST_BY_CITY_CATEGORY: new URL('/api/adverts/:city/:category', api),
-    GET_ADVERT: new URL('/api/adverts/:city/:category/:id', api),
+    GET_ADVERT: new URL('/api/adverts/Moskva/Test/15', api),
     DELETE_ADVERT: new URL('/api/adverts/delete/:id', api),
     CLOSEADVERT: new URL('/api/adverts/close/:id', api),
   },
@@ -40,24 +40,24 @@ export const API_ROUTES = {
  */
 export const PAGES_ROUTES = {
   mainPage: {
-    href: new URL('/', serverHost),
+    href: new URL('/:city', serverHost),
     name: 'main',
-    re: new RegExp('^\/$'),
+    re: new RegExp(/\/[a-zA-Z]+$/),
   },
   loginPage: {
     href: new URL('/login', serverHost),
     name: 'login',
-    re: new RegExp('^\/login$'),
+    re: new RegExp(/^\/login$/),
   },
   signupPage: {
     href: new URL('/signup', serverHost),
     name: 'signup',
-    re: new RegExp('^\/signup$'),
+    re: new RegExp(/^\/signup$/),
   },
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),
     name: 'advert',
-    re: new RegExp('^\/[a-zA-Z]+\/[a-zA-Z]+\/\d+$'),
+    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z]+\/\d+$/),
   },
 };
 

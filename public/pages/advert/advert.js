@@ -2,10 +2,15 @@
 
 import {renderAdPathTemplate} from '../../components/adPath/adPath.js';
 import ajax from '../../modules/ajax.js';
+import router from '../../router/router.js';
+import {buildURL} from '../../modules/parsePathParams.js';
+import {parsePathParams} from '../../modules/parsePathParams.js';
+import {getURLFromLocation} from '../../modules/parsePathParams.js';
 
 /** Class representing advert page. */
 export class Advert {
   #element;
+  #slug;
 
   /**
    * Initialize the advert page.
@@ -22,9 +27,18 @@ export class Advert {
    * @return {Element} - The advert page.
    */
   render() {
+    this.#getSlug();
     this.#renderTemplate();
 
     return this.#element;
+  }
+
+  /**
+   * Get slug parameters from URL.
+   */
+  #getSlug() {
+    const url = getURLFromLocation(window.location.href);
+    this.#slug = parsePathParams(router.routes.adPage.href, url);
   }
 
   /**
@@ -38,7 +52,7 @@ export class Advert {
     content.classList.add('page-content');
     this.#element.appendChild(content);
 
-    const apiRoute = ajax.routes.ADVERT.GET_ADVERT;
+    const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT, this.#slug);
 
     ajax.get(
         apiRoute,

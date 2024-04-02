@@ -1,7 +1,5 @@
 'use strict';
 
-import {buildURL} from './parsePathParams.js';
-
 const GET = 'GET';
 const POST = 'POST';
 
@@ -19,7 +17,7 @@ class Ajax {
 
   /**
    * Make a POST request.
-   * @param {string} url - The request path.
+   * @param {URL} url - The request path.
    * @param {URLSearchParams} body - The request body.
    * @param {function} callback - The callback function.
    */
@@ -40,14 +38,14 @@ class Ajax {
    * @param {function} callback - The callback function.
    * @param {string} params
    */
-  async get(url, callback, params) {
+  async get(url, callback) {
     const init = {
       method: GET,
       mode: 'cors',
       credentials: 'include',
     };
 
-    await this.#ajax(buildURL(url, params), callback, init);
+    await this.#ajax(url, callback, init);
   }
 
   /**

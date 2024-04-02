@@ -2,11 +2,16 @@
 
 import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
 import ajax from '../../modules/ajax.js';
+import router from '../../router/router.js';
+import {buildURL} from '../../modules/parsePathParams.js';
+import {parsePathParams} from '../../modules/parsePathParams.js';
+import {getURLFromLocation} from '../../modules/parsePathParams.js';
 
 /** Class representing a main page. */
 export class Main {
   #element;
   #isBottomReached;
+  #slug;
 
   /**
    * Initialize a main page.
@@ -24,6 +29,7 @@ export class Main {
    * @return {Element} - The element of main page.
    */
   render() {
+    this.#getSlug();
     this.#renderTemplate();
     this.#addListeners();
 
@@ -36,7 +42,13 @@ export class Main {
   #addListeners() {
     this.#addScrollListener();
   }
-
+  /**
+   * Get slug parameters from URL.
+   */
+  #getSlug() {
+    const url = getURLFromLocation(window.location.href);
+    this.#slug = parsePathParams(router.routes.adPage.href, url);
+  }
   /**
    * Add event listener for scrolling main page.
    */
@@ -80,7 +92,7 @@ export class Main {
       1 :
       parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
-    const apiRoute = ajax.routes.ADVERT.GET_ADS_LIST;
+    const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST, this.#slug);
 
     apiRoute.searchParams.delete('count');
     apiRoute.searchParams.delete('startId');
@@ -112,7 +124,6 @@ export class Main {
 
           content.appendChild(cardsContainer);
           this.#isBottomReached = false;
-        },
-    );
+        });
   }
 }

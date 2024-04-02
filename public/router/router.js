@@ -1,7 +1,6 @@
 'use strict';
 
 import {getURLFromLocation} from '../modules/parsePathParams.js';
-import {parsePathParams} from '../modules/parsePathParams.js';
 
 /** */
 class Router {
@@ -13,7 +12,6 @@ class Router {
   initialize(auth, routes) {
     this.auth = auth;
     this.routes = routes;
-    this.slug = {};
     this.listeners = {};
   }
 
@@ -39,7 +37,6 @@ class Router {
       if (route.re.test(href.pathname)) {
         document.title = route.name;
         parent.appendChild(route.render());
-        this.slug = parsePathParams(route.href, href);
         return;
       }
     });
