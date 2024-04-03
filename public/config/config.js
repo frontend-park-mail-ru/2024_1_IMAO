@@ -16,7 +16,7 @@ export const API_ROUTES = {
   ADVERT: {
     CREATE_ADVERT: new URL('/api/adverts/create', api),
     EDIT_ADVERT: new URL('/api/adverts/edit', api),
-    GET_ADS_LIST: new URL('/api/adverts/list', api),
+    GET_ADS_LIST: new URL('/api/adverts/', api),
     GET_ADS_LIST_BY_CITY: new URL('/api/adverts/:city', api),
     GET_ADS_LIST_BY_CITY_CATEGORY: new URL('/api/adverts/:city/:category', api),
     GET_ADVERT: new URL('/api/adverts/:city/:category/:id', api),
