@@ -1,6 +1,6 @@
 'use strict';
 
-import {buildUrl} from '../../modules/parsePathParams.js';
+import {buildUrl} from './parsePathParams.js';
 
 const GET = 'GET';
 const POST = 'POST';
@@ -46,9 +46,7 @@ class Ajax {
       credentials: 'include',
     };
     
-    console.log(url.pathname);
     await this.#ajax(buildUrl(url, params), callback, init);
-    console.log(url.pathname);
   }
 
   /**

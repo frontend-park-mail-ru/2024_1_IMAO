@@ -1,16 +1,15 @@
 'use strict';
 
 import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
-import {renderMerchantCardTemplate} from '../../components/merchantCard/merchantCard.js';
-import {renderActiveSoldSwitchTemplate} from '../../components/activeSoldSwitch/activeSoldSwitch.js';
-import {renderMerchantPageTitleTemplate} from '../../components/merchantPageTitle/merchantPageTitle.js';
-import {renderRatingBarTemplate} from '../../components/ratingBar/ratingBar.js';
-import {RatingCalculation} from '../../modules/ratingCalculation.js';
+import MerchantCard from '../../components/merchantCard/merchantCard.js';
+import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
+import MerchantPageTitle from '../../components/merchantPageTitle/merchantPageTitle.js';
+import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {FormatDate} from '../../modules/formatDate.js';
+import StageStorage from '../../modules/stateStorage.js';
 import ajax from '../../modules/ajax.js';
-import { StringToHtmlElement } from '../../modules/stringToHtmlElement.js';
 import router from '../../router/router.js';
-import {parsePathParams} from '../../modules/parsePathParams.js';
+
 
 
 
@@ -28,6 +27,7 @@ export class MerchantsPage {
     this.#element = document.createElement('div');
     this.#element.classList.add('main-page');
     this.header = header;
+    this.sectionState = new StageStorage();
     this.#isBottomReached = false;
   }
 
@@ -42,7 +42,12 @@ export class MerchantsPage {
   }
 
   #addListeners() {
-    const anchors = this.#element.getElementsByTagName('a');;
+    const anchors = this.#element.getElementsByTagName('a');
+    //const buttonGroupElements = this.#element.getElementsByTagName('label');
+    const buttonGroupElements = this.#element.querySelectorAll('.main-page');
+    console.log(this.#element);
+    console.log(buttonGroupElements);
+    console.log(anchors);
 
     this.#addButtonsListeners(anchors);
 
@@ -59,6 +64,7 @@ export class MerchantsPage {
    */
   #addButtonsListeners(buttons) {
     for (const anchor of buttons) {
+      console.log('added');
       if (anchor.dataset.url == undefined) {
         continue;
       }
@@ -68,6 +74,7 @@ export class MerchantsPage {
         console.log('clicked Главная');
       });
     }
+
   }
 
   /**
@@ -88,73 +95,28 @@ export class MerchantsPage {
     window.addEventListener('scroll', scrollHandler);
   }
 
-  /**
-   * Render a temlate for a main page.
-   */
-  #renderTemplate() {
-    const urlMain = router.routes.mainPage.href;
+  #handleClickFloorBtn(e) {
+    const section = e.target.value;
+    console.log(`handle click ${section}`)
+    // let data = this.sectionState.getSectionState(section, 'json_coordinates');
 
-    const alreadyRendered = document.querySelector('.merchant-page-right-section') != null;
-    const merchantsPageRightSection = alreadyRendered ?
-      document.querySelector('.merchant-page-right-section') :
-      document.createElement('div');
-
-    if (!alreadyRendered) {
+    // if (!data) {
+    //     //data = await requestDataByFloor(floorNum);
+    //     state.setSectionState(floorNum, 'json_coordinates', data);
         
-      ajax.get(
-        ajax.routes.getProfile,
-        (body) => {
-          const profile = body['profile'];
+    // }
 
-          const merchantsName = profile.merchantsName;
-          const location = profile.city.translation;
-          const registrationDate = FormatDate(profile.regTime);
-          const isProfileVerified = profile.approved;
-          const ratingValue = profile.rating;
-          const reviewCount = profile.reactionsCount;
-          const subscribersCount = profile.subersCount ;
-          const subscribtionsCount = profile.subonsCount;
+    // const needClear = state.getFloorState(floorNum, 'need_clear')
+    // if (typeof needClear !== "undefined")
+    // {
+    //   renderPolygons(data, floorNum, needClear);
+    //   state.setFloorState(floorNum, 'need_clear', false)
+    // } else {
+    //   renderPolygons(data, floorNum, needClear);
+    // }
+  }
 
-          this.#element.appendChild(this.header.render());
-    
-          const merchantPageTitle = document.createElement('div');
-          merchantPageTitle.classList.add('merchant-page-title');
-          merchantPageTitle.innerHTML += renderMerchantPageTitleTemplate (merchantsName, urlMain);
-          this.#element.appendChild(merchantPageTitle);
-      
-          const merchantPageContent = document.createElement('div');
-          merchantPageContent.classList.add('merchant-page-content');
-          this.#element.appendChild(merchantPageContent);
-      
-          
-          const merchantsCardContainer = StringToHtmlElement(renderMerchantCardTemplate(merchantsName, location, registrationDate, isProfileVerified, reviewCount, subscribersCount, subscribtionsCount));
-      
-          merchantPageContent.appendChild(merchantsCardContainer);
-      
-          const rating = merchantsCardContainer.querySelector('.rating');
-          
-          const svgArray = RatingCalculation(ratingValue);
-          const ratingBar = StringToHtmlElement(renderRatingBarTemplate(ratingValue, svgArray));
-          
-          rating.appendChild(ratingBar);
-      
-          merchantsPageRightSection.classList.add('merchant-page-right-section');
-          merchantPageContent.appendChild(merchantsPageRightSection);
-      
-          const merchantsPageRightSectionSwitch = document.createElement('div');
-          merchantsPageRightSectionSwitch.classList.add('merchant-page-right-section-switch');
-          const itemes  = [
-           { categoryLabel : 'Активные', count : '25' },
-           { categoryLabel : 'Проданные', count : '5' }
-          ];
-          merchantsPageRightSectionSwitch.innerHTML += renderActiveSoldSwitchTemplate (itemes);
-          merchantsPageRightSection.appendChild(merchantsPageRightSectionSwitch);
-          
-          console.log(profile)
-        }, {id : '2'} 
-      );  
-    } 
-
+  #renderCards(merchantsPageRightSection, alreadyRendered){
     const cards = document.getElementsByClassName('card');
     const startID = cards.length == 0 ?
       1 :
@@ -181,9 +143,6 @@ export class MerchantsPage {
           cardsContainer.classList.add('cards-container-merchant');
         }
 
-        // const cardsContainer = document.createElement('div');
-        // cardsContainer.classList.add('cards-container-merchant');
-
         adverts.forEach((inner) => {
           const {price, title, id, city, category} = inner;
           const path = city + '/' + category + '/' + id;
@@ -194,6 +153,82 @@ export class MerchantsPage {
         merchantsPageRightSection.appendChild(cardsContainer);
         this.#isBottomReached = false;
       },
-  );
+    );
+  }
+
+
+  /**
+   * Render a temlate for a merchant page.
+   */
+  #renderTemplate() {
+    const urlMain = router.routes.mainPage.href;
+
+    const alreadyRendered = document.querySelector('.merchant-page-right-section') != null;
+    const merchantsPageRightSection = alreadyRendered ?
+      document.querySelector('.merchant-page-right-section') :
+      document.createElement('div');
+
+    if (!alreadyRendered) {
+        
+      ajax.get(
+        ajax.routes.getProfile,
+        (body) => {
+          const profile = body['profile'];
+
+          const merchantsName = profile.merchantsName;
+          const ratingValue = profile.rating;
+          
+          this.#element.appendChild(this.header.render());
+    
+          const merchantPageTitle = document.createElement('div');
+          merchantPageTitle.classList.add('merchant-page-title');
+          const merchantPageTitleItems = {
+            merchantsName : merchantsName,
+            urlMain : urlMain
+          }
+          const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
+          this.#element.appendChild(merchantPageTitleInstance.render());
+      
+          const merchantPageContent = document.createElement('div');
+          merchantPageContent.classList.add('merchant-page-content');
+          this.#element.appendChild(merchantPageContent);
+          const merchantCartItems = {
+             merchantsName : merchantsName,
+             location : profile.city.translation,
+             registrationDate :FormatDate(profile.regTime),
+             isProfileVerified : profile.approved,
+             reviewCount : profile.reactionsCount,
+             subscribersCount : profile.subersCount, 
+             subscribtionsCount : profile.subonsCount
+          }
+          const merchantCardInstance = new MerchantCard(merchantCartItems);
+          const merchantsCardContainer = merchantCardInstance.render();
+          merchantPageContent.appendChild(merchantsCardContainer);
+      
+          const rating = merchantsCardContainer.querySelector('.rating');
+          const ratingBarInstance = new RatingBar(ratingValue);
+          const ratingBar = ratingBarInstance.render();
+          rating.appendChild(ratingBar);
+      
+          merchantsPageRightSection.classList.add('merchant-page-right-section');
+          merchantPageContent.appendChild(merchantsPageRightSection);
+      
+          const merchantsPageRightSectionSwitch = document.createElement('div');
+          merchantsPageRightSectionSwitch.classList.add('merchant-page-right-section-switch');
+          const buttonGroupItemes  = [
+           { categoryLabel : 'Активные', count : '20', checked : true, categoryLabelValue : 'active' },
+           { categoryLabel : 'Проданные', count : '5', checked : false, categoryLabelValue : 'sold' }
+          ];
+          const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
+          merchantsPageRightSection.appendChild(merchantsPageRightSectionSwitch);
+          merchantsPageRightSectionSwitch.appendChild(horizontalButtonGroupInstance.render())
+          
+          console.log(profile)
+        }, {id : '1'} 
+      );  
+    }
+
+    this.#renderCards(merchantsPageRightSection, alreadyRendered);
+
   }
 }

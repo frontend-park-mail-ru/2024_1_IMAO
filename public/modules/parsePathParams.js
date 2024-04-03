@@ -27,7 +27,6 @@ export function parsePathParams(path, url) {
 
 export function buildUrl(path, params) {
     let url = path.pathname;
-    console.log(url)
     for (const paramName in params) {
         if (params.hasOwnProperty(paramName)) {
             url = url.replace(':' + paramName, params[paramName]);

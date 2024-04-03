@@ -1,10 +1,6 @@
 @import "components/authForm/authForm.css";
 @import "components/adsCard/adsCard.css";
 @import "components/header/header.css"; 
-@import "components/merchantCard/merchantCard.css";
-@import "components/activeSoldSwitch/activeSoldSwitch.css"; 
-@import "components/merchantPageTitle/merchantPageTitle.css"; 
-@import "components/ratingBar/ratingBar.css";
 
 body {
     padding: 0;
@@ -79,7 +75,7 @@ main {
     color: #7092FE;
 }
 
-a, a:visited {
-    color: inherit;
-    text-decoration: none;
+label {
+    cursor: pointer;
 }
+
