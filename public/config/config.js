@@ -16,10 +16,10 @@ export const API_ROUTES = {
   ADVERT: {
     CREATE_ADVERT: new URL('/api/adverts/create', api),
     EDIT_ADVERT: new URL('/api/adverts/edit', api),
-    GET_ADS_LIST: new URL('/api/adverts/:city', api),
+    GET_ADS_LIST: new URL('/api/adverts/list', api),
     GET_ADS_LIST_BY_CITY: new URL('/api/adverts/:city', api),
     GET_ADS_LIST_BY_CITY_CATEGORY: new URL('/api/adverts/:city/:category', api),
-    GET_ADVERT: new URL('/api/adverts/Moskva/Test/15', api),
+    GET_ADVERT: new URL('/api/adverts/:city/:category/:id', api),
     DELETE_ADVERT: new URL('/api/adverts/delete/:id', api),
     CLOSEADVERT: new URL('/api/adverts/close/:id', api),
   },
@@ -40,9 +40,9 @@ export const API_ROUTES = {
  */
 export const PAGES_ROUTES = {
   mainPage: {
-    href: new URL('/:city', serverHost),
+    href: new URL('/', serverHost),
     name: 'main',
-    re: new RegExp(/\/[a-zA-Z]+$/),
+    re: new RegExp(/\/$/),
   },
   loginPage: {
     href: new URL('/login', serverHost),

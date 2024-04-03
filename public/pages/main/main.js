@@ -115,8 +115,11 @@ export class Main {
             cardsContainer.classList.add('cards-container');
           }
 
+          const ids = [];
+
           adverts.forEach((inner) => {
             const {price, title, id, city, category} = inner;
+            ids.push(id);
             const path = city + '/' + category + '/' + id;
             cardsContainer.innerHTML +=
               renderAdsCardTemplate(title, price, id, path);
@@ -124,6 +127,13 @@ export class Main {
 
           content.appendChild(cardsContainer);
           this.#isBottomReached = false;
+
+          ids.forEach((id) => {
+            const adress = this.#element.querySelector(`[id="${id}"]`);
+            adress.addEventListener('click', (ev) => {
+              router.pushPage(ev, adress.href);
+            });
+          });
         });
   }
 }
