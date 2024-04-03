@@ -2,7 +2,6 @@
 
 /* eslint-disable-next-line max-len */
 const emailRegex = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
-const specialChars = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
 /* eslint-disable-next-line max-len */
 export const passwordError = 'Пароль должен быть от 8 до 32 символов, содержать цифру, строчную, прописную буквы и специальный символ!';
 export const emailError = 'Неверный формат почты!';
@@ -93,13 +92,10 @@ export function validatePassword(password) {
   let hasUpper = false;
   let hasLower = false;
   let hasDigit = false;
-  let hasSpecial = false;
 
   for (const letter of password) {
     if (isDigit(letter)) {
       hasDigit = true;
-    } else if (specialChars.includes(letter)) {
-      hasSpecial = true;
     } else if (isLower(letter)) {
       hasLower = true;
     } else if (isUpper(letter)) {
@@ -107,5 +103,5 @@ export function validatePassword(password) {
     }
   }
 
-  return hasUpper && hasLower && hasDigit && hasSpecial;
+  return hasUpper && hasLower && hasDigit;
 }

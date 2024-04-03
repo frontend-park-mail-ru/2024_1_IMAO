@@ -19,7 +19,7 @@ export class Header {
    * @return {Element} - The element of header.
    */
   render() {
-    this.#renderHeaderTamplate('aboba');
+    this.#renderHeaderTemplate('aboba');
     this.#addListeners();
     return this.#header;
   }
@@ -64,10 +64,10 @@ export class Header {
 
     logoutBtn.addEventListener('click', (ev) => {
       ajax.post(
-          ajax.routes.logout,
+          ajax.routes.AUTH.LOGOUT,
           null,
           (body) => {
-            this.#renderHeaderTamplate();
+            this.#renderHeaderTemplate();
           },
       );
     });
@@ -76,13 +76,13 @@ export class Header {
   /**
  * Renders a template for a header.
  * @private
- * @param {string} location - The location to be displayed in the header.
+ * @param {URL} location - The location to be displayed in the header.
  * @return {void}
  */
-  #renderHeaderTamplate(location) {
+  #renderHeaderTemplate(location) {
     const template = Handlebars.templates['header.hbs'];
-    const urlMain = router.routes.mainPage.href;
-    const urlLogin = router.routes.loginPage.href;
+    const urlMain = router.routes.mainPage.href.href;
+    const urlLogin = router.routes.loginPage.href.href;
     const flag = router.auth.is_auth;
     this.#header.innerHTML = template({urlMain, urlLogin, flag, location});
   }

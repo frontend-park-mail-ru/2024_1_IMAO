@@ -1,5 +1,7 @@
 'use strict';
 
+import {getURLFromLocation} from '../modules/parsePathParams.js';
+
 /** */
 class Router {
   /**
@@ -25,18 +27,17 @@ class Router {
 
   /**
  * Router.
- * @param {string} href - The route to follow.
- * @param {HTMLElement} parant - The container for a page.
+ * @param {URL} href - The route to follow.
+ * @param {HTMLElement} parent - The container for a page.
  */
-  async #locationResolver(href, parant) {
+  async #locationResolver(href, parent) {
     await this.emit('checkAuth');
 
     Object.entries(this.routes).forEach(([_, route]) => {
-      const location = route?.href;
-
-      if (location == href) {
+      if (route.re.test(href.pathname)) {
         document.title = route.name;
-        parant.appendChild(route.render());
+        parent.appendChild(route.render());
+        return;
       }
     });
   };
@@ -47,37 +48,40 @@ class Router {
    * @param {HTMLElement} container - The container to render.
    */
   popPage(event, container) {
-    let location = window.location.pathname;
+    let location = window.location.href;
 
     if (event?.state) {
       location = event.state.page;
     }
 
     if (location) {
-      this.#locationResolver(location, container);
+      this.#locationResolver(getURLFromLocation(location), container);
     }
   };
 
   /**
    *
    * @param {*} event
-   * @param {*} href
+   * @param {string} href
    */
   pushPage(event, href) {
+    const url = getURLFromLocation(href);
+    const path = url.pathname;
     event.preventDefault();
-    history.pushState({page: href}, href, href);
+    history.pushState({page: path}, path, path);
     const main = document.getElementsByTagName('main')[0];
-    this.#locationResolver(href, main);
+    this.#locationResolver(url, main);
   }
 
   /**
    *
-   * @param {*} href
+   * @param {URL} url
    */
-  go(href) {
-    history.replaceState({page: href}, href, href);
+  go(url) {
+    const path = url.pathname;
+    history.replaceState({page: path}, path, path);
     const main = document.getElementsByTagName('main')[0];
-    this.#locationResolver(href, main);
+    this.#locationResolver(url, main);
   }
   /**
    *

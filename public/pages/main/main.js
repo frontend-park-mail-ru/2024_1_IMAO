@@ -2,11 +2,16 @@
 
 import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
 import ajax from '../../modules/ajax.js';
+import router from '../../router/router.js';
+import {buildURL} from '../../modules/parsePathParams.js';
+import {parsePathParams} from '../../modules/parsePathParams.js';
+import {getURLFromLocation} from '../../modules/parsePathParams.js';
 
 /** Class representing a main page. */
 export class Main {
   #element;
   #isBottomReached;
+  #slug;
 
   /**
    * Initialize a main page.
@@ -24,6 +29,7 @@ export class Main {
    * @return {Element} - The element of main page.
    */
   render() {
+    this.#getSlug();
     this.#renderTemplate();
     this.#addListeners();
 
@@ -36,7 +42,13 @@ export class Main {
   #addListeners() {
     this.#addScrollListener();
   }
-
+  /**
+   * Get slug parameters from URL.
+   */
+  #getSlug() {
+    const url = getURLFromLocation(window.location.href);
+    this.#slug = parsePathParams(router.routes.adPage.href, url);
+  }
   /**
    * Add event listener for scrolling main page.
    */
@@ -80,14 +92,16 @@ export class Main {
       1 :
       parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
-    ajax.routes.main.searchParams.delete('count');
-    ajax.routes.main.searchParams.delete('startId');
+    const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST, this.#slug);
 
-    ajax.routes.main.searchParams.append('count', 30);
-    ajax.routes.main.searchParams.append('startId', startID);
+    apiRoute.searchParams.delete('count');
+    apiRoute.searchParams.delete('startId');
+
+    apiRoute.searchParams.append('count', 30);
+    apiRoute.searchParams.append('startId', startID);
 
     ajax.get(
-        ajax.routes.main,
+        apiRoute,
         (body) => {
           const adverts = body['items'];
           if (!(adverts && Array.isArray(adverts))) {
@@ -101,8 +115,11 @@ export class Main {
             cardsContainer.classList.add('cards-container');
           }
 
+          const ids = [];
+
           adverts.forEach((inner) => {
             const {price, title, id, city, category} = inner;
+            ids.push(id);
             const path = city + '/' + category + '/' + id;
             cardsContainer.innerHTML +=
               renderAdsCardTemplate(title, price, id, path);
@@ -110,7 +127,13 @@ export class Main {
 
           content.appendChild(cardsContainer);
           this.#isBottomReached = false;
-        },
-    );
+
+          ids.forEach((id) => {
+            const adress = this.#element.querySelector(`[id="${id}"]`);
+            adress.addEventListener('click', (ev) => {
+              router.pushPage(ev, adress.href);
+            });
+          });
+        });
   }
 }
