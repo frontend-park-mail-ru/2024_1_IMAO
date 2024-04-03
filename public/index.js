@@ -5,6 +5,7 @@ import {Header} from './components/header/header.js';
 import {Main} from './pages/main/main.js';
 import {Login} from './pages/login/login.js';
 import {Signup} from './pages/signup/signup.js';
+import {Advert} from './pages/advert/advert.js';
 import {Cart} from './pages/cart/cart.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
@@ -23,6 +24,7 @@ ajax.initialize(AUTH, API_ROUTES);
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
 router.init('mainPage', renderMain);
+router.init('adPage', renderAdvert);
 router.init('cartPage', renderCart);
 
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
@@ -74,6 +76,16 @@ function renderMain() {
   mainElement.innerHTML = '';
   const main = new Main(header);
   return main.render();
+}
+
+/**
+ * Returns advert page.
+ * @return {HTMLElement} - The advert page.
+ */
+function renderAdvert() {
+  mainElement.innerHTML = '';
+  const advert = new Advert(header);
+  return advert.render();
 }
 
 /**

@@ -24,7 +24,7 @@ export class Login {
    * @return {Element} - The element of login page.
    */
   render() {
-    this.#renderTamplate();
+    this.#renderTemplate();
     this.#addListeners();
 
     return this.#element;
@@ -79,8 +79,10 @@ export class Login {
         return;
       }
 
+      const apiRoute = ajax.routes.AUTH.LOGIN;
+
       ajax.post(
-          ajax.routes.login,
+          apiRoute,
           data,
           (body) => {
             if (body?.isAuth === true) {
@@ -111,9 +113,9 @@ export class Login {
   }
 
   /**
-   * Render a tamlate for a login page.
+   * Render a template for a login page.
    */
-  #renderTamplate() {
+  #renderTemplate() {
     const templateParams = {
       title: 'Вход в «Волчок»',
       inputs: [
