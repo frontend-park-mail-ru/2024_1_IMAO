@@ -7,9 +7,9 @@
     "build": "webpack --watch --node-env development --mode development",
     "prestart": "handlebars public/components/adsCard/adsCard.hbs -f public/components/adsCard/adsCard.precompiled.js && handlebars public/components/authForm/authForm.hbs -f public/components/authForm/authForm.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js && handlebars public/components/merchantCard/merchantCard.hbs -f public/components/merchantCard/merchantCard.precompiled.js && handlebars public/components/merchantPageTitle/merchantPageTitle.hbs -f public/components/merchantPageTitle/merchantPageTitle.precompiled.js",
     "start": "node server",
-    "precommit": "npx lint-staged",
+    // "precommit": "npx lint-staged",
     "eslint": "npx eslint 'public/**/*.{js,jsx,ts,tsx}'",
-    "prepare": "husky install"
+    // "prepare": "husky install"
   },
   "author": "IMAO",
   "license": "MIT",
@@ -38,5 +38,10 @@
     "prettier": "^3.2.5",
     "style-loader": "^3.3.4",
     "webpack-dev-server": "^5.0.4"
+  },
+  "lint-staged": {
+    "*.{js, jsx}": [
+      "git add"
+    ]
   }
 }

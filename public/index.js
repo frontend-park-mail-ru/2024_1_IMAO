@@ -27,7 +27,6 @@ router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
 const header = new Header();
 
-
 /**
  * logout Required Decorator.
  * @param {HTMLElement} render
@@ -38,11 +37,13 @@ function logoutRequired(render) {
     if (AUTH.is_auth === true) {
       history.pushState({page: '/'}, 'main', '/');
       document.title = 'main';
-      return renderMain();
+
+return renderMain();
     }
-    return render();
+
+return render();
   };
-};
+}
 
 /**
  * Return login page.
@@ -51,7 +52,8 @@ function logoutRequired(render) {
 function renderLogin() {
   mainElement.innerHTML = '';
   const login = new Login();
-  return login.render();
+
+return login.render();
 }
 
 /**
@@ -61,7 +63,8 @@ function renderLogin() {
 function renderSignup() {
   mainElement.innerHTML = '';
   const signup = new Signup();
-  return signup.render(); ;
+
+return signup.render();
 }
 
 /**
@@ -71,7 +74,8 @@ function renderSignup() {
 function renderMerchantsPage() {
   mainElement.innerHTML = '';
   const merchantsPage = new MerchantsPage(header);
-  return merchantsPage.render(); ;
+
+return merchantsPage.render();
 }
 
 /**
@@ -81,7 +85,8 @@ function renderMerchantsPage() {
 function renderMain() {
   mainElement.innerHTML = '';
   const main = new Main(header);
-  return main.render();
+
+return main.render();
 }
 
 window.addEventListener('popstate', (event) => {
@@ -89,6 +94,4 @@ window.addEventListener('popstate', (event) => {
 });
 
 router.popPage(window.event, mainElement);
-
-
 
