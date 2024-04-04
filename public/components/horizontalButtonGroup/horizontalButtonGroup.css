@@ -78,13 +78,13 @@
 
 /* ----------- */
 
-:focus {
+/* :focus {
     outline: 0;
     border-color: #2260ff;
     box-shadow: 0 0 0 4px #b5c9fc;
-}
+} */
 
-.fieldset{
+.fieldset {
     display: flex;
     flex-wrap: wrap;
     margin-top: 0.5rem;
@@ -101,13 +101,10 @@ input[type="radio"] {
     width: 1px;
 }
 
-input[type="radio"]:checked + span {
-    
+input[type="radio"]:checked+span {
+
     padding-bottom: 9px;
     border-bottom: 2px #7092FE solid;
     color: #333333;
-   
+
 }
-
-
-
