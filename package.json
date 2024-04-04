@@ -7,9 +7,7 @@
     "build": "webpack --watch --node-env development --mode development",
     "prestart": "handlebars public/components/adsCard/adsCard.hbs -f public/components/adsCard/adsCard.precompiled.js && handlebars public/components/authForm/authForm.hbs -f public/components/authForm/authForm.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js && handlebars public/components/merchantCard/merchantCard.hbs -f public/components/merchantCard/merchantCard.precompiled.js && handlebars public/components/merchantPageTitle/merchantPageTitle.hbs -f public/components/merchantPageTitle/merchantPageTitle.precompiled.js",
     "start": "node server",
-    // "precommit": "npx lint-staged",
-    "eslint": "npx eslint 'public/**/*.{js,jsx,ts,tsx}'",
-    // "prepare": "husky install"
+    "eslint": "npx eslint 'public/**/*.{js,jsx,ts,tsx}'"
   },
   "author": "IMAO",
   "license": "MIT",

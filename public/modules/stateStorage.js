@@ -2,7 +2,7 @@
 
 class StageStorage {
     constructor() {
-        this.state = {}
+        this.state = {};
     }
 
     setSectionState(section, key, value) {

@@ -22,24 +22,38 @@ class Router {
     this.routes[route].render = render;
   }
 
-
   /**
  * Router.
  * @param {string} href - The route to follow.
  * @param {HTMLElement} parant - The container for a page.
  */
-  async #locationResolver(href, parant) {
+  // async #locationResolver(href, parant) {
+  //   await this.emit('checkAuth');
+
+  //   Object.entries(this.routes).forEach(([_, route]) => {
+  //     const location = route?.href;
+
+  //     if (location == href) {
+  //       document.title = route.name;
+  //       parant.appendChild(route.render());
+  //     }
+  //   });
+  // }
+
+  async #locationResolver(href, parent) {
     await this.emit('checkAuth');
 
-    Object.entries(this.routes).forEach(([_, route]) => {
+    for (const [_, route] of Object.entries(this.routes)) {
       const location = route?.href;
 
       if (location == href) {
         document.title = route.name;
-        parant.appendChild(route.render());
+        // Assuming route.render() returns a Promise
+        const renderedElement = await route.render();
+        parent.appendChild(renderedElement);
       }
-    });
-  };
+    }
+  }
 
   /**
    * Changing page via url.
@@ -56,7 +70,7 @@ class Router {
     if (location) {
       this.#locationResolver(location, container);
     }
-  };
+  }
 
   /**
    *
@@ -101,6 +115,6 @@ class Router {
       await listener(data);
     }
   }
-};
+}
 
 export default new Router();
