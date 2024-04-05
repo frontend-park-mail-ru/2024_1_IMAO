@@ -27,21 +27,23 @@ class BlackListOverlay {
 
     #addListeners() {
         const myButton = this.button;
-        console.log(myButton);
         myButton.addEventListener('click', () => {
             myDialog.showModal();
-            console.log('Кнопка была нажата');
         });
 
         const myDialog = this.#element;
-        //myDialog.addEventListener('click', () => myDialog.close());
         myDialog.addEventListener('click', () => {
             myDialog.close();
-            console.log('Закройся');
         });
 
         const myDiv = this.#element.querySelector('.container');
         myDiv.addEventListener('click', (event) => event.stopPropagation());
+
+        const blockBtn = this.#element.querySelector('.action-button-blacklist');
+        blockBtn.addEventListener('click', (event) => myDialog.close());
+
+        const cancelBtn = this.#element.querySelector('.cancel-button-blacklist');
+        cancelBtn.addEventListener('click', (event) => myDialog.close());
     }
 
 }
