@@ -1,6 +1,6 @@
 'use strict';
 
-import {API_ROUTES, PAGES_ROUTES, AUTH} from './config/config.js';
+import {API_ROUTES, PAGES_ROUTES, AUTH, serverHost} from './config/config.js';
 import {Header} from './components/header/header.js';
 import {Main} from './pages/main/main.js';
 import {Login} from './pages/login/login.js';
@@ -8,7 +8,7 @@ import {Signup} from './pages/signup/signup.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
-router.initialize(AUTH, PAGES_ROUTES);
+router.initialize(AUTH, PAGES_ROUTES, serverHost);
 ajax.initialize(AUTH, API_ROUTES);
 
 const rootElement = document.getElementById('root');
