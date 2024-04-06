@@ -44,6 +44,21 @@ export function buildURL(url, params) {
 }
 
 /**
+ * Build URL using path segments.
+ * @param {string} serverHost - Host of the server.
+ * @param {Object} segments - Path segments.
+ * @return {URL} - Builded URL.
+ */
+export function buildURLBySegments(serverHost, segments) {
+  let path = '';
+  segments.forEach((segment) => {
+    path = path + '/' + segment;
+  });
+
+  return new URL(path, serverHost);
+}
+
+/**
  * Turns browser location into URL object.
  * @param {string} location - Browser location.
  * @param {string} serverHost - Host of the server.

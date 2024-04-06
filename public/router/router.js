@@ -57,7 +57,8 @@ class Router {
     }
 
     if (location) {
-      this.#locationResolver(getURLFromLocation(location), container);
+      this.#locationResolver(getURLFromLocation(location, this.host),
+          container);
     }
   };
 
@@ -67,7 +68,7 @@ class Router {
    * @param {string} href
    */
   pushPage(event, href) {
-    const url = getURLFromLocation(href);
+    const url = getURLFromLocation(href, this.host);
     const path = url.pathname;
     event.preventDefault();
     history.pushState({page: path}, path, path);

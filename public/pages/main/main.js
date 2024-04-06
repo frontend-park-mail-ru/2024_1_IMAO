@@ -5,6 +5,7 @@ import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import {getURLFromLocation, buildURL} from '../../modules/parsePathParams.js';
 import {parsePathParams} from '../../modules/parsePathParams.js';
+import {buildURLBySegments} from '../../modules/parsePathParams.js';
 
 /** Class representing a main page. */
 export class Main {
@@ -142,7 +143,7 @@ export class Main {
           adverts.forEach((inner) => {
             const {price, title, id, city, category} = inner;
             ids.push(id);
-            const path = router.host + '/' + city + '/' + category + '/' + id;
+            const path = buildURLBySegments(router.host, [city, category, id]);
             cardsContainer.innerHTML +=
               renderAdsCardTemplate(title, price, id, path);
           });

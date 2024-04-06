@@ -3,9 +3,9 @@
 import {renderAdPathTemplate} from '../../components/adPath/adPath.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-import {buildURL} from '../../modules/parsePathParams.js';
-import {parsePathParams} from '../../modules/parsePathParams.js';
+import {parsePathParams, buildURL} from '../../modules/parsePathParams.js';
 import {getURLFromLocation} from '../../modules/parsePathParams.js';
+import {buildURLBySegments} from '../../modules/parsePathParams.js';
 
 /** Class representing advert page. */
 export class Advert {
@@ -64,11 +64,18 @@ export class Advert {
 
           const adTitle = advert['title'];
           const cityName = city['name'];
-          const catName = category['name'];
+          const categoryName = category['name'];
 
-          const adPath = document.createElement('div');
-          adPath.innerHTML = renderAdPathTemplate(cityName, catName, adTitle);
-          content.appendChild(adPath);
+          const categoryPath = buildURLBySegments(router.host,
+              [city['translation'], category['translation']]);
+          const cityPath = buildURLBySegments(router.host,
+              [city['translation']]);
+
+          const adPathElement = document.createElement('div');
+          adPathElement.innerHTML =
+            renderAdPathTemplate(cityName, categoryName, adTitle,
+                cityPath, categoryPath);
+          content.appendChild(adPathElement);
 
           const title = document.createElement('h1');
           title.innerHTML = adTitle;
