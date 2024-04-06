@@ -8,10 +8,12 @@ class Router {
    *
    * @param {*} auth
    * @param {*} routes
+   * @param {string} serverHost
    */
-  initialize(auth, routes) {
+  initialize(auth, routes, serverHost) {
     this.auth = auth;
     this.routes = routes;
+    this.host = serverHost;
     this.listeners = {};
   }
 

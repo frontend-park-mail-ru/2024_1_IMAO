@@ -1,6 +1,6 @@
 'use strict';
 
-import {API_ROUTES, PAGES_ROUTES, AUTH} from './config/config.js';
+import {API_ROUTES, PAGES_ROUTES, AUTH, serverHost} from './config/config.js';
 import {Header} from './components/header/header.js';
 import {Main} from './pages/main/main.js';
 import {Login} from './pages/login/login.js';
@@ -9,7 +9,7 @@ import {Advert} from './pages/advert/advert.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
-router.initialize(AUTH, PAGES_ROUTES);
+router.initialize(AUTH, PAGES_ROUTES, serverHost);
 ajax.initialize(AUTH, API_ROUTES);
 
 const rootElement = document.getElementById('root');
@@ -19,7 +19,10 @@ rootElement.appendChild(mainElement);
 
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
+
 router.init('mainPage', renderMain);
+router.init('adsListByCity', renderMain);
+router.init('adsListByCategory', renderMain);
 router.init('adPage', renderAdvert);
 
 router.on('checkAuth', ajax.checkAuth.bind(ajax));

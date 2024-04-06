@@ -1,7 +1,5 @@
 'use strict';
 
-import {serverHost} from '../config/config.js';
-
 /**
  * Function parses path params.
  * @param {URL} routerUrl - URL from the router.
@@ -48,9 +46,10 @@ export function buildURL(url, params) {
 /**
  * Turns browser location into URL object.
  * @param {string} location - Browser location.
+ * @param {string} serverHost - Host of the server.
  * @return {URL} - URL object from location.
  */
-export function getURLFromLocation(location) {
+export function getURLFromLocation(location, serverHost) {
   const path = location.split(serverHost).join('');
   return new URL(path, serverHost);
 }

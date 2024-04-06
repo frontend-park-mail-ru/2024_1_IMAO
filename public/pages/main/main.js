@@ -3,15 +3,14 @@
 import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-import {buildURL} from '../../modules/parsePathParams.js';
+import {getURLFromLocation, buildURL} from '../../modules/parsePathParams.js';
 import {parsePathParams} from '../../modules/parsePathParams.js';
-import {getURLFromLocation} from '../../modules/parsePathParams.js';
 
 /** Class representing a main page. */
 export class Main {
+  #slug;
   #element;
   #isBottomReached;
-  #slug;
 
   /**
    * Initialize a main page.
@@ -42,13 +41,7 @@ export class Main {
   #addListeners() {
     this.#addScrollListener();
   }
-  /**
-   * Get slug parameters from URL.
-   */
-  #getSlug() {
-    const url = getURLFromLocation(window.location.href);
-    this.#slug = parsePathParams(router.routes.adPage.href, url);
-  }
+
   /**
    * Add event listener for scrolling main page.
    */
@@ -65,6 +58,41 @@ export class Main {
     };
 
     window.addEventListener('scroll', scrollHandler);
+  }
+
+  /**
+   * Get slug parameters from URL.
+   */
+  #getSlug() {
+    const url = getURLFromLocation(window.location.href, router.host);
+    this.#slug = parsePathParams(router.routes.adsListByCategory.href, url);
+  }
+
+  /**
+   * Build API URL from slug parameters in path.
+   * @param {int} startID - Start ID in database.
+   * @return {URL} - Route in API.
+   */
+  #getRoute(startID) {
+    const url = getURLFromLocation(window.location.href, router.host);
+    this.#slug = parsePathParams(router.routes.adsListByCategory.href, url);
+    let apiRoute = '';
+    if (this.#slug.city === '') {
+      apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST, this.#slug);
+    } else if (this.#slug.category === undefined) {
+      apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST_BY_CITY, this.#slug);
+    } else {
+      apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST_BY_CATEGORY,
+          this.#slug);
+    }
+
+    apiRoute.searchParams.delete('count');
+    apiRoute.searchParams.delete('startId');
+
+    apiRoute.searchParams.append('count', 30);
+    apiRoute.searchParams.append('startId', startID);
+
+    return apiRoute;
   }
 
   /**
@@ -92,13 +120,7 @@ export class Main {
       1 :
       parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
-    const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST, this.#slug);
-
-    apiRoute.searchParams.delete('count');
-    apiRoute.searchParams.delete('startId');
-
-    apiRoute.searchParams.append('count', 30);
-    apiRoute.searchParams.append('startId', startID);
+    const apiRoute = this.#getRoute(startID);
 
     ajax.get(
         apiRoute,
@@ -120,7 +142,7 @@ export class Main {
           adverts.forEach((inner) => {
             const {price, title, id, city, category} = inner;
             ids.push(id);
-            const path = city + '/' + category + '/' + id;
+            const path = router.host + '/' + city + '/' + category + '/' + id;
             cardsContainer.innerHTML +=
               renderAdsCardTemplate(title, price, id, path);
           });
@@ -129,9 +151,11 @@ export class Main {
           this.#isBottomReached = false;
 
           ids.forEach((id) => {
-            const adress = this.#element.querySelector(`[id="${id}"]`);
-            adress.addEventListener('click', (ev) => {
-              router.pushPage(ev, adress.href);
+            const address = this.#element.querySelector(`[id="${id}"]`);
+            console.log(id);
+            console.log(address);
+            address.addEventListener('click', (ev) => {
+              router.pushPage(ev, address.href);
             });
           });
         });
