@@ -2,6 +2,7 @@
 @import "components/adsCard/adsCard.css";
 @import "components/header/header.css";
 @import "components/adPath/adPath.css";
+@import "components/adContainer/adContainer.css";
 
 body {
     padding: 0;
@@ -43,4 +44,13 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: 16px 36px;
+}
+
+.ad-container {
+    display: flex;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0) 0px 2px 2px 0px;
 }

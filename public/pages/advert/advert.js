@@ -1,11 +1,14 @@
 'use strict';
 
 import {renderAdPathTemplate} from '../../components/adPath/adPath.js';
+/* eslint-disable-next-line max-len */
+import {renderAdContainerTemplate} from '../../components/adContainer/adContainer.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import {parsePathParams, buildURL} from '../../modules/parsePathParams.js';
 import {getURLFromLocation} from '../../modules/parsePathParams.js';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
+import {convertDate} from '../../modules/convertDate.js';
 
 /** Class representing advert page. */
 export class Advert {
@@ -63,6 +66,8 @@ export class Advert {
           const category = items['category'];
 
           const adTitle = advert['title'];
+          const description = advert['description'];
+          const created = convertDate(advert['created']);
           const cityName = city['name'];
           const categoryName = category['name'];
 
@@ -77,9 +82,11 @@ export class Advert {
                 cityPath, categoryPath);
           content.appendChild(adPathElement);
 
-          const title = document.createElement('h1');
-          title.innerHTML = adTitle;
-          content.appendChild(title);
+          const adContainer = document.createElement('div');
+          adContainer.classList.add('ad-container');
+          adContainer.innerHTML = renderAdContainerTemplate(adTitle,
+              cityName, categoryName, description, created);
+          content.appendChild(adContainer);
         });
   }
 }

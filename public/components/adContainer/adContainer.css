@@ -1,0 +1,68 @@
+.advert-block {
+    width: 75%;
+}
+
+.seller-block {
+    width: 25%;
+}
+
+.ad-container .top-panel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ad-container .title{
+    width: 40%;
+}
+
+.ad-container .favourite {
+    width: 40%;
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+    font-size: 14px;
+}
+
+.ad-container .btn-favourite {
+    text-decoration: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.ad-container .btn-favourite:hover {
+    text-decoration: underline;
+}
+
+.ad-container .like-img {
+    width: 20px;
+    height: 20px;
+    vertical-align: bottom;
+}
+
+.ad-container h1 {
+    margin: 0;
+}
+
+.advert-description {
+    margin-top: 4%;
+    font-size: 16px;
+}
+
+.ad-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ad-container li {
+    display: flex;
+    margin-bottom: 1%;
+}
+
+.ad-container .property-name {
+    color:#858585;
+    flex: 0 0 30%;
+}
+
+.ad-container .end-of-block {
+    margin-bottom: 3%;
+}
