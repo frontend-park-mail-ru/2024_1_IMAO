@@ -5,6 +5,9 @@
 @import "components/cartMain/cartMain.css";
 @import "components/cartBlock/cartBlock.css";
 @import "components/sidebar/sidebar.css";
+@import "components/orderItem/orderItem.css";
+@import "components/orderMain/orderMain.css";
+
 
 body {
     padding: 0;

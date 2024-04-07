@@ -21,7 +21,7 @@ export const API_ROUTES = {
     GET_ADS_LIST_BY_CITY_CATEGORY: new URL('/api/adverts/:city/:category', api),
     GET_ADVERT: new URL('/api/adverts/:city/:category/:id', api),
     DELETE_ADVERT: new URL('/api/adverts/delete/:id', api),
-    CLOSEADVERT: new URL('/api/adverts/close/:id', api),
+    CLOSE_ADVERT: new URL('/api/adverts/close/:id', api),
   },
   PROFILE: {
     GET_PROFILE: new URL('/api/profile/:id', api),
@@ -33,9 +33,15 @@ export const API_ROUTES = {
     SET_PROFILE_CITY: new URL('/api/profile/city', api),
     SET_PROFILE_CITY_BY_ID: new URL('/api/profile/:id/adverts', api),
   },
-  cartList: new URL('/api/cart/list', api),
-  cartAppend: new URL('/api/cart/change', api),
-  cartDelete: new URL('/api/cart/delete', api),
+  CART: {
+    GET_CART_LIST: new URL('/api/cart/list', api),
+    CHANGE_CART_ITEM_STATUS: new URL('/api/cart/change', api),
+    DELETE_CART_ITEM: new URL('/api/cart/delete', api),
+  },
+  ORDER: {
+    GET_ORDERS_LIST: new URL('/api/order/list', api),
+    CREATE_ORDERS: new URL('/api/order/create', api),
+  },
 };
 
 /**
@@ -56,6 +62,16 @@ export const PAGES_ROUTES = {
     href: new URL('/signup', serverHost),
     name: 'signup',
     re: new RegExp(/^\/signup$/),
+  },
+  cartPage: {
+    href: new URL('/cart', serverHost),
+    name: 'cart',
+    re: new RegExp(/^\/cart$/),
+  },
+  orderPage: {
+    href: new URL('/order', serverHost),
+    name: 'order',
+    re: new RegExp(/^\/order$/),
   },
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),

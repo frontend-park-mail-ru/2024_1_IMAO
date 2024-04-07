@@ -7,6 +7,7 @@ import {Login} from './pages/login/login.js';
 import {Signup} from './pages/signup/signup.js';
 import {Advert} from './pages/advert/advert.js';
 import {Cart} from './pages/cart/cart.js';
+import {Order} from './pages/oreder/order.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
@@ -26,6 +27,7 @@ router.init('signupPage', logoutRequired(renderSignup));
 router.init('mainPage', renderMain);
 router.init('adPage', renderAdvert);
 router.init('cartPage', renderCart);
+router.init('orderPage', renderOrder);
 
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
@@ -96,22 +98,90 @@ function renderCart() {
   mainElement.innerHTML = '';
   const cart = new Cart(header);
   return cart.render();
-  // const empty = document.createElement('div');
-  // empty.classList.add('main-page');
-  // empty.appendChild(header.render());
+  const empty = document.createElement('div');
+  empty.classList.add('main-page');
+  empty.appendChild(header.render());
 
-  // const appendButton = document.createElement('a');
-  // appendButton.innerHTML = 'Добавить в корзину';
-  // appendButton.classList.add('btn-success');
-  // empty.appendChild(appendButton);
-  // appendButton.addEventListener('click', (ev) => {
-  //   const advertID = 2;
-  //   ajax.post(
-  //       ajax.routes.cartAppend,
-  //       {advertID},
-  //       (body)=>console.log(body),
-  //   );
-  // });
+  const appendButton = document.createElement('a');
+  appendButton.innerHTML = 'Добавить в корзину';
+  appendButton.classList.add('btn-success');
+  empty.appendChild(appendButton);
+  appendButton.addEventListener('click', (ev) => {
+    const advertID = 5;
+    ajax.post(
+        ajax.routes.CART.CHANGE_CART_ITEM_STATUS,
+        {advertID},
+        (body)=>console.log(body),
+    );
+  });
+
+  const deleteButton = document.createElement('a');
+  deleteButton.innerHTML = 'Удалить из корзины';
+  deleteButton.classList.add('btn-success');
+  empty.appendChild(deleteButton);
+  deleteButton.addEventListener('click', (ev) => {
+    const advertIDs = [7];
+    ajax.post(
+        ajax.routes.CART.DELETE_CART_ITEM,
+        {advertIDs},
+        (body)=>console.log(body),
+    );
+  });
+
+  ajax.get(
+      ajax.routes.CART.GET_CART_LIST,
+      (body) => {
+        const cont = document.createElement('div');
+        empty.appendChild(cont);
+        cont.innerHTML += JSON.stringify(body);
+      },
+  );
+  return empty;
+}
+
+/**
+ * Return cart page.
+ * @return {HTMLElement} - The main page.
+ */
+function renderOrder() {
+  mainElement.innerHTML = '';
+  const order = new Order(header);
+  return order.render();
+  const empty = document.createElement('div');
+  empty.classList.add('main-page');
+  empty.appendChild(header.render());
+
+  const appendButton = document.createElement('a');
+  appendButton.innerHTML = 'Добавить в заказ';
+  appendButton.classList.add('btn-success');
+  empty.appendChild(appendButton);
+
+  appendButton.addEventListener('click', (ev) => {
+    const adverts = [
+      // {
+      //   advertId: 7,
+      //   phone: '89165850582',
+      //   name: 'Оглоблин А.А',
+      //   email: 'doroga218@gmail.com',
+      //   adress: 'Рязанский проспект',
+      //   deliveryPrice: 49,
+      // },
+      {
+        advertId: 7,
+        phone: '89165850582',
+        name: 'Оглоблин А.А',
+        email: 'doroga218@gmail.com',
+        adress: 'Рязанский проспект',
+        deliveryPrice: 49,
+      },
+    ];
+
+    ajax.post(
+        ajax.routes.ORDER.CREATE_ORDERS,
+        {adverts},
+        (body)=>console.log(body),
+    );
+  });
 
   // const deleteButton = document.createElement('a');
   // deleteButton.innerHTML = 'Удалить из корзины';
@@ -120,25 +190,25 @@ function renderCart() {
   // deleteButton.addEventListener('click', (ev) => {
   //   const advertIDs = [7];
   //   ajax.post(
-  //       ajax.routes.cartDelete,
+  //       ajax.routes.CART.DELETE_CART_ITEM,
   //       {advertIDs},
   //       (body)=>console.log(body),
   //   );
   // });
 
-  // ajax.get(
-  //     ajax.routes.cartList,
-  //     (body) => {
-  //       const cont = document.createElement('div');
-  //       empty.appendChild(cont);
-  //       cont.innerHTML += JSON.stringify(body);
-  //     },
-  // );
-  // return empty;
+  ajax.get(
+      ajax.routes.ORDER.GET_ORDERS_LIST,
+      (body) => {
+        const cont = document.createElement('div');
+        empty.appendChild(cont);
+        cont.innerHTML += JSON.stringify(body);
+      },
+  );
+  return empty;
 }
 
 window.addEventListener('popstate', (event) => {
   router.popPage(event, mainElement);
 });
 
-router.popPage(window.event, mainElement);
+router.popPage(null, mainElement);

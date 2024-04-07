@@ -1,0 +1,116 @@
+/* Блок "order-item" */
+.order-item {
+  width: 570px; 
+  height: 200px; 
+  position: relative;
+  }
+  
+  /* Элемент "order-item__heading" */
+  .order-item__heading {
+    height: 30px; 
+    left: 0px; 
+    top: 0px; 
+    position: absolute; 
+    color: black; 
+    font-size: 26px; 
+    
+    font-weight: 700; 
+    line-height: 30px; 
+    word-wrap: break-word;
+  }
+  
+  /* Элемент "order-item__image" */
+  .order-item__image {
+    width: 100px; 
+    height: 75px; 
+    left: 0px; 
+    top: 46px; 
+    position: absolute; 
+    border-radius: 12px;
+  }
+  
+  /* Элемент "order-item__image-overlay" */
+  .order-item__image-overlay {
+    width: 100px; 
+    height: 75px; 
+    left: 0px; 
+    top: 46px; 
+    position: absolute; 
+    background: rgba(0, 0, 0, 0.04); 
+    border-radius: 12px;
+  }
+  
+  /* Элемент "order-item__price" */
+  .order-item__price {
+    height: 18px; 
+    left: 0px; 
+    top: 125px; 
+    position: absolute; 
+    color: #757575; 
+    font-size: 13px; 
+    
+    font-weight: 400; 
+    line-height: 18px; 
+    word-wrap: break-word;
+  }
+  
+  /* Блок "button" и элемент "order-item__button" */
+  .button.order-item__button {
+    width: 231px; 
+    height: 44px; 
+    left: 0px; 
+    top: 155px; 
+    position: absolute; 
+    background: #F2F1F0; 
+    border-radius: 12px;
+  }
+  
+  /* Элемент "button__text" */
+  .button__text {
+  width: 198px; 
+  height: 22px; 
+  left: 16px; 
+  top: 10.50px; 
+  position: absolute;
+  text-align: center; 
+  color: black; 
+  font-size: 15px; 
+  
+  font-weight: 400; 
+  line-height: 22px; 
+  word-wrap: break-word;
+  }
+  
+  /* Элемент "order-item__delivery-info" */
+  .order-item__delivery-info {
+    height: 22px; 
+    /* left: 247px;  */
+    top: 150px; 
+    position: absolute; 
+    color: black; 
+    font-size: 15px; 
+    
+    font-weight: 400; 
+    line-height: 22px; 
+    word-wrap: break-word;
+  }
+  
+  /* Элемент "order-item__delete" */
+  .order-item__delete {
+    width: 20px; 
+    height: 20px; 
+    left: 540px; 
+    top: 7px; 
+    position: absolute;
+  }
+  
+  /* Элемент "order-item__delete-icon" */
+  .order-item__delete-icon {
+    width: 16px; 
+    height: 17px; 
+    left: 2px; 
+    top: 1.50px; 
+    position: absolute; 
+   
+  }
+  

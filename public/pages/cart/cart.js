@@ -4,10 +4,12 @@ import {renderCartBlock} from '../../components/cartBlock/cartBlock.js';
 import {renderCartMain} from '../../components/cartMain/cartMain.js';
 import {renderSidebar} from '../../components/sidebar/sidebar.js';
 import ajax from '../../modules/ajax.js';
+import router from '../../router/router.js';
 
 /** Class representing a main page. */
 export class Cart {
   #element;
+  #items;
 
   /**
    * Initialize a main page.
@@ -16,6 +18,7 @@ export class Cart {
   constructor(header) {
     this.#element = document.createElement('div');
     this.#element.classList.add('main-page');
+    this.#items = {};
     this.header = header;
   }
 
@@ -48,7 +51,34 @@ export class Cart {
 
     const button = this.#element.querySelector('.selection-panel__action');
 
-    this.#addDeleteCheckedListener(button, quantity, headQuantity, priceSum);
+    // eslint-disable-next-line max-len
+    this.#addDeleteCheckedListener(button, quantity, headQuantity, priceSum, ads);
+
+    const submit = this.#element.querySelector('.sidebar__button');
+
+    this.#addSubmitListener(submit, ads);
+  }
+
+  /**
+   *
+   * @param {*} submit
+   * @param {*} ads
+   */
+  #addSubmitListener(submit, ads) {
+    submit.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const store = this.#items[ajax.auth.id];
+      const orderItems = {};
+      for (const element of ads) {
+        if (!element.checked) {
+          continue;
+        }
+        const id = element.value;
+        orderItems[id] = store[id];
+      }
+      sessionStorage.setItem(ajax.auth.id, JSON.stringify(orderItems));
+      router.pushPage(ev, router.routes.orderPage.href.href);
+    });
   }
 
   /**
@@ -57,9 +87,6 @@ export class Cart {
    * @param {NodeListOf} ads
    */
   #addCheckboxesListener(allCheckbox, ads) {
-    // const allCheckbox = this.#element.querySelector('[name="cartBlocks"]');
-    // const ads = this.#element.querySelectorAll('[name="product"]');
-
     allCheckbox.addEventListener('change', () => {
       ads.forEach((checkbox) => {
         checkbox.checked = allCheckbox.checked;
@@ -83,22 +110,18 @@ export class Cart {
    * @param {HTMLElement} quantity
    * @param {HTMLElement} headQuantity
    * @param {HTMLElement} priceSum
+   * @param {NodeListOf} ads
    */
-  #addDeleteCheckedListener(button, quantity, headQuantity, priceSum) {
-    // const button = this.#element.querySelector('.selection-panel__action');
-    // const quantity = this.#element.querySelector('[id="quantity"]');
-    // const headQuantity = this.#element.querySelector('.basket__quantity');
-    // const priceSum = this.#element.querySelector('[id="priceSum"]');
-
+  #addDeleteCheckedListener(button, quantity, headQuantity, priceSum, ads) {
     button.addEventListener('click', (ev) => {
       ev.preventDefault();
-      const ads = this.#element.querySelectorAll('[name="product"]');
 
       for (const element of ads) {
         if (!element.checked) {
           continue;
         }
         const id = element.value;
+        element.checked = false;
         const advert = this.#element.querySelector(`[id="${id}"]`);
         advert.remove();
         const price = Number(advert.querySelector('.price').innerHTML);
@@ -117,19 +140,16 @@ export class Cart {
    * @param {HTMLElement} priceSum
    */
   #addDeleteListener(ads, quantity, headQuantity, priceSum) {
-    // const quantity = this.#element.querySelector('[id="quantity"]');
-    // const headQuantity = this.#element.querySelector('.basket__quantity');
-    // const priceSum = this.#element.querySelector('[id="priceSum"]');
-
     for (const element of ads) {
       element.addEventListener('click', (ev) => {
         const id = element.dataset.id;
+        this.#element.querySelector(`[value="${id}"]`).checked = false;
         const advert = this.#element.querySelector(`[id="${id}"]`);
+        advert.remove();
         const price = Number(advert.querySelector('.price').innerHTML);
         priceSum.innerHTML = Number(priceSum.innerHTML) - price;
         quantity.innerHTML = Number(quantity.innerHTML) - 1;
         headQuantity.innerHTML = quantity.innerHTML;
-        advert.remove();
       });
     }
   }
@@ -140,12 +160,14 @@ export class Cart {
   async #renderTemplate() {
     this.#element.appendChild(this.header.render());
     let adverts ={};
+
     await ajax.get(
-        ajax.routes.cartList,
+        ajax.routes.CART.GET_CART_LIST,
         (body) => {
           adverts = body['items'];
         },
     );
+
     if (!(adverts && Array.isArray(adverts))) {
       return;
     }
@@ -155,8 +177,11 @@ export class Cart {
     const selectPanel = this.#element.querySelector('.selection-panel');
     let priceSum = 0;
 
+    this.#items[ajax.auth.id] = {};
+
     adverts.forEach((advert) => {
       const {id, price, title} = advert;
+      this.#items[ajax.auth.id][id] = advert;
       priceSum += Number(price);
       selectPanel.innerHTML += renderCartBlock(id, title, price);
     });
@@ -164,7 +189,6 @@ export class Cart {
     const mainCont = this.#element.querySelector('.main-content');
 
     mainCont.innerHTML += renderSidebar(quantity, priceSum);
-
 
     this.#addListeners();
   }
