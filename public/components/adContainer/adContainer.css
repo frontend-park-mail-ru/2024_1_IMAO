@@ -55,7 +55,7 @@
 
 .ad-container li {
     display: flex;
-    margin-bottom: 1%;
+    margin-bottom: 2%;
 }
 
 .ad-container .property-name {
@@ -65,4 +65,52 @@
 
 .ad-container .end-of-block {
     margin-bottom: 3%;
+}
+
+.advert-images {
+    margin-top: 3%;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+  
+.advert-images .carousel {
+    display: flex;
+    position: relative;
+    transition: transform 0.5s ease;
+}
+  
+.advert-images .images {
+    display: flex;
+}
+  
+.advert-images img {
+    width: 40%;
+    height: 450px;
+    padding-right: 3px;
+}
+  
+.advert-images .btn-container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.advert-images button{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    position: relative;
+    margin: 1%;
+}
+
+.advert-images button:hover {
+    background-color: #dfdfdf;
+    border: 0px;
 }

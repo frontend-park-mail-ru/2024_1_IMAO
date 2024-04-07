@@ -52,5 +52,5 @@ main {
     padding: 20px;
     border-radius: 8px;
     background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0) 0px 2px 2px 0px;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
 }

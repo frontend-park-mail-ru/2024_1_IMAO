@@ -45,6 +45,71 @@ export class Advert {
   }
 
   /**
+   * Add event listeners for page.
+   */
+  #addListeners() {
+    this.#addCarouselListeners();
+    this.#addPathListener();
+  }
+
+  /**
+   * Add listeners for images carousel.
+   */
+  #addCarouselListeners() {
+    const carousel = this.#element.querySelector('.carousel');
+    // const imagesContainer = this.#element.querySelector('.images');
+    const prevBtn = this.#element.querySelector('.prev-btn');
+    const nextBtn = this.#element.querySelector('.next-btn');
+    // const images = imagesContainer.querySelectorAll('img');
+
+    let currentIndex = 0;
+    const elemsOnPage = 3;
+    // let elemsOnPage = 0;
+    // let elemWidth = images[0].offsetWidth;
+    // const containerWidth = carousel.offsetWidth;
+    // while (elemWidth < containerWidth) {
+    //   elemsOnPage++;
+    //   elemWidth += images[elemsOnPage].offsetWidth;
+    // }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1) % elemsOnPage;
+      updateCarousel(currentIndex, elemsOnPage);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % elemsOnPage;
+      updateCarousel(currentIndex, elemsOnPage);
+    });
+
+    const updateCarousel = (currentIndex, elemsOnPage) => {
+      const index = (currentIndex + elemsOnPage) % elemsOnPage;
+      const newPosition = index !== 2 ? -index * 80 : -index * 50;
+
+      carousel.style.transform = `translateX(${newPosition}%)`;
+    };
+  }
+
+  /**
+   * Event listener to prevent page reload while clicking links in path.
+   */
+  #addPathListener() {
+    const adPath = this.#element.querySelector('.ad-path');
+    const cityPath = adPath.querySelector('.city').childNodes[1];
+    const categoryPath = adPath.querySelector('.category').childNodes[1];
+
+    cityPath.addEventListener('click', (ev) => {
+      const address = cityPath.href;
+      router.pushPage(ev, address);
+    });
+
+    categoryPath.addEventListener('click', (ev) => {
+      const address = categoryPath.href;
+      router.pushPage(ev, address);
+    });
+  }
+
+  /**
    * Render the advert page template.
    */
   #renderTemplate() {
@@ -87,6 +152,8 @@ export class Advert {
           adContainer.innerHTML = renderAdContainerTemplate(adTitle,
               cityName, categoryName, description, created);
           content.appendChild(adContainer);
+
+          this.#addListeners();
         });
   }
 }
