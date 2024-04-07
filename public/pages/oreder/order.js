@@ -41,12 +41,11 @@ export class Order {
     // this.#addCheckboxesListener(allCheckbox, ads);
 
     const quantity = this.#element.querySelector('[id="quantity"]');
-    const headQuantity = this.#element.querySelector('.basket__quantity');
     const priceSum = this.#element.querySelector('[id="priceSum"]');
 
     const des = this.#element.querySelectorAll('.order-item__delete-icon');
 
-    this.#addDeleteListener(des, quantity, headQuantity, priceSum);
+    this.#addDeleteListener(des, quantity, priceSum);
 
     const submit = this.#element.querySelector('.sidebar__button');
     const form = this.#element.querySelector('.recipient-form');
@@ -63,6 +62,8 @@ export class Order {
   #addSubmitListener(submit, form) {
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
+      submit.disabled = true;
+
       const forms = this.#element.querySelectorAll('input');
       const inputs = [];
       for (const pair of forms) {
@@ -74,7 +75,6 @@ export class Order {
       const email = inputs[3].trim();
       const adress = inputs[4];
 
-      // const store = this.#items[ajax.auth.id];
       const orderItems = {adverts: []};
       const order = JSON.parse(sessionStorage.getItem(ajax.auth.id));
       const deliveryPrice = this.#deliveriPrice;
@@ -91,12 +91,15 @@ export class Order {
           });
         }
       }
-      // console.log(orderItems);
       ajax.post(
           ajax.routes.ORDER.CREATE_ORDERS,
           orderItems,
           (body)=>console.log(body),
       );
+      //
+      // Поставить редирект на страницу заказов в профиле
+      //
+      sessionStorage.removeItem(ajax.auth.id);
     });
   }
 
@@ -104,16 +107,14 @@ export class Order {
    *
    * @param {NodeListOf} ads
    * @param {HTMLElement} quantity
-   * @param {HTMLElement} headQuantity
    * @param {HTMLElement} priceSum
    */
-  #addDeleteListener(ads, quantity, headQuantity, priceSum) {
+  #addDeleteListener(ads, quantity, priceSum) {
     for (const element of ads) {
       element.addEventListener('click', (ev) => {
         const id = element.dataset.id;
         element.checked = false;
         const advert = this.#element.querySelector(`[id="${id}"]`);
-        advert.remove();
         const price = Number(advert.querySelector('.price').innerHTML);
         priceSum.innerHTML =
           Number(priceSum.innerHTML) - price - this.#deliveriPrice;
@@ -121,6 +122,7 @@ export class Order {
         const order = JSON.parse(sessionStorage.getItem(ajax.auth.id));
         delete order[id];
         sessionStorage.setItem(ajax.auth.id, JSON.stringify(order));
+        advert.remove();
       });
     }
   }

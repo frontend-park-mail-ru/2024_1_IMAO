@@ -50,6 +50,7 @@ export class Header {
       }
 
       anchor.addEventListener('click', (ev) => {
+        ev.preventDefault();
         router.pushPage(ev, anchor.dataset.url);
       });
     }
@@ -65,11 +66,14 @@ export class Header {
     }
 
     logoutBtn.addEventListener('click', (ev) => {
+      ev.preventDefault();
       ajax.post(
           ajax.routes.AUTH.LOGOUT,
           null,
           (body) => {
-            this.#renderHeaderTemplate();
+            ajax.auth.is_auth = body.isAuth;
+            this.#renderHeaderTemplate('aboba');
+            this.#addListeners();
           },
       );
     });
