@@ -21,7 +21,7 @@ export const API_ROUTES = {
     GET_ADS_LIST_BY_CATEGORY: new URL('/api/adverts/:city/:category', api),
     GET_ADVERT: new URL('/api/adverts/:city/:category/:id', api),
     DELETE_ADVERT: new URL('/api/adverts/delete/:id', api),
-    CLOSEADVERT: new URL('/api/adverts/close/:id', api),
+    CLOSE_ADVERT: new URL('/api/adverts/close/:id', api),
   },
   PROFILE: {
     GET_PROFILE: new URL('/api/profile/:id', api),
@@ -39,6 +39,21 @@ export const API_ROUTES = {
  * Routes for Pages.
  */
 export const PAGES_ROUTES = {
+  adCreationPage: {
+    href: new URL('/create', serverHost),
+    name: 'create',
+    re: new RegExp(/^\/create$/),
+  },
+  loginPage: {
+    href: new URL('/login', serverHost),
+    name: 'login',
+    re: new RegExp(/^\/login$/),
+  },
+  signupPage: {
+    href: new URL('/signup', serverHost),
+    name: 'signup',
+    re: new RegExp(/^\/signup$/),
+  },
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),
     name: 'advert',
@@ -58,16 +73,6 @@ export const PAGES_ROUTES = {
     href: new URL('/:city/:category', serverHost),
     name: 'category',
     re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z]+$/),
-  },
-  loginPage: {
-    href: new URL('/login', serverHost),
-    name: 'login',
-    re: new RegExp(/^\/login$/),
-  },
-  signupPage: {
-    href: new URL('/signup', serverHost),
-    name: 'signup',
-    re: new RegExp(/^\/signup$/),
   },
 };
 

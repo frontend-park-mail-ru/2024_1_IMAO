@@ -48,13 +48,15 @@ export class Main {
    */
   #addScrollListener() {
     const scrollHandler = () => {
-      const position = window.scrollY;
-      const winHeight = window.innerHeight;
-      const docHeight = document.body.scrollHeight;
+      if (document.querySelector('.cards-container') != null ) {
+        const position = window.scrollY;
+        const winHeight = window.innerHeight;
+        const docHeight = document.body.scrollHeight;
 
-      if (position + winHeight >= docHeight && !this.#isBottomReached) {
-        this.#renderTemplate();
-        this.#isBottomReached = true;
+        if (position + winHeight >= docHeight && !this.#isBottomReached) {
+          this.#renderTemplate();
+          this.#isBottomReached = true;
+        }
       }
     };
 

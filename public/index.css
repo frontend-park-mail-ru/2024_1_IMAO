@@ -3,6 +3,7 @@
 @import "components/header/header.css";
 @import "components/adPath/adPath.css";
 @import "components/adContainer/adContainer.css";
+@import "components/adCreationForm/adCreationForm.css";
 
 body {
     padding: 0;

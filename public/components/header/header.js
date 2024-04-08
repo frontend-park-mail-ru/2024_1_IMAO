@@ -83,7 +83,9 @@ export class Header {
     const template = Handlebars.templates['header.hbs'];
     const urlMain = router.routes.mainPage.href.href;
     const urlLogin = router.routes.loginPage.href.href;
+    const urlCreate = router.routes.adCreationPage.href.href;
     const flag = router.auth.is_auth;
-    this.#header.innerHTML = template({urlMain, urlLogin, flag, location});
+    this.#header.innerHTML = template({urlMain, urlLogin, urlCreate,
+      flag, location});
   }
 }

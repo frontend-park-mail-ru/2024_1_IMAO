@@ -6,6 +6,7 @@ import {Main} from './pages/main/main.js';
 import {Login} from './pages/login/login.js';
 import {Signup} from './pages/signup/signup.js';
 import {Advert} from './pages/advert/advert.js';
+import {AdCreation} from './pages/adCreation/adCreation.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
@@ -24,6 +25,7 @@ router.init('mainPage', renderMain);
 router.init('adsListByCity', renderMain);
 router.init('adsListByCategory', renderMain);
 router.init('adPage', renderAdvert);
+router.init('adCreationPage', loginRequired(renderAdCreation));
 
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
@@ -32,8 +34,8 @@ const header = new Header();
 
 /**
  * logout Required Decorator.
- * @param {HTMLElement} render
- * @return {function}
+ * @param {Function} render
+ * @return {Function}
  */
 function logoutRequired(render) {
   return function() {
@@ -41,6 +43,22 @@ function logoutRequired(render) {
       history.pushState({page: '/'}, 'main', '/');
       document.title = 'main';
       return renderMain();
+    }
+    return render();
+  };
+};
+
+/**
+ * login Required Decorator.
+ * @param {Function} render
+ * @return {Function}
+ */
+function loginRequired(render) {
+  return function() {
+    if (AUTH.is_auth !== true) {
+      history.pushState({page: '/login'}, 'login', '/login');
+      document.title = 'login';
+      return renderLogin();
     }
     return render();
   };
@@ -84,6 +102,16 @@ function renderAdvert() {
   mainElement.innerHTML = '';
   const advert = new Advert(header);
   return advert.render();
+}
+
+/**
+ * Returns advert creation page.
+ * @return {HTMLElement} - The advert creation page.
+ */
+function renderAdCreation() {
+  mainElement.innerHTML = '';
+  const adCreation = new AdCreation(header);
+  return adCreation.render();
 }
 
 window.addEventListener('popstate', (event) => {

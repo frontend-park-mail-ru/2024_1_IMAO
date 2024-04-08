@@ -35,13 +35,17 @@ class Router {
   async #locationResolver(href, parent) {
     await this.emit('checkAuth');
 
-    Object.entries(this.routes).forEach(([_, route]) => {
-      if (route.re.test(href.pathname)) {
-        document.title = route.name;
-        parent.appendChild(route.render());
-        return;
+    const routes = this.routes;
+    for (const key in routes) {
+      if (routes.hasOwnProperty(key)) {
+        const route = routes[key];
+        if (route.re.test(href.pathname)) {
+          document.title = route.name;
+          parent.appendChild(route.render());
+          return;
+        }
       }
-    });
+    }
   };
 
   /**

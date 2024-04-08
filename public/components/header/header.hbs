@@ -33,10 +33,10 @@
 </div>
 
 <div class="navbar">
-    <a href="/">
+    <a href="{{urlMain}}" data-url="{{urlMain}}">
         <img class="logo" src="images/vol4ok.svg">	
     </a>
-    <a class="name" href="/">ВОЛЧОК</a>
+    <a class="name" href="{{urlMain}}" data-url="{{urlMain}}">ВОЛЧОК</a>
 	
     <div class="dropdown">
         <button class="dropbtn">
@@ -54,13 +54,13 @@
         <input type="text" placeholder="Поиск по объявлениям" name="search">
 	<button type="submit">Найти</button>
     </form>
-    <a class="btn-success" href="#" >Разместить объявление</a>
+    <a class="btn-success" href="{{urlCreate}}" data-url="{{urlCreate}}">Разместить объявление</a>
     {{#if flag}}
         <div class="dropdown">
             <img class="profile-icon" src="images/img_avatar.png">
             <div class="dropdown-content dropdown-content-right">
                 <a href="#">Профиль</a>
-                <a href="#" class="logout">Выйти</a>
+                <a href="/logout" class="logout">Выйти</a>
             </div>
         </div>
     {{^}}
