@@ -109,14 +109,6 @@ export class Main {
 
     if (!alreadyRendered) {
       this.#element.appendChild(this.header.render());
-  #renderTemplate() {
-    const alreadyRendered = document.querySelector('.page-content') != null;
-    const content = alreadyRendered ?
-      document.querySelector('.page-content') :
-      document.createElement('div');
-
-    if (!alreadyRendered) {
-      this.#element.appendChild(this.header.render());
 
       content.classList.add('page-content');
       this.#element.appendChild(content);
@@ -165,8 +157,8 @@ export class Main {
 
           ids.forEach((id) => {
             const address = this.#element.querySelector(`[id="${id}"]`);
-            console.log(id);
-            console.log(address);
+            // console.log(id);
+            // console.log(address);
             address.addEventListener('click', (ev) => {
               router.pushPage(ev, address.href);
             });

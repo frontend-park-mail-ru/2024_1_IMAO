@@ -17,7 +17,6 @@ class Ajax {
     this.routes = routes;
   }
 
-
   /**
    * Make a POST request.
    * @param {URL} url - The request path.
@@ -79,10 +78,11 @@ class Ajax {
             return;
           }
 
+          // eslint-disable-next-line camelcase
           this.auth.is_auth = body.isAuth;
         },
     );
-  };
+  }
 
     /**
    * Make scheme of the AJAX request.

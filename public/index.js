@@ -44,12 +44,12 @@ function logoutRequired(render) {
       history.pushState({page: '/'}, 'main', '/');
       document.title = 'main';
 
-return renderMain();
+      return renderMain();
     }
 
-return render();
+  return render();
   };
-};
+}
 
 /**
  * login Required Decorator.
@@ -61,11 +61,13 @@ function loginRequired(render) {
     if (AUTH.is_auth !== true) {
       history.pushState({page: '/login'}, 'login', '/login');
       document.title = 'login';
+
       return renderLogin();
     }
+
     return render();
   };
-};
+}
 
 /**
  * Return login page.
@@ -118,6 +120,7 @@ return main.render();
 function renderAdvert() {
   mainElement.innerHTML = '';
   const advert = new Advert(header);
+
   return advert.render();
 }
 
@@ -128,6 +131,7 @@ function renderAdvert() {
 function renderAdCreation() {
   mainElement.innerHTML = '';
   const adCreation = new AdCreation(header);
+
   return adCreation.render();
 }
 
