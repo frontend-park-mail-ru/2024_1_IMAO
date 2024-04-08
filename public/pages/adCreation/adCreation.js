@@ -45,18 +45,18 @@ export class AdCreation {
       const data = new FormData(form);
       const apiRoute = ajax.routes.ADVERT.CREATE_ADVERT;
 
-      ajax.post(
+      ajax.postMultipart(
           apiRoute,
           data,
           (body) => {
-            if (body?.items === true) {
+            if (body.hasOwnProperty('items')) {
               const items = body['items'];
               const params = {
                 'city': items['city']['translation'],
                 'category': items['category']['translation'],
                 'id': items['advert']['id'],
               };
-              router.go(buildURL(ajax.routes.ADVERT.GET_ADVERT, params));
+              router.go(buildURL(router.routes.adPage.href, params));
               return;
             }
             submit.disabled = false;

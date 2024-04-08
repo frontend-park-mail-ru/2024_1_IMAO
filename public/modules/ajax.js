@@ -33,6 +33,23 @@ class Ajax {
   }
 
   /**
+   * Make a post request with multipart/form-data.
+   * @param {URL} url - The request path.
+   * @param {FormData} body - The request body.
+   * @param {Function} callback - The callback function.
+   */
+  async postMultipart(url, body, callback) {
+    const init = {
+      method: POST,
+      mode: 'cors',
+      credentials: 'include',
+      body: body,
+    };
+
+    await this.#ajax(url, callback, init);
+  }
+
+  /**
    * Make a GET request.
    * @param {URL} url - The request path.
    * @param {function} callback - The callback function.
