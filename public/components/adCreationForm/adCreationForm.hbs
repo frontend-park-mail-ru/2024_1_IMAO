@@ -19,26 +19,26 @@
 
     <label class="form__label" for="title">Название товара<span class="asterisk">*</span></label>
     <div class="form__input--description">
-        <input class="form__input form__input--description" type="text" id="title" name="title" required>
+        <input class="form__input form__input--description" type="text" id="title" name="title" value="{{title}}" required>
         <div class="form__description">Название не должно превышать 50 символов</div>
     </div>
     <label class="form__label" for="price">Цена<span class="asterisk">*</span></label>
     <div>
-        <input class="form__input form__input--min" type="number" id="price" name="price" required>
+        <input class="form__input form__input--min" type="number" id="price" name="price" value="{{price}}" required>
         <span>₽</span>
     </div>
     <label class="form__label" for="description">Описание</label>
     <div>
-        <textarea class="form__textarea form__input--description" id="description" name="description"></textarea>
+        <textarea class="form__textarea form__input--description" id="description" name="description">{{description}}</textarea>
         <div class="form__description">До 3000 символов</div>
     </div>
     <label class="form__label" for="photos">Фотографии<span class="asterisk">*</span></label>
     <input class="form__input" type="file" id="photos" name="photos" multiple required>
 
     <label class="form__label" for="location">Местоположение<span class="asterisk">*</span></label>
-    <input class="form__input" type="text" id="location" name="city" required>
+    <input class="form__input" type="text" id="location" name="city" value="{{city}}" required>
 
     <label class="form__label" for="phone">Телефон<span class="asterisk">*</span></label>
     <input class="form__input form__input--min" type="tel" id="phone" name="phone" pattern="[0-9]{11}" required>
-    <input type="submit" class="form__button" value="Разместить объявление">
+    <input type="submit" class="form__button" value="{{btn}}">
 </form>

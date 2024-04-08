@@ -77,6 +77,8 @@ class Ajax {
           }
 
           this.auth.is_auth = body.isAuth;
+          this.auth.id = body.user.id;
+          this.auth.email = body.user.email;
         },
     );
   };
