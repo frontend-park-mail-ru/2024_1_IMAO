@@ -59,13 +59,14 @@ export class AdCreation {
       submit.disabled = true;
 
       const data = new FormData(form);
-      const apiRoute = this.#create ?
-        ajax.routes.ADVERT.CREATE_ADVERT :
-        ajax.routes.ADVERT.EDIT_ADVERT;
-
+      data.append('userId', ajax.auth.id);
       if (!this.#create) {
         data.append('id', this.#slug['id']);
       }
+
+      const apiRoute = this.#create ?
+        ajax.routes.ADVERT.CREATE_ADVERT :
+        ajax.routes.ADVERT.EDIT_ADVERT;
 
       ajax.postMultipart(
           apiRoute,
@@ -116,7 +117,7 @@ export class AdCreation {
             const city = items['city'];
 
             if (ajax.auth.id != advert['userId']) {
-              router.go(router.routes.mainPage);
+              router.go(router.routes.mainPage.href);
               return;
             }
 
