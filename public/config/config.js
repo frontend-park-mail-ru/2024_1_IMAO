@@ -54,6 +54,11 @@ export const PAGES_ROUTES = {
     name: 'signup',
     re: new RegExp(/^\/signup$/),
   },
+  merchantsPage: {
+    href: new URL('/merchant', serverHost),
+    name: 'merchant',
+    re: new RegExp(/^\/merchant$/),
+  },
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),
     name: 'advert',
@@ -73,11 +78,6 @@ export const PAGES_ROUTES = {
     href: new URL('/:city/:category', serverHost),
     name: 'category',
     re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z]+$/),
-  },
-  merchantsPage: {
-    href: new URL('/merchant', serverHost),
-    name: 'merchant',
-    re: new RegExp(/^\/merchant$/),
   },
 };
 

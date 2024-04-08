@@ -40,7 +40,8 @@ class Router {
         const route = routes[key];
         if (route.re.test(href.pathname)) {
           document.title = route.name;
-          parent.appendChild(route.render());
+          const renderedElement = await route.render();
+          parent.appendChild(renderedElement);
           return;
         }
       }

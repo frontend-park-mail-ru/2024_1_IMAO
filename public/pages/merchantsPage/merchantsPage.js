@@ -12,6 +12,7 @@ import router from '../../router/router.js';
 import template from './merchantsPage.hbs';
 import styles from './merchantsPage.css'; //eslint-disable-line no-unused-vars
 import { StringToHtmlElement } from '../../modules/stringToHtmlElement.js';
+import { buildURL } from '../../modules/parsePathParams.js';
 
 /** Class representing a main page. */
 export class MerchantsPage {
@@ -107,14 +108,14 @@ export class MerchantsPage {
       1 :
       parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
-    ajax.routes.main.searchParams.delete('count');
-    ajax.routes.main.searchParams.delete('startId');
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('count');
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('startId');
 
-    ajax.routes.main.searchParams.append('count', 28);
-    ajax.routes.main.searchParams.append('startId', startID);
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('count', 28);
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('startId', startID);
 
     ajax.get(
-      ajax.routes.main,
+      ajax.routes.ADVERT.GET_ADS_LIST,
       (body) => {
         const adverts = body['items'];
         if (!(adverts && Array.isArray(adverts))) {
@@ -148,9 +149,10 @@ export class MerchantsPage {
     this.#element.appendChild(this.header.render());
     const root = StringToHtmlElement(template());
     this.#element.appendChild(root);
-
+    const id = 1;
+    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
     await ajax.get(
-      ajax.routes.getProfile,
+      path,
       (body) => {
         const profile = body['profile'];
 

@@ -9,6 +9,9 @@ import {parsePathParams, buildURL} from '../../modules/parsePathParams.js';
 import {getURLFromLocation} from '../../modules/parsePathParams.js';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import {convertDate} from '../../modules/convertDate.js';
+import { FormatDate } from '../../modules/formatDate.js';
+import MerchantCard from '../../components/merchantCard/merchantCard.js';
+import RatingBar from '../../components/ratingBar/ratingBar.js';
 
 /** Class representing advert page. */
 export class Advert {
@@ -112,7 +115,7 @@ export class Advert {
   /**
    * Render the advert page template.
    */
-  #renderTemplate() {
+  async #renderTemplate() {
     const content = document.createElement('div');
 
     this.#element.appendChild(this.header.render());
@@ -122,7 +125,9 @@ export class Advert {
 
     const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT, this.#slug);
 
-    ajax.get(
+    let userId = 0;
+
+    await ajax.get(
         apiRoute,
         (body) => {
           const items = body['items'];
@@ -132,9 +137,12 @@ export class Advert {
 
           const adTitle = advert['title'];
           const description = advert['description'];
+          const price = advert['price'];
           const created = convertDate(advert['created']);
           const cityName = city['name'];
           const categoryName = category['name'];
+
+          userId = advert['userId'];
 
           const categoryPath = buildURLBySegments(router.host,
               [city['translation'], category['translation']]);
@@ -150,10 +158,60 @@ export class Advert {
           const adContainer = document.createElement('div');
           adContainer.classList.add('ad-container');
           adContainer.innerHTML = renderAdContainerTemplate(adTitle,
-              cityName, categoryName, description, created);
+              cityName, categoryName, description, created, price);
           content.appendChild(adContainer);
 
           this.#addListeners();
         });
+
+        const sellerSection = this.#element.querySelector('.seller-block');
+
+        const id = userId;
+        const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
+        await ajax.get(
+          path,
+          (body) => {
+            const profile = body['profile'];
+            const merchantsName = profile.merchantsName;
+            const ratingValue = profile.rating;
+
+            const merchantCartItems = {
+              merchantsName: merchantsName,
+              location: profile.city.translation,
+              registrationDate: FormatDate(profile.regTime),
+              isProfileVerified: profile.approved,
+              reviewCount: profile.reactionsCount,
+              subscribersCount: profile.subersCount,
+              subscribtionsCount: profile.subonsCount,
+            };
+
+            const merchantCardInstance = new MerchantCard(merchantCartItems);
+            sellerSection.appendChild(merchantCardInstance.render());
+
+            const rating = this.#element.querySelector('.rating');
+            const ratingBarInstance = new RatingBar(ratingValue);
+            const ratingBar = ratingBarInstance.render();
+            rating.appendChild(ratingBar);
+
+            // const rating = this.#element.querySelector('.rating');
+            // const ratingBarInstance = new RatingBar(ratingValue);
+            // const ratingBar = ratingBarInstance.render();
+            // rating.appendChild(ratingBar);
+    
+            // const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
+            // const buttonGroupItemes = [
+            //   { categoryLabel: 'Активные', count: '20', checked: true, categoryLabelValue: 'active' },
+            //   { categoryLabel: 'Проданные', count: '5', checked: false, categoryLabelValue: 'sold' },
+            // ];
+            // buttonGroupItemes.forEach(item => {
+            //   this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
+            // });
+            // buttonGroupItemes.forEach(item => {
+            //   if (item.checked) {
+            //     this.sectionState.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
+    
+            //     return;
+            //   }
+            });
   }
 }

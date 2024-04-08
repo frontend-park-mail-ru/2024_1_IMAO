@@ -10,7 +10,8 @@
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the advert.
  */
 export function renderAdContainerTemplate(title, city, category, description,
-    created) {
+    created, price) {
   const template = Handlebars.templates['adContainer.hbs'];
-  return template({title, city, category, description, created});
+
+  return template({title, city, category, description, created, price});
 }
