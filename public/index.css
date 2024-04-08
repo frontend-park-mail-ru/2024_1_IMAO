@@ -46,7 +46,6 @@ main {
     flex-wrap: wrap;
     gap: 16px 36px;
 }
-
 .ad-container {
     display: flex;
     margin-top: 20px;

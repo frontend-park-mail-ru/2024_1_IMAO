@@ -109,7 +109,17 @@ export class Main {
 
     if (!alreadyRendered) {
       this.#element.appendChild(this.header.render());
+  #renderTemplate() {
+    const alreadyRendered = document.querySelector('.page-content') != null;
+    const content = alreadyRendered ?
+      document.querySelector('.page-content') :
+      document.createElement('div');
 
+    if (!alreadyRendered) {
+      this.#element.appendChild(this.header.render());
+
+      content.classList.add('page-content');
+      this.#element.appendChild(content);
       content.classList.add('page-content');
       this.#element.appendChild(content);
 

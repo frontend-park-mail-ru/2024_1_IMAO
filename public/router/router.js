@@ -26,7 +26,6 @@ class Router {
     this.routes[route].render = render;
   }
 
-
   /**
  * Router.
  * @param {URL} href - The route to follow.
@@ -64,7 +63,7 @@ class Router {
       this.#locationResolver(getURLFromLocation(location, this.host),
           container);
     }
-  };
+  }
 
   /**
    *
@@ -112,6 +111,6 @@ class Router {
       await listener(data);
     }
   }
-};
+}
 
 export default new Router();

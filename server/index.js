@@ -15,6 +15,10 @@ app.get('/*', function(request, response) {
   response.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
 });
 
+app.get('/test/:num/', function(req, res) {
+	res.send(req.params.num);
+});
+
 app.listen(port, function() {
   console.log(`Server listening port ${port}`);
 });

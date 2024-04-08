@@ -7,11 +7,13 @@ import {Login} from './pages/login/login.js';
 import {Signup} from './pages/signup/signup.js';
 import {Advert} from './pages/advert/advert.js';
 import {AdCreation} from './pages/adCreation/adCreation.js';
+import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
 router.initialize(AUTH, PAGES_ROUTES, serverHost);
 ajax.initialize(AUTH, API_ROUTES);
+//ajax.initialize(AUTH, API);
 
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
@@ -20,7 +22,7 @@ rootElement.appendChild(mainElement);
 
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
-
+router.init('merchantsPage', renderMerchantsPage);
 router.init('mainPage', renderMain);
 router.init('adsListByCity', renderMain);
 router.init('adsListByCategory', renderMain);
@@ -30,7 +32,6 @@ router.init('adCreationPage', loginRequired(renderAdCreation));
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
 const header = new Header();
-
 
 /**
  * logout Required Decorator.
@@ -42,9 +43,11 @@ function logoutRequired(render) {
     if (AUTH.is_auth === true) {
       history.pushState({page: '/'}, 'main', '/');
       document.title = 'main';
-      return renderMain();
+
+return renderMain();
     }
-    return render();
+
+return render();
   };
 };
 
@@ -71,7 +74,8 @@ function loginRequired(render) {
 function renderLogin() {
   mainElement.innerHTML = '';
   const login = new Login();
-  return login.render();
+
+return login.render();
 }
 
 /**
@@ -81,7 +85,19 @@ function renderLogin() {
 function renderSignup() {
   mainElement.innerHTML = '';
   const signup = new Signup();
-  return signup.render(); ;
+
+return signup.render();
+}
+
+/**
+ * Return merchant's page.
+ * @return {HTMLElement} - The merchant's page.
+ */
+function renderMerchantsPage() {
+  mainElement.innerHTML = '';
+  const merchantsPage = new MerchantsPage(header);
+
+return merchantsPage.render();
 }
 
 /**
@@ -91,7 +107,8 @@ function renderSignup() {
 function renderMain() {
   mainElement.innerHTML = '';
   const main = new Main(header);
-  return main.render();
+
+return main.render();
 }
 
 /**
@@ -119,3 +136,4 @@ window.addEventListener('popstate', (event) => {
 });
 
 router.popPage(window.event, mainElement);
+

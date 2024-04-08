@@ -19,9 +19,10 @@ export class Header {
    * @return {Element} - The element of header.
    */
   render() {
-    this.#renderHeaderTemplate('aboba');
+    this.#renderHeaderTamplate('Москва');
     this.#addListeners();
-    return this.#header;
+
+return this.#header;
   }
 
   /**
@@ -31,10 +32,10 @@ export class Header {
     const anchors = this.#header.getElementsByTagName('a');
 
     this.#addButtonsListeners(anchors);
-
     const logoutBtn = this.#header.getElementsByClassName('logout')[0];
 
     this.#addLogoutListener(logoutBtn);
+
   }
 
   /**

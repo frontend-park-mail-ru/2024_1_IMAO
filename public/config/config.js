@@ -74,6 +74,11 @@ export const PAGES_ROUTES = {
     name: 'category',
     re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z]+$/),
   },
+  merchantsPage: {
+    href: new URL('/merchant', serverHost),
+    name: 'merchant',
+    re: new RegExp(/^\/merchant$/),
+  },
 };
 
 /**
