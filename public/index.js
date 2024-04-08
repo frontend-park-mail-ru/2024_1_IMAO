@@ -28,6 +28,7 @@ router.init('adsListByCity', renderMain);
 router.init('adsListByCategory', renderMain);
 router.init('adPage', renderAdvert);
 router.init('adCreationPage', loginRequired(renderAdCreation));
+router.init('adEditingPage', loginRequired(renderAdEditing));
 
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
@@ -126,13 +127,24 @@ function renderAdvert() {
 
 /**
  * Returns advert creation page.
- * @return {HTMLElement} - The advert creation page.
+ * @return {HTMLElement} - The advert creation/editing page.
  */
 function renderAdCreation() {
   mainElement.innerHTML = '';
-  const adCreation = new AdCreation(header);
+  const adCreation = new AdCreation(header, true);
 
   return adCreation.render();
+}
+
+/**
+ * Returns advert editing page.
+ * @return {HTMLElement} - The advert creation/editing page.
+ */
+function renderAdEditing() {
+  mainElement.innerHTML = '';
+  const adEditing = new AdCreation(header, false);
+
+  return adEditing.render();
 }
 
 window.addEventListener('popstate', (event) => {

@@ -36,17 +36,18 @@ class Router {
 
     const routes = this.routes;
     for (const key in routes) {
-      if (routes.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(routes, key)) {
         const route = routes[key];
         if (route.re.test(href.pathname)) {
           document.title = route.name;
           const renderedElement = await route.render();
           parent.appendChild(renderedElement);
+
           return;
         }
       }
     }
-  };
+  }
 
   /**
    * Changing page via url.

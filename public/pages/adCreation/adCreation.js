@@ -3,36 +3,52 @@
 /* eslint-disable-next-line max-len */
 import {renderAdCreationForm} from '../../components/adCreationForm/adCreationForm.js';
 import ajax from '../../modules/ajax.js';
-import {buildURL} from '../../modules/parsePathParams.js';
+import {buildURL, parsePathParams} from '../../modules/parsePathParams.js';
+import {getURLFromLocation} from '../../modules/parsePathParams.js';
 import router from '../../router/router.js';
 
-/** Class represented advert creation page. */
+/** Class represented advert creation/editing page. */
 export class AdCreation {
   #element;
+  #create;
+  #slug;
 
   /**
-   * Initialize advert creation page.
+   * Initialize advert creation/editing page.
    * @param {*} header
+   * @param {boolean} create - Flag for editing/creation.
    */
-  constructor(header) {
+  constructor(header, create) {
     this.#element = document.createElement('div');
     this.#element.classList.add('main-page');
     this.header = header;
+    this.#create = create;
   }
 
   /**
-   * Render the advert creation page.
-   * @return {Element} - The advert creation page.
+   * Render the advert creation/editing page.
+   * @return {Element} - The advert creation/editing page.
    */
   render() {
     this.#renderTemplate();
-    this.#addFormListener();
+
+    if (this.#create) {
+      this.#addFormListener();
+    }
 
     return this.#element;
   }
 
   /**
-   * Add event listeners for the creating advert form.
+   * Get slug parameters from URL.
+   */
+  #getSlug() {
+    const url = getURLFromLocation(window.location.href, router.host);
+    this.#slug = parsePathParams(router.routes.adEditingPage.href, url);
+  }
+
+  /**
+   * Add event listeners for the creating/editing advert form.
    */
   #addFormListener() {
     const form = this.#element.getElementsByClassName('form')[0];
@@ -43,13 +59,20 @@ export class AdCreation {
       submit.disabled = true;
 
       const data = new FormData(form);
-      const apiRoute = ajax.routes.ADVERT.CREATE_ADVERT;
+      data.append('userId', ajax.auth.id);
+      if (!this.#create) {
+        data.append('id', this.#slug['id']);
+      }
+
+      const apiRoute = this.#create ?
+        ajax.routes.ADVERT.CREATE_ADVERT :
+        ajax.routes.ADVERT.EDIT_ADVERT;
 
       ajax.postMultipart(
           apiRoute,
           data,
           (body) => {
-            if (body.hasOwnProperty('items')) {
+            if (Object.prototype.hasOwnProperty.call(body, 'items')) {
               const items = body['items'];
               const params = {
                 'city': items['city']['translation'],
@@ -57,6 +80,7 @@ export class AdCreation {
                 'id': items['advert']['id'],
               };
               router.go(buildURL(router.routes.adPage.href, params));
+
               return;
             }
             submit.disabled = false;
@@ -66,7 +90,7 @@ export class AdCreation {
   }
 
   /**
-   * Render a template for the advert creation page.
+   * Render a template for the advert creation/editing page.
    */
   #renderTemplate() {
     const content = document.createElement('div');
@@ -78,7 +102,40 @@ export class AdCreation {
 
     const form = document.createElement('div');
     form.classList.add('ad__creation');
-    form.innerHTML = renderAdCreationForm();
+
+    if (this.#create) {
+      form.innerHTML = renderAdCreationForm('Разместить объявление');
+    } else {
+      this.#getSlug();
+      const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT_BY_ID,
+          this.#slug);
+
+      ajax.get(
+          apiRoute,
+          (body) => {
+            const items = body['items'];
+            const advert = items['advert'];
+            const city = items['city'];
+
+            if (ajax.auth.id != advert['userId']) {
+              router.go(router.routes.mainPage.href);
+
+              return;
+            }
+
+            const adTitle = advert['title'];
+            const description = advert['description'];
+            const price = advert['price'];
+            const cityName = city['name'];
+
+            form.innerHTML = renderAdCreationForm('Сохранить изменения',
+                adTitle, price, description, cityName);
+
+            this.#addFormListener();
+          },
+      );
+    }
+
     content.appendChild(form);
   }
 }

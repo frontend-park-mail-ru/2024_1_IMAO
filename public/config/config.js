@@ -20,6 +20,7 @@ export const API_ROUTES = {
     GET_ADS_LIST_BY_CITY: new URL('/api/adverts/:city', api),
     GET_ADS_LIST_BY_CATEGORY: new URL('/api/adverts/:city/:category', api),
     GET_ADVERT: new URL('/api/adverts/:city/:category/:id', api),
+    GET_ADVERT_BY_ID: new URL('/api/adverts/:id', api),
     DELETE_ADVERT: new URL('/api/adverts/delete/:id', api),
     CLOSE_ADVERT: new URL('/api/adverts/close/:id', api),
   },
@@ -43,6 +44,11 @@ export const PAGES_ROUTES = {
     href: new URL('/create', serverHost),
     name: 'create',
     re: new RegExp(/^\/create$/),
+  },
+  adEditingPage: {
+    href: new URL('/edit/:id', serverHost),
+    name: 'edit',
+    re: new RegExp(/^\/edit\/\d+$/),
   },
   loginPage: {
     href: new URL('/login', serverHost),
@@ -72,7 +78,7 @@ export const PAGES_ROUTES = {
   adsListByCity: {
     href: new URL('/:city', serverHost),
     name: 'city',
-    re: new RegExp(/\/[a-zA-Z]+(?![\w\/])/g),
+    re: new RegExp(/\/[a-zA-Z]+(?![\w/])/g),
   },
   adsListByCategory: {
     href: new URL('/:city/:category', serverHost),
@@ -85,5 +91,6 @@ export const PAGES_ROUTES = {
  * Auth state.
  */
 export const AUTH = {
+  // eslint-disable-next-line camelcase
   is_auth: false,
 };
