@@ -31,6 +31,9 @@ return this.#element;
         location : this.items.location,
         registrationDate : this.items.registrationDate,
         isProfileVerified : this.items.isProfileVerified,
+        reviewCount: this.items.reviewCount,
+        subscribersCount: this.items.subscribersCount,
+        subscribtionsCount: this.items.subscribtionsCount,
       };
       this.#element = StringToHtmlElement(template(context));
   }

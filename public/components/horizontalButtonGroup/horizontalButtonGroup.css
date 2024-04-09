@@ -91,7 +91,7 @@
     justify-content: center;
 }
 
-input[type="radio"] {
+.radio-group-horizontal input[type="radio"] {
     clip: rect(0 0 0 0);
     clip-path: inset(100%);
     height: 1px;
@@ -101,7 +101,7 @@ input[type="radio"] {
     width: 1px;
 }
 
-input[type="radio"]:checked+span {
+.radio-group-horizontal input[type="radio"]:checked+span {
 
     padding-bottom: 9px;
     border-bottom: 2px #7092FE solid;

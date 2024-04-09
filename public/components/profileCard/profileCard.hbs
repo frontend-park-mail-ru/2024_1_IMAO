@@ -61,27 +61,55 @@
     </div>
     {{/if}}
     <div class="statistics-container">
+        <div class="statistics-item cursor-hand-hover">
+            <div class="statistics-button">
+                <div class="button-number">{{reviewCount}}</div>
+                <div class="button-label">отзыв</div>
+            </div>
+        </div>
+        <div class="statistics-item cursor-hand-hover">
+            <div class="statistics-button">
+                <div class="button-number">{{subscribersCount}}</div>
+                <div class="button-label">подписчик</div>
+            </div>
+        </div>
+        <div class="statistics-item cursor-hand-hover">
+            <div class="statistics-button">
+                <div class="button-number">{{subscribtionsCount}}</div>
+                <div class="button-label">подписок</div>
+            </div>
+        </div>
     </div>
-    
-    <ul class="labels-group">
-      <li class="labeled-icon text-underline-hover cursor-hand-hover">
-        <div class="icon">
-	  <img src="list.svg">
-        </div>
-        <span class="text-secondary icon-text">Мои объявления</span>
-      </li>
-      <li class="labeled-icon text-underline-hover cursor-hand-hover">
-        <div class="icon">
-	  <img src="cart.svg">
-        </div>
-        <span class="text-secondary icon-text">Мои заказы</span>
-      </li>
-      <li class="labeled-icon text-underline-hover cursor-hand-hover active-tab">
-        <div class="icon">
-	  <img src="cog.svg">
-        </div>
-        <span class="text-secondary icon-text">Настроки</span>
-      </li>
+
+    <ul class="labels-group radio-group-vertical">
+        <li class="labeled-icon text-underline-hover cursor-hand-hover">
+            <div class="icon">
+                <img src="list.svg">
+            </div>
+            <label class="Active">
+                <input type="radio" name="radio" value="adverts" {{#if checked}}checked{{/if}} />
+                <span class="text-secondary icon-text">Мои объявления</span>
+            </label>
+        </li>
+        <li class="labeled-icon text-underline-hover cursor-hand-hover">
+            <div class="icon">
+                <img src="cart.svg">
+            </div>
+            <label class="Active">
+                <input type="radio" name="radio" value="orders" {{#if checked}}checked{{/if}} />
+                <span class="text-secondary icon-text">Мои заказы</span>
+            </label>
+        </li>
+        <li class="labeled-icon text-underline-hover cursor-hand-hover ">
+            <div class="icon">
+                <img src="cog.svg">
+            </div>
+            <label class="Active">
+                <input type="radio" name="radio" value="settings" {{#if checked}}checked{{/if}} />
+                <span class="text-secondary icon-text">Настроки</span>
+            </label>
+        </li>
     </ul>
-    
+</div>
+
 </div>
