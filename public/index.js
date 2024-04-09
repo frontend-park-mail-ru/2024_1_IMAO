@@ -8,6 +8,7 @@ import {Signup} from './pages/signup/signup.js';
 import {Advert} from './pages/advert/advert.js';
 import {AdCreation} from './pages/advert/adCreation.js';
 import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
+import {ProfilePage} from './pages/profilePage/profilePage.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
@@ -23,6 +24,7 @@ rootElement.appendChild(mainElement);
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
 router.init('merchantsPage', renderMerchantsPage);
+router.init('profilePage', renderProfilePage);
 router.init('mainPage', renderMain);
 router.init('adsListByCity', renderMain);
 router.init('adsListByCategory', renderMain);
@@ -101,6 +103,17 @@ function renderMerchantsPage() {
   const merchantsPage = new MerchantsPage(header);
 
 return merchantsPage.render();
+}
+
+/**
+ * Return merchant's page.
+ * @return {HTMLElement} - The merchant's page.
+ */
+function renderProfilePage() {
+  mainElement.innerHTML = '';
+  const profilePage = new ProfilePage(header);
+
+return profilePage.render();
 }
 
 /**

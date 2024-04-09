@@ -1,0 +1,114 @@
+.personal-data-list {
+  width: 921px;
+  height: 350px;
+  position: relative;
+  background: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+}
+
+.personal-data-heading {
+  padding-left: 10px;
+  width: 180.78px;
+  height: 32px;
+  position: relative;
+  color: #333333;
+  font-size: 24px;
+  font-family: Fira Sans;
+  font-weight: 500;
+  line-height: 32px;
+  word-wrap: break-word;
+}
+
+.DescriptionsItem {
+  width: 897px;
+  height: 57px;
+  position: relative;
+  background: white;
+  border-radius: 8px;
+}
+
+.DescriptionsTerm,
+.DescriptionsTermEMail {
+  width: 62.80px;
+  height: 24px;
+  left: 12px;
+  top: 17px;
+  position: absolute;
+  color: #858585;
+  font-size: 14px;
+  font-family: Open Sans;
+  font-weight: 400;
+  line-height: 24px;
+  word-wrap: break-word;
+}
+
+.DescriptionsDetails {
+  width: 498.64px;
+  height: 24px;
+  padding-right: 377.34px;
+  left: 228px;
+  top: 16px;
+  position: absolute;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  display: inline-flex;
+}
+
+.B40d90b09f74cfc5244da1Jpg {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  border-radius: 12px;
+}
+
+.PScCoxwqc {
+  width: 89.30px;
+  align-self: stretch;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3.24px;
+  display: inline-flex;
+}
+
+.User,
+.Name,
+.SomeemailMailCom {
+  height: 24px;
+  color: #333333;
+  font-size: 14px;
+  font-family: Open Sans;
+  font-weight: 400;
+  line-height: 24px;
+  word-wrap: break-word;
+}
+
+.set-or-edit-label {
+  width: 102.72px;
+  height: 24px;
+  left: 781.64px;
+  top: 16px;
+  position: absolute;
+  color: #7092FE;
+  font-size: 14px;
+  font-family: Open Sans;
+  font-weight: 400;
+  line-height: 24px;
+  word-wrap: break-word;
+}
+
+.After {
+  width: 881px;
+  height: 1px;
+  left: 8px;
+  top: 56px;
+  position: absolute;
+  background: #F5F5F5;
+}
+
+.atribute-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

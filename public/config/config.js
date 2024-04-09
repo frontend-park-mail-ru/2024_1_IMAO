@@ -65,6 +65,11 @@ export const PAGES_ROUTES = {
     name: 'merchant',
     re: new RegExp(/^\/merchant$/),
   },
+  profilePage: {
+    href: new URL('/profile', serverHost),
+    name: 'profile',
+    re: new RegExp(/^\/profile$/),
+  },
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),
     name: 'advert',
