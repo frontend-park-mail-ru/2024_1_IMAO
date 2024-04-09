@@ -68,7 +68,7 @@ export class MerchantsPage {
       const newMerchantsCardContainer = document.createElement('div');
       newMerchantsCardContainer.classList.add('cards-container-merchant');
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
-      this.sectionState.setSectionState(event.target.value, 'isRendered', merchantsCardContainer);
+      this.sectionState.setSectionState(event.target.value, 'isRendered', true);
       this.#renderCards(newMerchantsCardContainer, isRendered);
 
     } else {

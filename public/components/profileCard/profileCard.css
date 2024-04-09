@@ -395,3 +395,10 @@
 .radio-group-vertical input[type="radio"]:checked+span {
     color: rgba(112, 146, 254, 1);
 }
+
+.Active-2 {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    display: inline-flex;
+}

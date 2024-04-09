@@ -3,7 +3,7 @@
 import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
 import ProfileCard from '../../components/profileCard/profileCard.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
-// import MerchantPageTitle from '../../components/merchantPageTitle/merchantPageTitle.js';
+import MerchantPageTitle from '../../components/merchantPageTitle/merchantPageTitle.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {FormatDate} from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
@@ -28,6 +28,7 @@ export class ProfilePage {
     this.#element.classList.add('main-page');
     this.header = header;
     this.sectionState = new StageStorage();
+    this.sectionStateV = new StageStorage();
     this.#isBottomReached = false;
   }
 
@@ -50,7 +51,53 @@ export class ProfilePage {
       input.addEventListener('click', this.handleClick.bind(this));
     }.bind(this));
 
+    const verticalInputs = this.#element.querySelectorAll('.verticle-button-group-profile input[type="radio"]');
+
+    verticalInputs.forEach(function(input) {
+      input.addEventListener('click', this.handleClick2.bind(this));
+    }.bind(this));
+
     this.#addScrollListener();
+
+  }
+
+  handleClick2(event) {
+    console.log(event.target.value);
+
+    const targetValue = event.target.value;
+
+    console.log('event.target.value', event.target.value);
+
+    const labelsAndValues = [
+      { categoryLabel: 'Мои объявления', categoryLabelValue: 'adverts' },
+      { categoryLabel: 'Мои заказы', categoryLabelValue: 'orders' },
+      { categoryLabel: 'Настроки', categoryLabelValue: 'settings' },
+    ];
+
+    const found = labelsAndValues.find(item => item.categoryLabelValue === targetValue);
+    console.log('found', found);
+    this.#element.querySelector('.profile-page-right-section-header').innerText = found.categoryLabel;
+    const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
+    const isRendered = this.sectionStateV.getSectionState(event.target.value, 'isRendered');
+
+    const currentButtonChecked = this.sectionStateV.getSectionState('serviceField', 'isChecked');
+    this.sectionStateV.setSectionState('serviceField', 'isChecked', event.target.value);
+
+    this.sectionStateV.setSectionState(currentButtonChecked, 'render', profilePageContentContainer);
+
+    if (!isRendered) {
+      const newProfilePageContentContainer = document.createElement('div');
+      newProfilePageContentContainer.classList.add('profile-page-right-section-content');
+      profilePageContentContainer.replaceWith(newProfilePageContentContainer);
+      this.sectionStateV.setSectionState(event.target.value, 'isRendered', true);
+      //this.#renderCards(newProfilePageContentContainer, isRendered);
+
+    } else {
+      const stashedMerchantsCardContainer = this.sectionStateV.getSectionState(event.target.value, 'render');
+      profilePageContentContainer.replaceWith(stashedMerchantsCardContainer);
+    }
+
+    console.log(this.sectionStateV);
   }
 
   handleClick(event) {
@@ -68,7 +115,7 @@ export class ProfilePage {
       const newMerchantsCardContainer = document.createElement('div');
       newMerchantsCardContainer.classList.add('cards-container-merchant');
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
-      this.sectionState.setSectionState(event.target.value, 'isRendered', merchantsCardContainer);
+      this.sectionState.setSectionState(event.target.value, 'isRendered', true);
       this.#renderCards(newMerchantsCardContainer, isRendered);
 
     } else {
@@ -159,15 +206,15 @@ export class ProfilePage {
         const merchantsName = profile.merchantsName;
         const ratingValue = profile.rating;
 
-        // const merchantPageTitleItems = {
-          // merchantsName: merchantsName,
-          // urlMain: urlMain,
-        // };
-        // const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
-        // this.#element.insertBefore(merchantPageTitleInstance.render(), this.#element.lastChild);
+        const merchantPageTitleItems = {
+          merchantsName: merchantsName,
+          urlMain: urlMain,
+        };
+        const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
+        this.#element.insertBefore(merchantPageTitleInstance.render(), this.#element.lastChild);
 
         const merchantCartItems = {
-          merchantsName: merchantsName,
+          profileName: merchantsName,
           location: profile.city.translation,
           registrationDate: FormatDate(profile.regTime),
           isProfileVerified: profile.approved,
@@ -178,6 +225,22 @@ export class ProfilePage {
         const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
         const profileCardInstance = new ProfileCard(merchantCartItems);
         merchantsCardSection.appendChild(profileCardInstance.render());
+
+        const verticleButtonGroupItemes = [
+          { checked: true, categoryLabelValue: 'adverts' },
+          { checked: false, categoryLabelValue: 'orders' },
+          { checked: false, categoryLabelValue: 'settings' },
+        ];
+        verticleButtonGroupItemes.forEach(item => {
+          this.sectionStateV.setSectionState(item.categoryLabelValue, 'isRendered', false);
+        });
+        verticleButtonGroupItemes.forEach(item => {
+          if (item.checked) {
+            this.sectionStateV.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
+
+            return;
+          }
+        });
 
         const rating = this.#element.querySelector('.rating');
         const ratingBarInstance = new RatingBar(ratingValue);
@@ -212,6 +275,7 @@ export class ProfilePage {
     if (!currentState) {
       this.sectionState.setSectionState('active', 'isRendered', true);
     }
+    this.sectionStateV.setSectionState('adverts', 'isRendered', true);
 
     // const alreadyRendered = document.querySelector('.merchant-page-right-section') != null;
     // const merchantsPageRightSection = alreadyRendered ?

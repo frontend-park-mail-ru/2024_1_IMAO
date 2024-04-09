@@ -1,7 +1,7 @@
 <div class="user-card-main-div">
     <div class="card-container">
         <div class="card-header">
-            <div>{{merchantsName}}</div>
+            <div>{{profileName}}</div>
         </div>
         <div class="card-content">
             <div class="avatar-container">
@@ -20,8 +20,7 @@
     </div>
 
     {{#if isProfileVerified}}
-    <div class="profile-card cursor-hand-hover"
-        href="https://docs.google.com/document/d/1bMqtefaH_Lw5A0UaoYnuNrN_bBG9JdPVySsgkeyYIcs/edit">
+    <div class="profile-card cursor-hand-hover">
         <div class="profile-icon-container">
             <div class="verified-profile-icon">
                 <div class="icon-group">
@@ -81,13 +80,13 @@
         </div>
     </div>
 
-    <ul class="labels-group radio-group-vertical">
+    <ul class="labels-group verticle-button-group-profile radio-group-vertical">
         <li class="labeled-icon text-underline-hover cursor-hand-hover">
             <div class="icon">
                 <img src="images/list.svg">
             </div>
-            <label class="Active">
-                <input type="radio" name="radio" value="adverts" {{#if checked}}checked{{/if}} />
+            <label class="Active-2">
+                <input type="radio" name="radio-2" value="adverts" checked />
                 <span class="text-secondary icon-text">Мои объявления</span>
             </label>
         </li>
@@ -95,8 +94,8 @@
             <div class="icon">
                 <img src="images/cart.svg">
             </div>
-            <label class="Active">
-                <input type="radio" name="radio" value="orders" {{#if checked}}checked{{/if}} />
+            <label class="Active-2">
+                <input type="radio" name="radio-2" value="orders" />
                 <span class="text-secondary icon-text">Мои заказы</span>
             </label>
         </li>
@@ -104,8 +103,8 @@
             <div class="icon">
                 <img src="images/cog.svg">
             </div>
-            <label class="Active">
-                <input type="radio" name="radio" value="settings" {{#if checked}}checked{{/if}} />
+            <label class="Active-2">
+                <input type="radio" name="radio-2" value="settings" />
                 <span class="text-secondary icon-text">Настроки</span>
             </label>
         </li>
