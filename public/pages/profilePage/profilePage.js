@@ -3,7 +3,7 @@
 import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
 import ProfileCard from '../../components/profileCard/profileCard.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
-// import MerchantPageTitle from '../../components/merchantPageTitle/merchantPageTitle.js';
+import MerchantPageTitle from '../../components/merchantPageTitle/merchantPageTitle.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {FormatDate} from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
@@ -157,15 +157,15 @@ export class ProfilePage {
         const merchantsName = profile.merchantsName;
         const ratingValue = profile.rating;
 
-        // const merchantPageTitleItems = {
-          // merchantsName: merchantsName,
-          // urlMain: urlMain,
-        // };
-        // const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
-        // this.#element.insertBefore(merchantPageTitleInstance.render(), this.#element.lastChild);
+        const merchantPageTitleItems = {
+          merchantsName: merchantsName,
+          urlMain: urlMain,
+        };
+        const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
+        this.#element.insertBefore(merchantPageTitleInstance.render(), this.#element.lastChild);
 
         const merchantCartItems = {
-          merchantsName: merchantsName,
+          profileName: merchantsName,
           location: profile.city.translation,
           registrationDate: FormatDate(profile.regTime),
           isProfileVerified: profile.approved,

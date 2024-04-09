@@ -32,3 +32,16 @@
 label {
     cursor: pointer;
 }
+
+.profile-page-right-section-header {
+    align-self: stretch;
+    height: 32.53px;
+    padding-bottom: 0.54px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+
+    font-size: 24px;
+    font-weight: bold;
+}
