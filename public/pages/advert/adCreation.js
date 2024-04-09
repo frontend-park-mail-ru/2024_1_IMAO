@@ -117,7 +117,7 @@ export class AdCreation {
             const advert = items['advert'];
             const city = items['city'];
 
-            if (ajax.auth.id != advert['userId']) {
+            if (ajax.auth.id !== advert['userId']) {
               router.go(router.routes.mainPage.href);
 
               return;

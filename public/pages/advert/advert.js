@@ -53,6 +53,7 @@ export class Advert {
   #addListeners() {
     this.#addCarouselListeners();
     this.#addPathListener();
+    this.#addCloseListener();
   }
 
   /**
@@ -112,6 +113,27 @@ export class Advert {
     });
   }
 
+  #addCloseListener() {
+    const closeBtn = document.querySelector('.close');
+
+    if (closeBtn !== null) {
+      closeBtn.addEventListener('click', (ev) => {
+        const id = closeBtn.dataset['id'];
+        const apiRoute = buildURL(ajax.routes.ADVERT.CLOSE_ADVERT, {'id': id});
+
+        ajax.post(
+          apiRoute,
+          null,
+          (body) => {
+            router.go(router.routes.mainPage.href);
+
+            return;
+          },
+        );
+      });
+    }
+  }
+
   /**
    * Render the advert page template.
    */
@@ -135,12 +157,14 @@ export class Advert {
           const city = items['city'];
           const category = items['category'];
 
+          const id = advert['id'];
           const adTitle = advert['title'];
           const description = advert['description'];
           const price = advert['price'];
           const created = convertDate(advert['created']);
           const cityName = city['name'];
           const categoryName = category['name'];
+          const isAuthor = ajax.auth.id === advert['userId'];
 
           userId = advert['userId'];
 
@@ -148,6 +172,10 @@ export class Advert {
               [city['translation'], category['translation']]);
           const cityPath = buildURLBySegments(router.host,
               [city['translation']]);
+          const editPath = buildURLBySegments(router.host,
+              ['edit', advert['id']]);
+          const closePath = buildURLBySegments(router.host,
+              ['close', advert['id']]);
 
           const adPathElement = document.createElement('div');
           adPathElement.innerHTML =
@@ -158,7 +186,8 @@ export class Advert {
           const adContainer = document.createElement('div');
           adContainer.classList.add('ad-container');
           adContainer.innerHTML = renderAdContainerTemplate(adTitle,
-              cityName, categoryName, description, created, price);
+              cityName, categoryName, description, created, price, isAuthor,
+              editPath, closePath, id);
           content.appendChild(adContainer);
 
           this.#addListeners();
@@ -197,7 +226,7 @@ export class Advert {
             // const ratingBarInstance = new RatingBar(ratingValue);
             // const ratingBar = ratingBarInstance.render();
             // rating.appendChild(ratingBar);
-    
+
             // const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
             // const buttonGroupItemes = [
             //   { categoryLabel: 'Активные', count: '20', checked: true, categoryLabelValue: 'active' },
@@ -209,7 +238,7 @@ export class Advert {
             // buttonGroupItemes.forEach(item => {
             //   if (item.checked) {
             //     this.sectionState.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
-    
+
             //     return;
             //   }
             });

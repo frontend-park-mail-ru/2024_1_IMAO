@@ -57,7 +57,7 @@ class Ajax {
    * @param {function} callback - The callback function.
    * @param {string} params
    */
-  async get(url, callback, params ) {
+  async get(url, callback) {
     const init = {
       method: GET,
       mode: 'cors',

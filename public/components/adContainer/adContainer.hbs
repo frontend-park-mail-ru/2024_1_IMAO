@@ -4,10 +4,16 @@
             <h1>{{title}}</h1>
         </div>
         <div class="favourite">
+            {{#if isAuthor}}
+            <a class="btn-favourite" href="{{editPath}}">
+                Редактировать объявление
+            </a>
+            {{^}}
             <a class="btn-favourite">
                 <img src="images/heart.svg" class="like-img">
                 Добавить в избранное
             </a>
+            {{/if}}
         </div>
     </div>
     <div class="advert-images">
@@ -53,6 +59,10 @@
     </ul>
 </div>
 <div class="seller-block">
-<h1 class="price title">{{price}} ₽</h1>
-<a class="seller-block__btn" href="#" >Добавить в корзину</a>
+    <h1 class="price title">{{price}} ₽</h1>
+    {{#if isAuthor}}
+    <a class="seller-block__btn close" data-id="{{id}}" >Снять с продажи</a>
+    {{^}}
+    <a class="seller-block__btn" href="#" >Добавить в корзину</a>
+    {{/if}}
 </div>
