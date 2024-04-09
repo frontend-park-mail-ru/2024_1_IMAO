@@ -4,6 +4,12 @@
 @import "components/adPath/adPath.css";
 @import "components/adContainer/adContainer.css";
 @import "components/adCreationForm/adCreationForm.css";
+@import "components/cartMain/cartMain.css";
+@import "components/cartBlock/cartBlock.css";
+@import "components/sidebar/sidebar.css";
+@import "components/orderItem/orderItem.css";
+@import "components/orderMain/orderMain.css";
+
 
 body {
     padding: 0;
@@ -53,4 +59,10 @@ main {
     border-radius: 8px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
 }

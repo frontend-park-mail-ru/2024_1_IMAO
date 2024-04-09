@@ -36,6 +36,7 @@ export class Header {
 
     this.#addLogoutListener(logoutBtn);
 
+    // const cartButton = this.#header.querySelector('.cart-action');
   }
 
   /**
@@ -49,6 +50,7 @@ export class Header {
       }
 
       anchor.addEventListener('click', (ev) => {
+        ev.preventDefault();
         router.pushPage(ev, anchor.dataset.url);
       });
     }
@@ -64,11 +66,14 @@ export class Header {
     }
 
     logoutBtn.addEventListener('click', (ev) => {
+      ev.preventDefault();
       ajax.post(
           ajax.routes.AUTH.LOGOUT,
           null,
           (body) => {
-            this.#renderHeaderTemplate();
+            ajax.auth.is_auth = body.isAuth;
+            this.#renderHeaderTemplate('aboba');
+            this.#addListeners();
           },
       );
     });
@@ -85,8 +90,14 @@ export class Header {
     const urlMain = router.routes.mainPage.href.href;
     const urlLogin = router.routes.loginPage.href.href;
     const urlCreate = router.routes.adCreationPage.href.href;
+    const urlCart = router.routes.cartPage.href.href;
     const flag = router.auth.is_auth;
-    this.#header.innerHTML = template({urlMain, urlLogin, urlCreate,
-      flag, location});
+    this.#header.innerHTML = template({
+      urlMain,
+      urlLogin,
+      urlCart,
+      flag,
+      location,
+    });
   }
 }

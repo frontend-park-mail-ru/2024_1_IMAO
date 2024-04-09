@@ -72,7 +72,7 @@ export class Login {
       const password = inputs[1];
       const data = {email, password};
 
-      const divError = this.#element.getElementsByClassName('error')[0];
+      const divError = this.#element.querySelector('.error');
 
       if (!this.#validateData(email, password, divError)) {
         submit.disabled = false;
