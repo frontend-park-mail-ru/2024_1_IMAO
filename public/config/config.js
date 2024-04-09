@@ -74,6 +74,10 @@ export const PAGES_ROUTES = {
     href: '/merchant',
     name: 'merchant',
   },
+  profilePage: {
+    href: '/profile',
+    name: 'profile',
+  },
 };
 
 /**
