@@ -9,6 +9,7 @@ import {Advert} from './pages/advert/advert.js';
 import {AdCreation} from './pages/advert/adCreation.js';
 import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
 import {ProfilePage} from './pages/profilePage/profilePage.js';
+import {ProfileEdit} from './pages/profilePage/profileEdit.js';
 import {Cart} from './pages/cart/cart.js';
 import {Order} from './pages/oreder/order.js';
 import ajax from './modules/ajax.js';
@@ -26,7 +27,8 @@ rootElement.appendChild(mainElement);
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
 router.init('merchantsPage', renderMerchantsPage);
-router.init('profilePage', renderProfilePage);
+router.init('profilePage', loginRequired(renderProfilePage));
+router.init('profileEdit', loginRequired(renderProfileEdit));
 router.init('mainPage', renderMain);
 router.init('adsListByCity', renderMain);
 router.init('adsListByCategory', renderMain);
@@ -84,7 +86,7 @@ function renderLogin() {
   mainElement.innerHTML = '';
   const login = new Login();
 
-return login.render();
+  return login.render();
 }
 
 /**
@@ -95,7 +97,7 @@ function renderSignup() {
   mainElement.innerHTML = '';
   const signup = new Signup();
 
-return signup.render();
+  return signup.render();
 }
 
 /**
@@ -106,7 +108,7 @@ function renderMerchantsPage() {
   mainElement.innerHTML = '';
   const merchantsPage = new MerchantsPage(header);
 
-return merchantsPage.render();
+  return merchantsPage.render();
 }
 
 /**
@@ -117,7 +119,14 @@ function renderProfilePage() {
   mainElement.innerHTML = '';
   const profilePage = new ProfilePage(header);
 
-return profilePage.render();
+  return profilePage.render();
+}
+
+function renderProfileEdit() {
+  mainElement.innerHTML = '';
+  const profileEdit = new ProfileEdit(header);
+
+  return profileEdit.render();
 }
 
 /**
@@ -171,7 +180,8 @@ function renderAdEditing() {
 function renderCart() {
   mainElement.innerHTML = '';
   const cart = new Cart(header);
-  return cart.render();
+
+return cart.render();
   const empty = document.createElement('div');
   empty.classList.add('main-page');
   empty.appendChild(header.render());
@@ -210,7 +220,8 @@ function renderCart() {
         cont.innerHTML += JSON.stringify(body);
       },
   );
-  return empty;
+
+return empty;
 }
 
 /**
@@ -220,7 +231,8 @@ function renderCart() {
 function renderOrder() {
   mainElement.innerHTML = '';
   const order = new Order(header);
-  return order.render();
+
+return order.render();
   // const empty = document.createElement('div');
   // empty.classList.add('main-page');
   // empty.appendChild(header.render());

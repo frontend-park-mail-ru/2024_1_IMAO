@@ -33,6 +33,10 @@ export const API_ROUTES = {
     SET_PROFILE_AVATAR: new URL('/api/profile/avatar', api),
     SET_PROFILE_CITY: new URL('/api/profile/city', api),
     SET_PROFILE_CITY_BY_ID: new URL('/api/profile/:id/adverts', api),
+    EDIT_USER_EMAIL: new URL('/api/auth/edit/email', api),
+  },
+  CITY: {
+    GET_CITY_LIST: new URL('/api/profile/city', api),
   },
   CART: {
     GET_CART_LIST: new URL('/api/cart/list', api),
@@ -93,6 +97,11 @@ export const PAGES_ROUTES = {
     href: new URL('/profile', serverHost),
     name: 'profile',
     re: new RegExp(/^\/profile$/),
+  },
+  profileEdit: {
+    href: new URL('/profile/edit', serverHost),
+    name: 'edit profile',
+    re: new RegExp(/^\/profile\/edit$/),
   },
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),

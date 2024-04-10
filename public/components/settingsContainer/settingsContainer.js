@@ -1,37 +1,11 @@
 'use strict';
 
-// export function renderMerchantCardTemplate(merchantsName, location, registrationDate, isProfileVerified, reviewCount, subscribersCount, subscribtionsCount) {
-//   const template = Handlebars.templates['merchantCard.hbs'];
-//   return template({merchantsName, location, registrationDate, isProfileVerified, reviewCount, subscribersCount, subscribtionsCount});
-// }
+export function renderSettingsContainer(profileData) {
+  Handlebars.registerHelper('is_null', function(value) {
+    return value === '';
+  });
 
-'use strict';
-import template from './settingsContainer.hbs';
-import styles from './settingsContainer.css'; //eslint-disable-line no-unused-vars
-import { StringToHtmlElement } from '../../modules/stringToHtmlElement.js';
+  const template = Handlebars.templates['settingsContainer.hbs'];
 
-class ProfileCard {
-  #element;
-
-  constructor(items) {
-      this.items = items;
-  }
-
-  render(){
-    this.#renderTemplate();
-
-return this.#element;
-  }
-
-  #renderTemplate() {
-      const context = {
-        profileName : this.items.profileName,
-        location : this.items.location,
-        registrationDate : this.items.registrationDate,
-        isProfileVerified : this.items.isProfileVerified,
-      };
-      this.#element = StringToHtmlElement(template(context));
-  }
+  return template(profileData);
 }
-
-export default ProfileCard;

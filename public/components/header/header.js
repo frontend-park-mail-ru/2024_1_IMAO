@@ -93,12 +93,14 @@ export class Header {
     const urlLogin = router.routes.loginPage.href.href;
     const urlCreate = router.routes.adCreationPage.href.href;
     const urlCart = router.routes.cartPage.href.href;
+    const urlProfile = router.routes.profilePage.href.href;
     const flag = router.auth.is_auth;
     this.#header.innerHTML = template({
       urlMain,
       urlLogin,
       urlCreate,
       urlCart,
+      urlProfile,
       flag,
       location,
       CATEGORIES,

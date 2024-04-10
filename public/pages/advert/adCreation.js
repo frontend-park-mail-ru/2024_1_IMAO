@@ -104,7 +104,7 @@ export class AdCreation {
     form.classList.add('ad__creation');
 
     if (this.#create) {
-      form.innerHTML = renderAdCreationForm('Разместить объявление');
+      form.innerHTML = renderAdCreationForm(true);
     } else {
       this.#getSlug();
       const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT_BY_ID,
@@ -128,8 +128,8 @@ export class AdCreation {
             const price = advert['price'];
             const cityName = city['name'];
 
-            form.innerHTML = renderAdCreationForm('Сохранить изменения',
-                adTitle, price, description, cityName);
+            form.innerHTML = renderAdCreationForm(false, adTitle, price,
+              description, cityName);
 
             this.#addFormListener();
           },

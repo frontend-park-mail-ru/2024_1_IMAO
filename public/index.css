@@ -4,6 +4,7 @@
 @import "components/adPath/adPath.css";
 @import "components/adContainer/adContainer.css";
 @import "components/adCreationForm/adCreationForm.css";
+@import "components/settingsContainer/settingsContainer.css";
 @import "components/cartMain/cartMain.css";
 @import "components/cartBlock/cartBlock.css";
 @import "components/sidebar/sidebar.css";
@@ -52,6 +53,7 @@ main {
     flex-wrap: wrap;
     gap: 16px 36px;
 }
+
 .ad-container {
     display: flex;
     margin-top: 20px;

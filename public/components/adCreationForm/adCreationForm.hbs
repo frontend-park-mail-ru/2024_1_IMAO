@@ -1,5 +1,9 @@
 <div class="form__title">
+    {{#if create}}
     Размещение объявления
+    {{^}}
+    Редактирование объявления
+    {{/if}}
 </div>
 <form action="/submit" method="post" class="form" ecntype="multipart/form-data">
     <label class="form__label" for="category">Категория товара<span class="asterisk">*</span></label>
@@ -19,7 +23,8 @@
 
     <label class="form__label" for="title">Название товара<span class="asterisk">*</span></label>
     <div class="form__input--description">
-        <input class="form__input form__input--description" type="text" id="title" name="title" value="{{title}}" required>
+        <input class="form__input form__input--description" type="text" id="title" name="title" value="{{title}}"
+            required>
         <div class="form__description">Название не должно превышать 50 символов</div>
     </div>
     <label class="form__label" for="price">Цена<span class="asterisk">*</span></label>
@@ -29,7 +34,8 @@
     </div>
     <label class="form__label" for="description">Описание</label>
     <div>
-        <textarea class="form__textarea form__input--description" id="description" name="description">{{description}}</textarea>
+        <textarea class="form__textarea form__input--description" id="description"
+            name="description">{{description}}</textarea>
         <div class="form__description">До 3000 символов</div>
     </div>
     <label class="form__label" for="photos">Фотографии<span class="asterisk">*</span></label>
@@ -40,5 +46,9 @@
 
     <label class="form__label" for="phone">Телефон<span class="asterisk">*</span></label>
     <input class="form__input form__input--min" type="tel" id="phone" name="phone" pattern="[0-9]{11}" required>
-    <input type="submit" class="form__button" value="{{btn}}">
+    {{#if create}}
+    <input type="submit" class="form__button" value="Разместить объявление">
+    {{^}}
+    <input type="submit" class="form__button" value="Сохранить изменения">
+    {{/if}}
 </form>
