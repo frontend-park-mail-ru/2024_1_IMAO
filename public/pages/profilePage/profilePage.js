@@ -171,8 +171,7 @@ export class ProfilePage {
           subscribtionsCount: profile.subonsCount,
           urlOrder: '/cart',
           urlSettings: router.routes.profileEdit.href,
-          urlMerchant: buildURL(router.routes.merchantsPage.href,
-             ajax.auth.id),
+          urlMerchant: '#',
         };
         const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
         const profileCardInstance = new ProfileCard(merchantCartItems);
@@ -185,8 +184,8 @@ export class ProfilePage {
 
         const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
         const buttonGroupItemes = [
-          { categoryLabel: 'Активные', count: '20', checked: true, categoryLabelValue: 'active' },
-          { categoryLabel: 'Проданные', count: '5', checked: false, categoryLabelValue: 'sold' },
+          { categoryLabel: 'Активные', count: '', checked: true, categoryLabelValue: 'active' },
+          { categoryLabel: 'Проданные', count: '', checked: false, categoryLabelValue: 'sold' },
         ];
         buttonGroupItemes.forEach(item => {
           this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);

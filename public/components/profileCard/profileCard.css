@@ -73,9 +73,22 @@
     display: inline-flex;
 }
 
-.location,
+.location{
+  height: 20px;
+    padding-bottom: 0.63px;
+    left: 0px;
+    top: -0.64px;
+    /*position: absolute;*/
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: inline-flex;
+  
+    font-size: 14px;
+    color: gray;
+}
 .date {
-    height: 24.64px;
+    height: 40px;
     padding-bottom: 0.63px;
     left: 0px;
     top: -0.64px;
