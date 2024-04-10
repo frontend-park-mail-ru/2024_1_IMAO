@@ -1,5 +1,6 @@
 'use strict';
 
+import {CATEGORIES} from '../../config/config.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -12,6 +13,7 @@ export class Header {
    */
   constructor() {
     this.#header = document.createElement('header');
+
   }
 
   /**
@@ -72,7 +74,7 @@ export class Header {
           null,
           (body) => {
             ajax.auth.is_auth = body.isAuth;
-            this.#renderHeaderTemplate('aboba');
+            this.#renderHeaderTemplate('Москва');
             this.#addListeners();
           },
       );
@@ -95,9 +97,11 @@ export class Header {
     this.#header.innerHTML = template({
       urlMain,
       urlLogin,
+      urlCreate,
       urlCart,
       flag,
       location,
+      CATEGORIES,
     });
   }
 }

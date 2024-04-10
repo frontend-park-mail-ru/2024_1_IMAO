@@ -1,5 +1,9 @@
 'use strict';
 
+import { trimString } from '../../modules/trimString.js';
+
+const MAX_TITLE_LENGTH = 40;
+
 /**
  * Render an orderIte template.
  * @param {number} num
@@ -10,5 +14,7 @@
  */
 export function renderOrderItem(num, id, title, price) {
   const template = Handlebars.templates['orderItem.hbs'];
+  title = trimString(title, MAX_TITLE_LENGTH);
+
   return template({num, id, title, price});
 }

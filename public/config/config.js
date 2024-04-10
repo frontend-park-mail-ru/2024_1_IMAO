@@ -49,6 +49,11 @@ export const API_ROUTES = {
  * Routes for Pages.
  */
 export const PAGES_ROUTES = {
+  mainPage: {
+    href: new URL('/', serverHost),
+    name: 'main',
+    re: new RegExp(/\/$/),
+  },
   adCreationPage: {
     href: new URL('/create', serverHost),
     name: 'create',
@@ -80,9 +85,9 @@ export const PAGES_ROUTES = {
     re: new RegExp(/^\/order$/),
   },
   merchantsPage: {
-    href: new URL('/merchant', serverHost),
+    href: new URL('/merchant/:id', serverHost),
     name: 'merchant',
-    re: new RegExp(/^\/merchant$/),
+    re: new RegExp(/^\/merchant+\/\d+$/),
   },
   profilePage: {
     href: new URL('/profile', serverHost),
@@ -92,12 +97,7 @@ export const PAGES_ROUTES = {
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),
     name: 'advert',
-    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z]+\/\d+$/),
-  },
-  mainPage: {
-    href: new URL('/', serverHost),
-    name: 'main',
-    re: new RegExp(/\/$/),
+    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+\/\d+$/),
   },
   adsListByCity: {
     href: new URL('/:city', serverHost),
@@ -107,7 +107,7 @@ export const PAGES_ROUTES = {
   adsListByCategory: {
     href: new URL('/:city/:category', serverHost),
     name: 'category',
-    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z]+$/),
+    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+$/),
   },
 };
 
@@ -118,3 +118,70 @@ export const AUTH = {
   // eslint-disable-next-line camelcase
   is_auth: false,
 };
+
+export const CATEGORIES = [
+  {
+    name: 'Женский гардероб',
+    translation: 'zhenskij_garderob',
+  },
+  {
+    name: 'Мужской гардероб',
+    translation: 'muzhskoj_garderob',
+  },
+  {
+    name: 'Детский гардероб',
+    translation: 'detskij_garderob',
+  },
+  {
+    name: 'Детские товары',
+    translation: 'detskie_tovary',
+  },
+  {
+    name: 'Хэндмэйд',
+    translation: 'handmade',
+  },
+  {
+    name: 'Телефоны и планшеты',
+    translation: 'telefony_i_planshety',
+  },
+  {
+    name: 'Фото и видеокамеры',
+    translation: 'foto_i_videokamery',
+  },
+  {
+    name: 'Компьютерная техника',
+    translation: 'kompyuternaya_texnika',
+  },
+  {
+    name: 'ТВ, аудио и видео',
+    translation: 'tv_audio_i_video',
+  },
+  {
+    name: 'Бытовая техника',
+    translation: 'bytovaya_texnika',
+  },
+  {
+    name: 'Для дома и дачи',
+    translation: 'dlya_doma_i_dachi',
+  },
+  {
+    name: 'Стройматериалы и инструменты',
+    translation: 'strojmaterialy_i_instrumenty',
+  },
+  {
+    name: 'Красота и здоровье',
+    translation: 'krasota_i_zdorove',
+  },
+  {
+    name: 'Спорт и отдых',
+    translation: 'sport_i_otdyx',
+  },
+  {
+    name: 'Хобби и развлечения',
+    translation: 'xobbi_i_razvlecheniya',
+  },
+  {
+    name: 'Прочее',
+    translation: 'prochee',
+  },
+];

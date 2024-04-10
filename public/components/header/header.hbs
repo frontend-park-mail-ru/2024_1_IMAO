@@ -44,9 +44,9 @@
 	    Категории
         </button>
         <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            {{#each CATEGORIES}}
+            <a href="#" data-translation="{{this.translation}}">{{this.name}}</a>
+            {{/each}}
         </div>
     </div>
     <form class="search">

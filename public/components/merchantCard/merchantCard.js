@@ -30,6 +30,8 @@ return this.#element;
 
   #renderTemplate() {
       const context = {
+        id: this.items.id,
+        path: this.items.path,
         merchantsName : this.items.merchantsName,
         location : this.items.location,
         registrationDate : this.items.registrationDate,

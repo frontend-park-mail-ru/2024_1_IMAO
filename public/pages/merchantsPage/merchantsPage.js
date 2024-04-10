@@ -13,11 +13,13 @@ import template from './merchantsPage.hbs';
 import styles from './merchantsPage.css'; //eslint-disable-line no-unused-vars
 import { StringToHtmlElement } from '../../modules/stringToHtmlElement.js';
 import { buildURL } from '../../modules/parsePathParams.js';
+import { getURLFromLocation, parsePathParams } from '../../modules/parsePathParams.js';
 
 /** Class representing a main page. */
 export class MerchantsPage {
   #element;
   #isBottomReached;
+  #slug;
 
   /**
    * Initialize a main page.
@@ -36,11 +38,20 @@ export class MerchantsPage {
    * @return {Element} - The element of main page.
    */
   async render() {
+    this.#getSlug();
     await this.#renderTemplate();
 
     this.#addListeners();
 
     return this.#element;
+  }
+
+  /**
+   * Get slug parameters from URL.
+   */
+  #getSlug() {
+    const url = getURLFromLocation(window.location.href, router.host);
+    this.#slug = parsePathParams(router.routes.merchantsPage.href, url);
   }
 
   async #addListeners() {
@@ -50,7 +61,7 @@ export class MerchantsPage {
       input.addEventListener('click', this.handleClick.bind(this));
     }.bind(this));
 
-    this.#addScrollListener();
+    // this.#addScrollListener();
   }
 
   handleClick(event) {
@@ -91,7 +102,7 @@ export class MerchantsPage {
       if (position + winHeight >= docHeight && !this.#isBottomReached) {
         const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
         const currentState = this.sectionState.getSectionState('active', 'isRendered');
-        this.#renderCards(merchantsCardContainer, currentState);
+        // this.#renderCards(merchantsCardContainer, currentState);
         if (!currentState) {
           this.sectionState.setSectionState('active', 'isRendered', true);
         }
@@ -108,11 +119,15 @@ export class MerchantsPage {
       1 :
       parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('count');
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('startId');
-
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('count', 28);
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('startId', startID);
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('deleted');
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('userId');
+    const state = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ?
+      0 : 1;
+    const url = getURLFromLocation(window.location.href, router.host);
+    const params = parsePathParams(router.routes.merchantsPage.href, url);
+    const {id} = params;
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('userId', id);
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('deleted', state);
 
     ajax.get(
       ajax.routes.ADVERT.GET_ADS_LIST,
@@ -133,7 +148,7 @@ export class MerchantsPage {
           const {price, title, id, city, category} = inner;
           const path = city + '/' + category + '/' + id;
 
-          merchantsPageRightSection.appendChild(StringToHtmlElement(renderAdsCardTemplate(title, this.sectionState.getSectionState('serviceField', 'isChecked'), id, path)));
+          merchantsPageRightSection.appendChild(StringToHtmlElement(renderAdsCardTemplate(title, price, id, path)));
         });
 
         this.#isBottomReached = false;
@@ -150,7 +165,7 @@ export class MerchantsPage {
     const root = StringToHtmlElement(template());
     this.#element.appendChild(root);
     const id = 1;
-    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
+    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, this.#slug);
     await ajax.get(
       path,
       (body) => {
@@ -186,8 +201,8 @@ export class MerchantsPage {
 
         const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
         const buttonGroupItemes = [
-          { categoryLabel: 'Активные', count: '20', checked: true, categoryLabelValue: 'active' },
-          { categoryLabel: 'Проданные', count: '5', checked: false, categoryLabelValue: 'sold' },
+          { categoryLabel: 'Активные', count: '', checked: true, categoryLabelValue: 'active' },
+          { categoryLabel: 'Проданные', count: '', checked: false, categoryLabelValue: 'sold' },
         ];
         buttonGroupItemes.forEach(item => {
           this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);

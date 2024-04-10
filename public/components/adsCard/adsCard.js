@@ -1,5 +1,9 @@
 'use strict';
 
+import { trimString } from '../../modules/trimString.js';
+
+const MAX_TITLE_LENGTH = 22;
+
 /**
  * Render an AdsCard template.
  * @param {string} title - The title of the product.
@@ -10,5 +14,7 @@
  */
 export function renderAdsCardTemplate(title, price, id, path) {
   const template = Handlebars.templates['adsCard.hbs'];
-  return template({title, price, id, path});
+  const titleTrim = trimString(title, MAX_TITLE_LENGTH);
+
+  return template({title,titleTrim, price, id, path});
 }

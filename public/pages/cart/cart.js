@@ -3,6 +3,7 @@
 import {renderCartBlock} from '../../components/cartBlock/cartBlock.js';
 import {renderCartMain} from '../../components/cartMain/cartMain.js';
 import {renderSidebar} from '../../components/sidebar/sidebar.js';
+import { buildURLBySegments } from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -26,8 +27,9 @@ export class Cart {
    * Render the main page.
    * @return {Element} - The element of main page.
    */
-  render() {
-    this.#renderTemplate();
+  async render() {
+    await this.#renderTemplate();
+    this.#addListeners();
 
     return this.#element;
   }
@@ -115,12 +117,13 @@ export class Cart {
   #addDeleteCheckedListener(button, quantity, headQuantity, priceSum, ads) {
     button.addEventListener('click', (ev) => {
       ev.preventDefault();
-
+      const advertIDs = [];
       for (const element of ads) {
         if (!element.checked) {
           continue;
         }
         const id = element.value;
+        advertIDs.push(Number(id));
         element.checked = false;
         const advert = this.#element.querySelector(`[id="${id}"]`);
         advert.remove();
@@ -129,6 +132,11 @@ export class Cart {
         quantity.innerHTML = Number(quantity.innerHTML) - 1;
         headQuantity.innerHTML = quantity.innerHTML;
       }
+      ajax.post(
+        ajax.routes.CART.DELETE_CART_ITEM,
+        {advertIDs},
+        (body)=>console.log(body),
+      );
     });
   }
 
@@ -150,6 +158,12 @@ export class Cart {
         priceSum.innerHTML = Number(priceSum.innerHTML) - price;
         quantity.innerHTML = Number(quantity.innerHTML) - 1;
         headQuantity.innerHTML = quantity.innerHTML;
+        const advertIDs = [Number(id)];
+        ajax.post(
+          ajax.routes.CART.DELETE_CART_ITEM,
+          {advertIDs},
+          (body)=>console.log(body),
+        );
       });
     }
   }
@@ -179,17 +193,33 @@ export class Cart {
 
     this.#items[ajax.auth.id] = {};
 
-    adverts.forEach((advert) => {
+    const ids = [];
+
+    adverts.forEach((item) => {
+      let {city, category} = item;
+      const {advert} = item;
+      city = city.translation;
+      category = category.translation;
       const {id, price, title} = advert;
       this.#items[ajax.auth.id][id] = advert;
+      ids.push(id);
       priceSum += Number(price);
-      selectPanel.innerHTML += renderCartBlock(id, title, price);
+      const path = buildURLBySegments(router.host, [city, category, id]);
+      selectPanel.innerHTML += renderCartBlock(id, title, price, path);
+    });
+
+    ids.forEach((id) => {
+      const address = this.#element.querySelector(`a[data-id="${id}"]`);
+      // console.log(id);
+      // console.log(address);
+      address.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        router.pushPage(ev, address.href);
+      });
     });
 
     const mainCont = this.#element.querySelector('.main-content');
 
     mainCont.innerHTML += renderSidebar(quantity, priceSum);
-
-    this.#addListeners();
   }
 }

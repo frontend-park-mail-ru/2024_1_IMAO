@@ -54,6 +54,7 @@ export function buildURLBySegments(serverHost, segments) {
   segments.forEach((segment) => {
     path = path + '/' + segment;
   });
+  console.log(serverHost);
 
   return new URL(path, serverHost);
 }

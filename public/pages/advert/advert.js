@@ -12,6 +12,7 @@ import {convertDate} from '../../modules/convertDate.js';
 import { FormatDate } from '../../modules/formatDate.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
+import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
 
 /** Class representing advert page. */
 export class Advert {
@@ -54,6 +55,9 @@ export class Advert {
     this.#addCarouselListeners();
     this.#addPathListener();
     this.#addCloseListener();
+    // this.#addCartAddListener();
+    this.#addAddCartDialogListener();
+    this.#addMerchantPageListener();
   }
 
   /**
@@ -118,6 +122,7 @@ export class Advert {
 
     if (closeBtn !== null) {
       closeBtn.addEventListener('click', (ev) => {
+        ev.preventDefault();
         const id = closeBtn.dataset['id'];
         const apiRoute = buildURL(ajax.routes.ADVERT.CLOSE_ADVERT, {'id': id});
 
@@ -134,6 +139,27 @@ export class Advert {
     }
   }
 
+  /**
+   *
+   * @param {*} addToBlackListButton
+   * @param {*} overlayContainer
+   */
+  #addAddCartDialogListener() {
+    const addCartButton = this.#element.querySelector('.cart');
+    if (addCartButton == null) {
+      return;
+    }
+    const addCartOverlay = new AddCartOverlay(addCartButton);
+    const advertBlock = this.#element.querySelector('.advert-block');
+    advertBlock.appendChild(addCartOverlay.render());
+  }
+
+  #addMerchantPageListener() {
+    const merchantAddress = this.#element.querySelector('.merchant-address');
+    merchantAddress.addEventListener('click', (ev) => {
+      router.pushPage(ev, merchantAddress.href);
+    });
+  }
   /**
    * Render the advert page template.
    */
@@ -174,8 +200,8 @@ export class Advert {
               [city['translation']]);
           const editPath = buildURLBySegments(router.host,
               ['edit', advert['id']]);
-          const closePath = buildURLBySegments(router.host,
-              ['close', advert['id']]);
+          // const closePath = buildURLBySegments(router.host,
+          //     ['close', advert['id']]);
 
           const adPathElement = document.createElement('div');
           adPathElement.innerHTML =
@@ -187,60 +213,45 @@ export class Advert {
           adContainer.classList.add('ad-container');
           adContainer.innerHTML = renderAdContainerTemplate(adTitle,
               cityName, categoryName, description, created, price, isAuthor,
-              editPath, closePath, id);
+              editPath, id);
           content.appendChild(adContainer);
+        },
+    );
 
-          this.#addListeners();
-        });
+    const sellerSection = this.#element.querySelector('.seller-block');
 
-        const sellerSection = this.#element.querySelector('.seller-block');
+    const id = userId;
+    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
+    await ajax.get(
+      path,
+      (body) => {
+        const profile = body['profile'];
+        const merchantsName = profile.merchantsName;
+        const ratingValue = profile.rating;
+        const id = profile.id;
+        const path = buildURL(router.routes.merchantsPage.href, {id});
 
-        const id = userId;
-        const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
-        await ajax.get(
-          path,
-          (body) => {
-            const profile = body['profile'];
-            const merchantsName = profile.merchantsName;
-            const ratingValue = profile.rating;
+        const merchantCartItems = {
+          id: id,
+          path: path,
+          merchantsName: merchantsName,
+          location: profile.city.translation,
+          registrationDate: FormatDate(profile.regTime),
+          isProfileVerified: profile.approved,
+          reviewCount: profile.reactionsCount,
+          subscribersCount: profile.subersCount,
+          subscribtionsCount: profile.subonsCount,
+        };
 
-            const merchantCartItems = {
-              merchantsName: merchantsName,
-              location: profile.city.translation,
-              registrationDate: FormatDate(profile.regTime),
-              isProfileVerified: profile.approved,
-              reviewCount: profile.reactionsCount,
-              subscribersCount: profile.subersCount,
-              subscribtionsCount: profile.subonsCount,
-            };
+        const merchantCardInstance = new MerchantCard(merchantCartItems);
+        sellerSection.appendChild(merchantCardInstance.render());
 
-            const merchantCardInstance = new MerchantCard(merchantCartItems);
-            sellerSection.appendChild(merchantCardInstance.render());
-
-            const rating = this.#element.querySelector('.rating');
-            const ratingBarInstance = new RatingBar(ratingValue);
-            const ratingBar = ratingBarInstance.render();
-            rating.appendChild(ratingBar);
-
-            // const rating = this.#element.querySelector('.rating');
-            // const ratingBarInstance = new RatingBar(ratingValue);
-            // const ratingBar = ratingBarInstance.render();
-            // rating.appendChild(ratingBar);
-
-            // const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
-            // const buttonGroupItemes = [
-            //   { categoryLabel: 'Активные', count: '20', checked: true, categoryLabelValue: 'active' },
-            //   { categoryLabel: 'Проданные', count: '5', checked: false, categoryLabelValue: 'sold' },
-            // ];
-            // buttonGroupItemes.forEach(item => {
-            //   this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
-            // });
-            // buttonGroupItemes.forEach(item => {
-            //   if (item.checked) {
-            //     this.sectionState.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
-
-            //     return;
-            //   }
-            });
+        const rating = this.#element.querySelector('.rating');
+        const ratingBarInstance = new RatingBar(ratingValue);
+        const ratingBar = ratingBarInstance.render();
+        rating.appendChild(ratingBar);
+      },
+    );
+    this.#addListeners();
   }
 }

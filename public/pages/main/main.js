@@ -126,11 +126,11 @@ export class Main {
       parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
     const apiRoute = this.#getRoute(startID);
-
     ajax.get(
         apiRoute,
         (body) => {
           const adverts = body['items'];
+          // console.log(adverts);
           if (!(adverts && Array.isArray(adverts))) {
             return;
           }
@@ -148,7 +148,6 @@ export class Main {
             const {price, title, id, city, category} = inner;
             ids.push(id);
             const path = buildURLBySegments(router.host, [city, category, id]);
-            console.log(path);
             cardsContainer.innerHTML +=
               renderAdsCardTemplate(title, price, id, path);
           });

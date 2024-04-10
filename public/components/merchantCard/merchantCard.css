@@ -353,5 +353,12 @@
     word-wrap: break-word;
 }
 
+.merchant-address {
+  color: #333333;
+  text-decoration: none;
+}
 
+.merchant-address:hover {
+  color: #555454;
+}
 

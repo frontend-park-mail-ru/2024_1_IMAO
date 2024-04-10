@@ -61,8 +61,8 @@
 <div class="seller-block">
     <h1 class="price title">{{price}} ₽</h1>
     {{#if isAuthor}}
-    <a class="seller-block__btn close" data-id="{{id}}" >Снять с продажи</a>
+    <a class="seller-block__btn close" href="#" data-id="{{id}}" >Снять с продажи</a>
     {{^}}
-    <a class="seller-block__btn" href="#" >Добавить в корзину</a>
+    <a class="seller-block__btn cart" href="#" data-id="{{id}}" >Добавить в корзину</a>
     {{/if}}
 </div>
