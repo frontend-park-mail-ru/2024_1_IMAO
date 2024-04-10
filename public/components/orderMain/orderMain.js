@@ -9,6 +9,8 @@
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
 export function renderOrderMain() {
+  // eslint-disable-next-line no-undef
   const template = Handlebars.templates['orderMain.hbs'];
+
   return template({});
 }

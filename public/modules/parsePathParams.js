@@ -33,6 +33,7 @@ export function buildURL(url, params) {
   let path = url.pathname;
 
   for (const paramName in params) {
+    // eslint-disable-next-line no-prototype-builtins
     if (params.hasOwnProperty(paramName)) {
       path = path.replace(':' + paramName, params[paramName]);
     }
@@ -40,6 +41,7 @@ export function buildURL(url, params) {
 
   const retURL = new URL(path, url.origin);
   retURL.search = url.search;
+
   return retURL;
 }
 
@@ -54,7 +56,6 @@ export function buildURLBySegments(serverHost, segments) {
   segments.forEach((segment) => {
     path = path + '/' + segment;
   });
-  console.log(serverHost);
 
   return new URL(path, serverHost);
 }
@@ -67,5 +68,6 @@ export function buildURLBySegments(serverHost, segments) {
  */
 export function getURLFromLocation(location, serverHost) {
   const path = location.split(serverHost).join('');
-  return new URL(path, serverHost);
+
+return new URL(path, serverHost);
 }

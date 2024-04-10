@@ -7,6 +7,8 @@
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
 export function renderSidebar(quantity, priceSum) {
+  // eslint-disable-next-line no-undef
   const template = Handlebars.templates['sidebar.hbs'];
+
   return template({quantity, priceSum});
 }

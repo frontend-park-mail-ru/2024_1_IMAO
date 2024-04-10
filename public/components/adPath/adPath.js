@@ -11,6 +11,8 @@
  */
 export function renderAdPathTemplate(city, category, name,
     cityPath, categoryPath) {
+  // eslint-disable-next-line no-undef
   const template = Handlebars.templates['adPath.hbs'];
+
   return template({city, category, name, cityPath, categoryPath});
 }

@@ -15,13 +15,12 @@ class RatingBar {
 
       const context = {
           ratingValue : this.ratingValue,
-          items: this.items
+          items: this.items,
       };
       const root = StringToHtmlElement(template(context));
-
 
       return root;
   }
 }
 
-export default RatingBar;  
+export default RatingBar;

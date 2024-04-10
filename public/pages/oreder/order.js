@@ -94,7 +94,13 @@ export class Order {
       ajax.post(
           ajax.routes.ORDER.CREATE_ORDERS,
           orderItems,
-          (body)=>console.log(body),
+          (body)=>{
+            const {isCreated} = body;
+
+            if(isCreated !== undefined){
+              router.go(router.routes.cartPage.href);
+            }
+          },
       );
       //
       // Поставить редирект на страницу заказов в профиле
@@ -141,7 +147,8 @@ export class Order {
     let num = 1;
     if (quantity === 0) {
       router.go(router.routes.cartPage.href);
-      return;
+
+return;
     }
 
     for (const orderItem in order) {

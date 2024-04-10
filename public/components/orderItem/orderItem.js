@@ -13,6 +13,7 @@ const MAX_TITLE_LENGTH = 40;
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
 export function renderOrderItem(num, id, title, price) {
+  // eslint-disable-next-line no-undef
   const template = Handlebars.templates['orderItem.hbs'];
   title = trimString(title, MAX_TITLE_LENGTH);
 

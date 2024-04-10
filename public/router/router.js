@@ -14,7 +14,6 @@ class Router {
     this.auth = auth;
     this.routes = routes;
     this.host = serverHost;
-    console.log(this.host);
     this.listeners = {};
   }
 

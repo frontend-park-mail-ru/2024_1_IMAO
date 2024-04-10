@@ -16,7 +16,7 @@ app.get('/*', function(request, response) {
 });
 
 app.get('/test/:num/', function(req, res) {
-	res.send(req.params.num);
+  res.send(req.params.num);
 });
 
 app.listen(port, function() {

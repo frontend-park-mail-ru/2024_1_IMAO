@@ -73,6 +73,7 @@ export class Header {
           ajax.routes.AUTH.LOGOUT,
           null,
           (body) => {
+            // eslint-disable-next-line camelcase
             ajax.auth.is_auth = body.isAuth;
             this.#renderHeaderTemplate('Москва');
             this.#addListeners();
@@ -88,6 +89,7 @@ export class Header {
  * @return {void}
  */
   #renderHeaderTemplate(location) {
+    // eslint-disable-next-line no-undef
     const template = Handlebars.templates['header.hbs'];
     const urlMain = router.routes.mainPage.href.href;
     const urlLogin = router.routes.loginPage.href.href;

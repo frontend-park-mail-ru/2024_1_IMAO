@@ -65,8 +65,6 @@ export class MerchantsPage {
   }
 
   handleClick(event) {
-    console.log(event.target.value);
-
     const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
     const isRendered = this.sectionState.getSectionState(event.target.value, 'isRendered');
 
@@ -86,8 +84,6 @@ export class MerchantsPage {
       const stashedMerchantsCardContainer = this.sectionState.getSectionState(event.target.value, 'render');
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
     }
-
-    console.log(this.sectionState);
   }
 
   /**
@@ -216,8 +212,6 @@ export class MerchantsPage {
         });
         const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
         merchantsPageRightSection.appendChild(horizontalButtonGroupInstance.render());
-
-        console.log(profile);
       }, { id: '1' },
     );
 

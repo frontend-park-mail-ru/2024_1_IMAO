@@ -6,7 +6,6 @@ import {emailError, passwordError} from '../../modules/validate.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
-
 const passwordMatchError = 'Пароли не совпадают!';
 const userAlreadyExistError = 'Такой пользователь уже существует!';
 
@@ -80,7 +79,8 @@ export class Signup {
 
       if (!this.#validateData(email, password, passwordRepeat, divError)) {
         submit.disabled = false;
-        return;
+
+return;
       }
 
       const apiRoute = ajax.routes.AUTH.SIGNUP;
@@ -91,6 +91,7 @@ export class Signup {
           (body) => {
             if (body?.isAuth === true) {
               router.go(router.routes.mainPage.href);
+
               return;
             }
             submit.disabled = false;
@@ -111,17 +112,20 @@ export class Signup {
   #validateData(email, password, passwordRepeat, divError) {
     if (!validateEmail(email)) {
       divError.innerHTML = emailError;
-      return false;
+
+return false;
     }
 
     if (!validatePassword(password)) {
       divError.innerHTML = passwordError;
-      return false;
+
+return false;
     }
 
     if (password != passwordRepeat) {
       divError.innerHTML = passwordMatchError;
-      return false;
+
+return false;
     }
 
     return true;

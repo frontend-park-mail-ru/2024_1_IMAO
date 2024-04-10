@@ -11,6 +11,7 @@
  */
 export function renderAdContainerTemplate(title, city, category, description,
     created, price, isAuthor, editPath, id) {
+  // eslint-disable-next-line no-undef
   const template = Handlebars.templates['adContainer.hbs'];
 
   return template({title, city, category, description, created, price,

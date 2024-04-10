@@ -60,7 +60,7 @@ export class Login {
   #addFormListener(form) {
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      const submit = form.querySelector('[type="submit"]')[this.data.id];
+      const submit = form.querySelector('[type="submit"]');
       submit.disabled = true;
 
       const inputs = [];
@@ -89,7 +89,7 @@ return;
             if (body?.isAuth === true) {
               router.go(router.routes.mainPage.href);
 
-return;
+            return;
             }
             submit.disabled = false;
             divError.innerHTML = authError;

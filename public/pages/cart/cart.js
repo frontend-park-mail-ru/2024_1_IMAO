@@ -135,7 +135,7 @@ export class Cart {
       ajax.post(
         ajax.routes.CART.DELETE_CART_ITEM,
         {advertIDs},
-        (body)=>console.log(body),
+        (body)=>{return;},
       );
     });
   }
@@ -162,7 +162,7 @@ export class Cart {
         ajax.post(
           ajax.routes.CART.DELETE_CART_ITEM,
           {advertIDs},
-          (body)=>console.log(body),
+          (body)=>{return;},
         );
       });
     }

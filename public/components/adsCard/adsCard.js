@@ -13,6 +13,7 @@ const MAX_TITLE_LENGTH = 22;
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
 export function renderAdsCardTemplate(title, price, id, path) {
+  // eslint-disable-next-line no-undef
   const template = Handlebars.templates['adsCard.hbs'];
   const titleTrim = trimString(title, MAX_TITLE_LENGTH);
 
