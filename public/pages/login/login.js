@@ -60,7 +60,7 @@ export class Login {
   #addFormListener(form) {
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      const submit = form.querySelector('[type="submit"]')[this.data.id];
+      const submit = form.querySelector('[type="submit"]');
       submit.disabled = true;
 
       const inputs = [];

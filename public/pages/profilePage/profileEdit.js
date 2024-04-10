@@ -60,8 +60,9 @@ export class ProfileEdit {
         const forms = [{
             title: 'Изменить профиль',
             fields: [{type: 'text', value: this.profile.name, name: 'name'},
-              {type: 'text', value: this.profile.surname, name: 'surname'}],
-            apiRoute: ajax.routes.PROFILE.SET_PROFILE_AVATAR,
+              {type: 'text', value: this.profile.surname, name: 'surname'},
+              {type: 'file', name: 'avatar'}],
+            apiRoute: ajax.routes.PROFILE.PROFILE_EDIT,
             id: 1,
           },
           {
@@ -92,7 +93,7 @@ export class ProfileEdit {
         }
 
         for (let i = 0; i < btns.length; ++i) {
-          const form = document.getElementsByTagName('form')[i + 1];
+          const form = this.#element.getElementsByTagName('form')[i + 1];
 
           form.addEventListener('submit', (ev) => {
             ev.preventDefault();
@@ -101,7 +102,7 @@ export class ProfileEdit {
 
             const formData = new FormData(form);
 
-            if (forms[i].apiRoute === ajax.routes.PROFILE.SET_PROFILE_AVATAR) {
+            if (forms[i].apiRoute === ajax.routes.PROFILE.PROFILE_EDIT) {
               ajax.postMultipart(
                 forms[i].apiRoute,
                 formData,
