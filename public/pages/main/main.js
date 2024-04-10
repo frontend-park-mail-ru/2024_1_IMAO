@@ -148,7 +148,6 @@ export class Main {
             const {price, title, id, city, category} = inner;
             ids.push(id);
             const path = buildURLBySegments(router.host, [city, category, id]);
-            console.log(path);
             cardsContainer.innerHTML +=
               renderAdsCardTemplate(title, price, id, path);
           });

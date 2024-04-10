@@ -27,13 +27,16 @@ return this.#element;
 
   #renderTemplate() {
       const context = {
-        profileName : this.items.profileName,
-        location : this.items.location,
-        registrationDate : this.items.registrationDate,
-        isProfileVerified : this.items.isProfileVerified,
+        merchantsName: this.items.merchantsName,
+        location: this.items.location,
+        registrationDate: this.items.registrationDate,
+        isProfileVerified: this.items.isProfileVerified,
         reviewCount: this.items.reviewCount,
         subscribersCount: this.items.subscribersCount,
         subscribtionsCount: this.items.subscribtionsCount,
+        urlOrder: this.items.urlOrder,
+        urlSettings: this.items.urlSettings,
+        urlMerchant: this.items.urlMerchant.href,
       };
       this.#element = StringToHtmlElement(template(context));
   }

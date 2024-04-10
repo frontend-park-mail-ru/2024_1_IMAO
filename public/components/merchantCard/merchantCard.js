@@ -25,7 +25,7 @@ class MerchantCard {
     this.#addBlackListEventListener(addToBlackListButton, overlayContainer);
     console.log(addToBlackListButton);
 
-return this.#element;
+    return this.#element;
   }
 
   #renderTemplate() {
@@ -38,13 +38,13 @@ return this.#element;
         subscribersCount : this.items.subscribersCount,
         subscribtionsCount : this.items.subscribtionsCount,
       };
+
       this.#element = StringToHtmlElement(template(context));
   }
 
   #addBlackListEventListener(addToBlackListButton, overlayContainer) {
 
     const blacklistOverlay = new BlackListOverlay(addToBlackListButton);
-    console.log(blacklistOverlay);
     overlayContainer.appendChild(blacklistOverlay.render());
   }
 }

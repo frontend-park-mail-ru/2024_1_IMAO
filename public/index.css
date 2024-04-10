@@ -4,6 +4,7 @@
 @import "components/adPath/adPath.css";
 @import "components/adContainer/adContainer.css";
 @import "components/adCreationForm/adCreationForm.css";
+@import "components/settingsContainer/settingsContainer.css";
 
 body {
     padding: 0;
@@ -46,6 +47,7 @@ main {
     flex-wrap: wrap;
     gap: 16px 36px;
 }
+
 .ad-container {
     display: flex;
     margin-top: 20px;

@@ -85,8 +85,9 @@ export class Header {
     const urlMain = router.routes.mainPage.href.href;
     const urlLogin = router.routes.loginPage.href.href;
     const urlCreate = router.routes.adCreationPage.href.href;
+    const urlProfile = router.routes.profilePage.href.href;
     const flag = router.auth.is_auth;
     this.#header.innerHTML = template({urlMain, urlLogin, urlCreate,
-      flag, location});
+      urlProfile, flag, location});
   }
 }

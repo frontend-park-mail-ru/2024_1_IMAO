@@ -88,7 +88,7 @@
             </div>
             <label class="Active">
                 <input type="radio" name="radio" value="adverts" {{#if checked}}checked{{/if}} />
-                <span class="text-secondary icon-text">Мои объявления</span>
+                <a class="icon-text" href="{{urlMerchant}}" data-url="{{urlMerchant}}">Мои объявления</a>
             </label>
         </li>
         <li class="labeled-icon text-underline-hover cursor-hand-hover">
@@ -97,7 +97,7 @@
             </div>
             <label class="Active">
                 <input type="radio" name="radio" value="orders" {{#if checked}}checked{{/if}} />
-                <span class="text-secondary icon-text">Мои заказы</span>
+                <a class="icon-text" href="{{urlOrder}}" data-url="{{urlOrder}}">Мои заказы</a>
             </label>
         </li>
         <li class="labeled-icon text-underline-hover cursor-hand-hover ">
@@ -106,7 +106,7 @@
             </div>
             <label class="Active">
                 <input type="radio" name="radio" value="settings" {{#if checked}}checked{{/if}} />
-                <span class="text-secondary icon-text">Настроки</span>
+                <a class="icon-text" href="{{urlSettings}}" data-url="{{urlSettings}}">Настройки</a>
             </label>
         </li>
     </ul>

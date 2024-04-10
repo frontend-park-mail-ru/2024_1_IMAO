@@ -10,9 +10,8 @@ import StageStorage from '../../modules/stateStorage.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import template from './profilePage.hbs';
-import styles from './profilePage.css'; //eslint-disable-line no-unused-vars
-import { StringToHtmlElement } from '../../modules/stringToHtmlElement.js';
-import { buildURL } from '../../modules/parsePathParams.js';
+import {StringToHtmlElement} from '../../modules/stringToHtmlElement.js';
+import {buildURL, buildURLBySegments} from '../../modules/parsePathParams.js';
 
 /** Class representing a main page. */
 export class ProfilePage {
@@ -54,8 +53,6 @@ export class ProfilePage {
   }
 
   handleClick(event) {
-    console.log(event.target.value);
-
     const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
     const isRendered = this.sectionState.getSectionState(event.target.value, 'isRendered');
 
@@ -75,8 +72,6 @@ export class ProfilePage {
       const stashedMerchantsCardContainer = this.sectionState.getSectionState(event.target.value, 'render');
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
     }
-
-    console.log(this.sectionState);
   }
 
   /**
@@ -131,7 +126,7 @@ export class ProfilePage {
 
         adverts.forEach((inner) => {
           const {price, title, id, city, category} = inner;
-          const path = city + '/' + category + '/' + id;
+          const path = buildURLBySegments(router.host, [city, category, id]);
 
           merchantsPageRightSection.appendChild(StringToHtmlElement(renderAdsCardTemplate(title, this.sectionState.getSectionState('serviceField', 'isChecked'), id, path)));
         });
@@ -149,8 +144,8 @@ export class ProfilePage {
     this.#element.appendChild(this.header.render());
     const root = StringToHtmlElement(template());
     this.#element.appendChild(root);
-    const id = 1;
-    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
+    const id = ajax.auth.id;
+    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {'id': id});
     await ajax.get(
       path,
       (body) => {
@@ -174,6 +169,10 @@ export class ProfilePage {
           reviewCount: profile.reactionsCount,
           subscribersCount: profile.subersCount,
           subscribtionsCount: profile.subonsCount,
+          urlOrder: '/cart',
+          urlSettings: router.routes.profileEdit.href,
+          urlMerchant: buildURL(router.routes.merchantsPage.href,
+             ajax.auth.id),
         };
         const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
         const profileCardInstance = new ProfileCard(merchantCartItems);
@@ -201,9 +200,7 @@ export class ProfilePage {
         });
         const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
         merchantsPageRightSection.appendChild(horizontalButtonGroupInstance.render());
-
-        console.log(profile);
-      }, { id: '1' },
+      },
     );
 
     const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');

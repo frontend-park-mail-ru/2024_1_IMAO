@@ -60,7 +60,7 @@ export class Login {
   #addFormListener(form) {
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      const submit = form.querySelector('[type="submit"]');
+      const submit = form.querySelector('[type="submit"]')[this.data.id];
       submit.disabled = true;
 
       const inputs = [];
@@ -76,7 +76,8 @@ export class Login {
 
       if (!this.#validateData(email, password, divError)) {
         submit.disabled = false;
-        return;
+
+return;
       }
 
       const apiRoute = ajax.routes.AUTH.LOGIN;
@@ -87,7 +88,8 @@ export class Login {
           (body) => {
             if (body?.isAuth === true) {
               router.go(router.routes.mainPage.href);
-              return;
+
+return;
             }
             submit.disabled = false;
             divError.innerHTML = authError;
@@ -106,7 +108,8 @@ export class Login {
   #validateData(email, password, divError) {
     if (!validateEmail(email)) {
       divError.innerHTML = emailError;
-      return false;
+
+return false;
     }
 
     return true;

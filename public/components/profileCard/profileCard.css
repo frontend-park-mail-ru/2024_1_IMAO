@@ -395,3 +395,12 @@
 .radio-group-vertical input[type="radio"]:checked+span {
     color: rgba(112, 146, 254, 1);
 }
+
+.labeled-icon a {
+    text-decoration: none;
+    color: black;
+}
+
+.labeled-icon a:hover {
+    color: #002ab3;
+}

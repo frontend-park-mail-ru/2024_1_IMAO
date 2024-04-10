@@ -111,4 +111,14 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  font-size: 14px;
+  font-family: Open Sans;
+}
+
+.atribute-list button {
+  border-radius: 0;
+  border-color: #ffffff;
+  border-style: none;
+  background-color: #ffffff;
+  cursor: pointer;
 }
