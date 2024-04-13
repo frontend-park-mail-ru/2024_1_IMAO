@@ -2,12 +2,11 @@
 
 /**
  * Render ad creation form page.
- * @param {String} btn
+ * @param {boolean} create
  * @param {String} title
  * @param {String} price
  * @param {String} description
  * @param {String} city
- * @param {boolean} create
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the ad creation form.
  */
 export function renderAdCreationForm(create, title, price, description, city) {

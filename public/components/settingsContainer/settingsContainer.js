@@ -1,6 +1,11 @@
 'use strict';
 
-export function renderSettingsContainer(profileData) {
+/**
+ *
+ * @param {*} profileData
+ * @return {HTMLElement}
+ */
+export default function renderSettingsContainer(profileData) {
   // eslint-disable-next-line no-undef
   Handlebars.registerHelper('is_null', function(value) {
     return value === '';

@@ -11,18 +11,17 @@ import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
 import {ProfilePage} from './pages/profilePage/profilePage.js';
 import {ProfileEdit} from './pages/profilePage/profileEdit.js';
 import {Cart} from './pages/cart/cart.js';
-import {Order} from './pages/oreder/order.js';
+import {Order} from './pages/order/order.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
-router.initialize(AUTH, PAGES_ROUTES, serverHost);
-ajax.initialize(AUTH, API_ROUTES);
-//ajax.initialize(AUTH, API);
-
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
-
 rootElement.appendChild(mainElement);
+
+ajax.initialize(AUTH, API_ROUTES);
+router.initialize(AUTH, PAGES_ROUTES, serverHost);
+router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
@@ -38,7 +37,6 @@ router.init('adEditingPage', loginRequired(renderAdEditing));
 router.init('cartPage', loginRequired(renderCart));
 router.init('orderPage', loginRequired(renderOrder));
 
-router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
 const header = new Header();
 
@@ -56,7 +54,7 @@ function logoutRequired(render) {
       return renderMain();
     }
 
-  return render();
+    return render();
   };
 }
 
@@ -68,7 +66,7 @@ function logoutRequired(render) {
 function loginRequired(render) {
   return function() {
     if (AUTH.is_auth !== true) {
-      history.pushState({page: '/login'}, 'login', '/login');
+      history.replaceState({page: '/login'}, 'login', '/login');
       document.title = 'login';
 
       return renderLogin();
@@ -112,7 +110,7 @@ function renderMerchantsPage() {
 }
 
 /**
- * Return merchant's page.
+ * Return profile page.
  * @return {HTMLElement} - The merchant's page.
  */
 function renderProfilePage() {
@@ -122,6 +120,10 @@ function renderProfilePage() {
   return profilePage.render();
 }
 
+/**
+ * Return profile page.
+ * @return {HTMLElement} - The merchant's page.
+ */
 function renderProfileEdit() {
   mainElement.innerHTML = '';
   const profileEdit = new ProfileEdit(header);

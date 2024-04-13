@@ -7,38 +7,52 @@
 
 'use strict';
 import template from './profileCard.hbs';
-import styles from './profileCard.css'; //eslint-disable-line no-unused-vars
+import styles from './profileCard.css'; // eslint-disable-line no-unused-vars
 import BlackListOverlay from '../../components/blackListOverlay/blackListOverlay.js';
-import { StringToHtmlElement } from '../../modules/stringToHtmlElement.js';
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 
+/**
+ *
+ */
 class ProfileCard {
   #element;
 
+  /**
+   *
+   * @param {*} items
+   */
   constructor(items) {
-      this.items = items;
+    this.items = items;
   }
 
-  render(){
+  /**
+   *
+   * @return {HTMLElement}
+   */
+  render() {
     this.#renderTemplate();
     const overlayContainer = this.#element.querySelector('.overlay-container-blacklist');
 
-return this.#element;
+    return this.#element;
   }
 
+  /**
+   *
+   */
   #renderTemplate() {
-      const context = {
-        merchantsName: this.items.merchantsName,
-        location: this.items.location,
-        registrationDate: this.items.registrationDate,
-        isProfileVerified: this.items.isProfileVerified,
-        reviewCount: this.items.reviewCount,
-        subscribersCount: this.items.subscribersCount,
-        subscribtionsCount: this.items.subscribtionsCount,
-        urlOrder: this.items.urlOrder,
-        urlSettings: this.items.urlSettings,
-        urlMerchant: this.items.urlMerchant.href,
-      };
-      this.#element = StringToHtmlElement(template(context));
+    const context = {
+      merchantsName: this.items.merchantsName,
+      location: this.items.location,
+      registrationDate: this.items.registrationDate,
+      isProfileVerified: this.items.isProfileVerified,
+      reviewCount: this.items.reviewCount,
+      subscribersCount: this.items.subscribersCount,
+      subscribtionsCount: this.items.subscribtionsCount,
+      urlOrder: this.items.urlOrder,
+      urlSettings: this.items.urlSettings,
+      urlMerchant: this.items.urlMerchant.href,
+    };
+    this.#element = stringToHtmlElement(template(context));
   }
 }
 

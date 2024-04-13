@@ -1,14 +1,15 @@
 'use strict';
 
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './sidebar.hbs';
+import styles from './sidebar.css'; // eslint-disable-line no-unused-vars
+
 /**
  * Render an CartBlock template.
  * @param {string | number} quantity - The title of the product.
  * @param {string | number} priceSum - The price of the product.
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export function renderSidebar(quantity, priceSum) {
-  // eslint-disable-next-line no-undef
-  const template = Handlebars.templates['sidebar.hbs'];
-
-  return template({quantity, priceSum});
+export default function renderSidebar(quantity, priceSum) {
+  return stringToHtmlElement(template({quantity, priceSum}));
 }

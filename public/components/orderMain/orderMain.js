@@ -1,5 +1,9 @@
 'use strict';
 
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './orderMain.hbs';
+import styles from './orderMain.css'; // eslint-disable-line no-unused-vars
+
 /**
  * Render an orderIte template.
  * @param {number} num
@@ -10,7 +14,7 @@
  */
 export function renderOrderMain() {
   // eslint-disable-next-line no-undef
-  const template = Handlebars.templates['orderMain.hbs'];
+  // const template = Handlebars.templates['orderMain.hbs'];
 
-  return template({});
+  return stringToHtmlElement(template());
 }

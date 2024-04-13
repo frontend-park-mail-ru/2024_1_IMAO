@@ -1,6 +1,6 @@
 'use strict';
 
-import {renderAuthForm} from '../../components/authForm/authForm.js';
+import renderAuthForm from '../../components/authForm/authForm.js';
 import {emailError, validateEmail} from '../../modules/validate.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
@@ -77,7 +77,7 @@ export class Login {
       if (!this.#validateData(email, password, divError)) {
         submit.disabled = false;
 
-return;
+        return;
       }
 
       const apiRoute = ajax.routes.AUTH.LOGIN;
@@ -89,7 +89,7 @@ return;
             if (body?.isAuth === true) {
               router.go(router.routes.mainPage.href);
 
-            return;
+              return;
             }
             submit.disabled = false;
             divError.innerHTML = authError;
@@ -109,7 +109,7 @@ return;
     if (!validateEmail(email)) {
       divError.innerHTML = emailError;
 
-return false;
+      return false;
     }
 
     return true;
@@ -138,7 +138,6 @@ return false;
       askText: 'Нет аккаунта?',
       anchorText: 'Зарегистрируйтесь',
     };
-    const template = renderAuthForm();
-    this.#element.innerHTML = template(templateParams);
+    this.#element.appendChild(renderAuthForm(templateParams));
   }
 }

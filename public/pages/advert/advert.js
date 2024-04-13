@@ -3,16 +3,16 @@
 import {renderAdPathTemplate} from '../../components/adPath/adPath.js';
 /* eslint-disable-next-line max-len */
 import {renderAdContainerTemplate} from '../../components/adContainer/adContainer.js';
-import ajax from '../../modules/ajax.js';
-import router from '../../router/router.js';
 import {parsePathParams, buildURL} from '../../modules/parsePathParams.js';
 import {getURLFromLocation} from '../../modules/parsePathParams.js';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import {convertDate} from '../../modules/convertDate.js';
-import { FormatDate } from '../../modules/formatDate.js';
+import formatDate from '../../modules/formatDate.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
+import ajax from '../../modules/ajax.js';
+import router from '../../router/router.js';
 
 /** Class representing advert page. */
 export class Advert {
@@ -117,6 +117,9 @@ export class Advert {
     });
   }
 
+  /**
+   * Event listener on advert close.
+   */
   #addCloseListener() {
     const closeBtn = document.querySelector('.close');
 
@@ -127,13 +130,13 @@ export class Advert {
         const apiRoute = buildURL(ajax.routes.ADVERT.CLOSE_ADVERT, {'id': id});
 
         ajax.post(
-          apiRoute,
-          null,
-          (body) => {
-            router.go(router.routes.mainPage.href);
+            apiRoute,
+            null,
+            (body) => {
+              router.go(router.routes.mainPage.href);
 
-            return;
-          },
+              return;
+            },
         );
       });
     }
@@ -154,6 +157,9 @@ export class Advert {
     advertBlock.appendChild(addCartOverlay.render());
   }
 
+  /**
+   * Event listener to redirect on merchant page.
+   */
   #addMerchantPageListener() {
     const merchantAddress = this.#element.querySelector('.merchant-address');
     merchantAddress.addEventListener('click', (ev) => {
@@ -223,34 +229,34 @@ export class Advert {
     const id = userId;
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
     await ajax.get(
-      path,
-      (body) => {
-        const profile = body['profile'];
-        const merchantsName = profile.merchantsName;
-        const ratingValue = profile.rating;
-        const id = profile.id;
-        const path = buildURL(router.routes.merchantsPage.href, {id});
+        path,
+        (body) => {
+          const profile = body['profile'];
+          const merchantsName = profile.merchantsName;
+          const ratingValue = profile.rating;
+          const id = profile.id;
+          const path = buildURL(router.routes.merchantsPage.href, {id});
 
-        const merchantCartItems = {
-          id: id,
-          path: path,
-          merchantsName: merchantsName,
-          location: profile.city.translation,
-          registrationDate: FormatDate(profile.regTime),
-          isProfileVerified: profile.approved,
-          reviewCount: profile.reactionsCount,
-          subscribersCount: profile.subersCount,
-          subscribtionsCount: profile.subonsCount,
-        };
+          const merchantCartItems = {
+            id: id,
+            path: path,
+            merchantsName: merchantsName,
+            location: profile.city.translation,
+            registrationDate: formatDate(profile.regTime),
+            isProfileVerified: profile.approved,
+            reviewCount: profile.reactionsCount,
+            subscribersCount: profile.subersCount,
+            subscribtionsCount: profile.subonsCount,
+          };
 
-        const merchantCardInstance = new MerchantCard(merchantCartItems);
-        sellerSection.appendChild(merchantCardInstance.render());
+          const merchantCardInstance = new MerchantCard(merchantCartItems);
+          sellerSection.appendChild(merchantCardInstance.render());
 
-        const rating = this.#element.querySelector('.rating');
-        const ratingBarInstance = new RatingBar(ratingValue);
-        const ratingBar = ratingBarInstance.render();
-        rating.appendChild(ratingBar);
-      },
+          const rating = this.#element.querySelector('.rating');
+          const ratingBarInstance = new RatingBar(ratingValue);
+          const ratingBar = ratingBarInstance.render();
+          rating.appendChild(ratingBar);
+        },
     );
     this.#addListeners();
   }

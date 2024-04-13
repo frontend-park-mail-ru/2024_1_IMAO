@@ -1,6 +1,10 @@
 'use strict';
 
-import { trimString } from '../../modules/trimString.js';
+import trimString from '../../modules/trimString.js';
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './adsCard.hbs';
+import styles from './adsCard.css'; // eslint-disable-line no-unused-vars
+
 
 const MAX_TITLE_LENGTH = 22;
 
@@ -14,8 +18,8 @@ const MAX_TITLE_LENGTH = 22;
  */
 export function renderAdsCardTemplate(title, price, id, path) {
   // eslint-disable-next-line no-undef
-  const template = Handlebars.templates['adsCard.hbs'];
+  // const template = Handlebars.templates['adsCard.hbs'];
   const titleTrim = trimString(title, MAX_TITLE_LENGTH);
 
-  return template({title,titleTrim, price, id, path});
+  return stringToHtmlElement(template({title, titleTrim, price, id, path}));
 }

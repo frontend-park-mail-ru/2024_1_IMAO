@@ -2,8 +2,8 @@
 
 import {renderCartBlock} from '../../components/cartBlock/cartBlock.js';
 import {renderCartMain} from '../../components/cartMain/cartMain.js';
-import {renderSidebar} from '../../components/sidebar/sidebar.js';
-import { buildURLBySegments } from '../../modules/parsePathParams.js';
+import renderSidebar from '../../components/sidebar/sidebar.js';
+import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -133,9 +133,11 @@ export class Cart {
         headQuantity.innerHTML = quantity.innerHTML;
       }
       ajax.post(
-        ajax.routes.CART.DELETE_CART_ITEM,
-        {advertIDs},
-        (body)=>{return;},
+          ajax.routes.CART.DELETE_CART_ITEM,
+          {advertIDs},
+          (body)=>{
+            return;
+          },
       );
     });
   }
@@ -160,9 +162,11 @@ export class Cart {
         headQuantity.innerHTML = quantity.innerHTML;
         const advertIDs = [Number(id)];
         ajax.post(
-          ajax.routes.CART.DELETE_CART_ITEM,
-          {advertIDs},
-          (body)=>{return;},
+            ajax.routes.CART.DELETE_CART_ITEM,
+            {advertIDs},
+            (body)=>{
+              return;
+            },
         );
       });
     }
@@ -186,7 +190,7 @@ export class Cart {
       return;
     }
     const quantity = adverts.length;
-    this.#element.innerHTML += renderCartMain(quantity);
+    this.#element.appendChild(renderCartMain(quantity));
 
     const selectPanel = this.#element.querySelector('.selection-panel');
     let priceSum = 0;
@@ -205,13 +209,11 @@ export class Cart {
       ids.push(id);
       priceSum += Number(price);
       const path = buildURLBySegments(router.host, [city, category, id]);
-      selectPanel.innerHTML += renderCartBlock(id, title, price, path);
+      selectPanel.appendChild(renderCartBlock(id, title, price, path));
     });
 
     ids.forEach((id) => {
       const address = this.#element.querySelector(`a[data-id="${id}"]`);
-      // console.log(id);
-      // console.log(address);
       address.addEventListener('click', (ev) => {
         ev.preventDefault();
         router.pushPage(ev, address.href);
@@ -220,6 +222,6 @@ export class Cart {
 
     const mainCont = this.#element.querySelector('.main-content');
 
-    mainCont.innerHTML += renderSidebar(quantity, priceSum);
+    mainCont.appendChild(renderSidebar(quantity, priceSum));
   }
 }

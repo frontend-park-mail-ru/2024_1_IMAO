@@ -1,5 +1,9 @@
 'use strict';
 
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './cartMain.hbs';
+import styles from './cartMain.css'; // eslint-disable-line no-unused-vars
+
 /**
  * Render an CartBlock template.
  * @param {string | number} quantity - The title of the product.
@@ -7,7 +11,7 @@
  */
 export function renderCartMain(quantity) {
   // eslint-disable-next-line no-undef
-  const template = Handlebars.templates['cartMain.hbs'];
+  // const template = Handlebars.templates['cartMain.hbs'];
 
-  return template({quantity});
+  return stringToHtmlElement(template({quantity}));
 }

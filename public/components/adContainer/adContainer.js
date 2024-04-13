@@ -7,6 +7,10 @@
  * @param {string} category - Advert category.
  * @param {string} description - Description of an advert.
  * @param {string} created - Created date.
+ * @param {*} price
+ * @param {*} isAuthor
+ * @param {*} editPath
+ * @param {*} id
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the advert.
  */
 export function renderAdContainerTemplate(title, city, category, description,
@@ -15,5 +19,5 @@ export function renderAdContainerTemplate(title, city, category, description,
   const template = Handlebars.templates['adContainer.hbs'];
 
   return template({title, city, category, description, created, price,
-      isAuthor, editPath, id});
+    isAuthor, editPath, id});
 }

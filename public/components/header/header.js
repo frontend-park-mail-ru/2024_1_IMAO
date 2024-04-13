@@ -1,6 +1,9 @@
 'use strict';
 
 import {CATEGORIES} from '../../config/config.js';
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './header.hbs';
+import styles from './header.css'; // eslint-disable-line no-unused-vars
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -13,7 +16,6 @@ export class Header {
    */
   constructor() {
     this.#header = document.createElement('header');
-
   }
 
   /**
@@ -83,21 +85,24 @@ export class Header {
   }
 
   /**
- * Renders a template for a header.
- * @private
- * @param {URL} location - The location to be displayed in the header.
- * @return {void}
- */
+   * Renders a template for a header.
+   * @private
+   * @param {URL} location - The location to be displayed in the header.
+   * @return {void}
+   */
   #renderHeaderTemplate(location) {
     // eslint-disable-next-line no-undef
-    const template = Handlebars.templates['header.hbs'];
+    // const template = Handlebars.templates['header.hbs'];
     const urlMain = router.routes.mainPage.href.href;
     const urlLogin = router.routes.loginPage.href.href;
     const urlCreate = router.routes.adCreationPage.href.href;
     const urlCart = router.routes.cartPage.href.href;
     const urlProfile = router.routes.profilePage.href.href;
     const flag = router.auth.is_auth;
-    this.#header.innerHTML = template({
+    while (this.#header.firstChild) {
+      this.#header.removeChild(this.#header.lastChild);
+    }
+    this.#header.appendChild(stringToHtmlElement(template({
       urlMain,
       urlLogin,
       urlCreate,
@@ -106,6 +111,6 @@ export class Header {
       flag,
       location,
       CATEGORIES,
-    });
+    })));
   }
 }

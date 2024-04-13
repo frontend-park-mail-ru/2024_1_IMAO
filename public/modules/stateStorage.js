@@ -1,18 +1,35 @@
 'use strict';
 
+/**
+ *
+ */
 class StageStorage {
-    constructor() {
-        this.state = {};
-    }
+  /**
+   *
+   */
+  constructor() {
+    this.state = {};
+  }
+  /**
+   *
+   * @param {*} section
+   * @param {*} key
+   * @param {*} value
+   */
+  setSectionState(section, key, value) {
+    this.state[section] = this.state[section] || {};
+    this.state[section][key] = value;
+  }
 
-    setSectionState(section, key, value) {
-        this.state[section] = this.state[section] || {};
-        this.state[section][key] = value;
-    }
-
-    getSectionState(section, key) {
-        return this.state[section] ? this.state[section][key] : undefined;
-    }
+  /**
+   *
+   * @param {*} section
+   * @param {*} key
+   * @return {string}
+   */
+  getSectionState(section, key) {
+    return this.state[section] ? this.state[section][key] : undefined;
+  }
 }
 
 export default StageStorage;

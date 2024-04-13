@@ -2,7 +2,7 @@
 
 import {renderOrderItem} from '../../components/orderItem/orderItem.js';
 import {renderOrderMain} from '../../components/orderMain/orderMain.js';
-import {renderSidebar} from '../../components/sidebar/sidebar.js';
+import renderSidebar from '../../components/sidebar/sidebar.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -97,7 +97,7 @@ export class Order {
           (body)=>{
             const {isCreated} = body;
 
-            if(isCreated !== undefined){
+            if (isCreated !== undefined) {
               router.go(router.routes.cartPage.href);
             }
           },
@@ -138,7 +138,7 @@ export class Order {
    */
   async #renderTemplate() {
     this.#element.appendChild(this.header.render());
-    this.#element.innerHTML += renderOrderMain();
+    this.#element.appendChild(renderOrderMain());
 
     const selectPanel = this.#element.querySelector('.order-page__container');
     const order = JSON.parse(sessionStorage.getItem(ajax.auth.id));
@@ -148,21 +148,21 @@ export class Order {
     if (quantity === 0) {
       router.go(router.routes.cartPage.href);
 
-return;
+      return;
     }
 
     for (const orderItem in order) {
       if (Object.hasOwn(order, orderItem)) {
         const {id, title, price} = order[orderItem];
         priceSum += Number(price) + this.#deliveriPrice;
-        selectPanel.innerHTML += renderOrderItem(num, id, title, price);
+        selectPanel.appendChild(renderOrderItem(num, id, title, price));
         num++;
       }
     }
 
     // eslint-disable-next-line max-len
     const mainCont = this.#element.querySelector('.order-page__container__sidebar');
-    mainCont.innerHTML += renderSidebar(quantity, priceSum);
+    mainCont.appendChild(renderSidebar(quantity, priceSum));
     this.#element.querySelector('.sidebar__description').innerHTML =
       'Цена с доставкой';
 

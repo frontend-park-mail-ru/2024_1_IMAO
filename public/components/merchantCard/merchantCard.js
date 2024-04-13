@@ -7,18 +7,29 @@
 
 'use strict';
 import template from './merchantCard.hbs';
-import styles from './merchantCard.css'; //eslint-disable-line no-unused-vars
+import styles from './merchantCard.css'; // eslint-disable-line no-unused-vars
 import BlackListOverlay from '../../components/blackListOverlay/blackListOverlay.js';
-import { StringToHtmlElement } from '../../modules/stringToHtmlElement.js';
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 
+/**
+ *
+ */
 class MerchantCard {
   #element;
 
-  constructor(items){
-      this.items = items;
+  /**
+   *
+   * @param {*} items
+   */
+  constructor(items) {
+    this.items = items;
   }
 
-  render(){
+  /**
+   *
+   * @return {*}
+   */
+  render() {
     this.#renderTemplate();
     const addToBlackListButton = this.#element.querySelector('.add-to-blacklist-button');
     const overlayContainer = this.#element.querySelector('.overlay-container-blacklist');
@@ -27,24 +38,31 @@ class MerchantCard {
     return this.#element;
   }
 
+  /**
+   *
+   */
   #renderTemplate() {
-      const context = {
-        id: this.items.id,
-        path: this.items.path,
-        merchantsName : this.items.merchantsName,
-        location : this.items.location,
-        registrationDate : this.items.registrationDate,
-        isProfileVerified : this.items.isProfileVerified,
-        reviewCount : this.items.reviewCount,
-        subscribersCount : this.items.subscribersCount,
-        subscribtionsCount : this.items.subscribtionsCount,
-      };
+    const context = {
+      id: this.items.id,
+      path: this.items.path,
+      merchantsName: this.items.merchantsName,
+      location: this.items.location,
+      registrationDate: this.items.registrationDate,
+      isProfileVerified: this.items.isProfileVerified,
+      reviewCount: this.items.reviewCount,
+      subscribersCount: this.items.subscribersCount,
+      subscribtionsCount: this.items.subscribtionsCount,
+    };
 
-      this.#element = StringToHtmlElement(template(context));
+    this.#element = stringToHtmlElement(template(context));
   }
 
+  /**
+   *
+   * @param {*} addToBlackListButton
+   * @param {*} overlayContainer
+   */
   #addBlackListEventListener(addToBlackListButton, overlayContainer) {
-
     const blacklistOverlay = new BlackListOverlay(addToBlackListButton);
     overlayContainer.appendChild(blacklistOverlay.render());
   }

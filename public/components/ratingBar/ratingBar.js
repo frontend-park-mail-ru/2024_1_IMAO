@@ -1,25 +1,36 @@
 'use strict';
 import template from './ratingBar.hbs';
-import styles from './ratingBar.css'; //eslint-disable-line no-unused-vars
-import { StringToHtmlElement } from '../../modules/stringToHtmlElement.js';
-import { RatingCalculation } from '../../modules/ratingCalculation.js';
+import styles from './ratingBar.css'; // eslint-disable-line no-unused-vars
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import ratingCalculation from '../../modules/ratingCalculation.js';
 
+/**
+ *
+ */
 class RatingBar {
-  constructor(ratingValue){
-      this.ratingValue = ratingValue;
-      this.items = {};
+  /**
+   *
+   * @param {*} ratingValue
+   */
+  constructor(ratingValue) {
+    this.ratingValue = ratingValue;
+    this.items = {};
   }
 
+  /**
+   *
+   * @return {HTMLElement}
+   */
   render() {
-      this.items = RatingCalculation(this.ratingValue);
+    this.items = ratingCalculation(this.ratingValue);
 
-      const context = {
-          ratingValue : this.ratingValue,
-          items: this.items,
-      };
-      const root = StringToHtmlElement(template(context));
+    const context = {
+      ratingValue: this.ratingValue,
+      items: this.items,
+    };
+    const root = stringToHtmlElement(template(context));
 
-      return root;
+    return root;
   }
 }
 

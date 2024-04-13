@@ -7,41 +7,41 @@ module.exports = {
   devtool: 'eval-source-map',
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: "bundle.js"
+    filename: 'bundle.js',
   },
   module: {
-    rules: [ 
+    rules: [
       {
         test: /.jsx?$/,
         include: [
-          path.resolve(__dirname, 'public')
+          path.resolve(__dirname, 'public'),
         ],
         exclude: [
-          path.resolve(__dirname, 'node_modules')
+          path.resolve(__dirname, 'node_modules'),
         ],
         loader: 'babel-loader',
         options: {
           presets: [
-            [ "@babel/env", {
-              "targets": {
-                  "browsers": "last 2 chrome versions"
-                }
-              } 
-            ]
-          ]
-        }
+            ['@babel/env', {
+              'targets': {
+                'browsers': 'last 2 chrome versions',
+              },
+            },
+            ],
+          ],
+        },
       },
-      { 
+      {
         test: /\.hbs$/,
         include: [
-          path.resolve(__dirname, 'public')
-        ], 
+          path.resolve(__dirname, 'public'),
+        ],
         loader: 'handlebars-loader',
       },
-      { 
-        test: /\.css$/, 
-        use: [ 'style-loader', 'css-loader' ] 
-      }
-  ],
-  }
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
 };

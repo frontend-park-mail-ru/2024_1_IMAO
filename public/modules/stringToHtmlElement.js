@@ -1,11 +1,13 @@
+'use strict';
+
 /**
  * @param {String} string HTML элемент в виде строки
  * @return {Element}
  */
-export function StringToHtmlElement(string) {
-    const template = document.createElement('template');
-    string = string.trim();
-    template.innerHTML = string;
+export default function stringToHtmlElement(string) {
+  const template = document.createElement('template');
+  string = string.trim();
+  template.innerHTML = string;
 
-return template.content.firstChild;
+  return template.content.firstChild;
 }

@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['eslint:recommended'],
+  extends: ['eslint:recommended', 'google'],
   parserOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
@@ -9,18 +9,29 @@ module.exports = {
     browser: true,
     node: true,
   },
+  overrides: [
+    {
+      'env': {
+        'node': true,
+      },
+      'files': [
+        '.eslintrc.{js,cjs}',
+      ],
+      'parserOptions': {
+        'sourceType': 'script',
+      },
+    },
+  ],
+  ignorePatterns: ['*.precompiled.js', '**/handlebars/*.js'],
   rules: {
+    'max-len': ['error', {code: 120}],
     'camelcase': ['error', {ignoreDestructuring: true}],
     'semi': ['error', 'always'], // точки с запятой
     'eol-last': ['error', 'always'], // Пустая строка в конце файла
     'quotes': ['error', 'single'], // Одинарные кавычки
-    'no-console': ['error', {allow: ['error', 'info']}], // Запрет использования console.log
     'no-unused-vars': 'off', // Запрет неиспользуемых переменных
     // 'no-undef': 'error', // Запрет использования необъявленных переменных
-    'no-multiple-empty-lines': ['error', {max: 1}], // Запрет множественных пустых строк
     'no-trailing-spaces': 'error', // Запрет завершающих пробелов
-    'comma-dangle': ['error', 'always-multiline'], // Запятая в конце массивов и объектов
-    'space-before-function-paren': ['error', 'never'], // Пробел перед скобками функции
     'no-var': 'error', // Запрет использования var
     'prefer-const': 'error', // Предпочтение const
     'no-tabs': 'error', // Запрет использования табуляции

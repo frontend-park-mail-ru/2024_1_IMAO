@@ -1,53 +1,69 @@
 'use strict';
 
 import template from './editProfileOverlay.hbs';
-import styles from './editProfileOverlay.css'; //eslint-disable-line no-unused-vars
+import styles from './editProfileOverlay.css'; // eslint-disable-line no-unused-vars
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-import {StringToHtmlElement} from '../../modules/stringToHtmlElement.js';
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 
+/**
+ *
+ */
 class EditProfileOverlay {
-    #element;
+  #element;
+  /**
+   *
+   * @param {*} button
+   * @param {*} data
+   */
+  constructor(button, data) {
+    this.button = button;
+    this.data = data;
+  }
+  /**
+   *
+   * @return {HTMLElement}
+   */
+  render() {
+    this.#renderTemplate();
+    this.#addListeners();
 
-    constructor(button, data) {
-        this.button = button;
-        this.data = data;
-    }
+    return this.#element;
+  }
 
-    render() {
-        this.#renderTemplate();
-        this.#addListeners();
+  /**
+   *
+   */
+  #renderTemplate() {
+    const context = {
+      title: this.data.title,
+      fields: this.data.fields,
+      id: this.data.id,
+    };
 
-        return this.#element;
-    }
+    this.#element = stringToHtmlElement(template(context));
+  }
 
-    #renderTemplate() {
-        const context = {
-            title: this.data.title,
-            fields: this.data.fields,
-            id: this.data.id,
-        };
+  /**
+   *
+   */
+  #addListeners() {
+    const myButton = this.button;
+    myButton.addEventListener('click', () => {
+      myDialog.showModal();
+    });
 
-        this.#element = StringToHtmlElement(template(context));
-    }
+    const myDialog = this.#element;
+    myDialog.addEventListener('click', () => {
+      myDialog.close();
+    });
 
-    #addListeners() {
-        const myButton = this.button;
-        myButton.addEventListener('click', () => {
-            myDialog.showModal();
-        });
+    const myDiv = this.#element.querySelector('.container');
+    myDiv.addEventListener('click', (event) => event.stopPropagation());
 
-        const myDialog = this.#element;
-        myDialog.addEventListener('click', () => {
-            myDialog.close();
-        });
-
-        const myDiv = this.#element.querySelector('.container');
-        myDiv.addEventListener('click', (event) => event.stopPropagation());
-
-        const cancelBtn = this.#element.querySelector('.cancel-button-blacklist');
-        cancelBtn.addEventListener('click', (event) => myDialog.close());
-    }
+    const cancelBtn = this.#element.querySelector('.cancel-button-blacklist');
+    cancelBtn.addEventListener('click', (event) => myDialog.close());
+  }
 }
 
 export default EditProfileOverlay;

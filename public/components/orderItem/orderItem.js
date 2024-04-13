@@ -1,6 +1,9 @@
 'use strict';
 
-import { trimString } from '../../modules/trimString.js';
+import trimString from '../../modules/trimString.js';
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './orderItem.hbs';
+import styles from './orderItem.css'; // eslint-disable-line no-unused-vars
 
 const MAX_TITLE_LENGTH = 40;
 
@@ -14,8 +17,8 @@ const MAX_TITLE_LENGTH = 40;
  */
 export function renderOrderItem(num, id, title, price) {
   // eslint-disable-next-line no-undef
-  const template = Handlebars.templates['orderItem.hbs'];
+  // const template = Handlebars.templates['orderItem.hbs'];
   title = trimString(title, MAX_TITLE_LENGTH);
 
-  return template({num, id, title, price});
+  return stringToHtmlElement(template({num, id, title, price}));
 }

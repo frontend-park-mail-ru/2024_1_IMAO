@@ -1,6 +1,6 @@
 'use strict';
 
-import {renderAuthForm} from '../../components/authForm/authForm.js';
+import renderAuthForm from '../../components/authForm/authForm.js';
 import {validateEmail, validatePassword} from '../../modules/validate.js';
 import {emailError, passwordError} from '../../modules/validate.js';
 import ajax from '../../modules/ajax.js';
@@ -80,7 +80,7 @@ export class Signup {
       if (!this.#validateData(email, password, passwordRepeat, divError)) {
         submit.disabled = false;
 
-return;
+        return;
       }
 
       const apiRoute = ajax.routes.AUTH.SIGNUP;
@@ -113,19 +113,19 @@ return;
     if (!validateEmail(email)) {
       divError.innerHTML = emailError;
 
-return false;
+      return false;
     }
 
     if (!validatePassword(password)) {
       divError.innerHTML = passwordError;
 
-return false;
+      return false;
     }
 
     if (password != passwordRepeat) {
       divError.innerHTML = passwordMatchError;
 
-return false;
+      return false;
     }
 
     return true;
@@ -159,7 +159,6 @@ return false;
       askText: 'Есть аккаунт?',
       anchorText: 'Авторизируйтесь',
     };
-    const template = renderAuthForm();
-    this.#element.innerHTML = template(templateParams);
+    this.#element.appendChild(renderAuthForm(templateParams));
   }
 }

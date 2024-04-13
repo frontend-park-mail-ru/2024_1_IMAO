@@ -1,51 +1,64 @@
 'use strict';
 import template from './blackListOverlay.hbs';
-import styles from './blackListOverlay.css'; //eslint-disable-line no-unused-vars
-import { StringToHtmlElement } from '../../modules/stringToHtmlElement.js';
+import styles from './blackListOverlay.css'; // eslint-disable-line no-unused-vars
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 
+/**
+ *
+ */
 class BlackListOverlay {
-    #element;
+  #element;
 
-    constructor(button) {
-        this.button = button;
+  /**
+   *
+   * @param {*} button
+   */
+  constructor(button) {
+    this.button = button;
+  }
 
-    }
+  /**
+   *
+   * @return {HTMLElement}
+   */
+  render() {
+    this.#renderTemplate();
 
-    render() {
-        this.#renderTemplate();
+    this.#addListeners();
 
-        this.#addListeners();
+    return this.#element;
+  }
 
-        return this.#element;
-    }
+  /**
+   *
+   */
+  #renderTemplate() {
+    this.#element = stringToHtmlElement(template());
+  }
 
-    #renderTemplate() {
+  /**
+   *
+   */
+  #addListeners() {
+    const myButton = this.button;
+    myButton.addEventListener('click', () => {
+      myDialog.showModal();
+    });
 
-        this.#element = StringToHtmlElement(template());
+    const myDialog = this.#element;
+    myDialog.addEventListener('click', () => {
+      myDialog.close();
+    });
 
-    }
+    const myDiv = this.#element.querySelector('.container');
+    myDiv.addEventListener('click', (event) => event.stopPropagation());
 
-    #addListeners() {
-        const myButton = this.button;
-        myButton.addEventListener('click', () => {
-            myDialog.showModal();
-        });
+    const blockBtn = this.#element.querySelector('.action-button-blacklist');
+    blockBtn.addEventListener('click', (event) => myDialog.close());
 
-        const myDialog = this.#element;
-        myDialog.addEventListener('click', () => {
-            myDialog.close();
-        });
-
-        const myDiv = this.#element.querySelector('.container');
-        myDiv.addEventListener('click', (event) => event.stopPropagation());
-
-        const blockBtn = this.#element.querySelector('.action-button-blacklist');
-        blockBtn.addEventListener('click', (event) => myDialog.close());
-
-        const cancelBtn = this.#element.querySelector('.cancel-button-blacklist');
-        cancelBtn.addEventListener('click', (event) => myDialog.close());
-    }
-
+    const cancelBtn = this.#element.querySelector('.cancel-button-blacklist');
+    cancelBtn.addEventListener('click', (event) => myDialog.close());
+  }
 }
 
 export default BlackListOverlay;
