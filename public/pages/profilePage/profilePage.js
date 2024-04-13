@@ -140,7 +140,6 @@ export class ProfilePage {
    * Render a temlate for a merchant page.
    */
   async #renderTemplate() {
-    const urlMain = router.routes.mainPage.href;
     this.#element.appendChild(this.header.render());
     const root = StringToHtmlElement(template());
     this.#element.appendChild(root);
