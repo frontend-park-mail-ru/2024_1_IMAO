@@ -70,21 +70,21 @@
   left: 24px;
   top: 85px;
   padding: 8px 20px;
-background: #7092FE;
-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
-border-radius: 8px;
-justify-content: center;
-align-items: center;
-display: inline-flex;
-text-decoration: none;
-color: white; /* белый цвет текста */
-border: none; /* без границ */
-/* border-radius: 25px; скругленные углы */
-/* padding: 10px 20px; внутренние отступы */
-font-size: 18px; /* размер шрифта */
-cursor: pointer; /* курсор в виде указателя */
-transition: background-color 0.3s; /* плавное изменение цвета фона при наведении */
-  }
+  background: #7092FE;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  text-decoration: none;
+  color: white; /* белый цвет текста */
+  border: none; /* без границ */
+  /* border-radius: 25px; скругленные углы */
+  /* padding: 10px 20px; внутренние отступы */
+  font-size: 18px; /* размер шрифта */
+  cursor: pointer; /* курсор в виде указателя */
+  transition: background-color 0.3s; /* плавное изменение цвета фона при наведении */
+}
 
   .sidebar__button:hover {
     background: #4b74f8

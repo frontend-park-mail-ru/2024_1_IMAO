@@ -6,6 +6,7 @@
     border-radius: 10px;
     position: relative;
     display: inline-block;
+    background: white;
 }
 
 .card img {
@@ -28,6 +29,7 @@
     position: absolute;
     bottom: 45px;
     right: 20px;
+    width: 50px;
 }
 
 .card:hover {

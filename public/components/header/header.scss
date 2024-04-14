@@ -1,5 +1,18 @@
+header {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  justify-content: center;
+}
+
 .pre-header {
-    width: 100%;
+    max-width: 1219px;
     height: 32px;
     background: white;
     display: inline-flex;
@@ -14,6 +27,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 833px;
 }
 
 .section-nav {
@@ -89,7 +103,7 @@
 }
 
 .navbar {
-    width: 100%;
+    width: 1219px;
     max-height: fit-content;
     font-family: Open Sans;
     display: flex;

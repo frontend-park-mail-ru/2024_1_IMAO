@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './addCartOverlay.hbs';
-import styles from './addCartOverlay.scss';
+import './addCartOverlay.scss';
 import router from '../../router/router.js';
 import ajax from '../../modules/ajax.js';
 
@@ -59,7 +59,7 @@ class AddCartOverlay {
               return;
             }
 
-            const textToChange = this.#element.querySelector('.text-to-change');
+            const textToChange = this.#element.querySelector('.add-to-cart-dialog__text-to-change');
 
             if (isAppended) {
               textToChange.innerHTML = 'Товар добавлен в корзину';
@@ -75,16 +75,16 @@ class AddCartOverlay {
       myDialog.close();
     });
 
-    const myDiv = this.#element.querySelector('.container');
+    const myDiv = this.#element.querySelector('.add-to-cart-dialog__container');
     myDiv.addEventListener('click', (event) => event.stopPropagation());
 
-    const blockBtn = this.#element.querySelector('.action-button-blacklist');
+    const blockBtn = this.#element.querySelector('.add-to-cart-dialog__modal-buttons-button--action');
     blockBtn.addEventListener('click', (event) => {
       myDialog.close();
       router.pushPage(event, router.routes.cartPage.href.href);
     });
 
-    const cancelBtn = this.#element.querySelector('.cancel-button-blacklist');
+    const cancelBtn = this.#element.querySelector('.add-to-cart-dialog__modal-buttons-button--cancel');
     cancelBtn.addEventListener('click', (event) => myDialog.close());
   }
 }
