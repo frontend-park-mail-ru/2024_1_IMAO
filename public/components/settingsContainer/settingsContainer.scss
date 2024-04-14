@@ -1,62 +1,35 @@
-.personal-data-list {
-  width: 921px;
-  height: 350px;
-  position: relative;
-  background: white;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+.personal__data__list {
+  margin-top: 20px;
+  padding: 20px;
   border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
+  margin-left: 20px;
+  width: 100%;
 }
 
-.personal-data-heading {
-  padding-left: 10px;
-  width: 180.78px;
-  height: 32px;
-  position: relative;
-  color: #333333;
-  font-size: 24px;
-  font-family: Fira Sans;
-  font-weight: 500;
-  line-height: 32px;
-  word-wrap: break-word;
+.personal__data__list h1 {
+  margin: 0;
 }
 
-.DescriptionsItem {
-  width: 897px;
-  height: 57px;
-  position: relative;
+.personal__data__list .settings__block {
   background: white;
   border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  width: 100%;
 }
 
-.DescriptionsTerm,
-.DescriptionsTermEMail {
-  width: 62.80px;
-  height: 24px;
-  left: 12px;
-  top: 17px;
-  position: absolute;
+.personal__data__list .settings__header {
   color: #858585;
-  font-size: 14px;
-  font-family: Open Sans;
-  font-weight: 400;
-  line-height: 24px;
   word-wrap: break-word;
+  width: 15%;
 }
 
-.DescriptionsDetails {
-  width: 498.64px;
-  height: 24px;
-  padding-right: 377.34px;
-  left: 228px;
-  top: 16px;
-  position: absolute;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 8px;
-  display: inline-flex;
-}
+// .personal__data__list .description__details {}
 
-.B40d90b09f74cfc5244da1Jpg {
+.personal__data__list img {
   width: 24px;
   height: 24px;
   position: relative;
@@ -79,23 +52,13 @@
   color: #333333;
   font-size: 14px;
   font-family: Open Sans;
-  font-weight: 400;
-  line-height: 24px;
   word-wrap: break-word;
 }
 
-.set-or-edit-label {
-  width: 102.72px;
-  height: 24px;
-  left: 781.64px;
-  top: 16px;
-  position: absolute;
+.personal__data__list .set-or-edit-label {
   color: #7092FE;
   font-size: 14px;
   font-family: Open Sans;
-  font-weight: 400;
-  line-height: 24px;
-  word-wrap: break-word;
 }
 
 .After {
@@ -107,15 +70,16 @@
   background: #F5F5F5;
 }
 
-.atribute-list {
+.personal__data__list .atribute__list {
   display: flex;
   flex-direction: column;
   gap: 10px;
   font-size: 14px;
   font-family: Open Sans;
+  margin-top: 15px;
 }
 
-.atribute-list button {
+.personal__data__list button {
   border-radius: 0;
   border-color: #ffffff;
   border-style: none;

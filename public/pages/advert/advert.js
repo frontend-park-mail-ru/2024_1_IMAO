@@ -100,18 +100,26 @@ export class Advert {
    */
   #addPathListener() {
     const adPath = this.#element.querySelector('.ad-path');
-    const cityPath = adPath.querySelector('.city').childNodes[1];
-    const categoryPath = adPath.querySelector('.category').childNodes[1];
+    const links = adPath.querySelectorAll('a');
 
-    cityPath.addEventListener('click', (ev) => {
-      const address = cityPath.href;
-      router.pushPage(ev, address);
-    });
+    for (const link of links) {
+      link.addEventListener('click', (ev) => {
+        const address = link.href;
+        router.pushPage(ev, address);
+      });
+    }
+    // const cityPath = adPath.querySelector('.city').childNodes[1];
+    // const categoryPath = adPath.querySelector('.category').childNodes[1];
 
-    categoryPath.addEventListener('click', (ev) => {
-      const address = categoryPath.href;
-      router.pushPage(ev, address);
-    });
+    // cityPath.addEventListener('click', (ev) => {
+    //   const address = cityPath.href;
+    //   router.pushPage(ev, address);
+    // });
+
+    // categoryPath.addEventListener('click', (ev) => {
+    //   const address = categoryPath.href;
+    //   router.pushPage(ev, address);
+    // });
   }
 
   /**
@@ -207,9 +215,21 @@ export class Advert {
           //     ['close', advert['id']]);
 
           const adPathElement = document.createElement('div');
-          adPathElement.appendChild(
-              renderAdPathTemplate(cityName, categoryName, adTitle, cityPath, categoryPath),
-          );
+          const paths = [
+            {
+              path: cityPath,
+              title: cityName,
+            },
+            {
+              path: categoryPath,
+              title: categoryName,
+            },
+            {
+              path: '#',
+              title: adTitle,
+            },
+          ];
+          adPathElement.appendChild(renderAdPathTemplate({paths}));
           content.appendChild(adPathElement);
 
           const adContainer = renderAdContainerTemplate(
