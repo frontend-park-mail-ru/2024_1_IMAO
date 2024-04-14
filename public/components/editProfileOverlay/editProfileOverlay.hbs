@@ -1,37 +1,27 @@
-<dialog class="my-dialog" id="myDialog">
-    <div class="close-icon cursor-hand-hover">
-        <div class="line line1"></div>
-        <div class="line line2"></div>
+<dialog class="profile-edit-dialog" id="my-dialog">
+    <div class="profile-close-block">
+        <div class="profile-close-btn">
+            &#10006
+        </div>
     </div>
-    <div class="container" id="myDiv">
-        <div class="modal">
-            <form class="modal-content" enc-type="multipart/form-data" method="post" action="/submit">
-                <div class="modal-header">
-                    <div class="header-text">
-                        <div>{{title}}</div>
-                    </div>
+    <div class="profile-container">
+        <div class="profile-modal">
+            <form class="profile-modal-content" enc-type="multipart/form-data" method="post" action="/submit">
+                <div class="profile-header-title">
+                    {{title}}
                 </div>
                 {{#each fields}}
                 {{#if this.isPhone}}
-                <div class="modal-fields">
-                    <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" pattern="[0-9]{11}"
-                        required>
-                </div>
+                <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" pattern="[0-9]{11}"
+                    placeholder="+7(___)___-__-__" required>
                 {{^}}
-                <div class="modal-fields">
+                <div class="profile-modal-fields">
                     <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" required>
                 </div>
                 {{/if}}
                 {{/each}}
-                <div class="modal-buttons">
-                    <input class="common-button-blacklist action-button-blacklist cursor-hand-hover" type="submit"
-                        value="Сохранить">
-                    <div class="common-button-blacklist cancel-button-blacklist cursor-hand-hover">
-                        <div>Отмена</div>
-                    </div>
-                </div>
+                <input class="submit-btn" type="submit" value="Сохранить">
             </form>
         </div>
-
     </div>
 </dialog>

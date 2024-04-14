@@ -91,9 +91,6 @@ export class ProfileEdit {
           const btns = document.querySelectorAll('.set-or-edit-label');
           const main = document.querySelector('.main-page');
 
-          const cityExists = profile.city.name === '';
-          const phoneExists = profile.phoneNumber === '';
-
           const forms = [{
             title: 'Изменить профиль',
             fields: [{type: 'text', value: this.profile.name, name: 'name'},
@@ -102,20 +99,20 @@ export class ProfileEdit {
             id: 1,
           },
           {
-            title: phoneExists ? 'Указать номер' : 'Изменить номер',
-            fields: [{type: 'number', value: this.profile.phone,
+            title: 'Номер телефона',
+            fields: [{type: 'text', value: this.profile.phone,
               name: 'phone', isPhone: true}],
             apiRoute: ajax.routes.PROFILE.SET_PROFILE_PHONE,
             id: 2,
           },
           {
-            title: 'Изменить E-mail',
+            title: 'E-mail',
             fields: [{type: 'text', value: this.profile.email, name: 'email'}],
             apiRoute: ajax.routes.PROFILE.EDIT_USER_EMAIL,
             id: 3,
           },
           {
-            title: cityExists ? 'Указать город' : 'Изменить город',
+            title: 'Город',
             fields: [{type: 'text', value: this.profile.city, name: 'id'}],
             apiRoute: ajax.routes.PROFILE.SET_PROFILE_CITY,
             id: 4,

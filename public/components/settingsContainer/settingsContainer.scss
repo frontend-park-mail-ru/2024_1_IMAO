@@ -1,88 +1,87 @@
-.personal__data__list {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
-  margin-left: 20px;
-  width: 100%;
-}
+.personal-data-list {
+    margin: 20px 0;
+    padding: 3%;
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
+    width: 94%;
 
-.personal__data__list h1 {
-  margin: 0;
-}
+    h1 {
+        margin: 0;
+    }
 
-.personal__data__list .settings__block {
-  background: white;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-  width: 100%;
-}
+    .settings-block {
+        background: white;
+        border-radius: 8px;
+        display: flex;
+        margin-top: 15px;
+        width: 100%;
+        height: auto;
+    }
 
-.personal__data__list .settings__header {
-  color: #858585;
-  word-wrap: break-word;
-  width: 15%;
-}
+    .settings-block:not(:last-child) {
+        border-bottom: 1px solid #F5F5F5;
+        padding-bottom: 1%;
+    }
 
-.personal__data__list .description__details {}
+    .settings-header {
+        color: #858585;
+        width: 15%;
+        align-self: center;
+    }
 
-.personal__data__list img {
-  width: 24px;
-  height: 24px;
-  position: relative;
-  border-radius: 12px;
-}
+    .settings-details {
+        width: 60%;
+    }
 
-.PScCoxwqc {
-  width: 250px;
-  align-self: stretch;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 3.24px;
-  display: inline-flex;
-}
+    .settings-hint {
+        width: 60%;
+        color: #858585;
+    }
 
-.User,
-.Name,
-.SomeemailMailCom {
-  height: 24px;
-  color: #333333;
-  font-size: 14px;
-  font-family: Open Sans;
-  word-wrap: break-word;
-}
+    img {
+        width: 24px;
+        height: 24px;
+        position: relative;
+        border-radius: 12px;
+    }
 
-.personal__data__list .set-or-edit-label {
-  color: #7092FE;
-  font-size: 14px;
-  font-family: Open Sans;
-}
+    .set-or-edit-label {
+        color: #7092FE;
+        font-size: 14px;
+        font-family: Open Sans;
+        width: 15%;
+        margin-left: auto;
+    }
 
-.After {
-  width: 881px;
-  height: 1px;
-  left: 8px;
-  top: 56px;
-  position: absolute;
-  background: #F5F5F5;
-}
+    .atribute-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 14px;
+        font-family: Open Sans;
+        margin-top: 15px;
+    }
 
-.personal__data__list .atribute__list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: 14px;
-  font-family: Open Sans;
-  margin-top: 15px;
-}
+    button {
+        border-radius: 0;
+        border-color: #ffffff;
+        border-style: none;
+        background-color: #ffffff;
+        cursor: pointer;
+    }
 
-.personal__data__list button {
-  border-radius: 0;
-  border-color: #ffffff;
-  border-style: none;
-  background-color: #ffffff;
-  cursor: pointer;
+    .merchant-profile {
+        display: flex;
+        align-items: center;
+        gap: 2%;
+    }
+
+    .merchant-avatar {
+        width: 5%;
+    }
+
+    .merchant-name {
+        width: 90%;
+    }
 }
