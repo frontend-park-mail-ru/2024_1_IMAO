@@ -1,8 +1,7 @@
 'use strict';
 
 import renderAuthForm from '../../components/authForm/authForm.js';
-import {validateEmail, validatePassword} from '../../modules/validate.js';
-import {emailError, passwordError} from '../../modules/validate.js';
+import {validateEmail, validatePassword, emailError, passwordError} from '../../modules/validate.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 

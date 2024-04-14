@@ -1,18 +1,16 @@
 'use strict';
 
-import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
+import renderProfileMain from '../../components/profileMain/profileMain.js';
+import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
 import ProfileCard from '../../components/profileCard/profileCard.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
-// import MerchantPageTitle from '../../components/merchantPageTitle/merchantPageTitle.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import formatDate from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
+import {buildURL, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-import {renderProfileMain} from '../../components/profileMain/profileMain.js';
-// import template from './profilePage.hbs';
-// import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
-import {buildURL, buildURLBySegments} from '../../modules/parsePathParams.js';
+
 
 /** Class representing a main page. */
 export class ProfilePage {

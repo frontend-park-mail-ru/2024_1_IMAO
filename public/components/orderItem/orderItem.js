@@ -3,7 +3,7 @@
 import trimString from '../../modules/trimString.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './orderItem.hbs';
-import styles from './orderItem.css'; // eslint-disable-line no-unused-vars
+import styles from './orderItem.css';
 
 const MAX_TITLE_LENGTH = 40;
 
@@ -15,9 +15,7 @@ const MAX_TITLE_LENGTH = 40;
  * @param {string | number} price - The price of the product.
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export function renderOrderItem(num, id, title, price) {
-  // eslint-disable-next-line no-undef
-  // const template = Handlebars.templates['orderItem.hbs'];
+export default function renderOrderItem(num, id, title, price) {
   title = trimString(title, MAX_TITLE_LENGTH);
 
   return stringToHtmlElement(template({num, id, title, price}));

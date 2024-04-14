@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './orderMain.hbs';
-import styles from './orderMain.css'; // eslint-disable-line no-unused-vars
+import styles from './orderMain.css';
 
 /**
  * Render an orderIte template.
@@ -12,9 +12,6 @@ import styles from './orderMain.css'; // eslint-disable-line no-unused-vars
  * @param {string | number} price - The price of the product.
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export function renderOrderMain() {
-  // eslint-disable-next-line no-undef
-  // const template = Handlebars.templates['orderMain.hbs'];
-
+export default function renderOrderMain() {
   return stringToHtmlElement(template());
 }

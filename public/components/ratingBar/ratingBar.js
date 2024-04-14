@@ -1,8 +1,9 @@
 'use strict';
-import template from './ratingBar.hbs';
-import styles from './ratingBar.css'; // eslint-disable-line no-unused-vars
-import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+
 import ratingCalculation from '../../modules/ratingCalculation.js';
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './ratingBar.hbs';
+import styles from './ratingBar.css';
 
 /**
  *

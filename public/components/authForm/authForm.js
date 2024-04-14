@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './authForm.hbs';
-import styles from './authForm.css'; // eslint-disable-line no-unused-vars
+import styles from './authForm.css';
 
 /**
  * Return the template function of the authForm.
@@ -10,7 +10,5 @@ import styles from './authForm.css'; // eslint-disable-line no-unused-vars
  * @return {HTMLElement} - The template function.
  */
 export default function renderAuthForm(templateParams) {
-  // eslint-disable-next-line no-undef
-  // return Handlebars.templates['authForm.hbs'];
   return stringToHtmlElement(template(templateParams));
 }

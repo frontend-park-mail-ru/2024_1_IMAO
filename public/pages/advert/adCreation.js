@@ -1,10 +1,9 @@
 'use strict';
 
 /* eslint-disable-next-line max-len */
-import {renderAdCreationForm} from '../../components/adCreationForm/adCreationForm.js';
+import renderAdCreationForm from '../../components/adCreationForm/adCreationForm.js';
+import {buildURL, parsePathParams, getURLFromLocation} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
-import {buildURL, parsePathParams} from '../../modules/parsePathParams.js';
-import {getURLFromLocation} from '../../modules/parsePathParams.js';
 import router from '../../router/router.js';
 
 /** Class represented advert creation/editing page. */
@@ -104,7 +103,7 @@ export class AdCreation {
     form.classList.add('ad__creation');
 
     if (this.#create) {
-      form.innerHTML = renderAdCreationForm(true);
+      form.appendChild(renderAdCreationForm(true));
     } else {
       this.#getSlug();
       const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT_BY_ID,
@@ -128,8 +127,8 @@ export class AdCreation {
             const price = advert['price'];
             const cityName = city['name'];
 
-            form.innerHTML = renderAdCreationForm(false, adTitle, price,
-              description, cityName);
+            form.appendChild(renderAdCreationForm(false, adTitle, price,
+                description, cityName));
 
             this.#addFormListener();
           },

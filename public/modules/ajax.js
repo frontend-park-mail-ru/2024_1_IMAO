@@ -1,7 +1,5 @@
 'use strict';
 
-import {buildUrl} from './parsePathParams.js';
-
 const GET = 'GET';
 const POST = 'POST';
 
@@ -86,7 +84,7 @@ class Ajax {
     );
   }
 
-    /**
+  /**
    * Make scheme of the AJAX request.
    * @param {URL} url - The relative request path.
    * @param {function} callback - The callback function.

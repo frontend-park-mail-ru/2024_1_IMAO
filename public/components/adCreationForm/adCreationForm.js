@@ -1,5 +1,10 @@
 'use strict';
 
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './adCreationForm.hbs';
+import styles from './adCreationForm.css';
+
+
 /**
  * Render ad creation form page.
  * @param {boolean} create
@@ -9,9 +14,6 @@
  * @param {String} city
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the ad creation form.
  */
-export function renderAdCreationForm(create, title, price, description, city) {
-  // eslint-disable-next-line no-undef
-  const template = Handlebars.templates['adCreationForm.hbs'];
-
-  return template({title, price, description, city, create});
+export default function renderAdCreationForm(create, title, price, description, city) {
+  return stringToHtmlElement(template({title, price, description, city, create}));
 }

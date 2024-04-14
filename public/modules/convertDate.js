@@ -7,7 +7,7 @@ const monthNames = ['января', 'февраля', 'марта', 'апрел�
  * @param {string} rawDate - Date in database format.
  * @return {string} - Useful date.
  */
-export function convertDate(rawDate) {
+export default function convertDate(rawDate) {
   const fullDate = new Date(rawDate);
 
   const day = fullDate.getDate();

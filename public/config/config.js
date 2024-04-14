@@ -103,11 +103,6 @@ export const PAGES_ROUTES = {
     name: 'edit profile',
     re: new RegExp(/^\/profile\/edit$/),
   },
-  adPage: {
-    href: new URL('/:city/:category/:id', serverHost),
-    name: 'advert',
-    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+\/\d+$/),
-  },
   adsListByCity: {
     href: new URL('/:city', serverHost),
     name: 'city',
@@ -118,14 +113,18 @@ export const PAGES_ROUTES = {
     name: 'category',
     re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+$/),
   },
+  adPage: {
+    href: new URL('/:city/:category/:id', serverHost),
+    name: 'advert',
+    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+\/\d+$/),
+  },
 };
 
 /**
  * Auth state.
  */
 export const AUTH = {
-  // eslint-disable-next-line camelcase
-  is_auth: false,
+  isAuth: false,
 };
 
 export const CATEGORIES = [

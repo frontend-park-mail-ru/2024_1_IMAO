@@ -1,9 +1,7 @@
 'use strict';
 
 import template from './editProfileOverlay.hbs';
-import styles from './editProfileOverlay.css'; // eslint-disable-line no-unused-vars
-import ajax from '../../modules/ajax.js';
-import router from '../../router/router.js';
+import styles from './editProfileOverlay.css';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 
 /**

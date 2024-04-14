@@ -4,7 +4,7 @@
  * @param {string} str - String that appends path.
  * @return {URL} - Appended path.
  */
-export function appendPath(path, str) {
+export default function appendPath(path, str) {
   const newPathname = path.pathname + '/' + str;
 
   return new URL(newPathname, path.origin);

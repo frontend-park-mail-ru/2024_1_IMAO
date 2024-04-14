@@ -1,5 +1,9 @@
 'use strict';
 
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './adContainer.hbs';
+import styles from './adContainer.css';
+
 /**
  * Render ad page.
  * @param {string} title - Advert title.
@@ -13,11 +17,8 @@
  * @param {*} id
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the advert.
  */
-export function renderAdContainerTemplate(title, city, category, description,
+export default function renderAdContainerTemplate(title, city, category, description,
     created, price, isAuthor, editPath, id) {
-  // eslint-disable-next-line no-undef
-  const template = Handlebars.templates['adContainer.hbs'];
-
-  return template({title, city, category, description, created, price,
-    isAuthor, editPath, id});
+  return stringToHtmlElement(template({title, city, category, description, created, price,
+    isAuthor, editPath, id}));
 }

@@ -1,7 +1,7 @@
 'use strict';
 
-import {renderOrderItem} from '../../components/orderItem/orderItem.js';
-import {renderOrderMain} from '../../components/orderMain/orderMain.js';
+import renderOrderItem from '../../components/orderItem/orderItem.js';
+import renderOrderMain from '../../components/orderMain/orderMain.js';
 import renderSidebar from '../../components/sidebar/sidebar.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';

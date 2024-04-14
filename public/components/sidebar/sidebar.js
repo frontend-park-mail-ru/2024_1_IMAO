@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './sidebar.hbs';
-import styles from './sidebar.css'; // eslint-disable-line no-unused-vars
+import styles from './sidebar.css';
 
 /**
  * Render an CartBlock template.

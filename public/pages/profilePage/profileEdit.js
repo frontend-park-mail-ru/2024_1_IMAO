@@ -1,12 +1,10 @@
 'use strict';
 
-/* eslint-disable-next-line max-len */
 import renderSettingsContainer from '../../components/settingsContainer/settingsContainer';
-/* eslint-disable-next-line max-len */
 import EditProfileOverlay from '../../components/editProfileOverlay/editProfileOverlay.js';
+import {buildURL} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax';
 import router from '../../router/router';
-import {buildURL} from '../../modules/parsePathParams.js';
 
 /**
  *
@@ -62,7 +60,7 @@ export class ProfileEdit {
             city: profile.city.name,
           };
 
-          settings.innerHTML = renderSettingsContainer(this.profile);
+          settings.appendChild(renderSettingsContainer(this.profile));
           content.appendChild(settings);
 
           const btns = document.querySelectorAll('.set-or-edit-label');

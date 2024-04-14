@@ -1,16 +1,13 @@
 'use strict';
 
-import {renderAdPathTemplate} from '../../components/adPath/adPath.js';
-/* eslint-disable-next-line max-len */
-import {renderAdContainerTemplate} from '../../components/adContainer/adContainer.js';
-import {parsePathParams, buildURL} from '../../modules/parsePathParams.js';
-import {getURLFromLocation} from '../../modules/parsePathParams.js';
-import {buildURLBySegments} from '../../modules/parsePathParams.js';
-import {convertDate} from '../../modules/convertDate.js';
-import formatDate from '../../modules/formatDate.js';
+import renderAdPathTemplate from '../../components/adPath/adPath.js';
+import renderAdContainerTemplate from '../../components/adContainer/adContainer.js';
+import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
-import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
+import {parsePathParams, buildURL, getURLFromLocation, buildURLBySegments} from '../../modules/parsePathParams.js';
+import convertDate from '../../modules/convertDate.js';
+import formatDate from '../../modules/formatDate.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -210,16 +207,16 @@ export class Advert {
           //     ['close', advert['id']]);
 
           const adPathElement = document.createElement('div');
-          adPathElement.innerHTML =
-            renderAdPathTemplate(cityName, categoryName, adTitle,
-                cityPath, categoryPath);
+          adPathElement.appendChild(
+              renderAdPathTemplate(cityName, categoryName, adTitle, cityPath, categoryPath),
+          );
           content.appendChild(adPathElement);
 
-          const adContainer = document.createElement('div');
+          const adContainer = renderAdContainerTemplate(
+              adTitle, cityName, categoryName, description, created,
+              price, isAuthor, editPath, id,
+          );
           adContainer.classList.add('ad-container');
-          adContainer.innerHTML = renderAdContainerTemplate(adTitle,
-              cityName, categoryName, description, created, price, isAuthor,
-              editPath, id);
           content.appendChild(adContainer);
         },
     );

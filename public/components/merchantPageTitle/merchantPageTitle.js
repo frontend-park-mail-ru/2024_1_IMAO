@@ -1,7 +1,9 @@
 'use strict';
-import template from './merchantPageTitle.hbs';
-import styles from './merchantPageTitle.css'; // eslint-disable-line no-unused-vars
+
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './merchantPageTitle.hbs';
+import styles from './merchantPageTitle.css';
+
 
 /**
  *

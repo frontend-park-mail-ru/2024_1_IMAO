@@ -69,5 +69,5 @@ export function buildURLBySegments(serverHost, segments) {
 export function getURLFromLocation(location, serverHost) {
   const path = location.split(serverHost).join('');
 
-return new URL(path, serverHost);
+  return new URL(path, serverHost);
 }

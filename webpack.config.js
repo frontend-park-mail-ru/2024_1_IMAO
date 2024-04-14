@@ -37,6 +37,9 @@ module.exports = {
           path.resolve(__dirname, 'public'),
         ],
         loader: 'handlebars-loader',
+        options: {
+          runtime: path.resolve(__dirname, 'server/handlebars'),
+        },
       },
       {
         test: /\.css$/,

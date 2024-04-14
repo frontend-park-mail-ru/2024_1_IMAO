@@ -1,6 +1,7 @@
 'use strict';
+
 import template from './blackListOverlay.hbs';
-import styles from './blackListOverlay.css'; // eslint-disable-line no-unused-vars
+import styles from './blackListOverlay.css';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 
 /**

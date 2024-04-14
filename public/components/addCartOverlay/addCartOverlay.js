@@ -1,7 +1,8 @@
 'use strict';
-import template from './addCartOverlay.hbs';
-import styles from './addCartOverlay.css'; // eslint-disable-line no-unused-vars
+
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './addCartOverlay.hbs';
+import styles from './addCartOverlay.css';
 import router from '../../router/router.js';
 import ajax from '../../modules/ajax.js';
 
@@ -35,7 +36,6 @@ class AddCartOverlay {
    *
    */
   #renderTemplate() {
-    // const isAppended = this.isAppended;
     this.#element = stringToHtmlElement(template());
   }
 

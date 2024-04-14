@@ -3,7 +3,7 @@
 import trimString from '../../modules/trimString.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './cartBlock.hbs';
-import styles from './cartBlock.css'; // eslint-disable-line no-unused-vars
+import styles from './cartBlock.css';
 
 const MAX_TITLE_LENGTH = 40;
 
@@ -15,9 +15,7 @@ const MAX_TITLE_LENGTH = 40;
  * @param {string} path
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export function renderCartBlock(id, title, price, path) {
-  // eslint-disable-next-line no-undef
-  // const template = Handlebars.templates['cartBlock.hbs'];
+export default function renderCartBlock(id, title, price, path) {
   title = trimString(title, MAX_TITLE_LENGTH);
 
   return stringToHtmlElement(template({id, title, price, path}));

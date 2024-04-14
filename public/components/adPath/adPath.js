@@ -1,5 +1,10 @@
 'use strict';
 
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './adPath.hbs';
+import styles from './adPath.css';
+
+
 /**
  * Render an AdPath template.
  * @param {string} city - City where the product sells.
@@ -9,10 +14,6 @@
  * @param {URL} categoryPath - Path to adverts list in category.
  * @return {Handlebars.TemplateDelegate} - The template of path.
  */
-export function renderAdPathTemplate(city, category, name,
-    cityPath, categoryPath) {
-  // eslint-disable-next-line no-undef
-  const template = Handlebars.templates['adPath.hbs'];
-
-  return template({city, category, name, cityPath, categoryPath});
+export default function renderAdPathTemplate(city, category, name, cityPath, categoryPath) {
+  return stringToHtmlElement(template({city, category, name, cityPath, categoryPath}));
 }

@@ -1,15 +1,10 @@
 'use strict';
 
-// export function renderMerchantCardTemplate(merchantsName, location, registrationDate, isProfileVerified, reviewCount, subscribersCount, subscribtionsCount) {
-//   const template = Handlebars.templates['merchantCard.hbs'];
-//   return template({merchantsName, location, registrationDate, isProfileVerified, reviewCount, subscribersCount, subscribtionsCount});
-// }
-
-'use strict';
-import template from './profileCard.hbs';
-import styles from './profileCard.css'; // eslint-disable-line no-unused-vars
 import BlackListOverlay from '../../components/blackListOverlay/blackListOverlay.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './profileCard.hbs';
+import styles from './profileCard.css';
+
 
 /**
  *

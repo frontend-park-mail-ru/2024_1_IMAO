@@ -3,10 +3,10 @@
 import trimString from '../../modules/trimString.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './adsCard.hbs';
-import styles from './adsCard.css'; // eslint-disable-line no-unused-vars
+import styles from './adsCard.css';
 
 
-const MAX_TITLE_LENGTH = 22;
+const MAX_TITLE_LENGTH = 20;
 
 /**
  * Render an AdsCard template.
@@ -16,9 +16,7 @@ const MAX_TITLE_LENGTH = 22;
  * @param {string} path - Link to the advert page.
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export function renderAdsCardTemplate(title, price, id, path) {
-  // eslint-disable-next-line no-undef
-  // const template = Handlebars.templates['adsCard.hbs'];
+export default function renderAdsCardTemplate(title, price, id, path) {
   const titleTrim = trimString(title, MAX_TITLE_LENGTH);
 
   return stringToHtmlElement(template({title, titleTrim, price, id, path}));

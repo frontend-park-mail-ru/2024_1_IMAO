@@ -1,7 +1,7 @@
 'use strict';
 
-import {renderCartBlock} from '../../components/cartBlock/cartBlock.js';
-import {renderCartMain} from '../../components/cartMain/cartMain.js';
+import renderCartBlock from '../../components/cartBlock/cartBlock.js';
+import renderCartMain from '../../components/cartMain/cartMain.js';
 import renderSidebar from '../../components/sidebar/sidebar.js';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';

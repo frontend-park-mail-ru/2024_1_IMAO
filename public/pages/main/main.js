@@ -1,11 +1,10 @@
 'use strict';
 
-import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
+import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
+import {getURLFromLocation, buildURL, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-import {getURLFromLocation, buildURL} from '../../modules/parsePathParams.js';
-import {parsePathParams} from '../../modules/parsePathParams.js';
-import {buildURLBySegments} from '../../modules/parsePathParams.js';
+
 
 /** Class representing a main page. */
 export class Main {
