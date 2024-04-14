@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './merchantPageTitle.hbs';
-import styles from './merchantPageTitle.css';
+import styles from './merchantPageTitle.scss';
 
 
 /**

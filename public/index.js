@@ -1,5 +1,6 @@
 'use strict';
 
+import styles from './index.scss';
 import {API_ROUTES, PAGES_ROUTES, AUTH, serverHost} from './config/config.js';
 import {Header} from './components/header/header.js';
 import {Main} from './pages/main/main.js';
@@ -14,6 +15,7 @@ import {Cart} from './pages/cart/cart.js';
 import {Order} from './pages/order/order.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
+
 
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');

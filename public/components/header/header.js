@@ -3,7 +3,7 @@
 import {CATEGORIES} from '../../config/config.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './header.hbs';
-import styles from './header.css';
+import styles from './header.scss';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -79,7 +79,7 @@ export class Header {
             ajax.auth.is_auth = body.isAuth;
             this.#renderHeaderTemplate('Москва');
             this.#addListeners();
-            const main = document.querySelector('.main');
+            const main = document.querySelector('main');
             router.popPage(ev, main);
           },
       );

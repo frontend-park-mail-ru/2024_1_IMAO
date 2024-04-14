@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './cartMain.hbs';
-import styles from './cartMain.css';
+import styles from './cartMain.scss';
 
 /**
  * Render an CartBlock template.

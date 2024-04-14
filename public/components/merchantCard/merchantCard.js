@@ -3,7 +3,7 @@
 import BlackListOverlay from '../../components/blackListOverlay/blackListOverlay.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './merchantCard.hbs';
-import styles from './merchantCard.css';
+import styles from './merchantCard.scss';
 
 /**
  *

@@ -1,8 +1,8 @@
 'use strict';
 
-import template from './editProfileOverlay.hbs';
-import styles from './editProfileOverlay.css';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './editProfileOverlay.hbs';
+import styles from './editProfileOverlay.scss';
 
 /**
  *

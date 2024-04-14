@@ -3,7 +3,7 @@
 import trimString from '../../modules/trimString.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './orderItem.hbs';
-import styles from './orderItem.css';
+import styles from './orderItem.scss';
 
 const MAX_TITLE_LENGTH = 40;
 

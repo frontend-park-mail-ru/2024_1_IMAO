@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './adCreationForm.hbs';
-import styles from './adCreationForm.css';
+import styles from './adCreationForm.scss';
 
 
 /**

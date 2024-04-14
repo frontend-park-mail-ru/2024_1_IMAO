@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './adContainer.hbs';
-import styles from './adContainer.css';
+import styles from './adContainer.scss';
 
 /**
  * Render ad page.

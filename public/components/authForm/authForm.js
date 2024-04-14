@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './authForm.hbs';
-import styles from './authForm.css';
+import styles from './authForm.scss';
 
 /**
  * Return the template function of the authForm.

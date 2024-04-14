@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './horizontalButtonGroup.hbs';
-import styles from './horizontalButtonGroup.css';
+import styles from './horizontalButtonGroup.scss';
 
 /**
  *

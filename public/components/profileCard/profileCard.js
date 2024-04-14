@@ -3,7 +3,7 @@
 import BlackListOverlay from '../../components/blackListOverlay/blackListOverlay.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './profileCard.hbs';
-import styles from './profileCard.css';
+import styles from './profileCard.scss';
 
 
 /**

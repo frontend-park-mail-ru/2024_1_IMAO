@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './adPath.hbs';
-import styles from './adPath.css';
+import styles from './adPath.scss';
 
 
 /**

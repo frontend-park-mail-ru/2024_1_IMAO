@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './settingsContainer.hbs';
-import styles from './settingsContainer.css';
+import styles from './settingsContainer.scss';
 
 /**
  *

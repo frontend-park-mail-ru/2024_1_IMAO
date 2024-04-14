@@ -3,7 +3,7 @@
 import ratingCalculation from '../../modules/ratingCalculation.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './ratingBar.hbs';
-import styles from './ratingBar.css';
+import styles from './ratingBar.scss';
 
 /**
  *

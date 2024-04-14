@@ -3,7 +3,7 @@
 import trimString from '../../modules/trimString.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './adsCard.hbs';
-import styles from './adsCard.css';
+import styles from './adsCard.scss';
 
 
 const MAX_TITLE_LENGTH = 20;

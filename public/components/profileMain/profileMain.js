@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './profileMain.hbs';
-import styles from './profileMain.css';
+import styles from './profileMain.scss';
 
 /**
  * Render an orderIte template.

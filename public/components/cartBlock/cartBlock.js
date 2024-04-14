@@ -3,7 +3,7 @@
 import trimString from '../../modules/trimString.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './cartBlock.hbs';
-import styles from './cartBlock.css';
+import styles from './cartBlock.scss';
 
 const MAX_TITLE_LENGTH = 40;
 

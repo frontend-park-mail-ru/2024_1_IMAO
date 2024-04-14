@@ -2,7 +2,7 @@
 
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './addCartOverlay.hbs';
-import styles from './addCartOverlay.css';
+import styles from './addCartOverlay.scss';
 import router from '../../router/router.js';
 import ajax from '../../modules/ajax.js';
 
