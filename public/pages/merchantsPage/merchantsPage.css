@@ -1,34 +1,35 @@
 .merchant-page-content {
-    margin-top: 20px;
+    margin-top: 0;
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    justify-content: space-between;
 }
 
-.merchant-page-right-section {
+.merchant-page-content .merchant-page-right-section {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    width: 75%;
 }
 
-.cards-container-merchant {
+.merchant-page-content .cards-container-merchant {
     width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 16px 24px;
+    gap: 16px;
+    margin-top: 2%;
 }
 
-.cursor-hand-hover:hover {
+.merchant-page-content .cursor-hand-hover:hover {
     cursor: pointer;
 }
 
-.text-underline-hover:hover {
+.merchant-page-content .text-underline-hover:hover {
     text-decoration: underline;
     text-decoration-color: #7092FE;
     color: #7092FE;
 }
 
-label {
+.merchant-page-content label {
     cursor: pointer;
 }

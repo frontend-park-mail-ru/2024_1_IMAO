@@ -1,17 +1,13 @@
 .user-card-main-div {
     display: flex;
     flex-direction: column;
-    width: 264px;
-
+    width: 22%;
 }
 
 .card-container {
-    width: 264px;
-    height: 125px;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 16px;
     display: inline-flex;
 }
 
@@ -34,7 +30,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 0px;
-    display: inline-flex;
+    display: flex;
 }
 
 .avatar-container {
@@ -73,22 +69,8 @@
     display: inline-flex;
 }
 
-.location{
-  height: 20px;
-    padding-bottom: 0.63px;
-    left: 0px;
-    top: -0.64px;
-    /*position: absolute;*/
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    display: inline-flex;
-  
-    font-size: 14px;
-    color: gray;
-}
-.date {
-    height: 40px;
+.location {
+    height: 20px;
     padding-bottom: 0.63px;
     left: 0px;
     top: -0.64px;
@@ -98,6 +80,18 @@
     align-items: flex-start;
     display: inline-flex;
 
+    font-size: 14px;
+    color: gray;
+}
+
+.date {
+    height: auto;
+    /*position: absolute;*/
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: inline-flex;
+    margin-bottom: 5%;
     font-size: 14px;
     color: gray;
 }
@@ -155,16 +149,15 @@
 
 .profile-card {
     margin-top: 10px;
-    height: 60px;
-    padding: 12px 8px;
+    width: 90%;
+    height: auto;
+    padding: 4% 5%;
     background: white;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    display: inline-flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 7.27px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
 }
 
 .profile-card:hover {
@@ -173,11 +166,10 @@
 
 
 .profile-icon-container {
-    width: 18px;
-    height: 23px;
-    display: inline-flex;
+    width: 10%;
+    height: 100%;
+    margin-bottom: 7%;
     align-items: center;
-    gap: 0;
 }
 
 .verified-profile-icon {
@@ -188,22 +180,13 @@
 
 .icon-group {
     display: flex;
-    position: relative;
 }
 
 .icon-vector {
-    width: 17.99px;
-    height: 21.99px;
-    position: absolute;
     background: transparent;
 }
 
 .icon-vector-white {
-    width: 12px;
-    height: 15.91px;
-    position: absolute;
-    left: 3px;
-    top: 4px;
     background: transparent;
 }
 
@@ -211,24 +194,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 32.91px;
-    padding-bottom: 12.91px;
-    border-bottom: 2px solid #F5F5F5;
+    padding-bottom: 5px;
+    width: 90%;
 }
 
 .profile-status {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    font-size: 14px;
+    width: 90%;
 }
 
 .profile-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex: 1 1 0;
+    width: 10%;
 }
 
 .action-icon {
@@ -254,7 +229,8 @@
 
 .subscribe-button {
     margin-top: 20px;
-    height: 40px;
+    height: 35px;
+    width: 100%;
     background: #E8EDFE;
     box-shadow: 0px 2px 4px rgba(51, 51, 51, 0.02);
     border-radius: 8px;

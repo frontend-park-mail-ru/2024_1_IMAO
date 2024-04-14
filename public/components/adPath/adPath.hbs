@@ -1,11 +1,7 @@
 <ul class="ad-path">
-    <li class="city">
-        <a href="{{cityPath}}">{{city}}</a>
+    {{#each paths}}
+    <li>
+        <a href="{{this.path}}">{{this.title}}</a>
     </li>
-    <li class="category">
-        <a href="{{categoryPath}}">{{category}}</a>
-    </li>
-    <li class="name">
-        <a>{{name}}</a>
-    </li>
+    {{/each}}
 </ul>

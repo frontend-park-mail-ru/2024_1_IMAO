@@ -3,7 +3,7 @@
 import {renderAdsCardTemplate} from '../../components/adsCard/adsCard.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
-import MerchantPageTitle from '../../components/merchantPageTitle/merchantPageTitle.js';
+import {renderAdPathTemplate} from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {FormatDate} from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
@@ -174,8 +174,8 @@ export class MerchantsPage {
           merchantsName: merchantsName,
           urlMain: urlMain,
         };
-        const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
-        this.#element.insertBefore(merchantPageTitleInstance.render(), this.#element.lastChild);
+        //const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
+        //this.#element.insertBefore(merchantPageTitleInstance.render(), this.#element.lastChild);
 
         const merchantCartItems = {
           merchantsName: merchantsName,

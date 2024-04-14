@@ -1,14 +1,14 @@
-.merchant-page-content {
+.profile-page-content {
     margin-top: 20px;
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    justify-content: space-between;
 }
 
-.merchant-page-right-section {
+.profile-page-content .profile-page-right-section {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    width: 80%;
 }
 
 .cards-container-merchant {

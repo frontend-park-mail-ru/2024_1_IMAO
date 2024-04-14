@@ -1,8 +1,7 @@
-.user-card-main-div{
+.user-card-main-div {
     display: flex;
     flex-direction: column;
-    width: 264px;
-
+    width: 20%;
 }
 
 .card-container {
@@ -73,7 +72,8 @@
     display: inline-flex;
 }
 
-.location, .date {
+.location,
+.date {
     height: 24.64px;
     padding-bottom: 0.63px;
     left: 0px;
@@ -147,14 +147,14 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     display: inline-flex;
-    flex-direction: row; 
+    flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 7.27px;
 }
 
 .profile-card:hover {
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -343,7 +343,6 @@
     gap: 15.99px;
 }
 
-
 .action-button {
     color: #333333;
     font-size: 14px;
@@ -354,11 +353,10 @@
 }
 
 .merchant-address {
-  color: #333333;
-  text-decoration: none;
+    color: #333333;
+    text-decoration: none;
 }
 
 .merchant-address:hover {
-  color: #555454;
+    color: #555454;
 }
-

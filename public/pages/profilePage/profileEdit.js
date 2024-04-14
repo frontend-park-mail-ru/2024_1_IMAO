@@ -34,7 +34,7 @@ export class ProfileEdit {
     this.#element.appendChild(root);
 
     const settings = document.createElement('div');
-    settings.classList.add('personal-data-list');
+    settings.classList.add('personal__data__list');
 
     const apiRoute = buildURL(ajax.routes.PROFILE.GET_PROFILE,
         {'id': ajax.auth.id});

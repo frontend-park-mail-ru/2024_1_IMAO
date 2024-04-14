@@ -9,10 +9,9 @@
  * @param {URL} categoryPath - Path to adverts list in category.
  * @return {Handlebars.TemplateDelegate} - The template of path.
  */
-export function renderAdPathTemplate(city, category, name,
-    cityPath, categoryPath) {
+export function renderAdPathTemplate(paths) {
   // eslint-disable-next-line no-undef
   const template = Handlebars.templates['adPath.hbs'];
 
-  return template({city, category, name, cityPath, categoryPath});
+  return template(paths);
 }

@@ -204,9 +204,22 @@ export class Advert {
           //     ['close', advert['id']]);
 
           const adPathElement = document.createElement('div');
+          const paths = [
+            {
+              path: cityPath,
+              title: cityName,
+            },
+            {
+              path: categoryPath,
+              title: categoryName,
+            },
+            {
+              path: '',
+              title: adTitle,
+            },
+          ];
           adPathElement.innerHTML =
-            renderAdPathTemplate(cityName, categoryName, adTitle,
-                cityPath, categoryPath);
+            renderAdPathTemplate(paths);
           content.appendChild(adPathElement);
 
           const adContainer = document.createElement('div');
