@@ -1,0 +1,87 @@
+.personal-data-list {
+    margin: 20px 0;
+    padding: 3%;
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
+    width: 94%;
+
+    h1 {
+        margin: 0;
+    }
+
+    .settings-block {
+        background: white;
+        border-radius: 8px;
+        display: flex;
+        margin-top: 15px;
+        width: 100%;
+        height: auto;
+    }
+
+    .settings-block:not(:last-child) {
+        border-bottom: 1px solid #F5F5F5;
+        padding-bottom: 1%;
+    }
+
+    .settings-header {
+        color: #858585;
+        width: 15%;
+        align-self: center;
+    }
+
+    .settings-details {
+        width: 60%;
+    }
+
+    .settings-hint {
+        width: 60%;
+        color: #858585;
+    }
+
+    img {
+        width: 24px;
+        height: 24px;
+        position: relative;
+        border-radius: 12px;
+    }
+
+    .set-or-edit-label {
+        color: #7092FE;
+        font-size: 14px;
+        font-family: Open Sans;
+        width: 15%;
+        margin-left: auto;
+    }
+
+    .atribute-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 14px;
+        font-family: Open Sans;
+        margin-top: 15px;
+    }
+
+    button {
+        border-radius: 0;
+        border-color: #ffffff;
+        border-style: none;
+        background-color: #ffffff;
+        cursor: pointer;
+    }
+
+    .merchant-profile {
+        display: flex;
+        align-items: center;
+        gap: 2%;
+    }
+
+    .merchant-avatar {
+        width: 5%;
+    }
+
+    .merchant-name {
+        width: 90%;
+    }
+}

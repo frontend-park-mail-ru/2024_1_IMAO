@@ -1,12 +1,9 @@
 'use strict';
 
-import {renderAuthForm} from '../../components/authForm/authForm.js';
-import {Ajax} from '../../modules/ajax.js';
-import {validateEmail, validatePassword} from '../../modules/validate.js';
-import {emailError, passwordError} from '../../modules/validate.js';
-import {ROUTES, locationResolver} from '../../routes/routes.js';
-
-const ajax = new Ajax();
+import renderAuthForm from '../../components/authForm/authForm.js';
+import {validateEmail, validatePassword, emailError, passwordError} from '../../modules/validate.js';
+import ajax from '../../modules/ajax.js';
+import router from '../../router/router.js';
 
 const passwordMatchError = 'Пароли не совпадают!';
 const userAlreadyExistError = 'Такой пользователь уже существует!';
@@ -28,7 +25,7 @@ export class Signup {
    * @return {Element} - The element of signup page.
    */
   render() {
-    this.#renderTamplate();
+    this.#renderTemplate();
     this.#addListeners();
 
     return this.#element;
@@ -53,8 +50,7 @@ export class Signup {
    */
   #addLoginFollowListener(anchor) {
     anchor.addEventListener('click', (ev) => {
-      const main = document.getElementsByTagName('main')[0];
-      locationResolver(anchor.dataset.url, main);
+      router.pushPage(ev, anchor.dataset.url);
     });
   }
 
@@ -68,31 +64,34 @@ export class Signup {
       const submit = form.querySelector('[type="submit"]');
       submit.disabled = true;
 
-      const data = new URLSearchParams();
       const inputs = [];
       for (const pair of new FormData(form)) {
-        data.append(pair[0], pair[1]);
         inputs.push(pair[1]);
       }
 
       const email = inputs[0].trim();
       const password = inputs[1];
       const passwordRepeat = inputs[2];
+      const data = {email, password, passwordRepeat};
 
       const divError = this.#element.getElementsByClassName('error')[0];
 
       if (!this.#validateData(email, password, passwordRepeat, divError)) {
         submit.disabled = false;
+
         return;
       }
 
+      const apiRoute = ajax.routes.AUTH.SIGNUP;
+
       ajax.post(
-          ROUTES.signup,
+          apiRoute,
           data,
           (body) => {
             if (body?.isAuth === true) {
-              const main = document.getElementsByTagName('main')[0];
-              locationResolver(ROUTES.mainPage.href, main);
+              const main = document.querySelector('main');
+              router.popPage(ev, main);
+
               return;
             }
             submit.disabled = false;
@@ -113,16 +112,19 @@ export class Signup {
   #validateData(email, password, passwordRepeat, divError) {
     if (!validateEmail(email)) {
       divError.innerHTML = emailError;
+
       return false;
     }
 
     if (!validatePassword(password)) {
       divError.innerHTML = passwordError;
+
       return false;
     }
 
     if (password != passwordRepeat) {
       divError.innerHTML = passwordMatchError;
+
       return false;
     }
 
@@ -130,9 +132,9 @@ export class Signup {
   }
 
   /**
-   * Render a tamlate for a signup page.
+   * Render a template for a signup page.
    */
-  #renderTamplate() {
+  #renderTemplate() {
     const templateParams = {
       title: 'Регистрация в «Волчок»',
       inputs: [
@@ -153,11 +155,10 @@ export class Signup {
         },
       ],
       buttonText: 'Зарегистрироваться',
-      url: ROUTES.loginPage.href,
+      url: router.routes.loginPage.href,
       askText: 'Есть аккаунт?',
       anchorText: 'Авторизируйтесь',
     };
-    const template = renderAuthForm();
-    this.#element.innerHTML = template(templateParams);
+    this.#element.appendChild(renderAuthForm(templateParams));
   }
 }

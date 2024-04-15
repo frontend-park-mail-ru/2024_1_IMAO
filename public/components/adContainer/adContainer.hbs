@@ -1,0 +1,70 @@
+<div>
+  <div class="advert-block">
+      <div class="top-panel">
+          <div class="title">
+              <h1>{{title}}</h1>
+          </div>
+          <div class="favourite">
+              {{#if isAuthor}}
+              <a class="btn-favourite" href="{{editPath}}">
+                  Редактировать объявление
+              </a>
+              {{^}}
+              <a class="btn-favourite">
+                  <img src="images/heart.svg" class="like-img">
+                  Добавить в избранное
+              </a>
+              {{/if}}
+          </div>
+      </div>
+      <div class="advert-images">
+          <div class="carousel">
+              <div class="images">
+                  <img src="images/image1.jpg" alt="Image 1">
+                  <img src="images/image2.jpg" alt="Image 2">
+                  <img src="images/image3.jpg" alt="Image 3">
+                  <img src="images/image4.jpg" alt="Image 4">
+                  <img src="images/image5.jpg" alt="Image 5">
+              </div>
+          </div>
+          <div class="btn-container">
+              <button class="prev-btn">&#10094;</button>
+              <button class="next-btn">&#10095;</button>
+          </div>
+      </div>
+      <ul class="advert-description">
+          <li>
+              <span class="property-name">Местоположение</span>
+              <span class="property-description">{{city}}</span>
+          </li>
+          <li class="end-of-block">
+              <span class="property-name">Категория</span>
+              <span class="property-description">{{category}}</span>
+          </li>
+          <li class="end-of-block">
+              <span class="property-name">Описание</span>
+              <span class="property-description">{{description}}</span> 
+          </li>
+          <li>
+              <span class="property-name">В избранном</span>
+              <span class="property-description">23</span>
+          </li>
+          <li>
+              <span class="property-name">Просмотры</span>
+              <span class="property-description">100</span>
+          </li>
+          <li>
+              <span class="property-name">Размещено</span>
+              <span class="property-description">{{created}}</span>
+          </li>
+      </ul>
+  </div>
+  <div class="seller-block">
+      <h1 class="price title">{{price}} ₽</h1>
+      {{#if isAuthor}}
+      <a class="seller-block__btn close" href="#" data-id="{{id}}" >Снять с продажи</a>
+      {{^}}
+      <a class="seller-block__btn cart" href="#" data-id="{{id}}" >Добавить в корзину</a>
+      {{/if}}
+  </div>
+</div>

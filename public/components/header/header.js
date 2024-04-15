@@ -1,19 +1,21 @@
 'use strict';
 
-import {Ajax} from '../../modules/ajax.js';
-import {ROUTES, locationResolver, auth} from '../../routes/routes.js';
-
-const ajax = new Ajax();
+import {CATEGORIES} from '../../config/config.js';
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './header.hbs';
+import styles from './header.scss';
+import ajax from '../../modules/ajax.js';
+import router from '../../router/router.js';
 
 /** Class representing a header component. */
 export class Header {
-  #element;
+  #header;
 
   /**
    * Initialize a header.
    */
   constructor() {
-    this.#element = document.createElement('header');
+    this.#header = document.createElement('header');
   }
 
   /**
@@ -21,23 +23,24 @@ export class Header {
    * @return {Element} - The element of header.
    */
   render() {
-    this.#renderTamplate();
+    this.#renderHeaderTemplate('Москва');
     this.#addListeners();
 
-    return this.#element;
+    return this.#header;
   }
 
   /**
    * Add event listeners for a header.
    */
   #addListeners() {
-    const anchors = this.#element.getElementsByTagName('a');
+    const anchors = this.#header.getElementsByTagName('a');
 
     this.#addButtonsListeners(anchors);
-
-    const logoutBtn = this.#element.getElementsByClassName('logout')[0];
+    const logoutBtn = this.#header.getElementsByClassName('logout')[0];
 
     this.#addLogoutListener(logoutBtn);
+
+    // const cartButton = this.#header.querySelector('.cart-action');
   }
 
   /**
@@ -51,8 +54,8 @@ export class Header {
       }
 
       anchor.addEventListener('click', (ev) => {
-        const main = document.getElementsByTagName('main')[0];
-        locationResolver(anchor.dataset.url, main);
+        ev.preventDefault();
+        router.pushPage(ev, anchor.dataset.url);
       });
     }
   }
@@ -67,25 +70,49 @@ export class Header {
     }
 
     logoutBtn.addEventListener('click', (ev) => {
+      ev.preventDefault();
       ajax.post(
-          ROUTES.logout,
+          ajax.routes.AUTH.LOGOUT,
           null,
           (body) => {
-            const main = document.getElementsByTagName('main')[0];
-            locationResolver(ROUTES.mainPage.href, main);
+            // eslint-disable-next-line camelcase
+            ajax.auth.is_auth = body.isAuth;
+            this.#renderHeaderTemplate('Москва');
+            this.#addListeners();
+            const main = document.querySelector('main');
+            router.popPage(ev, main);
           },
       );
     });
   }
 
   /**
-   * Render a tamlate for a header.
+   * Renders a template for a header.
+   * @private
+   * @param {URL} location - The location to be displayed in the header.
+   * @return {void}
    */
-  #renderTamplate() {
-    const template = Handlebars.templates['header.hbs'];
-    const urlMain = ROUTES.mainPage.href;
-    const urlLogin = ROUTES.loginPage.href;
-    const flag = auth.is_auth;
-    this.#element.innerHTML = template({urlMain, urlLogin, flag});
+  #renderHeaderTemplate(location) {
+    // eslint-disable-next-line no-undef
+    // const template = Handlebars.templates['header.hbs'];
+    const urlMain = router.routes.mainPage.href.href;
+    const urlLogin = router.routes.loginPage.href.href;
+    const urlCreate = router.routes.adCreationPage.href.href;
+    const urlCart = router.routes.cartPage.href.href;
+    const urlProfile = router.routes.profilePage.href.href;
+    const flag = router.auth.is_auth;
+    while (this.#header.firstChild) {
+      this.#header.removeChild(this.#header.lastChild);
+    }
+    this.#header.appendChild(stringToHtmlElement(template({
+      urlMain,
+      urlLogin,
+      urlCreate,
+      urlCart,
+      urlProfile,
+      flag,
+      location,
+      CATEGORIES,
+    })));
   }
 }

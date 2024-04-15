@@ -1,0 +1,46 @@
+.card {
+    width: 215px;
+    height: 295px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 10px;
+    position: relative;
+    display: inline-block;
+    background: white;
+}
+
+.card img {
+    border-radius: 10px 10px 0 0;
+}
+
+.card p {
+    margin: 5px 0;
+}
+
+.card .cost {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card .like-icon {
+    border-radius: 50%;
+    background: white;
+    height: 50px;
+    position: absolute;
+    bottom: 45px;
+    right: 20px;
+    width: 50px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card .container {
+    padding: 2px 16px;
+}
+
+.container p {
+    text-decoration: none;
+    color: black;
+}

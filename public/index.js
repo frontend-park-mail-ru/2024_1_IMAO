@@ -1,18 +1,91 @@
 'use strict';
 
-import {ROUTES, locationResolver} from './routes/routes.js';
+import styles from './index.scss';
+import {API_ROUTES, PAGES_ROUTES, AUTH, serverHost} from './config/config.js';
+import {Header} from './components/header/header.js';
 import {Main} from './pages/main/main.js';
 import {Login} from './pages/login/login.js';
 import {Signup} from './pages/signup/signup.js';
+import {Advert} from './pages/advert/advert.js';
+import {AdCreation} from './pages/advert/adCreation.js';
+import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
+import {ProfilePage} from './pages/profilePage/profilePage.js';
+import {ProfileEdit} from './pages/profilePage/profileEdit.js';
+import {Cart} from './pages/cart/cart.js';
+import {Order} from './pages/order/order.js';
+import ajax from './modules/ajax.js';
+import router from './router/router.js';
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js', {scope: '/'})
+      .then((reg) => {
+        console.log(reg);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+}
 
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
-
 rootElement.appendChild(mainElement);
 
-ROUTES.init('loginPage', renderLogin);
-ROUTES.init('signupPage', renderSignup);
-ROUTES.init('mainPage', renderMain);
+ajax.initialize(AUTH, API_ROUTES);
+router.initialize(AUTH, PAGES_ROUTES, serverHost);
+router.on('checkAuth', ajax.checkAuth.bind(ajax));
+
+router.init('loginPage', logoutRequired(renderLogin));
+router.init('signupPage', logoutRequired(renderSignup));
+router.init('merchantsPage', renderMerchantsPage);
+router.init('profilePage', loginRequired(renderProfilePage));
+router.init('profileEdit', loginRequired(renderProfileEdit));
+router.init('mainPage', renderMain);
+router.init('adsListByCity', renderMain);
+router.init('adsListByCategory', renderMain);
+router.init('adPage', renderAdvert);
+router.init('adCreationPage', loginRequired(renderAdCreation));
+router.init('adEditingPage', loginRequired(renderAdEditing));
+router.init('cartPage', loginRequired(renderCart));
+router.init('orderPage', loginRequired(renderOrder));
+
+
+const header = new Header();
+
+/**
+ * logout Required Decorator.
+ * @param {Function} render
+ * @return {Function}
+ */
+function logoutRequired(render) {
+  return function() {
+    if (AUTH.is_auth === true) {
+      history.replaceState({page: '/'}, 'main', '/');
+      document.title = 'main';
+
+      return renderMain();
+    }
+
+    return render();
+  };
+}
+
+/**
+ * login Required Decorator.
+ * @param {Function} render
+ * @return {Function}
+ */
+function loginRequired(render) {
+  return function() {
+    if (AUTH.is_auth !== true) {
+      history.replaceState({page: '/login'}, 'login', '/login');
+      document.title = 'login';
+
+      return renderLogin();
+    }
+
+    return render();
+  };
+}
 
 /**
  * Return login page.
@@ -21,6 +94,7 @@ ROUTES.init('mainPage', renderMain);
 function renderLogin() {
   mainElement.innerHTML = '';
   const login = new Login();
+
   return login.render();
 }
 
@@ -31,7 +105,41 @@ function renderLogin() {
 function renderSignup() {
   mainElement.innerHTML = '';
   const signup = new Signup();
-  return signup.render(); ;
+
+  return signup.render();
+}
+
+/**
+ * Return merchant's page.
+ * @return {HTMLElement} - The merchant's page.
+ */
+function renderMerchantsPage() {
+  mainElement.innerHTML = '';
+  const merchantsPage = new MerchantsPage(header);
+
+  return merchantsPage.render();
+}
+
+/**
+ * Return profile page.
+ * @return {HTMLElement} - The merchant's page.
+ */
+function renderProfilePage() {
+  mainElement.innerHTML = '';
+  const profilePage = new ProfilePage(header);
+
+  return profilePage.render();
+}
+
+/**
+ * Return profile page.
+ * @return {HTMLElement} - The merchant's page.
+ */
+function renderProfileEdit() {
+  mainElement.innerHTML = '';
+  const profileEdit = new ProfileEdit(header);
+
+  return profileEdit.render();
 }
 
 /**
@@ -40,25 +148,68 @@ function renderSignup() {
  */
 function renderMain() {
   mainElement.innerHTML = '';
-  const main = new Main();
+  const main = new Main(header);
+
   return main.render();
 }
 
 /**
- * Changing page via url.
- * @param {HTMLElement} container - The container to render.
+ * Returns advert page.
+ * @return {HTMLElement} - The advert page.
  */
-function changePage(container) {
-  const location = window.location.hash;
+function renderAdvert() {
+  mainElement.innerHTML = '';
+  const advert = new Advert(header);
 
-  if (location) {
-    locationResolver(location, container);
-  }
-};
-
-window.addEventListener('popstate', () => changePage(mainElement));
-window.addEventListener('load', () => changePage(mainElement));
-
-if (window.location.hash === '' ) {
-  locationResolver(ROUTES.mainPage.href, mainElement);
+  return advert.render();
 }
+
+/**
+ * Returns advert creation page.
+ * @return {HTMLElement} - The advert creation/editing page.
+ */
+function renderAdCreation() {
+  mainElement.innerHTML = '';
+  const adCreation = new AdCreation(header, true);
+
+  return adCreation.render();
+}
+
+/**
+ * Returns advert editing page.
+ * @return {HTMLElement} - The advert creation/editing page.
+ */
+function renderAdEditing() {
+  mainElement.innerHTML = '';
+  const adEditing = new AdCreation(header, false);
+
+  return adEditing.render();
+}
+
+/**
+ * Return cart page.
+ * @return {HTMLElement} - The main page.
+ */
+function renderCart() {
+  mainElement.innerHTML = '';
+  const cart = new Cart(header);
+
+  return cart.render();
+}
+
+/**
+ * Return cart page.
+ * @return {HTMLElement} - The main page.
+ */
+function renderOrder() {
+  mainElement.innerHTML = '';
+  const order = new Order(header);
+
+  return order.render();
+}
+
+window.addEventListener('popstate', (event) => {
+  router.popPage(event, mainElement);
+});
+
+router.popPage(null, mainElement);

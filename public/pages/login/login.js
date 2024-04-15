@@ -1,11 +1,9 @@
 'use strict';
 
-import {renderAuthForm} from '../../components/authForm/authForm.js';
-import {Ajax} from '../../modules/ajax.js';
+import renderAuthForm from '../../components/authForm/authForm.js';
 import {emailError, validateEmail} from '../../modules/validate.js';
-import {ROUTES, locationResolver} from '../../routes/routes.js';
-
-const ajax = new Ajax();
+import ajax from '../../modules/ajax.js';
+import router from '../../router/router.js';
 
 const authError = 'Неверный логин или пароль!';
 
@@ -26,7 +24,7 @@ export class Login {
    * @return {Element} - The element of login page.
    */
   render() {
-    this.#renderTamplate();
+    this.#renderTemplate();
     this.#addListeners();
 
     return this.#element;
@@ -51,8 +49,7 @@ export class Login {
    */
   #addSignupFollowListener(anchor) {
     anchor.addEventListener('click', (ev) => {
-      const main = document.getElementsByTagName('main')[0];
-      locationResolver(anchor.dataset.url, main);
+      router.pushPage(ev, anchor.dataset.url);
     });
   }
 
@@ -66,30 +63,33 @@ export class Login {
       const submit = form.querySelector('[type="submit"]');
       submit.disabled = true;
 
-      const data = new URLSearchParams();
       const inputs = [];
       for (const pair of new FormData(form)) {
-        data.append(pair[0], pair[1]);
         inputs.push(pair[1]);
       }
 
       const email = inputs[0].trim();
       const password = inputs[1];
+      const data = {email, password};
 
-      const divError = this.#element.getElementsByClassName('error')[0];
+      const divError = this.#element.querySelector('.error');
 
       if (!this.#validateData(email, password, divError)) {
         submit.disabled = false;
+
         return;
       }
 
+      const apiRoute = ajax.routes.AUTH.LOGIN;
+
       ajax.post(
-          ROUTES.login,
+          apiRoute,
           data,
           (body) => {
             if (body?.isAuth === true) {
-              const main = document.getElementsByTagName('main')[0];
-              locationResolver(ROUTES.mainPage.href, main);
+              const main = document.querySelector('main');
+              router.popPage(ev, main);
+
               return;
             }
             submit.disabled = false;
@@ -109,6 +109,7 @@ export class Login {
   #validateData(email, password, divError) {
     if (!validateEmail(email)) {
       divError.innerHTML = emailError;
+
       return false;
     }
 
@@ -116,9 +117,9 @@ export class Login {
   }
 
   /**
-   * Render a tamlate for a login page.
+   * Render a template for a login page.
    */
-  #renderTamplate() {
+  #renderTemplate() {
     const templateParams = {
       title: 'Вход в «Волчок»',
       inputs: [
@@ -134,11 +135,10 @@ export class Login {
         },
       ],
       buttonText: 'Войти',
-      url: ROUTES.signupPage.href,
+      url: router.routes.signupPage.href,
       askText: 'Нет аккаунта?',
       anchorText: 'Зарегистрируйтесь',
     };
-    const template = renderAuthForm();
-    this.#element.innerHTML = template(templateParams);
+    this.#element.appendChild(renderAuthForm(templateParams));
   }
 }

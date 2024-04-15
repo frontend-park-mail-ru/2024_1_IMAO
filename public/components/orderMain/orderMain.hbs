@@ -1,0 +1,30 @@
+<div class="order-page">
+  <form class="recipient-form">
+    <div class="order__title">Оформление заказа</div>
+    <div class="order-page__container">
+      <div class="order-page__container__sidebar"></div>
+    </div>
+    <div class="order-page__container">
+    {{!-- <form class="recipient-form"> --}}
+    <h2 class="recipient-form__title">Получатель</h2>
+    
+    <label class="recipient-form__label" for="full-name">ФИО</label>
+    <input type="text" id="full-name" class="recipient-form__input" placeholder="Иванов Иван Иванович" required>
+    <small class="recipient-form__note">Заказ выдают только по паспорту</small>
+    
+    <label class="recipient-form__label" for="phone">Телефон</label>
+    <input type="tel" id="phone" class="recipient-form__input" placeholder="+7 ___ ___ -__ -__" required>
+    <small class="recipient-form__note">Отправим на этот номер код выдачи заказа</small>
+    
+    <label class="recipient-form__label" for="email">Почта</label>
+    <input type="email" id="email" class="recipient-form__input" placeholder="xxxxxx@mail.ru" required>
+    <small class="recipient-form__note">На этот адрес придёт чек</small>
+    
+    <label class="recipient-form__label" for="address">Адрес</label>
+    <input type="text" id="address" class="recipient-form__input" placeholder="Москва, Ленинградский просп., 39, стр. 79" required>
+    <small class="recipient-form__note">На этот адрес придёт заказ</small>
+    <div class="recipient-form__sidebar"></div>
+    <!-- <button type="submit" class="recipient-form__submit-button">Отправить</button> -->
+    </form>
+  </div>
+  </div>

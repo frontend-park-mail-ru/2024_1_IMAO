@@ -1,9 +1,14 @@
 'use strict';
 
+import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import template from './authForm.hbs';
+import styles from './authForm.scss';
+
 /**
  * Return the template function of the authForm.
- * @return {HandlebarsTemplates} - The template function.
+ * @param {object} templateParams
+ * @return {HTMLElement} - The template function.
  */
-export function renderAuthForm() {
-  return Handlebars.templates['authForm.hbs'];
+export default function renderAuthForm(templateParams) {
+  return stringToHtmlElement(template(templateParams));
 }
