@@ -136,10 +136,11 @@ export class ProfilePage {
 
           adverts.forEach((inner) => {
             const {price, title, id, city, category} = inner;
+
             const path = buildURLBySegments(router.host, [city, category, id]);
 
             merchantsPageRightSection.appendChild(
-                renderAdsCardTemplate(title, this.sectionState.getSectionState('serviceField', 'isChecked'), id, path),
+                renderAdsCardTemplate(title, price, id, path),
             );
           });
 

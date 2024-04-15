@@ -105,7 +105,7 @@ class Ajax {
           }
         })
         .then((data) => callback(data))
-        .catch((err) => alert(err));
+        .catch((err) => console.log(err));
   }
 }
 
