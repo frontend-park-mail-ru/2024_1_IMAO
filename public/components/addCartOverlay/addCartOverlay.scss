@@ -44,7 +44,7 @@
     padding: 30px;
     position: absolute;
     top: 16px;
-    left: 0;
+    <<<<<<< HEAD left: 0;
     background: white;
     border-radius: 8px;
     overflow: hidden;
@@ -131,3 +131,22 @@
     }
   }
 }
+
+=======transform: rotate(45deg);
+transform-origin: 0 0;
+}
+
+#myDialog {
+  width: 440px;
+  height: 250px;
+  z-index: 5;
+  padding: 0;
+}
+
+dialog {
+  border: none;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+>>>>>>>origin/predev-profile

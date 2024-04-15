@@ -46,21 +46,19 @@ class EditProfileOverlay {
    *
    */
   #addListeners() {
+    const myDialog = this.#element;
     const myButton = this.button;
+
     myButton.addEventListener('click', () => {
       myDialog.showModal();
     });
 
-    const myDialog = this.#element;
     myDialog.addEventListener('click', () => {
       myDialog.close();
     });
 
-    const myDiv = this.#element.querySelector('.container');
+    const myDiv = this.#element.querySelector('.profile-container');
     myDiv.addEventListener('click', (event) => event.stopPropagation());
-
-    const cancelBtn = this.#element.querySelector('.cancel-button-blacklist');
-    cancelBtn.addEventListener('click', (event) => myDialog.close());
   }
 }
 

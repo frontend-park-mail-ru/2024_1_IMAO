@@ -4,7 +4,7 @@ import renderProfileMain from '../../components/profileMain/profileMain.js';
 import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
-import MerchantPageTitle from '../../components/merchantPageTitle/merchantPageTitle.js';
+import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import formatDate from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
@@ -164,11 +164,18 @@ export class MerchantsPage {
    * Render a temlate for a merchant page.
    */
   async #renderTemplate() {
-    const urlMain = router.routes.mainPage.href;
+    const content = document.createElement('div');
+
     this.#element.appendChild(this.header.render());
+
+    content.classList.add('page-content');
+    this.#element.appendChild(content);
+
+    const urlMain = router.routes.mainPage.href;
+
     const root = renderProfileMain();
-    this.#element.appendChild(root);
-    const id = 1;
+    content.appendChild(root);
+
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, this.#slug);
     await ajax.get(
         path,
@@ -178,12 +185,20 @@ export class MerchantsPage {
           const merchantsName = profile.merchantsName;
           const ratingValue = profile.rating;
 
-          const merchantPageTitleItems = {
-            merchantsName: merchantsName,
-            urlMain: urlMain,
-          };
-          const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
-          this.#element.insertBefore(merchantPageTitleInstance.render(), this.#element.lastChild);
+          const paths = [
+            {
+              path: urlMain,
+              title: 'Главная',
+            },
+            {
+              path: '#',
+              title: merchantsName,
+            },
+          ];
+
+          const adPathElement = document.createElement('div');
+          adPathElement.appendChild(renderAdPathTemplate({paths}));
+          content.insertBefore(adPathElement, content.lastChild);
 
           const merchantCartItems = {
             merchantsName: merchantsName,
@@ -220,7 +235,7 @@ export class MerchantsPage {
           });
           const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
           merchantsPageRightSection.appendChild(horizontalButtonGroupInstance.render());
-        }, {id: '1'},
+        },
     );
 
     const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');

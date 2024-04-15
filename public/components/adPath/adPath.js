@@ -7,7 +7,7 @@ import styles from './adPath.scss';
 
 /**
  * Render an AdPath template.
- * @param {object} paths - City where the product sells.
+ * @param {object} paths - Array of paths and their names.
  * @return {HTMLElement} - The template of path.
  */
 export default function renderAdPathTemplate(paths) {

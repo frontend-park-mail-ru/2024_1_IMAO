@@ -1,5 +1,5 @@
 .ad-path {
-    padding: 0; 
+    padding: 0;
     margin: 0;
     font-size: 14px;
 }
@@ -19,4 +19,9 @@
 
 .ad-path li:not(:last-child) a {
     color: #4365d4;
+}
+
+.ad-path li:last-child a {
+    color: #000000;
+    cursor: default;
 }
