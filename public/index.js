@@ -16,6 +16,15 @@ import {Order} from './pages/order/order.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js', {scope: '/'})
+      .then((reg) => {
+        console.log(reg);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+}
 
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');

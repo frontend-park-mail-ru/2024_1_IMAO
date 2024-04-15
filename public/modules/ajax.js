@@ -26,6 +26,7 @@ class Ajax {
       method: POST,
       mode: 'cors',
       credentials: 'include',
+      cache: 'default',
       body: JSON.stringify(body),
     };
 
@@ -43,6 +44,7 @@ class Ajax {
       method: POST,
       mode: 'cors',
       credentials: 'include',
+      cache: 'default',
       body: body,
     };
 
@@ -60,6 +62,7 @@ class Ajax {
       method: GET,
       mode: 'cors',
       credentials: 'include',
+      cache: 'default',
     };
 
     await this.#ajax(url, callback, init);
@@ -91,6 +94,10 @@ class Ajax {
    * @param {object} init - Options of the request.
    */
   async #ajax(url, callback, init) {
+    // caches.open('aaa')
+    //     .then((cache) => {
+    //       return cache.add(url);
+    //     });
     await fetch(url, init)
         .then((response) => {
           if (response.ok) {
