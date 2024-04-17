@@ -96,6 +96,8 @@ export class ProfileEdit {
             fields: [{type: 'text', value: this.profile.name, name: 'name'},
               {type: 'text', value: this.profile.surname, name: 'surname'}],
             apiRoute: ajax.routes.PROFILE.SET_PROFILE_AVATAR,
+            hasAvatar: true,
+            avatar: '',
             id: 1,
           },
           {

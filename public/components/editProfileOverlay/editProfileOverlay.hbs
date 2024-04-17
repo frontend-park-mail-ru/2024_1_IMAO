@@ -10,18 +10,36 @@
                 <div class="profile-header-title">
                     {{title}}
                 </div>
-                {{#each fields}}
-                {{#if this.isPhone}}
-                <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" pattern="[0-9]{11}"
-                    placeholder="+7(___)___-__-__" required>
-                {{^}}
-                <div class="profile-modal-fields">
-                    <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" required>
+                {{#if hasAvatar}}
+                <div class="avatar-upload">
+                    <div class="avatar-edit">
+                        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" required>
+                        <label for="imageUpload"></label>
+                    </div>
+                    <div class="avatar-preview">
+                        {{#if (is_null avatar)}}
+                        <div id="imagePreview" style="background-image: url(images/img_avatar.png);"></div>
+                        {{^}}
+                        <div id="imagePreview" style="background-image: url({{avatar}});"></div>
+                        {{/if}}
+                    </div>
                 </div>
-                {{/if}}
-                {{/each}}
-                <input class="submit-btn" type="submit" value="Сохранить">
-            </form>
         </div>
+        {{/if}}
+        {{#each fields}}
+        {{#if this.isPhone}}
+        <div class="profile-modal-fields">
+            <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" pattern="[0-9]{11}"
+                placeholder="+7(___)___-__-__" class="profile-text" required>
+        </div>
+        {{^}}
+        <div class="profile-modal-fields">
+            <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" class="profile-text" required>
+        </div>
+        {{/if}}
+        {{/each}}
+        <input class="submit-btn" type="submit" value="Сохранить">
+        </form>
+    </div>
     </div>
 </dialog>
