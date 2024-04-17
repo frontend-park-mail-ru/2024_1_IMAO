@@ -393,3 +393,10 @@
 .labeled-icon a:hover {
   color: #002ab3;
 }
+
+.Active-vertical {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  display: inline-flex;
+}

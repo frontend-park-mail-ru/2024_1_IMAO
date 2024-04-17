@@ -43,9 +43,6 @@ class ProfileCard {
       reviewCount: this.items.reviewCount,
       subscribersCount: this.items.subscribersCount,
       subscribtionsCount: this.items.subscribtionsCount,
-      urlOrder: this.items.urlOrder,
-      urlSettings: this.items.urlSettings,
-      urlMerchant: this.items.urlMerchant.href,
     };
     this.#element = stringToHtmlElement(template(context));
   }

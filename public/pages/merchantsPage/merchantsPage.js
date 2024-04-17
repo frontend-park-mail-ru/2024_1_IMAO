@@ -1,6 +1,6 @@
 'use strict';
 
-import renderProfileMain from '../../components/profileMain/profileMain.js';
+import renderMerchantMain from '../../components/merchantMain/merchantMain.js';
 import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
@@ -81,7 +81,7 @@ export class MerchantsPage {
       const newMerchantsCardContainer = document.createElement('div');
       newMerchantsCardContainer.classList.add('cards-container-merchant');
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
-      this.sectionState.setSectionState(event.target.value, 'isRendered', merchantsCardContainer);
+      this.sectionState.setSectionState(event.target.value, 'isRendered', true);
       this.#renderCards(newMerchantsCardContainer, isRendered);
     } else {
       const stashedMerchantsCardContainer = this.sectionState.getSectionState(event.target.value, 'render');
@@ -175,7 +175,7 @@ export class MerchantsPage {
 
     const urlMain = router.routes.mainPage.href;
 
-    const root = renderProfileMain();
+    const root = renderMerchantMain();
     content.appendChild(root);
 
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, this.#slug);
