@@ -36,7 +36,7 @@ export const API_ROUTES = {
     EDIT_USER_EMAIL: new URL('/api/auth/edit/email', api),
   },
   CITY: {
-    GET_CITY_LIST: new URL('/api/profile/city', api),
+    GET_CITY_LIST: new URL('/api/city', api),
   },
   CART: {
     GET_CART_LIST: new URL('/api/cart/list', api),

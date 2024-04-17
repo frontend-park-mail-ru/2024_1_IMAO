@@ -1,0 +1,32 @@
+<div class="dropdown-with-search">
+    <select name="">
+       {{#each items}}
+            <option value="{{value}}">{{label}}</option>
+       {{/each}} 
+  </select>
+    <div class="dropdown-select wide" tabindex="0">
+        <span class="current">{{current}}</span>
+        <div class="list">
+            <div class="dd-search">
+            <input id="txtSearchValue" placeholder="Введите название города" autocomplete="off"  class="dd-searchbox txtSearchValue" type="text">
+            </div>
+            <ul>
+                {{#each items}}
+                <li class="option {{#if isSelected}}selected{{/if}}" data-value="{{value}}" data-display-text="">{{label}}</li>
+                {{/each}}
+                {{!-- <li class="option selected" data-value="1" data-display-text="">One</li> --}}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+{{!-- <div class="dropdown-with-search">
+    <select name="">
+        {{#each items}}
+            <option value="{{value}}">{{label}}</option>
+        {{/each}}
+    </select>
+</div>   --}}

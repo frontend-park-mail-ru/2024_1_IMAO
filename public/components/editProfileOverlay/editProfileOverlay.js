@@ -1,5 +1,8 @@
 'use strict';
 
+import DropdownWithSearch from '../../components/dropdownWithSearch/dropdownWithSearch.js';
+
+import ajax from '../../modules/ajax';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './editProfileOverlay.hbs';
 import styles from './editProfileOverlay.scss';
@@ -40,6 +43,20 @@ class EditProfileOverlay {
     };
 
     this.#element = stringToHtmlElement(template(context));
+
+    const pathCity = ajax.routes.CITY.GET_CITY_LIST;
+    ajax.get(
+      pathCity,
+      (body) => {
+        //const cityList = body.city_list.CityItems;
+        //console.log('this.data.fields.value', this.data.fields.value)
+        const dropdownWithSearchDiv = this.#element.querySelector('.ddws-div');
+        const dropdownWithSearch = new DropdownWithSearch(body, 'Москва');
+        dropdownWithSearchDiv.appendChild(dropdownWithSearch.render());
+
+        
+      },
+    );
   }
 
   /**
