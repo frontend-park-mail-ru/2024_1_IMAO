@@ -222,8 +222,8 @@ export class MerchantsPage {
 
           const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
           const buttonGroupItemes = [
-            {categoryLabel: 'Активные', count: '', checked: true, categoryLabelValue: 'active'},
-            {categoryLabel: 'Проданные', count: '', checked: false, categoryLabelValue: 'sold'},
+            {categoryLabel: 'Активные', count: profile.activeAddsCount, checked: true, categoryLabelValue: 'active'},
+            {categoryLabel: 'Проданные', count: profile.soldAddsCount, checked: false, categoryLabelValue: 'sold'},
           ];
           buttonGroupItemes.forEach((item) => {
             this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
