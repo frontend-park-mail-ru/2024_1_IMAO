@@ -4,10 +4,11 @@ import renderProfileMain from '../../components/profileMain/profileMain.js';
 import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
 import ProfileCard from '../../components/profileCard/profileCard.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
+import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import formatDate from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
-import {buildURL, buildURLBySegments} from '../../modules/parsePathParams.js';
+import {buildURL, buildURLBySegments, parsePathParams, getURLFromLocation} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -51,7 +52,7 @@ export class ProfilePage {
       input.addEventListener('click', this.handleClick.bind(this));
     }.bind(this));
 
-    this.#addScrollListener();
+    // this.#addScrollListener();
   }
 
   /**
@@ -113,11 +114,13 @@ export class ProfilePage {
       1 :
       parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('count');
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('startId');
-
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('count', 28);
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('startId', startID);
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('deleted');
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('userId');
+    const state = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ?
+      0 : 1;
+    const id = ajax.auth.id;
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('userId', id);
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('deleted', state);
 
     ajax.get(
         ajax.routes.ADVERT.GET_ADS_LIST,
@@ -197,8 +200,8 @@ export class ProfilePage {
 
           const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
           const buttonGroupItemes = [
-            {categoryLabel: 'Активные', count: '', checked: true, categoryLabelValue: 'active'},
-            {categoryLabel: 'Проданные', count: '', checked: false, categoryLabelValue: 'sold'},
+            {categoryLabel: 'Активные', count: profile.activeAddsCount, checked: true, categoryLabelValue: 'active'},
+            {categoryLabel: 'Проданные', count: profile.soldAddsCount, checked: false, categoryLabelValue: 'sold'},
           ];
           buttonGroupItemes.forEach((item) => {
             this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
