@@ -6,7 +6,7 @@
     }
 
     .profile-container {
-        width: auto;
+        width: 360px;
         height: auto;
     }
 
@@ -154,5 +154,11 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
+    }
+
+    .error {
+        color: red;
+        margin-top: 15px;
+        font-size: 14px;
     }
 }

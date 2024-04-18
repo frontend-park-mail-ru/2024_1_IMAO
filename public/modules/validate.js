@@ -24,7 +24,7 @@ export function assertString(input) {
   const isStr = isString(input);
 
   if (!isStr) {
-    throw new TypeError('Expected a string');
+    throw new TypeError('Expected string');
   }
 }
 
@@ -104,4 +104,16 @@ export function validatePassword(password) {
   }
 
   return hasUpper && hasLower && hasDigit;
+}
+
+/**
+ * Check if string not empty and doesn`t contain numbers.
+ * @param {String} name
+ * @return {boolean}
+ */
+export function validateName(name) {
+  const notEmpty = name !== '';
+  const isStr = /^[a-zA-Zа-яА-Я]+$/.test(name);
+
+  return notEmpty && isStr;
 }

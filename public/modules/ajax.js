@@ -75,10 +75,6 @@ class Ajax {
     await this.get(
         this.routes.AUTH.CHECKAUTH,
         (body) => {
-          if (body.isAuth === this.auth.is_auth) {
-            return;
-          }
-
           // eslint-disable-next-line camelcase
           this.auth.is_auth = body.isAuth;
           this.auth.id = body.user.id;

@@ -28,8 +28,8 @@
                 {{#each fields}}
                 {{#if this.isPhone}}
                 <div class="profile-modal-fields">
-                    <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" pattern="[0-9]{11}"
-                        placeholder="{{this.place}}" class="profile-text" required>
+                    <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" placeholder="{{this.place}}"
+                        class="profile-text" required>
                 </div>
                 {{^}}
                 <div class="profile-modal-fields">
@@ -39,6 +39,7 @@
                 {{/if}}
                 {{/each}}
                 <input class="submit-btn" type="submit" value="Сохранить">
+                <div class="error"></div>
             </form>
         </div>
     </div>
