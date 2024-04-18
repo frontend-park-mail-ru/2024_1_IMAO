@@ -3,6 +3,7 @@
 import renderMerchantMain from '../../components/merchantMain/merchantMain.js';
 import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
+import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
@@ -138,6 +139,10 @@ export class MerchantsPage {
         (body) => {
           const adverts = body['items'];
           if (!(adverts && Array.isArray(adverts))) {
+
+            const test = new EmptyAdvertsPlug('aboba');
+            merchantsPageRightSection.appendChild(test.render());
+
             return;
           }
 

@@ -5,6 +5,8 @@ import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
 import renderSettingsContainer from '../../components/settingsContainer/settingsContainer';
 import EditProfileOverlay from '../../components/editProfileOverlay/editProfileOverlay.js';
 import ProfileCard from '../../components/profileCard/profileCard.js';
+import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
+import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
@@ -29,6 +31,7 @@ export class ProfilePage {
     this.header = header;
     this.sectionState = new StageStorage();
     this.sectionStateV = new StageStorage();
+    this.sectionStateS = new StageStorage();
     this.#isBottomReached = false;
   }
 
@@ -185,14 +188,56 @@ export class ProfilePage {
           });
         }
       }
-      //this.#renderCards(newProfilePageContentContainer, isRendered);
+
+      if (event.target.value === 'orders') {
+          //const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section');
+          const buttonGroupItemes = [
+            {categoryLabel: 'Покупки', count: '', checked: true, categoryLabelValue: 'purchases'},
+            {categoryLabel: 'Продажи', count: '', checked: false, categoryLabelValue: 'sales'},
+          ];
+          buttonGroupItemes.forEach((item) => {
+            this.sectionStateS.setSectionState(item.categoryLabelValue, 'isRendered', false);
+          });
+          buttonGroupItemes.forEach((item) => {
+            if (item.checked) {
+              this.sectionStateS.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
+
+              return;
+            }
+          });
+          const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
+          newProfilePageContentContainer.appendChild(horizontalButtonGroupInstance.render());
+
+          const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
+
+          inputs.forEach(function(input) {
+            input.addEventListener('click', this.handleClick3.bind(this));
+          }.bind(this));
+
+        
+          const currentState = this.sectionStateS.getSectionState('purchases', 'isRendered');
+          if (!currentState) {
+            this.sectionStateS.setSectionState('purchases', 'isRendered', true);
+          }
+
+          const header = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?  'Нет покупок' : 'Не продаж';
+          const content = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?  'Заказы по купленным товарам' : 'Заказы по проданным товарам';
+          
+          const emptyOrderPlug = new EmptyOrderPlug(header, content);
+          newProfilePageContentContainer.appendChild(emptyOrderPlug.render());
+      }
+
+      if (event.target.value === 'adverts') {
+        //this.#renderCards(newProfilePageContentContainer, isRendered);
+      }
+      
 
     } else {
       const stashedMerchantsCardContainer = this.sectionStateV.getSectionState(event.target.value, 'render');
       profilePageContentContainer.replaceWith(stashedMerchantsCardContainer);
     }
 
-    console.log(this.sectionStateV);
+    //console.log(this.sectionStateV);
   }
 
   handleClick(event) {
@@ -218,7 +263,40 @@ export class ProfilePage {
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
     }
 
-    console.log(this.sectionState);
+    //console.log(this.sectionState);
+  }
+
+  handleClick3(event) {
+    console.log(event.target.value);
+    
+    const merchantsCardContainer = this.#element.querySelector('.empty-orders-main-container');
+    const isRendered = this.sectionStateS.getSectionState(event.target.value, 'isRendered');
+
+    const currentButtonChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked');
+    this.sectionStateS.setSectionState('serviceField', 'isChecked', event.target.value);
+
+    this.sectionStateS.setSectionState(currentButtonChecked, 'render', merchantsCardContainer);
+
+    if (!isRendered) {
+      // const newMerchantsCardContainer = document.createElement('div');
+      // newMerchantsCardContainer.classList.add('empty-orders-main-container');
+      // merchantsCardContainer.replaceWith(newMerchantsCardContainer);
+      this.sectionStateS.setSectionState(event.target.value, 'isRendered', true);
+      
+      const header = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?  'Нет покупок' : 'Нет продаж';
+      const content = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?  'Заказы по купленным товарам' : 'Заказы по проданным товарам';
+      
+      const emptyOrderPlug = new EmptyOrderPlug(header, content);
+      merchantsCardContainer.replaceWith(emptyOrderPlug.render());
+      
+      //newMerchantsCardContainer.appendChild(emptyOrderPlug.render());
+
+    } else {
+      const stashedMerchantsCardContainer = this.sectionStateS.getSectionState(event.target.value, 'render');
+      merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
+    }
+
+    // console.log(this.sectionStateS);
   }
 
   /**
@@ -262,7 +340,13 @@ export class ProfilePage {
         ajax.routes.ADVERT.GET_ADS_LIST,
         (body) => {
           const adverts = body['items'];
+          
           if (!(adverts && Array.isArray(adverts))) {
+            
+            const content = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ?  'активные' : 'проданные';
+            const emptyAdvertsPlug = new EmptyAdvertsPlug(content);
+            merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
+            
             return;
           }
 
@@ -379,8 +463,10 @@ export class ProfilePage {
               return;
             }
           });
+
           const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
           merchantsPageRightSection.appendChild(horizontalButtonGroupInstance.render());
+
         },
     );
 

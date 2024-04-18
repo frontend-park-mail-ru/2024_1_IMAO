@@ -36,7 +36,7 @@ class DropdownWithSearch {
       items: this.transformData(this.items, this.current),
       current: this.current
     };
-    console.log('context', context)
+
     this.#element = stringToHtmlElement(template(context));
   }
 
@@ -147,7 +147,6 @@ class DropdownWithSearch {
 
     transformData(input, selectedName) {
         // Проверяем, что входные данные имеют ожидаемый формат
-        console.log('input', input)
         if (!input || !input.city_list || !input.city_list.CityItems) {
             return;
         }

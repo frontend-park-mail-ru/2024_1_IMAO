@@ -11,9 +11,9 @@ import Handlebars from 'handlebars';
  * @return {HTMLElement} - Settings form.
  */
 export default function renderSettingsContainer(profileData) {
-  // Handlebars.registerHelper('is_null', function(value) {
-  //   return value === '';
-  // });
+  Handlebars.registerHelper('is_null', function(value) {
+    return value === '';
+  });
 
   return stringToHtmlElement(template(profileData));
 }
