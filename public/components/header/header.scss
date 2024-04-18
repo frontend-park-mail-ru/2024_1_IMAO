@@ -43,7 +43,6 @@ header {
     height: 15px;
     color: #858585;
     font-size: 12px;
-    font-family: Open Sans;
     font-weight: 400;
     line-height: 15.96px;
     letter-spacing: 0.20px;
@@ -67,7 +66,6 @@ header {
 .location-name, .like-text, .cart-text {
     color: #333333;
     font-size: 12px;
-    font-family: Open Sans;
     font-weight: 400;
     text-decoration: underline;
     line-height: 16px;
@@ -105,7 +103,6 @@ header {
 .navbar {
     width: 1219px;
     max-height: fit-content;
-    font-family: Open Sans;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -202,6 +199,7 @@ header {
 }
 
 .navbar .search input[type=text] {
+    font-family: "OpenSans", sans-serif;
     flex-grow: 1;
     padding: 6px;
     font-size: 17px;
@@ -209,6 +207,7 @@ header {
 }
 
 .navbar .search button {
+  font-family: "OpenSans", sans-serif;
   width: 20%;
   padding: 10px;
   background: rgba(235, 235, 235, 1);
