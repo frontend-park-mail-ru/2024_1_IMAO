@@ -210,6 +210,7 @@ export class MerchantsPage {
             reviewCount: profile.reactionsCount,
             subscribersCount: profile.subersCount,
             subscribtionsCount: profile.subonsCount,
+            avatarImg: profile.avatarImg,
           };
           const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
           const merchantCardInstance = new MerchantCard(merchantCartItems);

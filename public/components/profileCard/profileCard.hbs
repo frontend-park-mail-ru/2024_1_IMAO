@@ -5,7 +5,11 @@
     </div>
     <div class="card-content">
       <div class="avatar-container">
-        <img class="avatar-image" src="https://via.placeholder.com/72x76" />
+        {{#if (is_null avatar)}}
+        <img class="avatar-image" src="public/images/img_avatar.png" />
+        {{^}}
+        <img class="avatar-image" src="data:image;base64,{{avatar}}" />
+        {{/if}}
         <div class="avatar-overlay"></div>
       </div>
       <div class="card-info">

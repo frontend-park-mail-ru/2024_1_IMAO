@@ -264,6 +264,7 @@ export class Advert {
             reviewCount: profile.reactionsCount,
             subscribersCount: profile.subersCount,
             subscribtionsCount: profile.subonsCount,
+            avatarImg: profile.avatarImg,
           };
 
           const merchantCardInstance = new MerchantCard(merchantCartItems);

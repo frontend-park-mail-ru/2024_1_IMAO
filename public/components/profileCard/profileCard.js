@@ -45,7 +45,7 @@ class ProfileCard {
       subscribtionsCount: this.items.subscribtionsCount,
       urlOrder: this.items.urlOrder,
       urlSettings: this.items.urlSettings,
-      urlMerchant: this.items.urlMerchant.href,
+      avatar: this.items.avatarImg,
     };
     this.#element = stringToHtmlElement(template(context));
   }

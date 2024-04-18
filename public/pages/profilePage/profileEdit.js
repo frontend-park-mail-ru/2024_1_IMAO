@@ -70,7 +70,7 @@ export class ProfileEdit {
             subscribtionsCount: profile.subonsCount,
             urlOrder: '/cart',
             urlSettings: router.routes.profileEdit.href,
-            urlMerchant: '#',
+            avatarImg: profile.avatarImg,
           };
 
           const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
@@ -93,17 +93,19 @@ export class ProfileEdit {
 
           const forms = [{
             title: 'Изменить профиль',
-            fields: [{type: 'text', value: this.profile.name, name: 'name'},
-              {type: 'text', value: this.profile.surname, name: 'surname'}],
+            fields: [{type: 'text', value: this.profile.name, name: 'name',
+              place: 'Имя'},
+            {type: 'text', value: this.profile.surname, name: 'surname',
+              place: 'Фамилия'}],
             apiRoute: ajax.routes.PROFILE.SET_PROFILE_AVATAR,
             hasAvatar: true,
-            avatar: '',
+            avatar: this.profile.avatarImg,
             id: 1,
           },
           {
             title: 'Номер телефона',
             fields: [{type: 'text', value: this.profile.phone,
-              name: 'phone', isPhone: true}],
+              name: 'phone', isPhone: true, place: '+7(___)___-__-__'}],
             apiRoute: ajax.routes.PROFILE.SET_PROFILE_PHONE,
             id: 2,
           },
@@ -128,16 +130,17 @@ export class ProfileEdit {
           }
 
           for (let i = 0; i < btns.length; ++i) {
-            const form = document.getElementsByTagName('form')[i + 1];
+            const form = document.querySelectorAll('.profile-modal-content')[i];
 
             form.addEventListener('submit', (ev) => {
               ev.preventDefault();
-              const submit = form.querySelector('[type="submit"]');
+              const submit = form.querySelectorAll('.submit-btn')[i];
               submit.disabled = true;
 
               const formData = new FormData(form);
 
-              if (forms[i].apiRoute === ajax.routes.PROFILE.SET_PROFILE_AVATAR) {
+              if (forms[i].apiRoute ===
+                  ajax.routes.PROFILE.SET_PROFILE_AVATAR) {
                 ajax.postMultipart(
                     forms[i].apiRoute,
                     formData,
