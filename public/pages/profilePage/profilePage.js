@@ -13,8 +13,13 @@ import formatDate from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-import {buildURL, buildURLBySegments, parsePathParams, getURLFromLocation} from '../../modules/parsePathParams.js';
+import {buildURL, buildURLBySegments} from '../../modules/parsePathParams.js';
 import {validateEmail, validateName} from '../../modules/validate.js';
+
+const wrongEmailFormt = 'Неправильный формат электронной почты';
+const emailAlreadyExists = 'Такой e-mail уже существует';
+const wrongNameFormat = 'Имя должно содержать только буквы';
+const wrongSurnameFormat = 'Фамилия должна содержать только буквы';
 
 /** Class representing a main page. */
 export class ProfilePage {
@@ -58,6 +63,9 @@ export class ProfilePage {
     divErr.innerHTML = error;
   }
 
+  /**
+   *
+   */
   async #addListeners() {
     const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
 
@@ -71,21 +79,23 @@ export class ProfilePage {
       input.addEventListener('click', this.handleClick2.bind(this));
     }.bind(this));
 
-    //this.#addScrollListener();
-
+    // this.#addScrollListener();
   }
 
+  /**
+   *
+   * @param {*} event
+   */
   handleClick2(event) {
-    console.log(event.target.value);
     const targetValue = event.target.value;
 
     const labelsAndValues = [
-      { categoryLabel: 'Мои объявления', categoryLabelValue: 'adverts' },
-      { categoryLabel: 'Мои заказы', categoryLabelValue: 'orders' },
-      { categoryLabel: 'Настроки', categoryLabelValue: 'settings' },
+      {categoryLabel: 'Мои объявления', categoryLabelValue: 'adverts'},
+      {categoryLabel: 'Мои заказы', categoryLabelValue: 'orders'},
+      {categoryLabel: 'Настроки', categoryLabelValue: 'settings'},
     ];
 
-    const found = labelsAndValues.find(item => item.categoryLabelValue === targetValue);
+    const found = labelsAndValues.find((item) => item.categoryLabelValue === targetValue);
     this.#element.querySelector('.profile-page-right-section-header').innerText = found.categoryLabel;
     const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
     const isRendered = this.sectionStateV.getSectionState(event.target.value, 'isRendered');
@@ -102,67 +112,69 @@ export class ProfilePage {
       this.sectionStateV.setSectionState(event.target.value, 'isRendered', true);
 
       if (event.target.value === 'settings') {
-
-          const settingsContainer = new SettingsContainer(this.profile);
-          newProfilePageContentContainer.appendChild(settingsContainer.render());
-          this.#addListenersForOverlays(settingsContainer.getForms());
-  
+        const settingsContainer = new SettingsContainer(this.profile);
+        newProfilePageContentContainer.appendChild(settingsContainer.render());
+        this.#addListenersForOverlays(settingsContainer.getForms());
       }
 
       if (event.target.value === 'orders') {
-          //const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section');
-          const buttonGroupItemes = [
-            {categoryLabel: 'Покупки', count: '', checked: true, categoryLabelValue: 'purchases'},
-            {categoryLabel: 'Продажи', count: '', checked: false, categoryLabelValue: 'sales'},
-          ];
-          buttonGroupItemes.forEach((item) => {
-            this.sectionStateS.setSectionState(item.categoryLabelValue, 'isRendered', false);
-          });
-          buttonGroupItemes.forEach((item) => {
-            if (item.checked) {
-              this.sectionStateS.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
+        // const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section');
+        const buttonGroupItemes = [
+          {categoryLabel: 'Покупки', count: '', checked: true, categoryLabelValue: 'purchases'},
+          {categoryLabel: 'Продажи', count: '', checked: false, categoryLabelValue: 'sales'},
+        ];
+        buttonGroupItemes.forEach((item) => {
+          this.sectionStateS.setSectionState(item.categoryLabelValue, 'isRendered', false);
+        });
+        buttonGroupItemes.forEach((item) => {
+          if (item.checked) {
+            this.sectionStateS.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
 
-              return;
-            }
-          });
-          const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
-          newProfilePageContentContainer.appendChild(horizontalButtonGroupInstance.render());
-
-          const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
-
-          inputs.forEach(function(input) {
-            input.addEventListener('click', this.handleClick3.bind(this));
-          }.bind(this));
-
-        
-          const currentState = this.sectionStateS.getSectionState('purchases', 'isRendered');
-          if (!currentState) {
-            this.sectionStateS.setSectionState('purchases', 'isRendered', true);
+            return;
           }
+        });
+        const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
+        newProfilePageContentContainer.appendChild(horizontalButtonGroupInstance.render());
 
-          const header = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?  'Нет покупок' : 'Не продаж';
-          const content = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?  'Заказы по купленным товарам' : 'Заказы по проданным товарам';
-          
-          const emptyOrderPlug = new EmptyOrderPlug(header, content);
-          newProfilePageContentContainer.appendChild(emptyOrderPlug.render());
+        const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
+
+        inputs.forEach(function(input) {
+          input.addEventListener('click', this.handleClick3.bind(this));
+        }.bind(this));
+
+
+        const currentState = this.sectionStateS.getSectionState('purchases', 'isRendered');
+        if (!currentState) {
+          this.sectionStateS.setSectionState('purchases', 'isRendered', true);
+        }
+
+        const header = this.sectionStateS.
+            getSectionState('serviceField', 'isChecked') == 'purchases' ? 'Нет покупок' : 'Не продаж';
+        const content = this.sectionStateS.
+            getSectionState('serviceField', 'isChecked') == 'purchases' ?
+            'Заказы по купленным товарам' :
+            'Заказы по проданным товарам';
+
+        const emptyOrderPlug = new EmptyOrderPlug(header, content);
+        newProfilePageContentContainer.appendChild(emptyOrderPlug.render());
       }
 
       if (event.target.value === 'adverts') {
-        //this.#renderCards(newProfilePageContentContainer, isRendered);
+        // this.#renderCards(newProfilePageContentContainer, isRendered);
       }
-      
-
     } else {
       const stashedMerchantsCardContainer = this.sectionStateV.getSectionState(event.target.value, 'render');
       profilePageContentContainer.replaceWith(stashedMerchantsCardContainer);
     }
 
-    //console.log(this.sectionStateV);
+    // console.log(this.sectionStateV);
   }
 
+  /**
+   *
+   * @param {*} event
+   */
   handleClick(event) {
-    console.log(event.target.value);
-
     const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
     const isRendered = this.sectionState.getSectionState(event.target.value, 'isRendered');
 
@@ -177,18 +189,19 @@ export class ProfilePage {
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
       this.sectionState.setSectionState(event.target.value, 'isRendered', true);
       this.#renderCards(newMerchantsCardContainer, isRendered);
-
     } else {
       const stashedMerchantsCardContainer = this.sectionState.getSectionState(event.target.value, 'render');
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
     }
 
-    //console.log(this.sectionState);
+    // console.log(this.sectionState);
   }
 
+  /**
+   *
+   * @param {*} event
+   */
   handleClick3(event) {
-    console.log(event.target.value);
-    
     const merchantsCardContainer = this.#element.querySelector('.empty-orders-main-container');
     const isRendered = this.sectionStateS.getSectionState(event.target.value, 'isRendered');
 
@@ -202,15 +215,18 @@ export class ProfilePage {
       // newMerchantsCardContainer.classList.add('empty-orders-main-container');
       // merchantsCardContainer.replaceWith(newMerchantsCardContainer);
       this.sectionStateS.setSectionState(event.target.value, 'isRendered', true);
-      
-      const header = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?  'Нет покупок' : 'Нет продаж';
-      const content = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?  'Заказы по купленным товарам' : 'Заказы по проданным товарам';
-      
+
+      const header = this.sectionStateS.
+          getSectionState('serviceField', 'isChecked') == 'purchases' ? 'Нет покупок' : 'Нет продаж';
+      const content = this.sectionStateS.
+          getSectionState('serviceField', 'isChecked') == 'purchases' ?
+          'Заказы по купленным товарам' :
+          'Заказы по проданным товарам';
+
       const emptyOrderPlug = new EmptyOrderPlug(header, content);
       merchantsCardContainer.replaceWith(emptyOrderPlug.render());
-      
-      //newMerchantsCardContainer.appendChild(emptyOrderPlug.render());
 
+      // newMerchantsCardContainer.appendChild(emptyOrderPlug.render());
     } else {
       const stashedMerchantsCardContainer = this.sectionStateS.getSectionState(event.target.value, 'render');
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
@@ -219,7 +235,11 @@ export class ProfilePage {
     // console.log(this.sectionStateS);
   }
 
-  #addListenersForOverlays(forms){
+  /**
+   * Edit profile due to form info.
+   * @param {HTMLElement} forms - Edit profile form.
+   */
+  #addListenersForOverlays(forms) {
     const btns = document.querySelectorAll('.set-or-edit-label');
 
     for (let i = 0; i < btns.length; ++i) {
@@ -255,9 +275,12 @@ export class ProfilePage {
               formData,
               (body) => {
                 if (body.profile != null) {
-
                   const profile = body['profile'];
-    
+
+                  const profileAvatar = document.querySelector('.avatar-image');
+                  const headerAvatar = document.querySelector('.profile-icon');
+                  const profileName = document.querySelector('.card-header').childNodes[1];
+
                   this.profile = {
                     merchantsName: profile.merchantsName,
                     ratingValue: profile.rating,
@@ -275,12 +298,17 @@ export class ProfilePage {
                     avatarImg: profile.avatarImg,
                   };
 
-                  const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
+                  profileName.innerHTML = profile.merchantsName;
+                  profileAvatar.src = `data:image;base64,${profile.avatarImg}`;
+                  headerAvatar.src = `data:image;base64,${profile.avatarImg}`;
+
+                  const profilePageContentContainer =
+                    this.#element.querySelector('.profile-page-right-section-content');
                   const settingsContainer = new SettingsContainer(this.profile);
                   profilePageContentContainer.lastElementChild.replaceWith(settingsContainer.render());
                   this.#addListenersForOverlays(settingsContainer.getForms());
 
-                  //router.go(router.routes.profilePage.href);
+                  // router.go(router.routes.profilePage.href);
 
                   return;
                 }
@@ -318,33 +346,38 @@ export class ProfilePage {
               forms[i].apiRoute,
               data,
               (body) => {
-              
                 if (body.profile != null || body.user != null) {
                   const profile = body['profile'];
-    
-                  this.profile = {
-                    merchantsName: profile.merchantsName,
-                    ratingValue: profile.rating,
-                    name: profile.name,
-                    surname: profile.surname,
-                    phone: profile.phoneNumber,
-                    email: ajax.auth.email,
-                    city: profile.city.name,
-                    location: profile.city.translation,
-                    registrationDate: formatDate(profile.regTime),
-                    isProfileVerified: profile.approved,
-                    reviewCount: profile.reactionsCount,
-                    subscribersCount: profile.subersCount,
-                    subscribtionsCount: profile.subonsCount,
-                    avatarImg: profile.avatarImg,
-                  };
 
-                  const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
+                  if (body.profile) {
+                    this.profile = {
+                      merchantsName: profile.merchantsName,
+                      ratingValue: profile.rating,
+                      name: profile.name,
+                      surname: profile.surname,
+                      phone: profile.phoneNumber,
+                      email: ajax.auth.email,
+                      city: profile.city.name,
+                      location: profile.city.translation,
+                      registrationDate: formatDate(profile.regTime),
+                      isProfileVerified: profile.approved,
+                      reviewCount: profile.reactionsCount,
+                      subscribersCount: profile.subersCount,
+                      subscribtionsCount: profile.subonsCount,
+                      avatarImg: profile.avatarImg,
+                    };
+                  }
+                  if (body.user) {
+                    this.profile.email = body.user.email;
+                  }
+
+                  const profilePageContentContainer =
+                    this.#element.querySelector('.profile-page-right-section-content');
                   const settingsContainer = new SettingsContainer(this.profile);
                   profilePageContentContainer.lastElementChild.replaceWith(settingsContainer.render());
                   this.#addListenersForOverlays(settingsContainer.getForms());
 
-                  //router.go(router.routes.profilePage.href);
+                  // router.go(router.routes.profilePage.href);
 
                   return;
                 }
@@ -359,7 +392,6 @@ export class ProfilePage {
         }
       });
     }
-  
   }
 
   /**
@@ -385,6 +417,11 @@ export class ProfilePage {
     window.addEventListener('scroll', scrollHandler);
   }
 
+  /**
+   *
+   * @param {*} merchantsPageRightSection
+   * @param {*} alreadyRendered
+   */
   #renderCards(merchantsPageRightSection, alreadyRendered) {
     const cards = document.getElementsByClassName('card');
     const startID = cards.length == 0 ?
@@ -403,13 +440,13 @@ export class ProfilePage {
         ajax.routes.ADVERT.GET_ADS_LIST,
         (body) => {
           const adverts = body['items'];
-          
+
           if (!(adverts && Array.isArray(adverts))) {
-            
-            const content = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ?  'активные' : 'проданные';
+            const content = this.sectionState.
+                getSectionState('serviceField', 'isChecked') == 'active' ? 'активные' : 'проданные';
             const emptyAdvertsPlug = new EmptyAdvertsPlug(content);
             merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
-            
+
             return;
           }
 
@@ -453,23 +490,6 @@ export class ProfilePage {
           const merchantsName = profile.merchantsName;
           const ratingValue = profile.rating;
 
-          // const merchantPageTitleItems = {
-          // merchantsName: merchantsName,
-          // urlMain: urlMain,
-          // };
-          // const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
-          // this.#element.insertBefore(merchantPageTitleInstance.render(), this.#element.lastChild);
-
-          const merchantCartItems = {
-            merchantsName: merchantsName,
-            location: profile.city.translation,
-            registrationDate: formatDate(profile.regTime),
-            isProfileVerified: profile.approved,
-            reviewCount: profile.reactionsCount,
-            subscribersCount: profile.subersCount,
-            subscribtionsCount: profile.subonsCount,
-          };
-
           this.profile = {
             merchantsName: profile.merchantsName,
             ratingValue: profile.rating,
@@ -488,21 +508,21 @@ export class ProfilePage {
           };
 
           const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
-          const profileCardInstance = new ProfileCard(merchantCartItems);
+          const profileCardInstance = new ProfileCard(this.profile);
           merchantsCardSection.appendChild(profileCardInstance.render());
 
           const verticleButtonGroupItemes = [
-            { checked: true, categoryLabelValue: 'adverts' },
-            { checked: false, categoryLabelValue: 'orders' },
-            { checked: false, categoryLabelValue: 'settings' },
+            {checked: true, categoryLabelValue: 'adverts'},
+            {checked: false, categoryLabelValue: 'orders'},
+            {checked: false, categoryLabelValue: 'settings'},
           ];
-          verticleButtonGroupItemes.forEach(item => {
+          verticleButtonGroupItemes.forEach((item) => {
             this.sectionStateV.setSectionState(item.categoryLabelValue, 'isRendered', false);
           });
-          verticleButtonGroupItemes.forEach(item => {
+          verticleButtonGroupItemes.forEach((item) => {
             if (item.checked) {
               this.sectionStateV.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
-  
+
               return;
             }
           });
@@ -530,7 +550,6 @@ export class ProfilePage {
 
           const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
           merchantsPageRightSection.appendChild(horizontalButtonGroupInstance.render());
-
         },
     );
 
@@ -554,6 +573,5 @@ export class ProfilePage {
     // console.log('aboba');
 
     // this.#renderCards(merchantsPageRightSection, alreadyRendered);
-
   }
 }

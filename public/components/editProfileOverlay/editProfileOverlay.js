@@ -16,6 +16,7 @@ class EditProfileOverlay {
    *
    * @param {*} button
    * @param {*} data
+   * @param {*} currentCity
    */
   constructor(button, data, currentCity) {
     this.button = button;
@@ -94,6 +95,7 @@ class EditProfileOverlay {
      * @param {HTMLElement} input - File input.
      */
     function readURL(input) {
+      console.log(input.files);
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -106,8 +108,10 @@ class EditProfileOverlay {
     }
 
     const fileField = document.getElementById('imageUpload');
+    console.log(fileField);
     if (fileField) {
       fileField.addEventListener('change', function() {
+        console.log('event');
         readURL(fileField);
       });
     }
