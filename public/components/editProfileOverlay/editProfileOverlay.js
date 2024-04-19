@@ -17,9 +17,10 @@ class EditProfileOverlay {
    * @param {*} button
    * @param {*} data
    */
-  constructor(button, data) {
+  constructor(button, data, currentCity) {
     this.button = button;
     this.data = data;
+    this.currentCity = currentCity;
   }
   /**
    *
@@ -52,7 +53,7 @@ class EditProfileOverlay {
           pathCity,
           (body) => {
             const dropdownWithSearchDiv = this.#element.querySelector('.ddws-div');
-            const dropdownWithSearch = new DropdownWithSearch(body, 'Москва');
+            const dropdownWithSearch = new DropdownWithSearch(body, this.currentCity);
             dropdownWithSearchDiv.appendChild(dropdownWithSearch.render());
           },
       );

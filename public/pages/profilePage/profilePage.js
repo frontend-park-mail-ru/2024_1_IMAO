@@ -2,8 +2,7 @@
 
 import renderProfileMain from '../../components/profileMain/profileMain.js';
 import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
-import renderSettingsContainer from '../../components/settingsContainer/settingsContainer';
-import EditProfileOverlay from '../../components/editProfileOverlay/editProfileOverlay.js';
+import SettingsContainer from '../../components/settingsContainer/settingsContainer';
 import ProfileCard from '../../components/profileCard/profileCard.js';
 import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
 import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
@@ -15,6 +14,7 @@ import StageStorage from '../../modules/stateStorage.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import {buildURL, buildURLBySegments, parsePathParams, getURLFromLocation} from '../../modules/parsePathParams.js';
+import {validateEmail, validateName} from '../../modules/validate.js';
 
 /** Class representing a main page. */
 export class ProfilePage {
@@ -102,181 +102,11 @@ export class ProfilePage {
       this.sectionStateV.setSectionState(event.target.value, 'isRendered', true);
 
       if (event.target.value === 'settings') {
-          newProfilePageContentContainer.appendChild(renderSettingsContainer(this.profile));
 
-          const btns = document.querySelectorAll('.set-or-edit-label');
-          const main = document.querySelector('.main-page');
-
-          const forms = [{
-            title: 'Изменить профиль',
-            fields: [{type: 'text', value: this.profile.name, name: 'name',
-              place: 'Имя'},
-            {type: 'text', value: this.profile.surname, name: 'surname',
-              place: 'Фамилия'}],
-            apiRoute: ajax.routes.PROFILE.SET_PROFILE_AVATAR,
-            hasAvatar: true,
-            avatar: this.profile.avatarImg,
-            id: 1,
-          },
-          {
-            title: 'Номер телефона',
-            fields: [{type: 'text', value: this.profile.phone,
-              name: 'phone', isPhone: true, place: '+7(___)___-__-__'}],
-            apiRoute: ajax.routes.PROFILE.SET_PROFILE_PHONE,
-            id: 2,
-          },
-          {
-            title: 'E-mail',
-            fields: [{type: 'text', value: this.profile.email, name: 'email'}],
-            apiRoute: ajax.routes.PROFILE.EDIT_USER_EMAIL,
-            id: 3,
-          },
-          {
-            title: 'Город',
-            fields: [{type: 'text', value: this.profile.city, name: 'id',
-              isCitySearch: true}],
-            apiRoute: ajax.routes.PROFILE.SET_PROFILE_CITY,
-            id: 4,
-          },
-          ];
-
-          for (let i = 0; i < btns.length; ++i) {
-            const btn = btns[i];
-            const overlay = new EditProfileOverlay(btn, forms[i]);
-            main.appendChild(overlay.render());
-          }
-
-          for (let i = 0; i < btns.length; ++i) {
-            const form = document.querySelectorAll('.profile-modal-content')[i];
-
-            form.addEventListener('submit', (ev) => {
-              ev.preventDefault();
-              const submit = form.querySelector('.submit-btn');
-              submit.disabled = true;
-
-              const formData = new FormData(form);
-
-              if (forms[i].apiRoute ===
-                  ajax.routes.PROFILE.SET_PROFILE_AVATAR) {
-                const name = formData.get('name');
-                if (!validateName(name)) {
-                  this.#addError(form, wrongNameFormat);
-                  submit.disabled = false;
-
-                  return;
-                }
-
-                const surname = formData.get('surname');
-                if (!validateName(surname)) {
-                  this.#addError(form, wrongSurnameFormat);
-                  submit.disabled = false;
-
-                  return;
-                }
-
-                ajax.postMultipart(
-                    forms[i].apiRoute,
-                    formData,
-                    (body) => {
-                      if (body.profile != null) {
-
-                        const profile = body['profile'];
-          
-                        this.profile = {
-                          merchantsName: profile.merchantsName,
-                          ratingValue: profile.rating,
-                          name: profile.name,
-                          surname: profile.surname,
-                          phone: profile.phoneNumber,
-                          email: ajax.auth.email,
-                          city: profile.city.name,
-                          location: profile.city.translation,
-                          registrationDate: formatDate(profile.regTime),
-                          isProfileVerified: profile.approved,
-                          reviewCount: profile.reactionsCount,
-                          subscribersCount: profile.subersCount,
-                          subscribtionsCount: profile.subonsCount,
-                          avatarImg: profile.avatarImg,
-                        };
-
-                        newProfilePageContentContainer.lastElementChild.replaceWith(renderSettingsContainer(this.profile));
-
-                        //router.go(router.routes.profilePage.href);
-
-                        return;
-                      }
-
-                      submit.disabled = false;
-                      console.error('Ошибка редактирования профиля');
-                    });
-              } else {
-                const inputs = [];
-                for (const pair of formData) {
-                  inputs.push(pair[1]);
-                }
-
-                let data = 0;
-                if (i == 1) {
-                  const phone = inputs[0];
-                  data = {phone};
-                } else if (i == 2) {
-                  const email = inputs[0];
-
-                  if (!validateEmail(email)) {
-                    this.#addError(form, wrongEmailFormt);
-                    submit.disabled = false;
-
-                    return;
-                  }
-
-                  data = {email};
-                } else {
-                  const id = document.querySelector('.selected').dataset.id;
-                  data = {'id': parseInt(id)};
-                }
-
-                ajax.post(
-                    forms[i].apiRoute,
-                    data,
-                    (body) => {
-                    
-                      if (body.profile != null || body.user != null) {
-                        const profile = body['profile'];
-          
-                        this.profile = {
-                          merchantsName: profile.merchantsName,
-                          ratingValue: profile.rating,
-                          name: profile.name,
-                          surname: profile.surname,
-                          phone: profile.phoneNumber,
-                          email: ajax.auth.email,
-                          city: profile.city.name,
-                          location: profile.city.translation,
-                          registrationDate: formatDate(profile.regTime),
-                          isProfileVerified: profile.approved,
-                          reviewCount: profile.reactionsCount,
-                          subscribersCount: profile.subersCount,
-                          subscribtionsCount: profile.subonsCount,
-                          avatarImg: profile.avatarImg,
-                        };
-
-                        newProfilePageContentContainer.lastElementChild.replaceWith(renderSettingsContainer(this.profile));
-
-                        //router.go(router.routes.profilePage.href);
-
-                        return;
-                      }
-
-                      if (body.status === 'This email is already in use') {
-                        this.#addError(form, emailAlreadyExists);
-                        submit.disabled = false;
-
-                        return;
-                      }
-                    });
-              }
-            });
-          }
+          const settingsContainer = new SettingsContainer(this.profile);
+          newProfilePageContentContainer.appendChild(settingsContainer.render());
+          this.#addListenersForOverlays(settingsContainer.getForms());
+  
       }
 
       if (event.target.value === 'orders') {
@@ -387,6 +217,149 @@ export class ProfilePage {
     }
 
     // console.log(this.sectionStateS);
+  }
+
+  #addListenersForOverlays(forms){
+    const btns = document.querySelectorAll('.set-or-edit-label');
+
+    for (let i = 0; i < btns.length; ++i) {
+      const form = document.querySelectorAll('.profile-modal-content')[i];
+
+      form.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const submit = form.querySelector('.submit-btn');
+        submit.disabled = true;
+
+        const formData = new FormData(form);
+
+        if (forms[i].apiRoute ===
+            ajax.routes.PROFILE.SET_PROFILE_AVATAR) {
+          const name = formData.get('name');
+          if (!validateName(name)) {
+            this.#addError(form, wrongNameFormat);
+            submit.disabled = false;
+
+            return;
+          }
+
+          const surname = formData.get('surname');
+          if (!validateName(surname)) {
+            this.#addError(form, wrongSurnameFormat);
+            submit.disabled = false;
+
+            return;
+          }
+
+          ajax.postMultipart(
+              forms[i].apiRoute,
+              formData,
+              (body) => {
+                if (body.profile != null) {
+
+                  const profile = body['profile'];
+    
+                  this.profile = {
+                    merchantsName: profile.merchantsName,
+                    ratingValue: profile.rating,
+                    name: profile.name,
+                    surname: profile.surname,
+                    phone: profile.phoneNumber,
+                    email: ajax.auth.email,
+                    city: profile.city.name,
+                    location: profile.city.translation,
+                    registrationDate: formatDate(profile.regTime),
+                    isProfileVerified: profile.approved,
+                    reviewCount: profile.reactionsCount,
+                    subscribersCount: profile.subersCount,
+                    subscribtionsCount: profile.subonsCount,
+                    avatarImg: profile.avatarImg,
+                  };
+
+                  const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
+                  const settingsContainer = new SettingsContainer(this.profile);
+                  profilePageContentContainer.lastElementChild.replaceWith(settingsContainer.render());
+                  this.#addListenersForOverlays(settingsContainer.getForms());
+
+                  //router.go(router.routes.profilePage.href);
+
+                  return;
+                }
+
+                submit.disabled = false;
+                console.error('Ошибка редактирования профиля');
+              });
+        } else {
+          const inputs = [];
+          for (const pair of formData) {
+            inputs.push(pair[1]);
+          }
+
+          let data = 0;
+          if (i == 1) {
+            const phone = inputs[0];
+            data = {phone};
+          } else if (i == 2) {
+            const email = inputs[0];
+
+            if (!validateEmail(email)) {
+              this.#addError(form, wrongEmailFormt);
+              submit.disabled = false;
+
+              return;
+            }
+
+            data = {email};
+          } else {
+            const id = document.querySelector('.selected').dataset.id;
+            data = {'id': parseInt(id)};
+          }
+
+          ajax.post(
+              forms[i].apiRoute,
+              data,
+              (body) => {
+              
+                if (body.profile != null || body.user != null) {
+                  const profile = body['profile'];
+    
+                  this.profile = {
+                    merchantsName: profile.merchantsName,
+                    ratingValue: profile.rating,
+                    name: profile.name,
+                    surname: profile.surname,
+                    phone: profile.phoneNumber,
+                    email: ajax.auth.email,
+                    city: profile.city.name,
+                    location: profile.city.translation,
+                    registrationDate: formatDate(profile.regTime),
+                    isProfileVerified: profile.approved,
+                    reviewCount: profile.reactionsCount,
+                    subscribersCount: profile.subersCount,
+                    subscribtionsCount: profile.subonsCount,
+                    avatarImg: profile.avatarImg,
+                  };
+
+                  const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
+                  const settingsContainer = new SettingsContainer(this.profile);
+                  profilePageContentContainer.lastElementChild.replaceWith(settingsContainer.render());
+                  this.#addListenersForOverlays(settingsContainer.getForms());
+
+                  //router.go(router.routes.profilePage.href);
+
+                  return;
+                }
+
+                if (body.status === 'This email is already in use') {
+                  this.#addError(form, emailAlreadyExists);
+                  submit.disabled = false;
+
+                  return;
+                }
+              });
+        }
+      });
+    }
+  
   }
 
   /**

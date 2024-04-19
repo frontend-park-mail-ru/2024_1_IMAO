@@ -1,8 +1,7 @@
   .dropdown-with-search{
-    margin:1rem;
     max-width:350px;
-    width:50%;
-    height:250px;
+    width:100%;
+    height:200px !important;
   }
   @media(max-width:34em){
     .dropdown-with-search{
