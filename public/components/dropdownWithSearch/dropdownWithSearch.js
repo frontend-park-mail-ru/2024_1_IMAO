@@ -25,7 +25,6 @@ class DropdownWithSearch {
   render() {
     this.#renderTemplate();
     this.#addListeners(this.#element);
-
     return this.#element;
   }
 

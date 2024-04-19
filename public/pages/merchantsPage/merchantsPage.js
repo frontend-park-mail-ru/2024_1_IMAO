@@ -1,8 +1,9 @@
 'use strict';
 
-import renderProfileMain from '../../components/profileMain/profileMain.js';
+import renderMerchantMain from '../../components/merchantMain/merchantMain.js';
 import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
+import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
@@ -82,7 +83,7 @@ export class MerchantsPage {
       const newMerchantsCardContainer = document.createElement('div');
       newMerchantsCardContainer.classList.add('cards-container-merchant');
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
-      this.sectionState.setSectionState(event.target.value, 'isRendered', merchantsCardContainer);
+      this.sectionState.setSectionState(event.target.value, 'isRendered', true);
       this.#renderCards(newMerchantsCardContainer, isRendered);
     } else {
       const stashedMerchantsCardContainer = this.sectionState.getSectionState(event.target.value, 'render');
@@ -139,6 +140,10 @@ export class MerchantsPage {
         (body) => {
           const adverts = body['items'];
           if (!(adverts && Array.isArray(adverts))) {
+
+            const test = new EmptyAdvertsPlug('aboba');
+            merchantsPageRightSection.appendChild(test.render());
+
             return;
           }
 
@@ -176,7 +181,7 @@ export class MerchantsPage {
 
     const urlMain = router.routes.mainPage.href;
 
-    const root = renderProfileMain();
+    const root = renderMerchantMain();
     content.appendChild(root);
 
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, this.#slug);
@@ -206,7 +211,7 @@ export class MerchantsPage {
 
           const merchantCartItems = {
             merchantsName: merchantsName,
-            location: profile.city.translation,
+            location: profile.city.name,
             registrationDate: formatDate(profile.regTime),
             isProfileVerified: profile.approved,
             reviewCount: profile.reactionsCount,
@@ -225,8 +230,8 @@ export class MerchantsPage {
 
           const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
           const buttonGroupItemes = [
-            {categoryLabel: 'Активные', count: '', checked: true, categoryLabelValue: 'active'},
-            {categoryLabel: 'Проданные', count: '', checked: false, categoryLabelValue: 'sold'},
+            {categoryLabel: 'Активные', count: profile.activeAddsCount, checked: true, categoryLabelValue: 'active'},
+            {categoryLabel: 'Проданные', count: profile.soldAddsCount, checked: false, categoryLabelValue: 'sold'},
           ];
           buttonGroupItemes.forEach((item) => {
             this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);

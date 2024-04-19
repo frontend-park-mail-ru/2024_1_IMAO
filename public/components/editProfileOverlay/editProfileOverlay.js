@@ -1,5 +1,8 @@
 'use strict';
 
+import DropdownWithSearch from '../../components/dropdownWithSearch/dropdownWithSearch.js';
+
+import ajax from '../../modules/ajax';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './editProfileOverlay.hbs';
 import styles from './editProfileOverlay.scss';
