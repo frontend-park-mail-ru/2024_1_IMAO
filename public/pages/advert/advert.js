@@ -71,7 +71,7 @@ export class Advert {
     // const images = imagesContainer.querySelectorAll('img');
 
     let currentIndex = 0;
-    const elemsOnPage = 3;
+    const elemsOnPage = 5;
     // let elemsOnPage = 0;
     // let elemWidth = images[0].offsetWidth;
     // const containerWidth = carousel.offsetWidth;
@@ -206,6 +206,7 @@ export class Advert {
           const cityName = city['name'];
           const categoryName = category['name'];
           const isAuthor = ajax.auth.id === advert['userId'];
+          const photos = items['photosIMG'];
 
           let state = '';
           if (isUsed) {
@@ -244,8 +245,7 @@ export class Advert {
 
           const adContainer = renderAdContainerTemplate(
               adTitle, cityName, categoryName, description, created,
-              price, isAuthor, editPath, id, state,
-          );
+              price, isAuthor, editPath, id, state, photos);
           adContainer.classList.add('ad-container');
           content.appendChild(adContainer);
           document.title += ' ' + trimString(adTitle, 40);
