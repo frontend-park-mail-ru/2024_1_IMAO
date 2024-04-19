@@ -1,5 +1,6 @@
 'use strict';
 
+import {CATEGORIES} from '../../config/config.js';
 import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
 import {getURLFromLocation, buildURL, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
@@ -78,15 +79,13 @@ export class Main {
   #getRoute(startID) {
     const url = getURLFromLocation(window.location.href, router.host);
     this.#slug = parsePathParams(router.routes.adsListByCategory.href, url);
-    console.log(this.#slug);
     let apiRoute = '';
     if (this.#slug.city === '') {
       apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST, this.#slug);
     } else if (this.#slug.category === undefined) {
       apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST_BY_CITY, this.#slug);
     } else {
-      apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST_BY_CATEGORY,
-          this.#slug);
+      apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST_BY_CATEGORY, this.#slug);
     }
 
     apiRoute.searchParams.delete('count');
@@ -130,7 +129,7 @@ export class Main {
         apiRoute,
         (body) => {
           const adverts = body['items'];
-          // console.log(adverts);
+
           if (!(adverts && Array.isArray(adverts))) {
             return;
           }
@@ -140,8 +139,18 @@ export class Main {
             document.querySelector('.cards-container');
           if (!alreadyRendered) {
             cardsContainer.classList.add('cards-container');
+            if (this.#slug.category !== undefined) {
+              for (const category of CATEGORIES) {
+                if (category.translation !== this.#slug.category) {
+                  continue;
+                }
+                document.title += ' - ' + category.name;
+                const title = document.querySelector('h1');
+                title.innerHTML = category.name;
+              }
+            }
           }
-
+          console.log(adverts);
           const ids = [];
 
           adverts.forEach((inner) => {
@@ -156,8 +165,6 @@ export class Main {
 
           ids.forEach((id) => {
             const address = this.#element.querySelector(`[id="${id}"]`);
-            // console.log(id);
-            // console.log(address);
             address.addEventListener('click', (ev) => {
               router.pushPage(ev, address.href);
             });
