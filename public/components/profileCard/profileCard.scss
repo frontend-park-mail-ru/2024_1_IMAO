@@ -190,6 +190,10 @@
   background: transparent;
 }
 
+.labeled-icon:hover .icon svg path {
+  fill: #7092FE; 
+ }
+
 .profile-info {
   display: flex;
   justify-content: space-between;
@@ -320,7 +324,7 @@
 }
 
 .active-tab {
-  color: rgba(112, 146, 254, 1);
+  color: #7092FE;
 }
 
 /*-----------------*/
@@ -382,8 +386,12 @@
 }
 
 .radio-group-vertical input[type="radio"]:checked+span {
-  color: rgba(112, 146, 254, 1);
+  color: #7092FE;
 }
+
+.radio-group-vertical input[type="radio"]:checked .labeled-icon .icon svg path {
+  fill: #7092FE; 
+ }
 
 .labeled-icon a {
   text-decoration: none;
