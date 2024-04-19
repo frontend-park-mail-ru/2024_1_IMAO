@@ -92,7 +92,7 @@ export class ProfilePage {
     const labelsAndValues = [
       {categoryLabel: 'Мои объявления', categoryLabelValue: 'adverts'},
       {categoryLabel: 'Мои заказы', categoryLabelValue: 'orders'},
-      {categoryLabel: 'Настроки', categoryLabelValue: 'settings'},
+      {categoryLabel: 'Настройки', categoryLabelValue: 'settings'},
     ];
 
     const found = labelsAndValues.find((item) => item.categoryLabelValue === targetValue);

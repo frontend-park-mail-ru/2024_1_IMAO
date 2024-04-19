@@ -83,7 +83,9 @@ class EditProfileOverlay {
     const myDiv = this.#element.querySelector('.profile-container');
     myDiv.addEventListener('click', (event) => event.stopPropagation());
 
-    this.#addAvatarListener();
+    if (this.data.hasAvatar) {
+      this.#addAvatarListener();
+    }
   }
 
   /**
@@ -107,8 +109,7 @@ class EditProfileOverlay {
       }
     }
 
-    const fileField = document.getElementById('imageUpload');
-    console.log(fileField);
+    const fileField = this.#element.querySelector('#imageUpload');
     if (fileField) {
       fileField.addEventListener('change', function() {
         console.log('event');
