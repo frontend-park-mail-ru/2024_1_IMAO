@@ -200,11 +200,18 @@ export class Advert {
           const adTitle = advert['title'];
           const description = advert['description'];
           const price = advert['price'];
+          const isUsed = advert['isUsed'];
           const created = convertDate(advert['created']);
           const cityName = city['name'];
           const categoryName = category['name'];
           const isAuthor = ajax.auth.id === advert['userId'];
 
+          let state = '';
+          if (isUsed) {
+            state = 'Б/У';
+          } else {
+            state = 'Новый';
+          }
           userId = advert['userId'];
 
           const categoryPath = buildURLBySegments(router.host,
@@ -236,7 +243,7 @@ export class Advert {
 
           const adContainer = renderAdContainerTemplate(
               adTitle, cityName, categoryName, description, created,
-              price, isAuthor, editPath, id,
+              price, isAuthor, editPath, id, state,
           );
           adContainer.classList.add('ad-container');
           content.appendChild(adContainer);
