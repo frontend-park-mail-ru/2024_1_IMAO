@@ -106,17 +106,17 @@ export const PAGES_ROUTES = {
   adsListByCity: {
     href: new URL('/:city', serverHost),
     name: 'Волчок - доска объявлений',
-    re: new RegExp(/\/[a-zA-Z]+(?![\w/])/g),
+    re: new RegExp(/\/[a-zA-Z_]+(?![\w/])/g),
   },
   adsListByCategory: {
     href: new URL('/:city/:category', serverHost),
     name: 'Волчок - доска объявлений',
-    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+$/),
+    re: new RegExp(/\/[a-zA-Z_]+\/[a-zA-Z_]+$/),
   },
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),
     name: 'Объявление - ',
-    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+\/\d+$/),
+    re: new RegExp(/\/[a-zA-Z_]+\/[a-zA-Z_]+\/\d+$/),
   },
 };
 
