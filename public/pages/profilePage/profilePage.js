@@ -100,6 +100,7 @@ export class ProfilePage {
       newProfilePageContentContainer.classList.add('profile-page-right-section-content');
       profilePageContentContainer.replaceWith(newProfilePageContentContainer);
       this.sectionStateV.setSectionState(event.target.value, 'isRendered', true);
+
       if (event.target.value === 'settings') {
           newProfilePageContentContainer.appendChild(renderSettingsContainer(this.profile));
 
@@ -178,7 +179,29 @@ export class ProfilePage {
                     formData,
                     (body) => {
                       if (body.profile != null) {
-                        router.go(router.routes.profileEdit.href);
+
+                        const profile = body['profile'];
+          
+                        this.profile = {
+                          merchantsName: profile.merchantsName,
+                          ratingValue: profile.rating,
+                          name: profile.name,
+                          surname: profile.surname,
+                          phone: profile.phoneNumber,
+                          email: ajax.auth.email,
+                          city: profile.city.name,
+                          location: profile.city.translation,
+                          registrationDate: formatDate(profile.regTime),
+                          isProfileVerified: profile.approved,
+                          reviewCount: profile.reactionsCount,
+                          subscribersCount: profile.subersCount,
+                          subscribtionsCount: profile.subonsCount,
+                          avatarImg: profile.avatarImg,
+                        };
+
+                        newProfilePageContentContainer.lastElementChild.replaceWith(renderSettingsContainer(this.profile));
+
+                        //router.go(router.routes.profilePage.href);
 
                         return;
                       }
@@ -216,8 +239,30 @@ export class ProfilePage {
                     forms[i].apiRoute,
                     data,
                     (body) => {
+                    
                       if (body.profile != null || body.user != null) {
-                        router.go(router.routes.profileEdit.href);
+                        const profile = body['profile'];
+          
+                        this.profile = {
+                          merchantsName: profile.merchantsName,
+                          ratingValue: profile.rating,
+                          name: profile.name,
+                          surname: profile.surname,
+                          phone: profile.phoneNumber,
+                          email: ajax.auth.email,
+                          city: profile.city.name,
+                          location: profile.city.translation,
+                          registrationDate: formatDate(profile.regTime),
+                          isProfileVerified: profile.approved,
+                          reviewCount: profile.reactionsCount,
+                          subscribersCount: profile.subersCount,
+                          subscribtionsCount: profile.subonsCount,
+                          avatarImg: profile.avatarImg,
+                        };
+
+                        newProfilePageContentContainer.lastElementChild.replaceWith(renderSettingsContainer(this.profile));
+
+                        //router.go(router.routes.profilePage.href);
 
                         return;
                       }
@@ -466,6 +511,7 @@ export class ProfilePage {
             reviewCount: profile.reactionsCount,
             subscribersCount: profile.subersCount,
             subscribtionsCount: profile.subonsCount,
+            avatarImg: profile.avatarImg,
           };
 
           const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
