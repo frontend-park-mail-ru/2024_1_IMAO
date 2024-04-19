@@ -1,9 +1,10 @@
 'use strict';
 
-/* eslint-disable-next-line max-len */
+import {CATEGORIES} from '../../config/config.js';
 import renderAdCreationForm from '../../components/adCreationForm/adCreationForm.js';
 import DropdownWithSearch from '../../components/dropdownWithSearch/dropdownWithSearch.js';
 import {buildURL, parsePathParams, getURLFromLocation} from '../../modules/parsePathParams.js';
+import {validateInput, inputError} from '../../modules/validate.js';
 import trimString from '../../modules/trimString.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
@@ -30,12 +31,12 @@ export class AdCreation {
    * Render the advert creation/editing page.
    * @return {Element} - The advert creation/editing page.
    */
-  render() {
-    this.#renderTemplate();
-    this.#addDynamicPhoneForm();
+  async render() {
+    await this.#renderTemplate();
     if (this.#create) {
       this.#addFormListener();
     }
+    this.#addDynamicPhoneForm();
 
     return this.#element;
   }
@@ -59,8 +60,41 @@ export class AdCreation {
       const submit = form.querySelector('[type="submit"]');
       submit.disabled = true;
 
+      let flag = true;
+
+      const titleInput = this.#element.querySelector('[id="title"]');
+      const titleInputError = this.#element.querySelector('.title__error');
+      titleInput.classList.remove('input__error');
+      titleInputError.innerHTML = '';
+      const title = titleInput.value;
+      if (!validateInput(title)) {
+        titleInput.classList.add('input__error');
+        titleInputError.innerHTML = inputError;
+        flag = false;
+      }
+
+      const descriptionInput = this.#element.querySelector('[id="description"]');
+      const descriptionInputError = this.#element.querySelector('.description__error');
+      descriptionInput.classList.remove('input__error');
+      descriptionInputError.innerHTML = '';
+      const description = descriptionInput.value;
+      console.log(description);
+      if (!validateInput(description)) {
+        descriptionInput.classList.add('input__error');
+        descriptionInputError.innerHTML = inputError;
+        flag = false;
+      }
+
+      if (!flag) {
+        submit.disabled = false;
+
+        return;
+      }
+
+      const city = this.#element.querySelector('.selected').innerHTML;
       const data = new FormData(form);
       data.append('userId', ajax.auth.id);
+      data.append('city', city);
       if (!this.#create) {
         data.append('id', this.#slug['id']);
       }
@@ -152,7 +186,7 @@ export class AdCreation {
   /**
    * Render a template for the advert creation/editing page.
    */
-  #renderTemplate() {
+  async #renderTemplate() {
     const content = document.createElement('div');
 
     this.#element.appendChild(this.header.render());
@@ -170,12 +204,16 @@ export class AdCreation {
       const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT_BY_ID,
           this.#slug);
 
-      ajax.get(
+      let categoryTr = 0;
+      let isUsed = 0;
+      await ajax.get(
           apiRoute,
           (body) => {
             const items = body['items'];
             const advert = items['advert'];
             const city = items['city'];
+            categoryTr = items.category.translation;
+            isUsed = advert.isUsed;
 
             if (ajax.auth.id !== advert['userId']) {
               router.go(router.routes.mainPage.href);
@@ -192,14 +230,26 @@ export class AdCreation {
                 description, cityName));
 
             document.title += trimString(adTitle, 40);
-            this.#addFormListener();
           },
       );
+
+      const catSelect = form.querySelector('[id="category"]');
+      for ( let i = 0; i < catSelect.options.length; i++ ) {
+        if ( catSelect.options[i].value == categoryTr ) {
+          catSelect.options[i].selected = true;
+        }
+      }
+      const stateSelect = form.querySelector('[id="condition"]');
+      if (isUsed) {
+        stateSelect.options[0].selected = true;
+      } else {
+        stateSelect.options[1].selected = true;
+      }
     }
 
     content.appendChild(form);
     const pathCity = ajax.routes.CITY.GET_CITY_LIST;
-    ajax.get(
+    await ajax.get(
         pathCity,
         (body) => {
           const dropdownWithSearchDiv = this.#element.querySelector('.location-place');
@@ -211,5 +261,6 @@ export class AdCreation {
           dropdownWithSearchDiv.appendChild(dropdownWithSearchTempl);
         },
     );
+    this.#addFormListener();
   }
 }

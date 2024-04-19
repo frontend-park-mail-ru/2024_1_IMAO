@@ -115,8 +115,11 @@
 }
 
 .signup .error{
-    text-align: left;
+    text-align: center;
     font-size: 14px;
-    color: red;
     margin-top: 15px;
+}
+
+.error {
+  color: red;
 }

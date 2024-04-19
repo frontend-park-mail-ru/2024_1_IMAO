@@ -75,6 +75,10 @@
     margin-bottom: 5px;
 }
 
+.input__error {
+  border-color: #ff0000 !important;
+}
+
 .ad__creation .form__input--min {
     max-width: 180px;
 }
