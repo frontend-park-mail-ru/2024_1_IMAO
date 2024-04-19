@@ -33,9 +33,7 @@ export class AdCreation {
    */
   async render() {
     await this.#renderTemplate();
-    if (this.#create) {
-      this.#addFormListener();
-    }
+    this.#addFormListener();
     this.#addDynamicPhoneForm();
 
     return this.#element;
@@ -241,7 +239,7 @@ export class AdCreation {
       }
       const stateSelect = form.querySelector('[id="condition"]');
       if (isUsed) {
-        stateSelect.options[0].selected = true;
+        stateSelect.options[2].selected = true;
       } else {
         stateSelect.options[1].selected = true;
       }
@@ -261,6 +259,5 @@ export class AdCreation {
           dropdownWithSearchDiv.appendChild(dropdownWithSearchTempl);
         },
     );
-    this.#addFormListener();
   }
 }

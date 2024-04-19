@@ -35,6 +35,7 @@ export class Advert {
   async render() {
     this.#getSlug();
     await this.#renderTemplate();
+    this.#addListeners();
 
     return this.#element;
   }
@@ -53,10 +54,10 @@ export class Advert {
   async #addListeners() {
     this.#addCarouselListeners();
     this.#addPathListener();
-    this.#addCloseListener();
     // this.#addCartAddListener();
     await this.#addAddCartDialogListener();
     this.#addMerchantPageListener();
+    this.#addCloseListener();
   }
 
   /**
@@ -128,7 +129,7 @@ export class Advert {
    * Event listener on advert close.
    */
   #addCloseListener() {
-    const closeBtn = document.querySelector('.close');
+    const closeBtn = this.#element.querySelector('.close');
 
     if (closeBtn !== null) {
       closeBtn.addEventListener('click', (ev) => {
@@ -292,6 +293,5 @@ export class Advert {
           rating.appendChild(ratingBar);
         },
     );
-    this.#addListeners();
   }
 }
