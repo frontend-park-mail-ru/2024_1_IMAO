@@ -47,6 +47,17 @@ export class ProfilePage {
     return this.#element;
   }
 
+  /**
+   *
+   * @param {HTMLElement} form - Form for adding error.
+   * @param {String} error - Error message.
+   */
+  #addError(form, error) {
+    const divErr = form.querySelector('.error');
+
+    divErr.innerHTML = error;
+  }
+
   async #addListeners() {
     const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
 
@@ -90,103 +101,137 @@ export class ProfilePage {
       profilePageContentContainer.replaceWith(newProfilePageContentContainer);
       this.sectionStateV.setSectionState(event.target.value, 'isRendered', true);
       if (event.target.value === 'settings') {
-        newProfilePageContentContainer.appendChild(renderSettingsContainer(this.profile));
+          newProfilePageContentContainer.appendChild(renderSettingsContainer(this.profile));
 
-        const btns = document.querySelectorAll('.set-or-edit-label');
-        const main = document.querySelector('.main-page');
+          const btns = document.querySelectorAll('.set-or-edit-label');
+          const main = document.querySelector('.main-page');
 
-        const forms = [{
-          title: 'Изменить профиль',
-          fields: [{type: 'text', value: this.profile.name, name: 'name'},
-            {type: 'text', value: this.profile.surname, name: 'surname'}],
-          apiRoute: ajax.routes.PROFILE.SET_PROFILE_AVATAR,
-          id: 1,
-        },
-        {
-          title: 'Номер телефона',
-          fields: [{type: 'text', value: this.profile.phone,
-            name: 'phone', isPhone: true}],
-          apiRoute: ajax.routes.PROFILE.SET_PROFILE_PHONE,
-          id: 2,
-        },
-        {
-          title: 'E-mail',
-          fields: [{type: 'text', value: this.profile.email, name: 'email'}],
-          apiRoute: ajax.routes.PROFILE.EDIT_USER_EMAIL,
-          id: 3,
-        },
-        {
-          title: 'Город',
-          fields: [{type: 'text', value: this.profile.city, name: 'id'}],
-          apiRoute: ajax.routes.PROFILE.SET_PROFILE_CITY,
-          id: 4,
-        },
-        ];
+          const forms = [{
+            title: 'Изменить профиль',
+            fields: [{type: 'text', value: this.profile.name, name: 'name',
+              place: 'Имя'},
+            {type: 'text', value: this.profile.surname, name: 'surname',
+              place: 'Фамилия'}],
+            apiRoute: ajax.routes.PROFILE.SET_PROFILE_AVATAR,
+            hasAvatar: true,
+            avatar: this.profile.avatarImg,
+            id: 1,
+          },
+          {
+            title: 'Номер телефона',
+            fields: [{type: 'text', value: this.profile.phone,
+              name: 'phone', isPhone: true, place: '+7(___)___-__-__'}],
+            apiRoute: ajax.routes.PROFILE.SET_PROFILE_PHONE,
+            id: 2,
+          },
+          {
+            title: 'E-mail',
+            fields: [{type: 'text', value: this.profile.email, name: 'email'}],
+            apiRoute: ajax.routes.PROFILE.EDIT_USER_EMAIL,
+            id: 3,
+          },
+          {
+            title: 'Город',
+            fields: [{type: 'text', value: this.profile.city, name: 'id',
+              isCitySearch: true}],
+            apiRoute: ajax.routes.PROFILE.SET_PROFILE_CITY,
+            id: 4,
+          },
+          ];
 
-        for (let i = 0; i < btns.length; ++i) {
-          const btn = btns[i];
-          const overlay = new EditProfileOverlay(btn, forms[i]);
-          main.appendChild(overlay.render());
-        }
+          for (let i = 0; i < btns.length; ++i) {
+            const btn = btns[i];
+            const overlay = new EditProfileOverlay(btn, forms[i]);
+            main.appendChild(overlay.render());
+          }
 
-        for (let i = 0; i < btns.length; ++i) {
-          const form = document.getElementsByTagName('form')[i + 1];
+          for (let i = 0; i < btns.length; ++i) {
+            const form = document.querySelectorAll('.profile-modal-content')[i];
 
-          form.addEventListener('submit', (ev) => {
-            ev.preventDefault();
-            const submit = form.querySelector('[type="submit"]');
-            submit.disabled = true;
+            form.addEventListener('submit', (ev) => {
+              ev.preventDefault();
+              const submit = form.querySelector('.submit-btn');
+              submit.disabled = true;
 
-            const formData = new FormData(form);
+              const formData = new FormData(form);
 
-            if (forms[i].apiRoute === ajax.routes.PROFILE.SET_PROFILE_AVATAR) {
-              ajax.postMultipart(
-                  forms[i].apiRoute,
-                  formData,
-                  (body) => {
-                    if (body.profile != null) {
-                      router.go(router.routes.profileEdit.href);
+              if (forms[i].apiRoute ===
+                  ajax.routes.PROFILE.SET_PROFILE_AVATAR) {
+                const name = formData.get('name');
+                if (!validateName(name)) {
+                  this.#addError(form, wrongNameFormat);
+                  submit.disabled = false;
 
-                      return;
-                    }
+                  return;
+                }
 
-                    submit.disabled = false;
-                    console.error('Ошибка редактирования профиля');
-                  });
-            } else {
-              const inputs = [];
-              for (const pair of formData) {
-                inputs.push(pair[1]);
-              }
+                const surname = formData.get('surname');
+                if (!validateName(surname)) {
+                  this.#addError(form, wrongSurnameFormat);
+                  submit.disabled = false;
 
-              let data = 0;
-              if (i == 1) {
-                const phone = inputs[0];
-                data = {phone};
-              } else if (i == 2) {
-                const email = inputs[0];
-                data = {email};
+                  return;
+                }
+
+                ajax.postMultipart(
+                    forms[i].apiRoute,
+                    formData,
+                    (body) => {
+                      if (body.profile != null) {
+                        router.go(router.routes.profileEdit.href);
+
+                        return;
+                      }
+
+                      submit.disabled = false;
+                      console.error('Ошибка редактирования профиля');
+                    });
               } else {
-                const id = inputs[0];
-                data = {id};
-              }
+                const inputs = [];
+                for (const pair of formData) {
+                  inputs.push(pair[1]);
+                }
 
-              ajax.post(
-                  forms[i].apiRoute,
-                  data,
-                  (body) => {
-                    if (body.profile != null) {
-                      router.go(router.routes.profileEdit.href);
+                let data = 0;
+                if (i == 1) {
+                  const phone = inputs[0];
+                  data = {phone};
+                } else if (i == 2) {
+                  const email = inputs[0];
 
-                      return;
-                    }
-
+                  if (!validateEmail(email)) {
+                    this.#addError(form, wrongEmailFormt);
                     submit.disabled = false;
-                    console.error('Ошибка редактирования профиля');
-                  });
-            }
-          });
-        }
+
+                    return;
+                  }
+
+                  data = {email};
+                } else {
+                  const id = document.querySelector('.selected').dataset.id;
+                  data = {'id': parseInt(id)};
+                }
+
+                ajax.post(
+                    forms[i].apiRoute,
+                    data,
+                    (body) => {
+                      if (body.profile != null || body.user != null) {
+                        router.go(router.routes.profileEdit.href);
+
+                        return;
+                      }
+
+                      if (body.status === 'This email is already in use') {
+                        this.#addError(form, emailAlreadyExists);
+                        submit.disabled = false;
+
+                        return;
+                      }
+                    });
+              }
+            });
+          }
       }
 
       if (event.target.value === 'orders') {
