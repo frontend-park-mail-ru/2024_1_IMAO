@@ -14,12 +14,13 @@ import StageStorage from '../../modules/stateStorage.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import {buildURL, buildURLBySegments} from '../../modules/parsePathParams.js';
-import {validateEmail, validateName} from '../../modules/validate.js';
+import {validateEmail, validateName, validatePhone} from '../../modules/validate.js';
 
 const wrongEmailFormt = 'Неправильный формат электронной почты';
 const emailAlreadyExists = 'Такой e-mail уже существует';
 const wrongNameFormat = 'Имя должно содержать только буквы';
 const wrongSurnameFormat = 'Фамилия должна содержать только буквы';
+const wrongPhoneFormat = 'Неправильный формат телефона';
 
 /** Class representing a main page. */
 export class ProfilePage {
@@ -326,6 +327,13 @@ export class ProfilePage {
           if (i == 1) {
             const phone = inputs[0];
             data = {phone};
+
+            if (!validatePhone(phone)) {
+              this.#addError(form, wrongPhoneFormat);
+              submit.disabled = false;
+
+              return;
+            }
           } else if (i == 2) {
             const email = inputs[0];
 

@@ -131,3 +131,16 @@ export function validateInput(input) {
 
   return inputRegex.test(input);
 }
+
+/**
+ * 
+ * @param {*} phone
+ * @return {boolean}
+ */
+export function validatePhone(phone) {
+  if (phone.length < 18) {
+    return false;
+  }
+
+  return true;
+}
