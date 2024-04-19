@@ -2,7 +2,7 @@
 <div class="pre-header">
     <div class="internal-div">
         <div class="section-nav">
-            <div class="location-label">Местоположение:</div>
+            <div class="location-label">Местоположение:&nbsp;</div>
             <div class="location-value">
                 <div class="location-icon">
                     <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +33,7 @@
                             fill="black" />
                     </svg>
                 </div>
-                <div class="cart-text">Корзина</div>
+                <div class="cart-text">Корзина{{#if flag}}&nbsp;&#40;<span class="cart-quantity">{{cartQuantity}}</span>&#41;{{/if}}</div>
             </a>
         </div>
     </div>

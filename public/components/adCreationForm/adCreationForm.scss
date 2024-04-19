@@ -36,7 +36,6 @@
     color: #858585;
     display: flex;
     align-items: center;
-    font-family: "Roboto", Open Sans;
     font-size: 16px;
 }
 
@@ -44,6 +43,7 @@
 .ad__creation .form__select,
 .ad__creation .form__textarea {
     /* min-width: 640px; */
+    font-family:"OpenSans",sans-serif;
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -53,7 +53,6 @@
     color: #000000;
     background-color: #fff;
     background-clip: padding-box;
-    font-family: "Roboto", Open Sans;
     font-size: 16px;
 }
 
@@ -82,7 +81,7 @@
     border: none;
 }
 
-.preform .form__button {
+.form__button {
     width: 284px;
     height: 40px;
     padding: 8px 20px;
@@ -95,7 +94,6 @@
     text-decoration: none;
     color: white; /* белый цвет текста */
     border: none; /* без границ */
-    border-radius: 25px;
     padding: 10px 20px;
     font-size: 18px; /* размер шрифта */
     cursor: pointer; /* курсор в виде указателя */

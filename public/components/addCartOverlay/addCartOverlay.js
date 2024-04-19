@@ -11,23 +11,25 @@ import ajax from '../../modules/ajax.js';
  */
 class AddCartOverlay {
   #element;
-
+  #model;
   /**
    *
    * @param {*} button
+   * @param {*} model
    */
-  constructor(button) {
+  constructor(button, model) {
     this.button = button;
+    this.#model = model;
   }
 
   /**
    *
    * @return {HTMLElement}
    */
-  render() {
+  async render() {
     this.#renderTemplate();
 
-    this.#addListeners();
+    await this.#addListeners();
 
     return this.#element;
   }
@@ -42,32 +44,35 @@ class AddCartOverlay {
   /**
    *
    */
-  #addListeners() {
+  async #addListeners() {
     const myButton = this.button;
-    myButton.addEventListener('click', (ev) => {
+    myButton.addEventListener('click', async (ev) => {
+      if (!ajax.auth.is_auth) {
+        router.pushPage(ev, router.routes.loginPage.href.href);
+
+        return;
+      }
+
       myDialog.showModal();
       ev.preventDefault();
       const advertId = Number(myButton.dataset['id']);
+      console.log(ajax.auth);
 
-      ajax.post(
-          ajax.routes.CART.CHANGE_CART_ITEM_STATUS,
-          {advertId},
-          (body) => {
-            const {isAppended} = body;
+      const isAppended = await this.#model.changeCart(advertId);
 
-            if (isAppended === undefined) {
-              return;
-            }
+      if (isAppended === undefined) {
+        return;
+      }
 
-            const textToChange = this.#element.querySelector('.add-to-cart-dialog__text-to-change');
+      const textToChange = this.#element.querySelector('.add-to-cart-dialog__text-to-change');
 
-            if (isAppended) {
-              textToChange.innerHTML = 'Товар добавлен в корзину';
-            } else {
-              textToChange.innerHTML = 'Товар удалён из корзины';
-            }
-          },
-      );
+      if (isAppended) {
+        myButton.innerHTML = 'Удалить из корзины';
+        textToChange.innerHTML = 'Товар добавлен в корзину';
+      } else {
+        myButton.innerHTML = 'Добавить в корзину';
+        textToChange.innerHTML = 'Товар удалён из корзины';
+      }
     });
 
     const myDialog = this.#element;

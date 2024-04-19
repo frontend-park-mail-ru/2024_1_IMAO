@@ -31,7 +31,6 @@
   top: 12px;
   color: #222222;
   font-size: 2em;
-  /* font-family: 'Fira Sans', sans-serif; */
   font-weight: 500;
   line-height: 36px;
   }
@@ -44,7 +43,6 @@
   top: 13px;
   color: #858585;
   font-size: 24px;
-  /* font-family: 'Fira Sans', sans-serif; */
   font-weight: 300;
   line-height: 36px;
   }
@@ -76,11 +74,10 @@
   }
   
   .selection-panel__option {
-  width: 90px;
+  width: 100px;
   height: 20px;
   color: black;
   font-size: 14px;
-  font-family: 'Fira Sans', sans-serif;
   font-weight: 400;
   line-height: 20px;
   display: inline-block;
@@ -91,7 +88,6 @@
   height: 20px;
   color: #7092FE;
   font-size: 15px;
-  font-family: 'Fira Sans', sans-serif;
   font-weight: 400;
   line-height: 20.63px;
   text-decoration: none;

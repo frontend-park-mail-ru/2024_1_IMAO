@@ -6,6 +6,7 @@ import template from './header.hbs';
 import styles from './header.scss';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
+import cartModel from '../../models/cart.js';
 
 /** Class representing a header component. */
 export class Header {
@@ -93,14 +94,13 @@ export class Header {
    * @return {void}
    */
   #renderHeaderTemplate(location) {
-    // eslint-disable-next-line no-undef
-    // const template = Handlebars.templates['header.hbs'];
     const urlMain = router.routes.mainPage.href.href;
     const urlLogin = router.routes.loginPage.href.href;
     const urlCreate = router.routes.adCreationPage.href.href;
     const urlCart = router.routes.cartPage.href.href;
     const urlProfile = router.routes.profilePage.href.href;
     const flag = router.auth.is_auth;
+    const cartQuantity = cartModel.cartItems.length;
     while (this.#header.firstChild) {
       this.#header.removeChild(this.#header.lastChild);
     }
@@ -113,6 +113,16 @@ export class Header {
       flag,
       location,
       CATEGORIES,
+      cartQuantity,
     })));
+  }
+
+  /**
+   *
+   * @param {*} quantity
+   */
+  changeCartQuantity(quantity) {
+    const quanSpan = this.#header.querySelector('.cart-quantity');
+    quanSpan.innerHTML = quantity;
   }
 }

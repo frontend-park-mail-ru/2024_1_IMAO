@@ -8,6 +8,7 @@ import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import formatDate from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
+import trimString from '../../modules/trimString.js';
 import {buildURL, getURLFromLocation, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
@@ -186,6 +187,7 @@ export class MerchantsPage {
 
           const merchantsName = profile.merchantsName;
           const ratingValue = profile.rating;
+          document.title += ' ' + trimString(merchantsName, 40);
 
           const paths = [
             {

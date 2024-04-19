@@ -16,7 +16,6 @@ header {
     max-width: 1219px;
     height: 32px;
     background: white;
-    display: inline-flex;
     justify-content: flex-start;
     align-items: flex-start;
 }
@@ -28,7 +27,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 833px;
 }
 
 .section-nav {
@@ -40,11 +38,9 @@ header {
 }
 
 .location-label {
-    width: 113px;
     height: 15px;
     color: #858585;
     font-size: 12px;
-    font-family: Open Sans;
     font-weight: 400;
     line-height: 15.96px;
     letter-spacing: 0.20px;
@@ -72,7 +68,6 @@ header {
 .cart-text {
     color: #333333;
     font-size: 12px;
-    font-family: Open Sans;
     font-weight: 400;
     text-decoration: underline;
     line-height: 16px;
@@ -110,7 +105,6 @@ header {
 .navbar {
     width: 1219px;
     max-height: fit-content;
-    font-family: Open Sans;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -153,12 +147,12 @@ header {
 .dropdown .dropbtn {
     font-size: 16px;
     border: none;
+    font-family: "OpenSans", sans-serif;
     border-radius: 8px;
     outline: none;
     padding: 10px 16px;
     background-color: rgba(115, 146, 190, 1);
     color: white;
-    font-family: inherit;
     margin: 0 16px;
 }
 
@@ -207,6 +201,7 @@ header {
 }
 
 .navbar .search input[type=text] {
+    font-family: "OpenSans", sans-serif;
     flex-grow: 1;
     padding: 6px;
     font-size: 17px;
@@ -214,6 +209,7 @@ header {
 }
 
 .navbar .search button {
+    font-family: "OpenSans", sans-serif;
     width: 20%;
     padding: 10px;
     background: rgba(235, 235, 235, 1);

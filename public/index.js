@@ -12,27 +12,31 @@ import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
 import {ProfilePage} from './pages/profilePage/profilePage.js';
 import {ProfileEdit} from './pages/profilePage/profileEdit.js';
 import {Cart} from './pages/cart/cart.js';
+import cartModel from './models/cart.js';
 import {Order} from './pages/order/order.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js', {scope: '/'})
-      .then((reg) => {
-        console.log(reg);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-}
+// if ('serviceWorker' in navigator) {
+//   navigator.serviceWorker.register('sw.js', {scope: '/'})
+//       .then((reg) => {
+//         console.log(reg);
+//       })
+//       .catch((e) => {
+//         console.log(e);
+//       });
+// }
 
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
 rootElement.appendChild(mainElement);
+const header = new Header();
 
 ajax.initialize(AUTH, API_ROUTES);
 router.initialize(AUTH, PAGES_ROUTES, serverHost);
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
+cartModel.initialize();
+cartModel.on('cartChange', header.changeCartQuantity.bind(header));
 
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
@@ -49,8 +53,6 @@ router.init('cartPage', loginRequired(renderCart));
 router.init('orderPage', loginRequired(renderOrder));
 
 
-const header = new Header();
-
 /**
  * logout Required Decorator.
  * @param {Function} render
@@ -60,7 +62,7 @@ function logoutRequired(render) {
   return function() {
     if (AUTH.is_auth === true) {
       history.replaceState({page: '/'}, 'main', '/');
-      document.title = 'main';
+      document.title = 'Волчок - доска объявлений';
 
       return renderMain();
     }
@@ -78,7 +80,7 @@ function loginRequired(render) {
   return function() {
     if (AUTH.is_auth !== true) {
       history.replaceState({page: '/login'}, 'login', '/login');
-      document.title = 'login';
+      document.title = 'Волчок - авторизация';
 
       return renderLogin();
     }
@@ -192,7 +194,7 @@ function renderAdEditing() {
  */
 function renderCart() {
   mainElement.innerHTML = '';
-  const cart = new Cart(header);
+  const cart = new Cart(header, cartModel);
 
   return cart.render();
 }

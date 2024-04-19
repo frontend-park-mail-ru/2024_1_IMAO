@@ -78,6 +78,7 @@ export class Main {
   #getRoute(startID) {
     const url = getURLFromLocation(window.location.href, router.host);
     this.#slug = parsePathParams(router.routes.adsListByCategory.href, url);
+    console.log(this.#slug);
     let apiRoute = '';
     if (this.#slug.city === '') {
       apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST, this.#slug);

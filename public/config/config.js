@@ -1,7 +1,7 @@
 'use strict';
 
-const api = 'http://109.120.183.3:8080';
-export const serverHost = 'http://109.120.183.3:8008';
+const api = 'http://127.0.0.1:8080';
+export const serverHost = 'http://127.0.0.1:8008';
 
 /**
  * Routes for API.
@@ -55,67 +55,67 @@ export const API_ROUTES = {
 export const PAGES_ROUTES = {
   mainPage: {
     href: new URL('/', serverHost),
-    name: 'main',
+    name: 'Волчок - доска объявлений',
     re: new RegExp(/\/$/),
   },
   adCreationPage: {
     href: new URL('/create', serverHost),
-    name: 'create',
+    name: 'Размещение объявления',
     re: new RegExp(/^\/create$/),
   },
   adEditingPage: {
     href: new URL('/edit/:id', serverHost),
-    name: 'edit',
+    name: 'Редактирование объявления - ',
     re: new RegExp(/^\/edit\/\d+$/),
   },
   loginPage: {
     href: new URL('/login', serverHost),
-    name: 'login',
+    name: 'Волчок - авторизация',
     re: new RegExp(/^\/login$/),
   },
   signupPage: {
     href: new URL('/signup', serverHost),
-    name: 'signup',
+    name: 'Волчок - регистрация',
     re: new RegExp(/^\/signup$/),
   },
   cartPage: {
     href: new URL('/cart', serverHost),
-    name: 'cart',
+    name: 'Волчок - корзина',
     re: new RegExp(/^\/cart$/),
   },
   orderPage: {
     href: new URL('/order', serverHost),
-    name: 'order',
+    name: 'Оформление заказа',
     re: new RegExp(/^\/order$/),
   },
   merchantsPage: {
     href: new URL('/merchant/:id', serverHost),
-    name: 'merchant',
+    name: 'Продавец - ',
     re: new RegExp(/^\/merchant+\/\d+$/),
   },
   profilePage: {
     href: new URL('/profile', serverHost),
-    name: 'profile',
+    name: 'Профиль',
     re: new RegExp(/^\/profile$/),
   },
   profileEdit: {
     href: new URL('/profile/edit', serverHost),
-    name: 'edit profile',
+    name: 'Редактирование профиля',
     re: new RegExp(/^\/profile\/edit$/),
   },
   adsListByCity: {
     href: new URL('/:city', serverHost),
-    name: 'city',
+    name: 'Москва',
     re: new RegExp(/\/[a-zA-Z]+(?![\w/])/g),
   },
   adsListByCategory: {
     href: new URL('/:city/:category', serverHost),
-    name: 'category',
+    name: 'Категория - ',
     re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+$/),
   },
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),
-    name: 'advert',
+    name: 'Объявление - ',
     re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+\/\d+$/),
   },
 };

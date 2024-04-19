@@ -8,8 +8,10 @@ import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {parsePathParams, buildURL, getURLFromLocation, buildURLBySegments} from '../../modules/parsePathParams.js';
 import convertDate from '../../modules/convertDate.js';
 import formatDate from '../../modules/formatDate.js';
+import trimString from '../../modules/trimString.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
+import cartModel from '../../models/cart.js';
 
 /** Class representing advert page. */
 export class Advert {
@@ -30,9 +32,9 @@ export class Advert {
    * Render the advert Page.
    * @return {Element} - The advert page.
    */
-  render() {
+  async render() {
     this.#getSlug();
-    this.#renderTemplate();
+    await this.#renderTemplate();
 
     return this.#element;
   }
@@ -48,12 +50,12 @@ export class Advert {
   /**
    * Add event listeners for page.
    */
-  #addListeners() {
+  async #addListeners() {
     this.#addCarouselListeners();
     this.#addPathListener();
     this.#addCloseListener();
     // this.#addCartAddListener();
-    this.#addAddCartDialogListener();
+    await this.#addAddCartDialogListener();
     this.#addMerchantPageListener();
   }
 
@@ -152,14 +154,14 @@ export class Advert {
    * @param {*} addToBlackListButton
    * @param {*} overlayContainer
    */
-  #addAddCartDialogListener() {
+  async #addAddCartDialogListener() {
     const addCartButton = this.#element.querySelector('.cart');
     if (addCartButton == null) {
       return;
     }
-    const addCartOverlay = new AddCartOverlay(addCartButton);
+    const addCartOverlay = new AddCartOverlay(addCartButton, cartModel);
     const advertBlock = this.#element.querySelector('.advert-block');
-    advertBlock.appendChild(addCartOverlay.render());
+    advertBlock.appendChild(await addCartOverlay.render());
   }
 
   /**
@@ -238,6 +240,13 @@ export class Advert {
           );
           adContainer.classList.add('ad-container');
           content.appendChild(adContainer);
+          document.title += ' ' + trimString(adTitle, 40);
+          const addCartButton = this.#element.querySelector('.cart');
+          if (addCartButton !== null) {
+            if (cartModel.cartItems.includes(id)) {
+              addCartButton.innerHTML = 'Удалить из корзины';
+            }
+          }
         },
     );
 

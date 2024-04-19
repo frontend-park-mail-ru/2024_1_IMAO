@@ -11,16 +11,19 @@ import router from '../../router/router.js';
 export class Cart {
   #element;
   #items;
+  #model;
 
   /**
    * Initialize a main page.
    * @param {*} header
+   * @param {*} model
    */
-  constructor(header) {
+  constructor(header, model) {
     this.#element = document.createElement('div');
     this.#element.classList.add('main-page');
     this.#items = {};
     this.header = header;
+    this.#model = model;
   }
 
   /**
@@ -132,13 +135,7 @@ export class Cart {
         quantity.innerHTML = Number(quantity.innerHTML) - 1;
         headQuantity.innerHTML = quantity.innerHTML;
       }
-      ajax.post(
-          ajax.routes.CART.DELETE_CART_ITEM,
-          {advertIDs},
-          (body)=>{
-            return;
-          },
-      );
+      this.#model.deleteFromCart(advertIDs);
     });
   }
 
@@ -161,13 +158,7 @@ export class Cart {
         quantity.innerHTML = Number(quantity.innerHTML) - 1;
         headQuantity.innerHTML = quantity.innerHTML;
         const advertIDs = [Number(id)];
-        ajax.post(
-            ajax.routes.CART.DELETE_CART_ITEM,
-            {advertIDs},
-            (body)=>{
-              return;
-            },
-        );
+        this.#model.deleteFromCart(advertIDs);
       });
     }
   }
@@ -177,18 +168,8 @@ export class Cart {
    */
   async #renderTemplate() {
     this.#element.appendChild(this.header.render());
-    let adverts ={};
-
-    await ajax.get(
-        ajax.routes.CART.GET_CART_LIST,
-        (body) => {
-          adverts = body['items'];
-        },
-    );
-
-    if (!(adverts && Array.isArray(adverts))) {
-      return;
-    }
+    const adverts = await this.#model.getCart();
+    console.log(adverts);
     const quantity = adverts.length;
     this.#element.appendChild(renderCartMain(quantity));
 

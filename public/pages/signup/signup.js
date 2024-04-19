@@ -4,6 +4,7 @@ import renderAuthForm from '../../components/authForm/authForm.js';
 import {validateEmail, validatePassword, emailError, passwordError} from '../../modules/validate.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
+import cartModel from '../../models/cart.js';
 
 const passwordMatchError = 'Пароли не совпадают!';
 const userAlreadyExistError = 'Такой пользователь уже существует!';
@@ -89,8 +90,8 @@ export class Signup {
           data,
           (body) => {
             if (body?.isAuth === true) {
-              const main = document.querySelector('main');
-              router.popPage(ev, main);
+              cartModel.initialize();
+              history.go(-2);
 
               return;
             }

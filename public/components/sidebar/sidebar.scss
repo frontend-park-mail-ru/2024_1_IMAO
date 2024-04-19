@@ -16,14 +16,13 @@
   }
   
   .sidebar__item-count {
-  width: 62.69px;
+  width: 65px;
   height: 20px;
   position: absolute;
   left: 24px;
   top: 19.50px;
   color: black;
   font-size: 15px;
-  font-family: 'Fira Sans', sans-serif;
   font-weight: 400;
   line-height: 20px;
   }
@@ -44,25 +43,24 @@
   text-align: right;
   color: #222222;
   font-size: 16px;
-  font-family: 'Fira Sans', sans-serif;
   font-weight: 700;
   line-height: 22px;
   }
   
   .sidebar__description {
-  width: 150px;
+  width: 160px;
   height: 22px;
   position: absolute;
   left: 24px;
   top: 48px;
   color: #222222;
   font-size: 16px;
-  font-family: 'Manrope', sans-serif;
   font-weight: 700;
   line-height: 22px;
   }
   
   .sidebar__button {
+  font-family: "OpenSans", sans-serif;
   width: 255px;
   height: 50px;
   padding: 8px 20px;
@@ -93,7 +91,6 @@
   text-align: center;
   color: white;
   font-size: 16px;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   line-height: 24px;
   }

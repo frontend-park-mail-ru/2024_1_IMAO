@@ -3,6 +3,7 @@
 /* eslint-disable-next-line max-len */
 import renderAdCreationForm from '../../components/adCreationForm/adCreationForm.js';
 import {buildURL, parsePathParams, getURLFromLocation} from '../../modules/parsePathParams.js';
+import trimString from '../../modules/trimString.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -130,6 +131,7 @@ export class AdCreation {
             form.appendChild(renderAdCreationForm(false, adTitle, price,
                 description, cityName));
 
+            document.title += trimString(adTitle, 40);
             this.#addFormListener();
           },
       );
