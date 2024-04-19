@@ -6,10 +6,16 @@ import renderProfileMain from '../../components/profileMain/profileMain.js';
 import ProfileCard from '../../components/profileCard/profileCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import {validateEmail, validateName} from '../../modules/validate.js';
 import formatDate from '../../modules/formatDate.js';
 import {buildURL} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax';
 import router from '../../router/router';
+
+const wrongEmailFormt = 'Неправильный формат электронной почты';
+const emailAlreadyExists = 'Такой e-mail уже существует';
+const wrongNameFormat = 'Имя должно содержать только буквы';
+const wrongSurnameFormat = 'Фамилия должна содержать только буквы';
 
 /**
  *
@@ -35,6 +41,17 @@ export class ProfileEdit {
     this.#renderTemplate();
 
     return this.#element;
+  }
+
+  /**
+   *
+   * @param {HTMLElement} form - Form for adding error.
+   * @param {String} error - Error message.
+   */
+  #addError(form, error) {
+    const divErr = form.querySelector('.error');
+
+    divErr.innerHTML = error;
   }
 
   /**
@@ -70,7 +87,7 @@ export class ProfileEdit {
             subscribtionsCount: profile.subonsCount,
             urlOrder: '/cart',
             urlSettings: router.routes.profileEdit.href,
-            urlMerchant: '#',
+            avatarImg: profile.avatarImg,
           };
 
           const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
@@ -93,15 +110,19 @@ export class ProfileEdit {
 
           const forms = [{
             title: 'Изменить профиль',
-            fields: [{type: 'text', value: this.profile.name, name: 'name'},
-              {type: 'text', value: this.profile.surname, name: 'surname'}],
+            fields: [{type: 'text', value: this.profile.name, name: 'name',
+              place: 'Имя'},
+            {type: 'text', value: this.profile.surname, name: 'surname',
+              place: 'Фамилия'}],
             apiRoute: ajax.routes.PROFILE.SET_PROFILE_AVATAR,
+            hasAvatar: true,
+            avatar: this.profile.avatarImg,
             id: 1,
           },
           {
             title: 'Номер телефона',
             fields: [{type: 'text', value: this.profile.phone,
-              name: 'phone', isPhone: true}],
+              name: 'phone', isPhone: true, place: '+7(___)___-__-__'}],
             apiRoute: ajax.routes.PROFILE.SET_PROFILE_PHONE,
             id: 2,
           },
@@ -113,7 +134,8 @@ export class ProfileEdit {
           },
           {
             title: 'Город',
-            fields: [{type: 'text', value: this.profile.city, name: 'id'}],
+            fields: [{type: 'text', value: this.profile.city, name: 'id',
+              isCitySearch: true}],
             apiRoute: ajax.routes.PROFILE.SET_PROFILE_CITY,
             id: 4,
           },
@@ -126,16 +148,33 @@ export class ProfileEdit {
           }
 
           for (let i = 0; i < btns.length; ++i) {
-            const form = document.getElementsByTagName('form')[i + 1];
+            const form = document.querySelectorAll('.profile-modal-content')[i];
 
             form.addEventListener('submit', (ev) => {
               ev.preventDefault();
-              const submit = form.querySelector('[type="submit"]');
+              const submit = form.querySelector('.submit-btn');
               submit.disabled = true;
 
               const formData = new FormData(form);
 
-              if (forms[i].apiRoute === ajax.routes.PROFILE.SET_PROFILE_AVATAR) {
+              if (forms[i].apiRoute ===
+                  ajax.routes.PROFILE.SET_PROFILE_AVATAR) {
+                const name = formData.get('name');
+                if (!validateName(name)) {
+                  this.#addError(form, wrongNameFormat);
+                  submit.disabled = false;
+
+                  return;
+                }
+
+                const surname = formData.get('surname');
+                if (!validateName(surname)) {
+                  this.#addError(form, wrongSurnameFormat);
+                  submit.disabled = false;
+
+                  return;
+                }
+
                 ajax.postMultipart(
                     forms[i].apiRoute,
                     formData,
@@ -161,24 +200,36 @@ export class ProfileEdit {
                   data = {phone};
                 } else if (i == 2) {
                   const email = inputs[0];
+
+                  if (!validateEmail(email)) {
+                    this.#addError(form, wrongEmailFormt);
+                    submit.disabled = false;
+
+                    return;
+                  }
+
                   data = {email};
                 } else {
-                  const id = inputs[0];
-                  data = {id};
+                  const id = document.querySelector('.selected').dataset.id;
+                  data = {'id': parseInt(id)};
                 }
 
                 ajax.post(
                     forms[i].apiRoute,
                     data,
                     (body) => {
-                      if (body.profile != null) {
+                      if (body.profile != null || body.user != null) {
                         router.go(router.routes.profileEdit.href);
 
                         return;
                       }
 
-                      submit.disabled = false;
-                      console.error('Ошибка редактирования профиля');
+                      if (body.status === 'This email is already in use') {
+                        this.#addError(form, emailAlreadyExists);
+                        submit.disabled = false;
+
+                        return;
+                      }
                     });
               }
             });

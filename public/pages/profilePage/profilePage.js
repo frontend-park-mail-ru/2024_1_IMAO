@@ -185,6 +185,7 @@ export class ProfilePage {
             urlOrder: '/cart',
             urlSettings: router.routes.profileEdit.href,
             urlMerchant: '#',
+            avatarImg: profile.avatarImg,
           };
           const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
           const profileCardInstance = new ProfileCard(merchantCartItems);

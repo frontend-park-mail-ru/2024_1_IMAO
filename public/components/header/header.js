@@ -100,6 +100,7 @@ export class Header {
     const urlCart = router.routes.cartPage.href.href;
     const urlProfile = router.routes.profilePage.href.href;
     const flag = router.auth.is_auth;
+    const avatar = router.auth.avatar;
     const cartQuantity = cartModel.cartItems.length;
     while (this.#header.firstChild) {
       this.#header.removeChild(this.#header.lastChild);
@@ -113,6 +114,7 @@ export class Header {
       flag,
       location,
       CATEGORIES,
+      avatar,
       cartQuantity,
     })));
   }

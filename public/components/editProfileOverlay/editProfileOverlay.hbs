@@ -10,17 +10,40 @@
                 <div class="profile-header-title">
                     {{title}}
                 </div>
+                {{#if hasAvatar}}
+                <div class="avatar-upload">
+                    <div class="avatar-edit">
+                        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="avatar">
+                        <label for="imageUpload"></label>
+                    </div>
+                    <div class="avatar-preview">
+                        {{#if (is_null avatar)}}
+                        <div id="imagePreview" style="background-image: url(images/img_avatar.png);"></div>
+                        {{^}}
+                        <div id="imagePreview" style="background-image: url(data:image;base64,{{avatar}});"></div>
+                        {{/if}}
+                    </div>
+                </div>
+                {{/if}}
                 {{#each fields}}
                 {{#if this.isPhone}}
-                <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" pattern="[0-9]{11}"
-                    placeholder="+7(___)___-__-__" required>
+                <div class="profile-modal-fields">
+                    <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" placeholder="{{this.place}}"
+                        class="profile-text" id="phone" required>
+                </div>
+                {{^}}
+                {{#if this.isCitySearch}}
+                <div class="ddws-div"></div>
                 {{^}}
                 <div class="profile-modal-fields">
-                    <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" required>
+                    <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" class="profile-text"
+                        placeholder="{{this.place}}" required>
                 </div>
+                {{/if}}
                 {{/if}}
                 {{/each}}
                 <input class="submit-btn" type="submit" value="Сохранить">
+                <div class="error"></div>
             </form>
         </div>
     </div>

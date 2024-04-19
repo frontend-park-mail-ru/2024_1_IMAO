@@ -30,13 +30,13 @@ export const API_ROUTES = {
     SET_PROFILE_APPROVED: new URL('/api/profile/approved', api),
     PROFILE_EDIT: new URL('/api/profile/edit', api),
     SET_PROFILE_PHONE: new URL('/api/profile/phone', api),
-    SET_PROFILE_AVATAR: new URL('/api/profile/avatar', api),
+    SET_PROFILE_AVATAR: new URL('/api/profile/edit', api),
     SET_PROFILE_CITY: new URL('/api/profile/city', api),
     SET_PROFILE_CITY_BY_ID: new URL('/api/profile/:id/adverts', api),
     EDIT_USER_EMAIL: new URL('/api/auth/edit/email', api),
   },
   CITY: {
-    GET_CITY_LIST: new URL('/api/profile/city', api),
+    GET_CITY_LIST: new URL('/api/city', api),
   },
   CART: {
     GET_CART_LIST: new URL('/api/cart/list', api),

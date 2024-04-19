@@ -46,6 +46,7 @@ class MerchantCard {
       reviewCount: this.items.reviewCount,
       subscribersCount: this.items.subscribersCount,
       subscribtionsCount: this.items.subscribtionsCount,
+      avatar: this.items.avatarImg,
     };
 
     this.#element = stringToHtmlElement(template(context));
