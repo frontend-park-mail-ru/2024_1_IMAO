@@ -134,7 +134,8 @@ export class ProfileEdit {
           },
           {
             title: 'Город',
-            fields: [{type: 'text', value: this.profile.city, name: 'id'}],
+            fields: [{type: 'text', value: this.profile.city, name: 'id',
+              isCitySearch: true}],
             apiRoute: ajax.routes.PROFILE.SET_PROFILE_CITY,
             id: 4,
           },
@@ -209,8 +210,8 @@ export class ProfileEdit {
 
                   data = {email};
                 } else {
-                  const id = inputs[0];
-                  data = {id};
+                  const id = document.querySelector('.selected').dataset.id;
+                  data = {'id': parseInt(id)};
                 }
 
                 ajax.post(

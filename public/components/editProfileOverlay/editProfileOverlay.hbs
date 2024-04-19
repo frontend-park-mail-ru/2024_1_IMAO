@@ -29,13 +29,17 @@
                 {{#if this.isPhone}}
                 <div class="profile-modal-fields">
                     <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" placeholder="{{this.place}}"
-                        class="profile-text" required>
+                        class="profile-text" id="phone" required>
                 </div>
+                {{^}}
+                {{#if this.isCitySearch}}
+                <div class="ddws-div"></div>
                 {{^}}
                 <div class="profile-modal-fields">
                     <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" class="profile-text"
                         placeholder="{{this.place}}" required>
                 </div>
+                {{/if}}
                 {{/if}}
                 {{/each}}
                 <input class="submit-btn" type="submit" value="Сохранить">

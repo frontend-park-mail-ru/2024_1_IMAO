@@ -75,8 +75,8 @@
     .profile-text,
     .submit-btn {
         margin-top: 16px;
-        width: 96%;
-        padding: 1% 2%;
+        width: 338px;
+        padding: 5px 10px;
         font-size: 14px;
         border-radius: 8px;
         border: 1px solid rgb(235, 235, 235);
@@ -160,5 +160,13 @@
         color: red;
         margin-top: 15px;
         font-size: 14px;
+    }
+
+    .dropdown-with-search {
+        margin: 16px 0;
+        width: 338px;
+        padding: 5px 10px;
+        height: auto;
+        overflow: visible;
     }
 }
