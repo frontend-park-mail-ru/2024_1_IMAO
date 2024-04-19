@@ -11,13 +11,14 @@
     grid-template-columns: auto auto;
     float: inline-start;
     gap: 10px;
-    margin: auto;
     margin: 0 auto;
     padding: 20px;
+    margin-bottom: 100px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 
 .ad__creation .form__title {
     font-size: 2em;
@@ -47,8 +48,9 @@
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
+    border: solid 1px #eee;
+    box-shadow: 0px 2px 5px 0px rgba(155, 155, 155, 0.5);
     box-sizing: border-box;
     color: #000000;
     background-color: #fff;
@@ -116,4 +118,12 @@
 .ad__creation .form__button--disabled {
     background-color: #cccccc;
     cursor: not-allowed;
+}
+
+.location-place{
+  max-width: 290px;
+  margin-bottom: 20px;
+}
+.ruble{
+  font-size:x-large;
 }

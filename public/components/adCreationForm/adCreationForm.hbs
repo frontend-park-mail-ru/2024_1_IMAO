@@ -47,7 +47,7 @@
         <div>
             <input class="form__input form__input--min" type="number" id="price" name="price" value="{{price}}"
                 required>
-            <span>₽</span>
+            <span class="ruble">&nbsp;₽</span>
         </div>
         <label class="form__label" for="description">Описание</label>
         <div>
@@ -59,10 +59,10 @@
         <input class="form__input" type="file" id="photos" name="photos" multiple required>
 
         <label class="form__label" for="location">Местоположение<span class="asterisk">*</span></label>
-        <input class="form__input" type="text" id="location" name="city" value="{{city}}" required>
-
+        {{!-- <input class="form__input" type="text" id="location" name="city" value="{{city}}" required> --}}
+        <div class="location-place"></div>
         <label class="form__label" for="phone">Телефон<span class="asterisk">*</span></label>
-        <input class="form__input form__input--min" type="tel" id="phone" name="phone" pattern="[0-9]{11}" required>
+        <input class="form__input form__input--min" type="tel" id="phone" name="phone" min="0" required>
         {{#if create}}
         <input type="submit" class="form__button" value="Разместить объявление">
         {{^}}
