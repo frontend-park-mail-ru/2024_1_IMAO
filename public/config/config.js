@@ -131,65 +131,81 @@ export const CATEGORIES = [
   {
     name: 'Женский гардероб',
     translation: 'zhenskij_garderob',
+    url: new URL('/Moscow/zhenskij_garderob', serverHost),
   },
   {
     name: 'Мужской гардероб',
     translation: 'muzhskoj_garderob',
+    url: new URL('/Moscow/muzhskoj_garderob', serverHost),
   },
   {
     name: 'Детский гардероб',
     translation: 'detskij_garderob',
+    url: new URL('/Moscow/detskij_garderob', serverHost),
   },
   {
     name: 'Детские товары',
     translation: 'detskie_tovary',
+    url: new URL('/Moscow/detskie_tovary', serverHost),
   },
   {
     name: 'Хэндмэйд',
     translation: 'handmade',
+    url: new URL('/Moscow/handmade', serverHost),
   },
   {
     name: 'Телефоны и планшеты',
     translation: 'telefony_i_planshety',
+    url: new URL('/Moscow/telefony_i_planshety', serverHost),
   },
   {
     name: 'Фото и видеокамеры',
     translation: 'foto_i_videokamery',
+    url: new URL('/Moscow/foto_i_videokamery', serverHost),
   },
   {
     name: 'Компьютерная техника',
     translation: 'kompyuternaya_texnika',
+    url: new URL('/Moscow/kompyuternaya_texnika', serverHost),
   },
   {
     name: 'ТВ, аудио и видео',
     translation: 'tv_audio_i_video',
+    url: new URL('/Moscow/tv_audio_i_video', serverHost),
   },
   {
     name: 'Бытовая техника',
     translation: 'bytovaya_texnika',
+    url: new URL('/Moscow/bytovaya_texnika', serverHost),
   },
   {
     name: 'Для дома и дачи',
     translation: 'dlya_doma_i_dachi',
+    url: new URL('/Moscow/dlya_doma_i_dachi', serverHost),
   },
   {
     name: 'Стройматериалы и инструменты',
     translation: 'strojmaterialy_i_instrumenty',
+    url: new URL('/Moscow/strojmaterialy_i_instrumenty', serverHost),
   },
   {
     name: 'Красота и здоровье',
     translation: 'krasota_i_zdorove',
+    url: new URL('/Moscow/krasota_i_zdorove', serverHost),
   },
   {
     name: 'Спорт и отдых',
     translation: 'sport_i_otdyx',
+    url: new URL('/Moscow/sport_i_otdyx', serverHost),
   },
   {
     name: 'Хобби и развлечения',
     translation: 'xobbi_i_razvlecheniya',
+    url: new URL('/Moscow/xobbi_i_razvlecheniya', serverHost),
   },
   {
     name: 'Прочее',
     translation: 'prochee',
+    url: new URL('/Moscow/prochee', serverHost),
   },
 ];
