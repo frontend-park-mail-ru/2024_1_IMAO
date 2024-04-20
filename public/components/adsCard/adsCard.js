@@ -16,8 +16,8 @@ const MAX_TITLE_LENGTH = 20;
  * @param {string} path - Link to the advert page.
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export default function renderAdsCardTemplate(title, price, id, path) {
+export default function renderAdsCardTemplate(title, price, id, path, photo) {
   const titleTrim = trimString(title, MAX_TITLE_LENGTH);
 
-  return stringToHtmlElement(template({title, titleTrim, price, id, path}));
+  return stringToHtmlElement(template({title, titleTrim, price, id, path, photo}));
 }

@@ -153,10 +153,10 @@ export class Main {
           const ids = [];
 
           adverts.forEach((inner) => {
-            const {price, title, id, city, category} = inner;
+            const {price, title, id, city, category, photoIMG} = inner;
             ids.push(id);
             const path = buildURLBySegments(router.host, [city, category, id]);
-            cardsContainer.appendChild(renderAdsCardTemplate(title, price, id, path));
+            cardsContainer.appendChild(renderAdsCardTemplate(title, price, id, path, photoIMG));
           });
 
           content.appendChild(cardsContainer);

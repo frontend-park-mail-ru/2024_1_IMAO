@@ -140,7 +140,6 @@ export class MerchantsPage {
         (body) => {
           const adverts = body['items'];
           if (!(adverts && Array.isArray(adverts))) {
-
             const test = new EmptyAdvertsPlug('aboba');
             merchantsPageRightSection.appendChild(test.render());
 
@@ -155,12 +154,12 @@ export class MerchantsPage {
           }
 
           adverts.forEach((inner) => {
-            const {price, title, id, city, category} = inner;
+            const {price, title, id, city, category, photoIMG} = inner;
 
             const path = buildURLBySegments(router.host, [city, category, id]);
             // const path = city + '/' + category + '/' + id;
 
-            merchantsPageRightSection.appendChild(renderAdsCardTemplate(title, price, id, path));
+            merchantsPageRightSection.appendChild(renderAdsCardTemplate(title, price, id, path, photoIMG));
           });
 
           this.#isBottomReached = false;
