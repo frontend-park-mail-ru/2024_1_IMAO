@@ -141,8 +141,9 @@ export class MerchantsPage {
           const adverts = body['items'];
           if (!(adverts && Array.isArray(adverts))) {
 
-            const test = new EmptyAdvertsPlug('');
-            merchantsPageRightSection.appendChild(test.render());
+            const content = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ? 'активные' : 'проданные';
+            const emptyAdvertsPlug = new EmptyAdvertsPlug(content);
+            merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
 
             return;
           }
