@@ -65,20 +65,13 @@ export class Advert {
    */
   #addCarouselListeners() {
     const carousel = this.#element.querySelector('.carousel');
-    // const imagesContainer = this.#element.querySelector('.images');
+    const imagesContainer = this.#element.querySelector('.images');
     const prevBtn = this.#element.querySelector('.prev-btn');
     const nextBtn = this.#element.querySelector('.next-btn');
-    // const images = imagesContainer.querySelectorAll('img');
+    const images = imagesContainer.querySelectorAll('.img-carousel');
 
     let currentIndex = 0;
-    const elemsOnPage = 5;
-    // let elemsOnPage = 0;
-    // let elemWidth = images[0].offsetWidth;
-    // const containerWidth = carousel.offsetWidth;
-    // while (elemWidth < containerWidth) {
-    //   elemsOnPage++;
-    //   elemWidth += images[elemsOnPage].offsetWidth;
-    // }
+    const elemsOnPage = images.length;
 
     prevBtn.addEventListener('click', () => {
       currentIndex = (currentIndex - 1) % elemsOnPage;
@@ -92,7 +85,18 @@ export class Advert {
 
     const updateCarousel = (currentIndex, elemsOnPage) => {
       const index = (currentIndex + elemsOnPage) % elemsOnPage;
-      const newPosition = index !== 2 ? -index * 80 : -index * 50;
+
+      const carouselWidth = carousel.offsetWidth;
+      const currentWidth = images[index].offsetWidth;
+
+      let newPosition = 0;
+      if (index !== elemsOnPage - 1) {
+        newPosition = -index * 100 * currentWidth / carouselWidth;
+      } else {
+        const lastWidth = images[images.length - 1].offsetWidth;
+        const offset = lastWidth - (carouselWidth - currentWidth);
+        newPosition = -index * 100 * offset / carouselWidth;
+      }
 
       carousel.style.transform = `translateX(${newPosition}%)`;
     };
