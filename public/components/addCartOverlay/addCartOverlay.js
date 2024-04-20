@@ -56,7 +56,6 @@ class AddCartOverlay {
       myDialog.showModal();
       ev.preventDefault();
       const advertId = Number(myButton.dataset['id']);
-      console.log(ajax.auth);
 
       const isAppended = await this.#model.changeCart(advertId);
 

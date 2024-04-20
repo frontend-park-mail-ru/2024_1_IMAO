@@ -150,7 +150,6 @@ export class Main {
               }
             }
           }
-          console.log(adverts);
           const ids = [];
 
           adverts.forEach((inner) => {

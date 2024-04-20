@@ -76,7 +76,6 @@ export class AdCreation {
       descriptionInput.classList.remove('input__error');
       descriptionInputError.innerHTML = '';
       const description = descriptionInput.value;
-      console.log(description);
       if (!validateInput(description)) {
         descriptionInput.classList.add('input__error');
         descriptionInputError.innerHTML = inputError;
@@ -254,7 +253,6 @@ export class AdCreation {
           const dropdownWithSearch = new DropdownWithSearch(body, 'Москва');
           const dropdownWithSearchTempl = dropdownWithSearch.render();
           dropdownWithSearchTempl.classList.remove('dropdown-with-search');
-          console.log(dropdownWithSearchTempl.classList);
           // dropdownWithSearchTempl.setProperty('height', '');
           dropdownWithSearchDiv.appendChild(dropdownWithSearchTempl);
         },

@@ -169,7 +169,6 @@ export class Cart {
   async #renderTemplate() {
     this.#element.appendChild(this.header.render());
     const adverts = await this.#model.getCart();
-    console.log(adverts);
     const quantity = adverts.length;
     this.#element.appendChild(renderCartMain(quantity));
 
