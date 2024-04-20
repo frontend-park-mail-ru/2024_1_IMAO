@@ -141,7 +141,7 @@ export class MerchantsPage {
           const adverts = body['items'];
           if (!(adverts && Array.isArray(adverts))) {
 
-            const test = new EmptyAdvertsPlug('aboba');
+            const test = new EmptyAdvertsPlug('');
             merchantsPageRightSection.appendChild(test.render());
 
             return;
