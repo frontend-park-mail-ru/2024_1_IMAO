@@ -15,8 +15,8 @@ const MAX_TITLE_LENGTH = 40;
  * @param {string} path
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export default function renderCartBlock(id, title, price, path) {
+export default function renderCartBlock(id, title, price, path, photo) {
   title = trimString(title, MAX_TITLE_LENGTH);
 
-  return stringToHtmlElement(template({id, title, price, path}));
+  return stringToHtmlElement(template({id, title, price, path, photo}));
 }

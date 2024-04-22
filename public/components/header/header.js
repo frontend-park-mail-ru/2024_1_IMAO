@@ -1,9 +1,10 @@
 'use strict';
 
-import {CATEGORIES} from '../../config/config.js';
+import {CATEGORIES, serverHost} from '../../config/config.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './header.hbs';
 import styles from './header.scss';
+import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import cartModel from '../../models/cart.js';
@@ -105,6 +106,14 @@ export class Header {
     while (this.#header.firstChild) {
       this.#header.removeChild(this.#header.lastChild);
     }
+    const CategoriesWithUrl = CATEGORIES.map((category) => {
+      const temp = ['Moscow', String(category.translation)];
+      const urlurl = buildURLBySegments(serverHost, temp);
+      const url = urlurl.href;
+      const {name} = category;
+
+      return {name, url};
+    });
     this.#header.appendChild(stringToHtmlElement(template({
       urlMain,
       urlLogin,
@@ -113,7 +122,7 @@ export class Header {
       urlProfile,
       flag,
       location,
-      CATEGORIES,
+      CategoriesWithUrl,
       avatar,
       cartQuantity,
     })));

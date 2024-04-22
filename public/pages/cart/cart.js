@@ -181,7 +181,7 @@ export class Cart {
 
     adverts.forEach((item) => {
       let {city, category} = item;
-      const {advert} = item;
+      const {advert, photosIMG} = item;
       city = city.translation;
       category = category.translation;
       const {id, price, title} = advert;
@@ -189,7 +189,8 @@ export class Cart {
       ids.push(id);
       priceSum += Number(price);
       const path = buildURLBySegments(router.host, [city, category, id]);
-      selectPanel.appendChild(renderCartBlock(id, title, price, path));
+      console.log(photosIMG[0]);
+      selectPanel.appendChild(renderCartBlock(id, title, price, path, photosIMG[0]));
     });
 
     ids.forEach((id) => {

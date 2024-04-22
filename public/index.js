@@ -35,8 +35,8 @@ const header = new Header();
 ajax.initialize(AUTH, API_ROUTES);
 router.initialize(AUTH, PAGES_ROUTES, serverHost);
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
-cartModel.initialize();
 cartModel.on('cartChange', header.changeCartQuantity.bind(header));
+cartModel.initialize();
 
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
