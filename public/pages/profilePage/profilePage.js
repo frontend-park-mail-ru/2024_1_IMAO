@@ -241,7 +241,7 @@ export class ProfilePage {
    * @param {HTMLElement} forms - Edit profile form.
    */
   #addListenersForOverlays(forms) {
-    const btns = document.querySelectorAll('.set-or-edit-label');
+    const btns = document.querySelectorAll('.settings-block__set-or-edit-label');
 
     for (let i = 0; i < btns.length; ++i) {
       const form = document.querySelectorAll('.profile-modal-content')[i];

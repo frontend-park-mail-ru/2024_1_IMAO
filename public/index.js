@@ -30,13 +30,14 @@ import router from './router/router.js';
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
 rootElement.appendChild(mainElement);
-const header = new Header();
 
 ajax.initialize(AUTH, API_ROUTES);
 router.initialize(AUTH, PAGES_ROUTES, serverHost);
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
+
+await cartModel.initialize();
+const header = new Header(cartModel);
 cartModel.on('cartChange', header.changeCartQuantity.bind(header));
-cartModel.initialize();
 
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
@@ -52,6 +53,12 @@ router.init('adEditingPage', loginRequired(renderAdEditing));
 router.init('cartPage', loginRequired(renderCart));
 router.init('orderPage', loginRequired(renderOrder));
 
+window.addEventListener('popstate', (event) => {
+  router.popPage(event, mainElement);
+});
+
+router.popPage(null, mainElement);
+
 
 /**
  * logout Required Decorator.
@@ -60,7 +67,7 @@ router.init('orderPage', loginRequired(renderOrder));
  */
 function logoutRequired(render) {
   return function() {
-    if (AUTH.is_auth === true) {
+    if (AUTH.isAuth === true) {
       history.replaceState({page: '/'}, 'main', '/');
       document.title = 'Волчок - доска объявлений';
 
@@ -78,7 +85,7 @@ function logoutRequired(render) {
  */
 function loginRequired(render) {
   return function() {
-    if (AUTH.is_auth !== true) {
+    if (AUTH.isAuth !== true) {
       history.replaceState({page: '/login'}, 'login', '/login');
       document.title = 'Волчок - авторизация';
 
@@ -209,9 +216,3 @@ function renderOrder() {
 
   return order.render();
 }
-
-window.addEventListener('popstate', (event) => {
-  router.popPage(event, mainElement);
-});
-
-router.popPage(null, mainElement);

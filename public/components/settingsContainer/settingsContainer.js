@@ -18,6 +18,9 @@ import EditProfileOverlay from '../../components/editProfileOverlay/editProfileO
 //   return stringToHtmlElement(template(profileData));
 // }
 
+/**
+ *
+ */
 class SettingsContainer {
   #element
 
@@ -100,7 +103,7 @@ class SettingsContainer {
   }
 
   #renderDialogs(){
-    const btns = this.#element.querySelectorAll('.set-or-edit-label');
+    const btns = this.#element.querySelectorAll('.settings-block__set-or-edit-label');
     
     for (let i = 0; i < btns.length; ++i) {
       const btn = btns[i];

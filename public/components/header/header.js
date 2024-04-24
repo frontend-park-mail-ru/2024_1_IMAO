@@ -7,7 +7,6 @@ import styles from './header.scss';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-import cartModel from '../../models/cart.js';
 
 /** Class representing a header component. */
 export class Header {
@@ -15,9 +14,11 @@ export class Header {
 
   /**
    * Initialize a header.
+   * @param {cart} cartModel
    */
-  constructor() {
+  constructor(cartModel) {
     this.#header = document.createElement('header');
+    this.cartModel = cartModel;
   }
 
   /**
@@ -78,7 +79,7 @@ export class Header {
           null,
           (body) => {
             // eslint-disable-next-line camelcase
-            ajax.auth.is_auth = body.isAuth;
+            ajax.auth.isAuth = body.isAuth;
             this.#renderHeaderTemplate('Москва');
             this.#addListeners();
             const main = document.querySelector('main');
@@ -100,9 +101,11 @@ export class Header {
     const urlCreate = router.routes.adCreationPage.href.href;
     const urlCart = router.routes.cartPage.href.href;
     const urlProfile = router.routes.profilePage.href.href;
-    const flag = router.auth.is_auth;
+    const flag = router.auth.isAuth;
     const avatar = router.auth.avatar;
-    const cartQuantity = cartModel.cartItems.length;
+    const cartQuantity = this.cartModel.cartItems.length;
+    console.log(this.cartModel.cartItems);
+    console.log(cartQuantity);
     while (this.#header.firstChild) {
       this.#header.removeChild(this.#header.lastChild);
     }

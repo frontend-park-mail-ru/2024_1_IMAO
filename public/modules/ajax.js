@@ -76,7 +76,7 @@ class Ajax {
         this.routes.AUTH.CHECKAUTH,
         (body) => {
           // eslint-disable-next-line camelcase
-          this.auth.is_auth = body.isAuth;
+          this.auth.isAuth = body.isAuth;
           this.auth.id = body.user.id;
           this.auth.email = body.user.email;
           this.auth.avatar = body.avatarImg;

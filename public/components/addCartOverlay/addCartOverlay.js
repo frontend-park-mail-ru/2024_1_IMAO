@@ -47,7 +47,7 @@ class AddCartOverlay {
   async #addListeners() {
     const myButton = this.button;
     myButton.addEventListener('click', async (ev) => {
-      if (!ajax.auth.is_auth) {
+      if (!ajax.auth.isAuth) {
         router.pushPage(ev, router.routes.loginPage.href.href);
 
         return;
