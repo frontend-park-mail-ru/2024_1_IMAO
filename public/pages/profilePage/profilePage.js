@@ -1,7 +1,7 @@
 'use strict';
 
 import renderProfileMain from '../../components/profileMain/profileMain.js';
-import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
+import AdsCard from '../../components/adsCard/adsCard.js';
 import SettingsContainer from '../../components/settingsContainer/settingsContainer';
 import ProfileCard from '../../components/profileCard/profileCard.js';
 import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
@@ -466,12 +466,11 @@ export class ProfilePage {
           }
 
           adverts.forEach((inner) => {
-            const {price, title, id, city, category, photoIMG} = inner;
+            const {price, title, id, city, category, photosIMG} = inner;
 
             const path = buildURLBySegments(router.host, [city, category, id]);
-
-            merchantsPageRightSection.appendChild(
-                renderAdsCardTemplate(title, price, id, path, photoIMG),
+            const adsCardInstance = new AdsCard(title, price, id, path, photosIMG);
+            merchantsPageRightSection.appendChild(adsCardInstance.render()          
             );
           });
 

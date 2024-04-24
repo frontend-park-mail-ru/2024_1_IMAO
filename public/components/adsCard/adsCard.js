@@ -2,9 +2,9 @@
 
 import trimString from '../../modules/trimString.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
+import HoverSlider from '../../components/hoverSlider/hoverSlider.js';
 import template from './adsCard.hbs';
 import styles from './adsCard.scss';
-
 
 const MAX_TITLE_LENGTH = 20;
 
@@ -14,10 +14,55 @@ const MAX_TITLE_LENGTH = 20;
  * @param {string | number} price - The price of the product.
  * @param {string | number} id - Product ID in database.
  * @param {string} path - Link to the advert page.
- * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export default function renderAdsCardTemplate(title, price, id, path, photo) {
-  const titleTrim = trimString(title, MAX_TITLE_LENGTH);
+class AdsCard {
+  #element;
 
-  return stringToHtmlElement(template({title, titleTrim, price, id, path, photo}));
+  /**
+   *
+   * @param {*} items
+   */
+  constructor(title, price, id, path, photosIMG) {
+    this.title = title;
+    this.price = price;
+    this.id = id;
+    this.path = path;
+    this.photosIMG = photosIMG;
+  }
+
+  /**
+   *
+   * @return {HTMLElement}
+   */
+  render() {
+    this.#renderTemplate();
+
+    //this.#element.addEventListener();
+    console.log('this.photosIMG', this.photosIMG)
+    const hoverSliderInstance = new HoverSlider(this.photosIMG);
+    const card = this.#element.querySelector('.card');
+    card.prepend(hoverSliderInstance.render());
+    return this.#element;
+  }
+
+  /**
+   *
+   */
+  #renderTemplate() {
+    const titleTrim = trimString(this.title, MAX_TITLE_LENGTH);
+
+    const context = {
+      title : this.title,
+      titleTrim : titleTrim,
+      price : this.price,
+      id : this.id,
+      path : this.path,
+      photo : this.photosIMG
+      
+    };
+     
+    this.#element = stringToHtmlElement(template(context));
+  }
 }
+
+export default AdsCard;

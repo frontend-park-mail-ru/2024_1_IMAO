@@ -1,11 +1,10 @@
 'use strict';
 
 import {CATEGORIES} from '../../config/config.js';
-import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
+import AdsCard from '../../components/adsCard/adsCard.js';
 import {getURLFromLocation, buildURL, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-
 
 /** Class representing a main page. */
 export class Main {
@@ -153,10 +152,11 @@ export class Main {
           const ids = [];
 
           adverts.forEach((inner) => {
-            const {price, title, id, city, category, photoIMG} = inner;
+            const {price, title, id, city, category, photosIMG} = inner;
             ids.push(id);
             const path = buildURLBySegments(router.host, [city, category, id]);
-            cardsContainer.appendChild(renderAdsCardTemplate(title, price, id, path, photoIMG));
+            const adsCardInstance = new AdsCard(title, price, id, path, photosIMG);
+            cardsContainer.appendChild(adsCardInstance.render());
           });
 
           content.appendChild(cardsContainer);

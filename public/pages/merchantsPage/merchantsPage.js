@@ -1,7 +1,7 @@
 'use strict';
 
 import renderMerchantMain from '../../components/merchantMain/merchantMain.js';
-import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
+import AdsCard from '../../components/adsCard/adsCard.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
@@ -154,12 +154,13 @@ export class MerchantsPage {
           }
 
           adverts.forEach((inner) => {
-            const {price, title, id, city, category, photoIMG} = inner;
+            const {price, title, id, city, category, photosIMG} = inner;
 
             const path = buildURLBySegments(router.host, [city, category, id]);
-            // const path = city + '/' + category + '/' + id;
+            const adsCardInstance = new AdsCard(title, price, id, path, photosIMG);
+            merchantsPageRightSection.appendChild(adsCardInstance.render()          
+            );
 
-            merchantsPageRightSection.appendChild(renderAdsCardTemplate(title, price, id, path, photoIMG));
           });
 
           this.#isBottomReached = false;

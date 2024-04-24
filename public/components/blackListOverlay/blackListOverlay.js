@@ -51,7 +51,7 @@ class BlackListOverlay {
       myDialog.close();
     });
 
-    const myDiv = this.#element.querySelector('.container');
+    const myDiv = this.#element.querySelector('.blacklist-container');
     myDiv.addEventListener('click', (event) => event.stopPropagation());
 
     const blockBtn = this.#element.querySelector('.action-button-blacklist');
