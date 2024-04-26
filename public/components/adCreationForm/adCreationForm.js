@@ -14,6 +14,6 @@ import styles from './adCreationForm.scss';
  * @param {String} city
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the ad creation form.
  */
-export default function renderAdCreationForm(create, title, price, description, city) {
-  return stringToHtmlElement(template({title, price, description, city, create}));
+export default function renderAdCreationForm(create, CSRFToken, title, price, description, city, ) {
+  return stringToHtmlElement(template({title, price, description, city, create, CSRFToken}));
 }

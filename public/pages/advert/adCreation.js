@@ -194,8 +194,18 @@ export class AdCreation {
     const form = document.createElement('div');
     form.classList.add('ad__creation');
 
+    let CSRFToken = '';
+    const apiCSRF = ajax.routes.AUTH.CSRF
+
+    await ajax.get(
+      apiCSRF,
+        (body) => {
+          CSRFToken = body['tokenBody'];
+        },
+      );
+
     if (this.#create) {
-      form.appendChild(renderAdCreationForm(true));
+      form.appendChild(renderAdCreationForm(true, CSRFToken));
     } else {
       this.#getSlug();
       const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT_BY_ID,
@@ -203,6 +213,17 @@ export class AdCreation {
 
       let categoryTr = 0;
       let isUsed = 0;
+      let CSRFToken = '';
+
+      const apiCSRF = ajax.routes.AUTH.CSRF
+      
+      await ajax.get(
+          apiCSRF,
+            (body) => {
+              CSRFToken = body['tokenBody'];
+            },
+          );
+
       await ajax.get(
           apiRoute,
           (body) => {
@@ -223,7 +244,7 @@ export class AdCreation {
             const price = advert['price'];
             const cityName = city['name'];
 
-            form.appendChild(renderAdCreationForm(false, adTitle, price,
+            form.appendChild(renderAdCreationForm(false, CSRFToken, adTitle, price,
                 description, cityName));
 
             document.title += trimString(adTitle, 40);
