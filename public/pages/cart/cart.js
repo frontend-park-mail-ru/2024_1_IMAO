@@ -188,9 +188,9 @@ export class Cart {
       this.#items[ajax.auth.id][id] = advert;
       ids.push(id);
       priceSum += Number(price);
+      const photo = photosIMG?.[0] ? photosIMG[0] : null;
       const path = buildURLBySegments(router.host, [city, category, id]);
-      console.log(photosIMG[0]);
-      selectPanel.appendChild(renderCartBlock(id, title, price, path, photosIMG[0]));
+      selectPanel.appendChild(renderCartBlock(id, title, price, path, photo));
     });
 
     ids.forEach((id) => {

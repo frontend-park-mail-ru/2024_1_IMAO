@@ -12,6 +12,7 @@ export const API_ROUTES = {
     CHECKAUTH: new URL('/api/auth/check_auth', api),
     LOGOUT: new URL('/api/auth/logout', api),
     SIGNUP: new URL('/api/auth/signup', api),
+    CSRF: new URL('/api/auth/csrf', api),
   },
   ADVERT: {
     CREATE_ADVERT: new URL('/api/adverts/create', api),

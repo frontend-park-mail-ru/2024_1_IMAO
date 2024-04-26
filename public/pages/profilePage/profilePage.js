@@ -114,7 +114,7 @@ export class ProfilePage {
 
       if (event.target.value === 'settings') {
         const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
-        newProfilePageContentContainer.appendChild(settingsContainer.render()); 
+        newProfilePageContentContainer.appendChild(settingsContainer.render());
         this.#addListenersForOverlays(settingsContainer.getForms());
       }
 
@@ -470,8 +470,7 @@ export class ProfilePage {
 
             const path = buildURLBySegments(router.host, [city, category, id]);
             const adsCardInstance = new AdsCard(title, price, id, path, photosIMG);
-            merchantsPageRightSection.appendChild(adsCardInstance.render()          
-            );
+            merchantsPageRightSection.appendChild(adsCardInstance.render());
           });
 
           this.#isBottomReached = false;
@@ -489,14 +488,14 @@ export class ProfilePage {
     this.#element.appendChild(root);
     const id = ajax.auth.id;
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {'id': id});
-    const apiCSRF = ajax.routes.AUTH.CSRF
-    
+    const apiCSRF = ajax.routes.AUTH.CSRF;
+
     await ajax.get(
         apiCSRF,
-          (body) => {
-            this.CSRFToken = body['tokenBody'];
-          },
-        );
+        (body) => {
+          this.CSRFToken = body['tokenBody'];
+        },
+    );
 
     await ajax.get(
         path,

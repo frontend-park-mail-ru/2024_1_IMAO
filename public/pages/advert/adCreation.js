@@ -195,14 +195,14 @@ export class AdCreation {
     form.classList.add('ad__creation');
 
     let CSRFToken = '';
-    const apiCSRF = ajax.routes.AUTH.CSRF
+    const apiCSRF = ajax.routes.AUTH.CSRF;
 
     await ajax.get(
-      apiCSRF,
+        apiCSRF,
         (body) => {
           CSRFToken = body['tokenBody'];
         },
-      );
+    );
 
     if (this.#create) {
       form.appendChild(renderAdCreationForm(true, CSRFToken));
@@ -215,14 +215,14 @@ export class AdCreation {
       let isUsed = 0;
       let CSRFToken = '';
 
-      const apiCSRF = ajax.routes.AUTH.CSRF
-      
+      const apiCSRF = ajax.routes.AUTH.CSRF;
+
       await ajax.get(
           apiCSRF,
-            (body) => {
-              CSRFToken = body['tokenBody'];
-            },
-          );
+          (body) => {
+            CSRFToken = body['tokenBody'];
+          },
+      );
 
       await ajax.get(
           apiRoute,

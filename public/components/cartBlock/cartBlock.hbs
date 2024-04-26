@@ -4,10 +4,10 @@
     {{!-- <div class="cart-block__item-header">
       <span class="cart-block__item-header-text">Пользователь</span>
     </div> --}}
-    {{#if (is_null photo)}}
-      <img class="cart-block__item-image" src="images/cart_placeholder_image.png">  
-    {{^}}
+    {{#if photo}}
       <img class="cart-block__item-image" src="data:image;base64,{{photo}}">
+    {{^}}
+      <img class="cart-block__item-image" src="images/cart_placeholder_image.png">
     {{/if}}
     {{!-- <img class="cart-block__item-image" src="images/cart_placeholder_image.png" /> --}}
     <div class="cart-block__item-description"><a class="selection-panel__action" data-id="{{id}}" href="{{path}}">{{title}}</a></div>
