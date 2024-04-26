@@ -35,7 +35,6 @@ class HoverSlider {
    *
    */
   #renderTemplate() {
-    console.log('this.photos', this.photos)
     const context = {
       photos: this.photos
     };

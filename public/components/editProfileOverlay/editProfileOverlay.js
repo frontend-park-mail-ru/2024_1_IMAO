@@ -18,10 +18,11 @@ class EditProfileOverlay {
    * @param {*} data
    * @param {*} currentCity
    */
-  constructor(button, data, currentCity) {
+  constructor(button, data, currentCity, CSRFToken) {
     this.button = button;
     this.data = data;
     this.currentCity = currentCity;
+    this.CSRFToken = CSRFToken
   }
   /**
    *
@@ -44,8 +45,9 @@ class EditProfileOverlay {
       id: this.data.id,
       hasAvatar: this.data.hasAvatar,
       avatar: this.data.avatar,
+      CSRFToken : this.CSRFToken,
     };
-
+    
     this.#element = stringToHtmlElement(template(context));
 
     if (context.fields[0].isCitySearch) {

@@ -10,6 +10,7 @@ import {validateEmail, validateName} from '../../modules/validate.js';
 import EditProfileOverlay from '../../components/editProfileOverlay/editProfileOverlay.js';
 
 
+
 // export default function renderSettingsContainer(profileData) {
 //   Handlebars.registerHelper('is_null', function(value) {
 //     return value === '';
@@ -24,8 +25,9 @@ import EditProfileOverlay from '../../components/editProfileOverlay/editProfileO
 class SettingsContainer {
   #element
 
-  constructor(profileData) {
+  constructor(profileData, CSRFToken) {
       this.profileData = profileData;
+      this.CSRFToken = CSRFToken
       this.forms = [{
         title: 'Изменить профиль',
         fields: [{type: 'text', value: this.profileData.name, name: 'name',
@@ -104,10 +106,10 @@ class SettingsContainer {
 
   #renderDialogs(){
     const btns = this.#element.querySelectorAll('.settings-block__set-or-edit-label');
-    
+
     for (let i = 0; i < btns.length; ++i) {
       const btn = btns[i];
-      const overlay = new EditProfileOverlay(btn, this.forms[i], this.profileData.city);
+      const overlay = new EditProfileOverlay(btn, this.forms[i], this.profileData.city, this.CSRFToken);
       this.#element.appendChild(overlay.render());
     }
 

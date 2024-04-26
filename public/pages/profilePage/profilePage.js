@@ -87,7 +87,7 @@ export class ProfilePage {
    *
    * @param {*} event
    */
-  handleClick2(event) {
+  async handleClick2(event) {
     const targetValue = event.target.value;
 
     const labelsAndValues = [
@@ -113,8 +113,8 @@ export class ProfilePage {
       this.sectionStateV.setSectionState(event.target.value, 'isRendered', true);
 
       if (event.target.value === 'settings') {
-        const settingsContainer = new SettingsContainer(this.profile);
-        newProfilePageContentContainer.appendChild(settingsContainer.render());
+        const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
+        newProfilePageContentContainer.appendChild(settingsContainer.render()); 
         this.#addListenersForOverlays(settingsContainer.getForms());
       }
 
@@ -305,7 +305,7 @@ export class ProfilePage {
 
                   const profilePageContentContainer =
                     this.#element.querySelector('.profile-page-right-section-content');
-                  const settingsContainer = new SettingsContainer(this.profile);
+                  const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
                   profilePageContentContainer.lastElementChild.replaceWith(settingsContainer.render());
                   this.#addListenersForOverlays(settingsContainer.getForms());
 
@@ -381,7 +381,7 @@ export class ProfilePage {
 
                   const profilePageContentContainer =
                     this.#element.querySelector('.profile-page-right-section-content');
-                  const settingsContainer = new SettingsContainer(this.profile);
+                  const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
                   profilePageContentContainer.lastElementChild.replaceWith(settingsContainer.render());
                   this.#addListenersForOverlays(settingsContainer.getForms());
 
@@ -489,6 +489,15 @@ export class ProfilePage {
     this.#element.appendChild(root);
     const id = ajax.auth.id;
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {'id': id});
+    const apiCSRF = ajax.routes.AUTH.CSRF
+    
+    await ajax.get(
+        apiCSRF,
+          (body) => {
+            this.CSRFToken = body['tokenBody'];
+          },
+        );
+
     await ajax.get(
         path,
         (body) => {

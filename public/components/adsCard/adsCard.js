@@ -38,7 +38,6 @@ class AdsCard {
     this.#renderTemplate();
 
     //this.#element.addEventListener();
-    console.log('this.photosIMG', this.photosIMG)
     const hoverSliderInstance = new HoverSlider(this.photosIMG);
     const card = this.#element.querySelector('.card');
     card.prepend(hoverSliderInstance.render());
