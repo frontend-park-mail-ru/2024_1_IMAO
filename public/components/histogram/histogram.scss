@@ -1,33 +1,26 @@
-
-  #canvas {
+#canvas {
     border:solid 2px black;
   }
   
-  input[type='range'] {
-    display: block;
-    /* margin: 2.5em auto; */
-    padding: 0;
-    border-radius: 4px;
-    /* inconsistent */
-    opacity: .75;
-    background: transparent;
-    /* inconsistent */
-    /* font-size inconsistent */
-    /* font: 1em trebuchet ms, verdana, arial, sans-serif; */
-    cursor: pointer;
-    box-shadow: inset 0 0 5px #333;
-    background-image: linear-gradient(to right, lightGreen, green 100%, orange);
-  }
-  
-  /* Change the Slider Button Color Webkit (Opera, Chrome, Safari) */
-  .slide1::-webkit-slider-thumb {
-      -webkit-appearance: none !important;
-      background-color: #AAA;
-      background-image:
-      linear-gradient(to bottom, #EEE, #AAA);
-      border: 2px solid #333;
-      height:18px;
-      width:10px;
-      border-radius: 15px;
-  }
+input[type='range'] {
+  display: block;
+  padding: 0;
+  border-radius: 4px;
+  opacity: .75;
+  background: transparent;
+  cursor: pointer;
+  box-shadow: inset 0 0 5px #333;
+  background-image: linear-gradient(to right, lightGreen, green 100%, orange);
+}
+
+.slide1::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    background-color: #AAA;
+    background-image:
+    linear-gradient(to bottom, #EEE, #AAA);
+    border: 2px solid #333;
+    height:18px;
+    width:10px;
+    border-radius: 15px;
+}
   

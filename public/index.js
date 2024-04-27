@@ -12,6 +12,7 @@ import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
 import {ProfilePage} from './pages/profilePage/profilePage.js';
 import {ProfileEdit} from './pages/profilePage/profileEdit.js';
 import {Cart} from './pages/cart/cart.js';
+import {Stats} from './pages/stats/stats.js';
 import cartModel from './models/cart.js';
 import {Order} from './pages/order/order.js';
 import ajax from './modules/ajax.js';

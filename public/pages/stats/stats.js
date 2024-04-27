@@ -18,6 +18,8 @@ export class Stats {
 
   #renderTemplate() {
     this.#element.appendChild(this.header.render());
-    const page = new StatsContainer()
+    const stats = new StatsContainer([1, 2, 3, 4]);
+
+    this.#element.appendChild(stats.render());
   }
 }

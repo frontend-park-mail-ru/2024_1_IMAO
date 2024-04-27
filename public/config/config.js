@@ -89,6 +89,11 @@ export const PAGES_ROUTES = {
     name: 'Оформление заказа',
     re: new RegExp(/^\/order$/),
   },
+  adminPage: {
+    href: new URL('/statistics', serverHost),
+    name: 'Статистика по опросам',
+    re: new RegExp(/^\/stats$/),
+  },
   merchantsPage: {
     href: new URL('/merchant/:id', serverHost),
     name: 'Продавец - ',
@@ -118,11 +123,6 @@ export const PAGES_ROUTES = {
     href: new URL('/:city/:category/:id', serverHost),
     name: 'Объявление - ',
     re: new RegExp(/\/[a-zA-Z_]+\/[a-zA-Z_]+\/\d+$/),
-  },
-  adminPage: {
-    href: new URL('/statistics', serverHost),
-    name: 'Статистика по опросам',
-    re: new RegExp(/^\/stats$/),
   },
 };
 
