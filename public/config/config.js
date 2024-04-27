@@ -59,6 +59,11 @@ export const PAGES_ROUTES = {
     name: 'Волчок - доска объявлений',
     re: new RegExp(/\/$/),
   },
+  csatPage: {
+    href: new URL('/csat', serverHost),
+    name: 'Размещение объявления',
+    re: new RegExp(/^\/csat$/),
+  },
   adCreationPage: {
     href: new URL('/create', serverHost),
     name: 'Размещение объявления',

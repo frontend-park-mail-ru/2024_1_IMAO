@@ -2,6 +2,7 @@
 
 import {CATEGORIES} from '../../config/config.js';
 import AdsCard from '../../components/adsCard/adsCard.js';
+import renderIframe from '../../components/iframe/iframe.js';
 import {getURLFromLocation, buildURL, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
@@ -116,6 +117,13 @@ export class Main {
       const title = document.createElement('h1');
       title.innerHTML = 'Все объявления';
       content.appendChild(title);
+
+      this.#element.appendChild(renderIframe());
+      const button = this.#element.querySelector('.button-iframe');
+      button.addEventListener('click', (ev) => {
+        const iframe = this.#element.querySelector('[id="iframe"]');
+        iframe.hidden = !iframe.hidden;
+      });
     }
 
     const cards = document.getElementsByClassName('card');

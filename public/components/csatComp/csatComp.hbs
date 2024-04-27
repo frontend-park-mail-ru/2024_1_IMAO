@@ -1,0 +1,40 @@
+<form class="survey">
+<div class="interactive-widget interactive-widget--blue">
+  <div class="interactive-widget__header">
+  <h3>{{CsatTitle}}</h3>
+  </div>
+  {{#each questions}}
+  <div class="interactive-widget__body interactive-widget__body--active" id="q{{this.num}}">
+    <div class="interactive-widget__body__header">
+      <h4>{{this.title}}</h4>
+      <p>{{this.postTitle}}</p>
+    </div>
+    <div class="interactive-widget__body__body">
+    <div class="questionary-wrapper">
+      {{#each this.options}}
+        <label class="custom-radioBtn">
+          <input type="radio" name="{{../num}}" value="{{this.value}}">
+          <span class="checkmark">{{this.option}}</span>
+        </label>
+        {{!-- <label class="custom-radioBtn">
+        <input type="radio" name="documents" value="90">
+        <span class="checkmark">zwischen 30 und 90</span>
+        </label>
+        <label class="custom-radioBtn">
+        <input type="radio" name="documents" value="limitless">
+        <span class="checkmark">mehr als 90</span>
+        </label> --}}
+      {{/each}}
+    </div>
+    </div>
+  </div>
+  {{/each}}
+  <div class="interactive-widget__body" id="result">
+    <div class="result--soloPlus">
+      <p class="result__price">6€ <span>/ Monat</span>
+      <p class="result__plan">Business</p>
+      </p>
+    </div>
+  </div>
+</div>
+</form>

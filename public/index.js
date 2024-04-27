@@ -14,6 +14,7 @@ import {ProfileEdit} from './pages/profilePage/profileEdit.js';
 import {Cart} from './pages/cart/cart.js';
 import cartModel from './models/cart.js';
 import {Order} from './pages/order/order.js';
+import {Csat} from './pages/csat/csat.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
@@ -52,6 +53,7 @@ router.init('adCreationPage', loginRequired(renderAdCreation));
 router.init('adEditingPage', loginRequired(renderAdEditing));
 router.init('cartPage', loginRequired(renderCart));
 router.init('orderPage', loginRequired(renderOrder));
+router.init('csatPage', renderCsat);
 
 window.addEventListener('popstate', (event) => {
   router.popPage(event, mainElement);
@@ -94,6 +96,17 @@ function loginRequired(render) {
 
     return render();
   };
+}
+
+/**
+ * Return csat page.
+ * @return {HTMLElement} - The csat page.
+ */
+function renderCsat() {
+  mainElement.innerHTML = '';
+  const csat = new Csat();
+
+  return csat.render();
 }
 
 /**
