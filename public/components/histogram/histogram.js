@@ -206,7 +206,6 @@ class Histogram {
             item.style.width = 70*rowData[index]+'px'; // values[item.textContent] + 'px';
             item.style.backgroundColor = color;
           });
-
         },
     );
   }
