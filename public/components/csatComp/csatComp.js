@@ -1,5 +1,6 @@
 'use strict';
 
+import ajax from '../../modules/ajax.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './csatComp.hbs';
 import styles from './csatComp.scss';
@@ -25,6 +26,7 @@ class CsatComp {
   render() {
     this.#renderTemplate();
     this.#questuonSwitch();
+    this.#addlistenerCloseCsat();
 
     return this.#element;
   }
@@ -33,20 +35,17 @@ class CsatComp {
    *
    */
   #renderTemplate() {
-    // const context = {
-    //   id: this.items.id,
-    //   path: this.items.path,
-    //   merchantsName: this.items.merchantsName,
-    //   location: this.items.location,
-    //   registrationDate: this.items.registrationDate,
-    //   isProfileVerified: this.items.isProfileVerified,
-    //   reviewCount: this.items.reviewCount,
-    //   subscribersCount: this.items.subscribersCount,
-    //   subscribtionsCount: this.items.subscribtionsCount,
-    //   avatar: this.items.avatarImg,
-    // };
-
     this.#element = stringToHtmlElement(template(this.items));
+  }
+
+  /**
+   *
+   */
+  #addlistenerCloseCsat() {
+    const closeBtn = this.#element.querySelector('.add-to-cart-dialog__close-icon');
+    closeBtn.addEventListener('click', () => {
+      window.top.postMessage('reply', '*');
+    });
   }
 
   /**
@@ -67,37 +66,6 @@ class CsatComp {
       });
     }
 
-    const rcmndPlan = 'Solo';
-    // function recommender() {
-    //   if (questionary.documents != '30') {
-    //     if (questionary.documents == '90') {
-    //       rcmndPlan = 'Solo+';
-    //     } else if (questionary.documents == 'limitless') {
-    //       rcmndPlan = 'Business';
-    //     }
-    //   }
-    //   if (questionary.clients != '60') {
-    //     if (questionary.clients == '90' && rcmndPlan != 'Business') {
-    //       rcmndPlan = 'Solo+';
-    //     } else if (questionary.clients == 'limitless') {
-    //       rcmndPlan = 'Business';
-    //     }
-    //   }
-    //   if (questionary.coworker != '1') {
-    //     if (questionary.coworker == '2') {
-    //       rcmndPlan = 'Business';
-    //     } else if (questionary.coworker == 'limitless') {
-    //       rcmndPlan = 'Customized';
-    //     }
-    //   }
-    //   if (questionary.articles == 'limitless' && rcmndPlan != 'Customized') {
-    //     rcmndPlan = 'Business';
-    //   }
-    //   if (questionary.templates == '' && rcmndPlan != 'Customized') {
-    //     rcmndPLan = 'Business';
-    //   }
-    // }
-
     function turnQuestion(question) {
       question.classList.remove('interactive-widget__body--active');
       question.nextElementSibling.classList.add('interactive-widget__body--active');
@@ -113,16 +81,37 @@ class CsatComp {
         } else {
           readAnswers();
           turnQuestion(question);
-          this.#element.querySelector('.interactive-widget__header h3').innerHTML ='Dein Tarif:<br>'+ rcmndPlan;
-          console.log(questionary);
-          console.log(questionaryContent);
-          // const form = this.#element.querySelectorAll('[type="radio"]');
-          // console.log(form);
-          // for (const aaa of form) {
-          //   console.log(aaa.checked);
-          // }
-          // const formData = new FormData(form);
-          // console.log(formData);
+          this.#element.querySelector('.interactive-widget__header h3').innerHTML ='Завершение';
+          if (this.items.questions.length != Object.keys(questionary).length) {
+            return;
+          }
+          const data = {
+            userId: ajax.auth.id,
+            surveyId: 1,
+            survey: [],
+          };
+
+          // eslint-disable-next-line guard-for-in
+          for (const quest in questionary) {
+            data.survey.push({
+              answerNum: Number(quest),
+              answerValue: Number(questionary[quest]),
+            });
+          }
+
+          console.log(data);
+          const apiRoute = ajax.routes.SURVEY.CREATE;
+
+          ajax.post(
+              apiRoute,
+              data,
+              (body) => {
+                if (body) {
+                  return;
+                }
+              },
+          );
+          setTimeout(() => window.top.postMessage('reply', '*'), 2000);
         }
       });
     });

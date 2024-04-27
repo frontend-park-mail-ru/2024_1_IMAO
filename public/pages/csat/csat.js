@@ -31,50 +31,140 @@ export class Csat {
    */
   #renderTemplate() {
     const templateParams = {
-      CsatTitle: 'Опрос',
+      CsatTitle: 'Пройдите, пожалуйста, опрос',
       questions: [
         {
           num: 1,
-          title: 'email',
-          postTitle: 'Электронная почта',
+          title: 'Категории',
+          postTitle: 'Как вы оцениваете подборку категорий?',
           options: [
             {
-              value: 1,
-              option: 'option1',
+              value: 5,
+              option: 'Отлично',
+            },
+            {
+              value: 4,
+              option: 'Очень хорошо',
+            },
+            {
+              value: 3,
+              option: 'Хорошо',
             },
             {
               value: 2,
-              option: 'option2',
+              option: 'Удовлетворительно',
+            },
+            {
+              value: 1,
+              option: 'Плохо',
             },
           ],
         },
         {
           num: 2,
-          title: 'email2',
-          postTitle: 'Электронная почта2',
+          title: 'Рекомендации',
+          postTitle: 'Как вы оцениваете рекомендации?',
           options: [
             {
-              value: 1,
-              option: 'option1',
+              value: 5,
+              option: 'Отлично',
+            },
+            {
+              value: 4,
+              option: 'Очень хорошо',
+            },
+            {
+              value: 3,
+              option: 'Хорошо',
             },
             {
               value: 2,
-              option: 'option2',
+              option: 'Удовлетворительно',
+            },
+            {
+              value: 1,
+              option: 'Плохо',
             },
           ],
         },
         {
           num: 3,
-          title: 'email3',
-          postTitle: 'Электронная почта3',
+          title: 'Оформление',
+          postTitle: 'Как вы оцениваете оформление сайта?',
           options: [
             {
-              value: 1,
-              option: 'option1',
+              value: 5,
+              option: 'Отлично',
+            },
+            {
+              value: 4,
+              option: 'Очень хорошо',
+            },
+            {
+              value: 3,
+              option: 'Хорошо',
             },
             {
               value: 2,
-              option: 'option2',
+              option: 'Удовлетворительно',
+            },
+            {
+              value: 1,
+              option: 'Плохо',
+            },
+          ],
+        },
+        {
+          num: 4,
+          title: 'Удобство использованиея',
+          postTitle: 'Как вы оцениваете удобство использования?',
+          options: [
+            {
+              value: 5,
+              option: 'Отлично',
+            },
+            {
+              value: 4,
+              option: 'Очень хорошо',
+            },
+            {
+              value: 3,
+              option: 'Хорошо',
+            },
+            {
+              value: 2,
+              option: 'Удовлетворительно',
+            },
+            {
+              value: 1,
+              option: 'Плохо',
+            },
+          ],
+        },
+        {
+          num: 5,
+          title: 'Рекомендация',
+          postTitle: 'Порекомендуете ли вы Волчок вашим друзьям?',
+          options: [
+            {
+              value: 5,
+              option: 'Да',
+            },
+            {
+              value: 4,
+              option: 'Скорее да, чем нет',
+            },
+            {
+              value: 3,
+              option: 'Затрудняюсь ответить',
+            },
+            {
+              value: 2,
+              option: 'Скорее нет, чем да',
+            },
+            {
+              value: 1,
+              option: 'Нет',
             },
           ],
         },

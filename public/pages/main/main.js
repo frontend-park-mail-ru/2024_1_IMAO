@@ -32,6 +32,7 @@ export class Main {
     this.#getSlug();
     this.#renderTemplate();
     this.#addListeners();
+    this.#closeIframe();
 
     return this.#element;
   }
@@ -98,6 +99,18 @@ export class Main {
   }
 
   /**
+   *
+   */
+  #closeIframe() {
+    const iframe = this.#element.querySelector('[id="iframe"]');
+    window.onmessage = function(event) {
+      if (event.data == 'reply') {
+        iframe.hidden = !iframe.hidden;
+      }
+    };
+  }
+
+  /**
    * Render a template for a main page.
    */
   #renderTemplate() {
@@ -119,11 +132,15 @@ export class Main {
       content.appendChild(title);
 
       this.#element.appendChild(renderIframe());
-      const button = this.#element.querySelector('.button-iframe');
-      button.addEventListener('click', (ev) => {
-        const iframe = this.#element.querySelector('[id="iframe"]');
+      // const button = this.#element.querySelector('.button-iframe');
+      // button.addEventListener('click', (ev) => {
+      //   const iframe = this.#element.querySelector('[id="iframe"]');
+      //   iframe.hidden = !iframe.hidden;
+      // });
+      const iframe = this.#element.querySelector('[id="iframe"]');
+      setTimeout(()=> {
         iframe.hidden = !iframe.hidden;
-      });
+      }, 2000);
     }
 
     const cards = document.getElementsByClassName('card');
