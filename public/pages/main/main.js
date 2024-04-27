@@ -32,7 +32,7 @@ export class Main {
     this.#getSlug();
     this.#renderTemplate();
     this.#addListeners();
-    
+
     return this.#element;
   }
 
