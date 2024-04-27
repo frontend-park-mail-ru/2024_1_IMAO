@@ -6,8 +6,9 @@ import styles from './iframe.scss';
 
 /**
  * Render an CartBlock template.
+ * @param {*} route
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export default function renderIframe() {
-  return stringToHtmlElement(template());
+export default function renderIframe(route) {
+  return stringToHtmlElement(template({route}));
 }

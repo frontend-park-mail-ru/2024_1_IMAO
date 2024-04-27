@@ -57,6 +57,7 @@ class CsatComp {
     const questionary = {};
     const questionaryContent = {};
 
+    /** */
     function readAnswers() {
       inputFields.forEach((input)=>{
         if (input.checked) {
@@ -66,6 +67,10 @@ class CsatComp {
       });
     }
 
+    /**
+     *
+     * @param {*} question
+     */
     function turnQuestion(question) {
       question.classList.remove('interactive-widget__body--active');
       question.nextElementSibling.classList.add('interactive-widget__body--active');

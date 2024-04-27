@@ -50,6 +50,7 @@ export const API_ROUTES = {
   },
   SURVEY: {
     CREATE: new URL('/api/survey/create', api),
+    CHECK: new URL('/api/survey/check/1', api),
   },
 };
 

@@ -131,16 +131,29 @@ export class Main {
       title.innerHTML = 'Все объявления';
       content.appendChild(title);
 
-      this.#element.appendChild(renderIframe());
       // const button = this.#element.querySelector('.button-iframe');
       // button.addEventListener('click', (ev) => {
       //   const iframe = this.#element.querySelector('[id="iframe"]');
       //   iframe.hidden = !iframe.hidden;
       // });
-      const iframe = this.#element.querySelector('[id="iframe"]');
-      setTimeout(()=> {
-        iframe.hidden = !iframe.hidden;
-      }, 2000);
+      const apiRoute = ajax.routes.SURVEY.CHECK;
+      ajax.get(
+          apiRoute,
+          (body) => {
+            if (body?.isChecked === undefined) {
+              return;
+            }
+            if (body.isChecked) {
+              return;
+            }
+            const iframeRoute = router.routes.csatPage.href.href;
+            this.#element.appendChild(renderIframe(iframeRoute));
+            const iframe = this.#element.querySelector('[id="iframe"]');
+            setTimeout(()=> {
+              iframe.hidden = !iframe.hidden;
+            }, 2000);
+          },
+      );
     }
 
     const cards = document.getElementsByClassName('card');
