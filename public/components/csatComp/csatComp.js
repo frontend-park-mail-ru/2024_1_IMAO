@@ -104,7 +104,6 @@ class CsatComp {
             });
           }
 
-          console.log(data);
           const apiRoute = ajax.routes.SURVEY.CREATE;
 
           ajax.post(

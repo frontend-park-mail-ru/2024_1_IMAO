@@ -32,8 +32,7 @@ export class Main {
     this.#getSlug();
     this.#renderTemplate();
     this.#addListeners();
-    this.#closeIframe();
-
+    
     return this.#element;
   }
 
@@ -152,6 +151,7 @@ export class Main {
             setTimeout(()=> {
               iframe.hidden = !iframe.hidden;
             }, 2000);
+            this.#closeIframe();
           },
       );
     }
