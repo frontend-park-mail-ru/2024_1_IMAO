@@ -98,6 +98,11 @@ export const PAGES_ROUTES = {
     name: 'Оформление заказа',
     re: new RegExp(/^\/order$/),
   },
+  adminPage: {
+    href: new URL('/statistics', serverHost),
+    name: 'Статистика по опросам',
+    re: new RegExp(/^\/stats$/),
+  },
   merchantsPage: {
     href: new URL('/merchant/:id', serverHost),
     name: 'Продавец - ',

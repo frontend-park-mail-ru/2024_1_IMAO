@@ -12,6 +12,7 @@ import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
 import {ProfilePage} from './pages/profilePage/profilePage.js';
 import {ProfileEdit} from './pages/profilePage/profileEdit.js';
 import {Cart} from './pages/cart/cart.js';
+import {Stats} from './pages/stats/stats.js';
 import cartModel from './models/cart.js';
 import {Order} from './pages/order/order.js';
 import {Csat} from './pages/csat/csat.js';
@@ -53,6 +54,7 @@ router.init('adCreationPage', loginRequired(renderAdCreation));
 router.init('adEditingPage', loginRequired(renderAdEditing));
 router.init('cartPage', loginRequired(renderCart));
 router.init('orderPage', loginRequired(renderOrder));
+router.init('adminPage', renderStats);
 router.init('csatPage', renderCsat);
 
 window.addEventListener('popstate', (event) => {
@@ -228,4 +230,11 @@ function renderOrder() {
   const order = new Order(header);
 
   return order.render();
+}
+
+function renderStats() {
+  mainElement.innerHTML = '';
+  const stats = new Stats(header);
+
+  return stats.render();
 }

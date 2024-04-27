@@ -1,0 +1,26 @@
+#canvas {
+    border:solid 2px black;
+  }
+  
+input[type='range'] {
+  display: block;
+  padding: 0;
+  border-radius: 4px;
+  opacity: .75;
+  background: transparent;
+  cursor: pointer;
+  box-shadow: inset 0 0 5px #333;
+  background-image: linear-gradient(to right, lightGreen, green 100%, orange);
+}
+
+.slide1::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    background-color: #AAA;
+    background-image:
+    linear-gradient(to bottom, #EEE, #AAA);
+    border: 2px solid #333;
+    height:18px;
+    width:10px;
+    border-radius: 15px;
+}
+  
