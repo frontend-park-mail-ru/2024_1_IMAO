@@ -54,8 +54,8 @@ router.init('adCreationPage', loginRequired(renderAdCreation));
 router.init('adEditingPage', loginRequired(renderAdEditing));
 router.init('cartPage', loginRequired(renderCart));
 router.init('orderPage', loginRequired(renderOrder));
-router.init('adminPage', renderStats);
-router.init('csatPage', renderCsat);
+router.init('adminPage', loginRequired(renderStats));
+router.init('csatPage', loginRequired(renderCsat));
 
 window.addEventListener('popstate', (event) => {
   router.popPage(event, mainElement);
