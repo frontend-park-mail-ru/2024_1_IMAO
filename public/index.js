@@ -232,6 +232,10 @@ function renderOrder() {
   return order.render();
 }
 
+/**
+ *
+ * @return {HTMLElement}
+ */
 function renderStats() {
   mainElement.innerHTML = '';
   const stats = new Stats(header);

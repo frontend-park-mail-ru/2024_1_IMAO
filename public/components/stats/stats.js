@@ -12,10 +12,10 @@ class StatsContainer {
 
   render() {
     this.#renderTemplate();
-    this.items.forEach(element => {
-      const chart = new Histogram(element);
+    
+      const chart = new Histogram(this.items);
       this.#element.appendChild(chart.render());
-    });
+  
 
     return this.#element;
   }
