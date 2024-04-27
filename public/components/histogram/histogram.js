@@ -189,18 +189,26 @@ class Histogram {
     ajax.get(
         apiRoute,
         (body) => {
-          results = body.results;
+          results = body.body.results;
+          const rowData = [];
+
+          for (const i of results) {
+            const j = i.QuestionResults.reverse();
+            for ( const k of j) {
+              rowData.push(k);
+            }
+          }
+          console.log(rowData);
+
+          const color = '#B6DCFE';
+
+          chartBars.forEach((item, index) => {
+            item.style.width = 70*rowData[index]+'px'; // values[item.textContent] + 'px';
+            item.style.backgroundColor = color;
+          });
+
         },
     );
-
-    console.log(results);
-
-    const color = '#B6DCFE';
-
-    chartBars.forEach((item, index) => {
-      item.style.width = '50px'; // values[item.textContent] + 'px';
-      item.style.backgroundColor = color;
-    });
   }
 }
 
