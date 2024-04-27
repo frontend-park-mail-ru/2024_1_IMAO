@@ -52,6 +52,7 @@ router.init('adCreationPage', loginRequired(renderAdCreation));
 router.init('adEditingPage', loginRequired(renderAdEditing));
 router.init('cartPage', loginRequired(renderCart));
 router.init('orderPage', loginRequired(renderOrder));
+router.init('adminPage', renderStats);
 
 window.addEventListener('popstate', (event) => {
   router.popPage(event, mainElement);
@@ -215,4 +216,11 @@ function renderOrder() {
   const order = new Order(header);
 
   return order.render();
+}
+
+function renderStats() {
+  mainElement.innerHTML = '';
+  const stats = new Stats(header);
+
+  return stats.render();
 }

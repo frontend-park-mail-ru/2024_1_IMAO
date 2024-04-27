@@ -119,6 +119,11 @@ export const PAGES_ROUTES = {
     name: 'Объявление - ',
     re: new RegExp(/\/[a-zA-Z_]+\/[a-zA-Z_]+\/\d+$/),
   },
+  adminPage: {
+    href: new URL('/statistics', serverHost),
+    name: 'Статистика по опросам',
+    re: new RegExp(/^\/stats$/),
+  },
 };
 
 /**
