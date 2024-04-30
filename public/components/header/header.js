@@ -100,7 +100,12 @@ export class Header {
     const urlLogin = router.routes.loginPage.href.href;
     const urlCreate = router.routes.adCreationPage.href.href;
     const urlCart = router.routes.cartPage.href.href;
-    const urlProfile = router.routes.profilePage.href.href;
+    const slugProfileAdverts = ['profile', 'adverts'];
+    const urlProfile = buildURLBySegments(serverHost, slugProfileAdverts);
+    const slugProfileFavorites = ['profile', 'favorites'];
+    const urlProfileFavorites = buildURLBySegments(serverHost, slugProfileFavorites);
+
+
     const flag = router.auth.isAuth;
     const avatar = router.auth.avatar;
     const cartQuantity = this.cartModel.cartItems.length;
@@ -123,6 +128,7 @@ export class Header {
       urlCreate,
       urlCart,
       urlProfile,
+      urlProfileFavorites,
       flag,
       location,
       CategoriesWithUrl,

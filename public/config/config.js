@@ -110,9 +110,9 @@ export const PAGES_ROUTES = {
     re: new RegExp(/^\/merchant+\/\d+$/),
   },
   profilePage: {
-    href: new URL('/profile', serverHost),
+    href: new URL('/profile/:state', serverHost),
     name: 'Профиль',
-    re: new RegExp(/^\/profile$/),
+    re: new RegExp(/^\/profile\/[a-zA-Z_]+$/),
   },
   profileEdit: {
     href: new URL('/profile/edit', serverHost),

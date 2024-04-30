@@ -11,8 +11,8 @@
   height: 156px;
   position: absolute;
   background: white;
-  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   }
   
   .sidebar__item-count {
@@ -70,7 +70,7 @@
   padding: 8px 20px;
   background: #7092FE;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
-  border-radius: 15px;
+  border-radius: 8px;
   justify-content: center;
   align-items: center;
   display: inline-flex;

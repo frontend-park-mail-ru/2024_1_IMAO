@@ -81,42 +81,42 @@ class CsatComp {
         const question = btn.parentNode.parentNode.parentNode;
         if (question.nextElementSibling.nextElementSibling) {
           readAnswers();
-          // recommender();
           turnQuestion(question);
-        } else {
-          readAnswers();
-          turnQuestion(question);
-          this.#element.querySelector('.interactive-widget__header h3').innerHTML ='Завершение';
-          if (this.items.questions.length != Object.keys(questionary).length) {
-            return;
-          }
-          const data = {
-            userId: ajax.auth.id,
-            surveyId: 1,
-            survey: [],
-          };
 
-          // eslint-disable-next-line guard-for-in
-          for (const quest in questionary) {
-            data.survey.push({
-              answerNum: Number(quest),
-              answerValue: Number(questionary[quest]),
-            });
-          }
-
-          const apiRoute = ajax.routes.SURVEY.CREATE;
-
-          ajax.post(
-              apiRoute,
-              data,
-              (body) => {
-                if (body) {
-                  return;
-                }
-              },
-          );
-          setTimeout(() => window.top.postMessage('reply', '*'), 2000);
+          return;
         }
+        readAnswers();
+        turnQuestion(question);
+        this.#element.querySelector('.interactive-widget__header h3').innerHTML ='Завершение';
+        if (this.items.questions.length != Object.keys(questionary).length) {
+          return;
+        }
+        const data = {
+          userId: ajax.auth.id,
+          surveyId: 1,
+          survey: [],
+        };
+
+        // eslint-disable-next-line guard-for-in
+        for (const quest in questionary) {
+          data.survey.push({
+            answerNum: Number(quest),
+            answerValue: Number(questionary[quest]),
+          });
+        }
+
+        const apiRoute = ajax.routes.SURVEY.CREATE;
+
+        ajax.post(
+            apiRoute,
+            data,
+            (body) => {
+              if (body) {
+                return;
+              }
+            },
+        );
+        setTimeout(() => window.top.postMessage('reply', '*'), 2000);
       });
     });
   }

@@ -158,9 +158,8 @@ export class MerchantsPage {
 
             const path = buildURLBySegments(router.host, [city, category, id]);
             const adsCardInstance = new AdsCard(title, price, id, path, photosIMG);
-            merchantsPageRightSection.appendChild(adsCardInstance.render()          
+            merchantsPageRightSection.appendChild(adsCardInstance.render(),
             );
-
           });
 
           this.#isBottomReached = false;
@@ -254,18 +253,5 @@ export class MerchantsPage {
     if (!currentState) {
       this.sectionState.setSectionState('active', 'isRendered', true);
     }
-
-    // const alreadyRendered = document.querySelector('.merchant-page-right-section') != null;
-    // const merchantsPageRightSection = alreadyRendered ?
-    //   document.querySelector('.merchant-page-right-section') :
-    //   document.createElement('div');
-
-    // if (!alreadyRendered) {
-
-    // }
-
-    // console.log('aboba');
-
-    // this.#renderCards(merchantsPageRightSection, alreadyRendered);
   }
 }

@@ -130,11 +130,6 @@ export class Main {
       title.innerHTML = 'Все объявления';
       content.appendChild(title);
 
-      // const button = this.#element.querySelector('.button-iframe');
-      // button.addEventListener('click', (ev) => {
-      //   const iframe = this.#element.querySelector('[id="iframe"]');
-      //   iframe.hidden = !iframe.hidden;
-      // });
       const apiRoute = ajax.routes.SURVEY.CHECK;
       ajax.get(
           apiRoute,
@@ -206,6 +201,7 @@ export class Main {
               router.pushPage(ev, address.href);
             });
           });
-        });
+        },
+    );
   }
 }
