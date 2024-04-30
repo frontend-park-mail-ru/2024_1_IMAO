@@ -14,6 +14,7 @@ import {ProfileEdit} from './pages/profilePage/profileEdit.js';
 import {Cart} from './pages/cart/cart.js';
 import {Stats} from './pages/stats/stats.js';
 import cartModel from './models/cart.js';
+import favoritesModel from './models/favorites.js';
 import {Order} from './pages/order/order.js';
 import {Csat} from './pages/csat/csat.js';
 import ajax from './modules/ajax.js';
@@ -38,8 +39,10 @@ router.initialize(AUTH, PAGES_ROUTES, serverHost);
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
 await cartModel.initialize();
-const header = new Header(cartModel);
+await favoritesModel.initialize();
+const header = new Header(cartModel, favoritesModel);
 cartModel.on('cartChange', header.changeCartQuantity.bind(header));
+favoritesModel.on('favoritesChange', header.changeFavoritesQuantity.bind(header));
 
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));

@@ -7,7 +7,6 @@ import ProfileCard from '../../components/profileCard/profileCard.js';
 import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
 import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
-import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import formatDate from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
@@ -35,6 +34,13 @@ export class ProfilePage {
     this.sectionStateV = new StageStorage();
     this.sectionStateS = new StageStorage();
     this.#isBottomReached = false;
+
+    this.labelsAndValues = [
+      {categoryLabel: 'Мои объявления', categoryLabelValue: 'adverts'},
+      {categoryLabel: 'Мои заказы', categoryLabelValue: 'orders'},
+      {categoryLabel: 'Избранное', categoryLabelValue: 'favorites'},
+      {categoryLabel: 'Настройки', categoryLabelValue: 'settings'},
+    ];
   }
 
   /**
@@ -62,12 +68,6 @@ export class ProfilePage {
    *
    */
   #addListeners() {
-    const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
-
-    inputs.forEach(function(input) {
-      input.addEventListener('click', this.handleClick.bind(this));
-    }.bind(this));
-
     const verticalInputs = this.#element.querySelectorAll('.verticle-button-group-profile input[type="radio"]');
 
     verticalInputs.forEach((input) => {
@@ -92,14 +92,9 @@ export class ProfilePage {
   async handleSectionClick(event) {
     const targetValue = event.target.value;
 
-    const labelsAndValues = [
-      {categoryLabel: 'Мои объявления', categoryLabelValue: 'adverts'},
-      {categoryLabel: 'Мои заказы', categoryLabelValue: 'orders'},
-      {categoryLabel: 'Избранное', categoryLabelValue: 'favorites'},
-      {categoryLabel: 'Настройки', categoryLabelValue: 'settings'},
-    ];
-
-    const found = labelsAndValues.find((item) => item.categoryLabelValue === targetValue) || labelsAndValues[0];
+    const found = this.labelsAndValues
+        .find((item) => item.categoryLabelValue === targetValue) ||
+        this.labelsAndValues[0];
     this.#element.querySelector('.profile-page-right-section-header').innerText = found.categoryLabel;
     const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
     const isRendered = this.sectionStateV.getSectionState(found.categoryLabelValue, 'isRendered');
@@ -108,6 +103,8 @@ export class ProfilePage {
     this.sectionStateV.setSectionState('serviceField', 'isChecked', found.categoryLabelValue);
 
     this.sectionStateV.setSectionState(currentButtonChecked, 'render', profilePageContentContainer);
+
+    document.title = 'Профиль - ' + found.categoryLabel;
 
     if (isRendered) {
       const stashedMerchantsCardContainer = this.sectionStateV.getSectionState(found.categoryLabelValue, 'render');
@@ -121,10 +118,7 @@ export class ProfilePage {
     profilePageContentContainer.replaceWith(newProfilePageContentContainer);
     this.sectionStateV.setSectionState(found.categoryLabelValue, 'isRendered', true);
 
-    document.title = 'Профиль - ' + found.categoryLabel;
-
     let buttonGroupItemes = [];
-    let horizontalButtonGroupInstance = null;
     let currentState = '';
 
     switch (found.categoryLabelValue) {
@@ -133,20 +127,13 @@ export class ProfilePage {
           {categoryLabel: 'Активные', count: this.profile.activeAddsCount, checked: true, categoryLabelValue: 'active'},
           {categoryLabel: 'Проданные', count: this.profile.soldAddsCount, checked: false, categoryLabelValue: 'sold'},
         ];
-        buttonGroupItemes.forEach((item) => {
-          this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
-          if (item.checked) {
-            this.sectionState.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
-          }
-        });
 
-        horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
-        newProfilePageContentContainer.appendChild(horizontalButtonGroupInstance.render());
-
-        currentState = this.sectionState.getSectionState('active', 'isRendered');
-        if (!currentState) {
-          this.sectionState.setSectionState('active', 'isRendered', true);
-        }
+        currentState = this.#addHorizontalSectionState(
+            newProfilePageContentContainer,
+            buttonGroupItemes,
+            this.sectionState,
+            this.advertsHandleClick,
+        );
 
         const merchantsCardContainer = document.createElement('div');
         merchantsCardContainer.classList.add('cards-container-merchant');
@@ -159,26 +146,13 @@ export class ProfilePage {
           {categoryLabel: 'Покупки', count: '', checked: true, categoryLabelValue: 'purchases'},
           {categoryLabel: 'Продажи', count: '', checked: false, categoryLabelValue: 'sales'},
         ];
-        buttonGroupItemes.forEach((item) => {
-          this.sectionStateS.setSectionState(item.categoryLabelValue, 'isRendered', false);
-          if (item.checked) {
-            this.sectionStateS.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
-          }
-        });
 
-        horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
-        newProfilePageContentContainer.appendChild(horizontalButtonGroupInstance.render());
-
-        currentState = this.sectionStateS.getSectionState('purchases', 'isRendered');
-        if (!currentState) {
-          this.sectionStateS.setSectionState('purchases', 'isRendered', true);
-        }
-
-        const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
-
-        inputs.forEach(function(input) {
-          input.addEventListener('click', this.handleClick3.bind(this));
-        }.bind(this));
+        currentState = this.#addHorizontalSectionState(
+            newProfilePageContentContainer,
+            buttonGroupItemes,
+            this.sectionStateS,
+            this.orderHandleClick,
+        );
 
         const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
         const header = isPerchasesChecked ? 'Нет покупок' : 'Не продаж';
@@ -192,16 +166,54 @@ export class ProfilePage {
         const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
         const settingsContainerElement = await settingsContainer.render();
         newProfilePageContentContainer.appendChild(settingsContainerElement);
-        // this.#addListenersForOverlays(settingsContainer.getForms());
         break;
     }
   }
 
   /**
    *
+   * @param {*} container
+   * @param {*} buttonGroupItemes
+   * @param {*} sectionState
+   * @param {*} handleClick
+   * @return {string}
+   */
+  #addHorizontalSectionState(
+      container,
+      buttonGroupItemes,
+      sectionState,
+      handleClick,
+  ) {
+    buttonGroupItemes.forEach((item) => {
+      sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
+      if (item.checked) {
+        sectionState.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
+      }
+    });
+
+    const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
+    container.appendChild(horizontalButtonGroupInstance.render());
+
+    const currentState = sectionState
+        .getSectionState(buttonGroupItemes.categoryLabelValue, 'isRendered');
+    if (!currentState) {
+      this.sectionState.setSectionState(buttonGroupItemes.categoryLabelValue, 'isRendered', true);
+    }
+
+    const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
+
+    inputs.forEach(function(input) {
+      input.addEventListener('click', handleClick.bind(this));
+    }.bind(this));
+
+    return currentState;
+  }
+
+  /**
+   *
    * @param {*} event
    */
-  handleClick(event) {
+  advertsHandleClick(event) {
     const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
     const isRendered = this.sectionState.getSectionState(event.target.value, 'isRendered');
 
@@ -226,7 +238,7 @@ export class ProfilePage {
    *
    * @param {*} event
    */
-  handleClick3(event) {
+  orderHandleClick(event) {
     const merchantsCardContainer = this.#element.querySelector('.empty-orders-main-container');
     const isRendered = this.sectionStateS.getSectionState(event.target.value, 'isRendered');
 

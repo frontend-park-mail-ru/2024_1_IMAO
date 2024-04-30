@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="section-nav-actions">
-            <div class="like-action">
+            <a class="like-action" href="{{urlProfileFavorites}}" data-url="{{urlProfileFavorites}}">
                 <div class="like-icon">
                     <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -23,8 +23,8 @@
                             fill="black" />
                     </svg>
                 </div>
-                <div class="like-text">Избранное</div>
-            </div>
+                <div class="like-text">Избранное{{#if flag}}&nbsp;&#40;<span class="favorites-quantity">{{favoritesQuantity}}</span>&#41;{{/if}}</div>
+            </a>
             <a class="cart-action" href="{{urlCart}}" data-url="{{urlCart}}">
                 <div class="cart-icon">
                     <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">

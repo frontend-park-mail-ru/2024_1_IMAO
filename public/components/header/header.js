@@ -15,10 +15,12 @@ export class Header {
   /**
    * Initialize a header.
    * @param {cart} cartModel
+   * @param {favorites} favoritesModel
    */
-  constructor(cartModel) {
+  constructor(cartModel, favoritesModel) {
     this.#header = document.createElement('header');
     this.cartModel = cartModel;
+    this.favoritesModel = favoritesModel;
   }
 
   /**
@@ -109,8 +111,7 @@ export class Header {
     const flag = router.auth.isAuth;
     const avatar = router.auth.avatar;
     const cartQuantity = this.cartModel.cartItems.length;
-    console.log(this.cartModel.cartItems);
-    console.log(cartQuantity);
+    const favoritesQuantity = this.favoritesModel.favoritesItems.length;
     while (this.#header.firstChild) {
       this.#header.removeChild(this.#header.lastChild);
     }
@@ -134,6 +135,7 @@ export class Header {
       CategoriesWithUrl,
       avatar,
       cartQuantity,
+      favoritesQuantity,
     })));
   }
 
@@ -143,6 +145,15 @@ export class Header {
    */
   changeCartQuantity(quantity) {
     const quanSpan = this.#header.querySelector('.cart-quantity');
+    quanSpan.innerHTML = quantity;
+  }
+
+  /**
+   *
+   * @param {*} quantity
+   */
+  changeFavoritesQuantity(quantity) {
+    const quanSpan = this.#header.querySelector('.favorites-quantity');
     quanSpan.innerHTML = quantity;
   }
 }

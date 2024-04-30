@@ -1,5 +1,6 @@
 'use strict';
 
+import ObservableMixin from '../modules/observableMixin';
 import ajax from '../modules/ajax';
 
 /**
@@ -99,29 +100,8 @@ class Cart {
         },
     );
   }
-
-  /**
-   *
-   * @param {*} event
-   * @param {*} callback
-   */
-  on(event, callback) {
-    if (this.listeners[event] === undefined) {
-      this.listeners[event] = [];
-    }
-    this.listeners[event].push(callback);
-  }
-
-  /**
-   *
-   * @param {*} event
-   * @param {*} data
-   */
-  emit(event, data) {
-    for (const listener of this.listeners[event]) {
-      listener(data);
-    }
-  }
 }
+
+Object.assign(Cart.prototype, ObservableMixin);
 
 export default new Cart();
