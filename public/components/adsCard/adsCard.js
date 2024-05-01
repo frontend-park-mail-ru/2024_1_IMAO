@@ -53,18 +53,19 @@ class AdsCard {
    */
   #addFavoritesListener() {
     const likeBtn = this.#element.querySelector('.like-icon');
-
-    likeBtn.addEventListener('click', (ev) => {
-      const card = this.#element.querySelector('.card');
-      const href = card.href;
-      card.href = '';
+    
+    likeBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      //const card = this.#element.querySelector('.card');
+      //const href = card.href;
+      //card.href = '';
       const result = favoritesModel.changeFavorites(this.id);
       if (!result) {
         likeBtn.src = 'images/like_fill_red_28.svg';
       } else {
         likeBtn.src = 'images/like_outline_28.svg';
       }
-      card.href = href;
+      //card.href = href;
     });
   }
 

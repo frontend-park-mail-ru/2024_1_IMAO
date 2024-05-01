@@ -198,6 +198,10 @@ export class Main {
           ids.forEach((id) => {
             const address = this.#element.querySelector(`[id="${id}"]`);
             address.addEventListener('click', (ev) => {
+              if (ev.target.matches('.like-icon')) {
+              
+                return
+              }
               router.pushPage(ev, address.href);
             });
           });
