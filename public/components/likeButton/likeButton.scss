@@ -20,9 +20,11 @@
       @include css3-prefix(transition, all 200ms ease-in-out);
       outline: none;
     }
+    svg:hover {
+        stroke: gray; 
+      }
   }
   
-  //like button 1
   a.like-heart {
     color: transparent; @extend %like-btn-shared; 
     height: 27.13px;
@@ -38,5 +40,6 @@
         stroke: #ff5252; 
     }
   }
+
   
   

@@ -30,6 +30,7 @@ class AdsCard {
     this.id = id;
     this.path = path;
     this.photosIMG = photosIMG;
+    this.inFavorites = favoritesModel.favoritesItems.includes(Number(this.id));
   }
 
   /**
@@ -44,7 +45,7 @@ class AdsCard {
     const card = this.#element.querySelector('.card');
     card.prepend(hoverSliderInstance.render());
 
-    const likeButtonInstance = new LikeButton();
+    const likeButtonInstance = new LikeButton(this.inFavorites);
     const likeButton = this.#element.querySelector('.like-icon');
     likeButton.appendChild(likeButtonInstance.render());
 

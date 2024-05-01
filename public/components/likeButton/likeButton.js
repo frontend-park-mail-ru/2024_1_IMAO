@@ -15,8 +15,8 @@ class LikeButton {
    *
    * @param {*} items
    */
-  constructor(photos) {
-    this.photos = photos;
+  constructor(inFavorites) {
+    this.inFavorites = inFavorites;
   }
 
   /**
@@ -36,7 +36,7 @@ class LikeButton {
    */
   #renderTemplate() {
     const context = {
-     
+        inFavorites: this.inFavorites,
     };
     this.#element = stringToHtmlElement(template(context));
   }
