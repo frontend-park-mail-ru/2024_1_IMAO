@@ -1,0 +1,42 @@
+/*mixins*/
+@mixin css3-prefix($property, $value) {
+    #{$property}: #{$value};
+  }
+  
+  %like-btn-shared{
+    display: inline-block;
+    font-size: 45px;
+    outline: none;
+    //@include css3-prefix(user-drag, none);
+    @include css3-prefix(user-select, none);
+    @include css3-prefix(tap-highlight-color, rgba(255, 255, 255, 0));
+    @include css3-prefix(transition, all 80ms ease-in-out);
+    svg{
+      height: 27.13px;
+      width: 30px;
+      fill: transparent;
+      stroke: black;
+      stroke-width: 10px;
+      @include css3-prefix(transition, all 200ms ease-in-out);
+      outline: none;
+    }
+  }
+  
+  //like button 1
+  a.like-heart {
+    color: transparent; @extend %like-btn-shared; 
+    height: 27.13px;
+    width: 30px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    &:active{
+      @include css3-prefix(transform, scale(0.75) translateY(2px));
+    }
+    &.active svg{ 
+        fill : #ff5252;
+        stroke: #ff5252; 
+    }
+  }
+  
+  

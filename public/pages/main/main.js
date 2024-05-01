@@ -198,7 +198,8 @@ export class Main {
           ids.forEach((id) => {
             const address = this.#element.querySelector(`[id="${id}"]`);
             address.addEventListener('click', (ev) => {
-              if (ev.target.matches('.like-icon')) {
+              console.log(ev.srcElement)
+              if ((ev.target.matches('path')) || (ev.target.matches('svg')) || (ev.target.matches('.like-icon'))) {
               
                 return
               }

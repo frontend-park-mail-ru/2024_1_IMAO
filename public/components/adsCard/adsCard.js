@@ -1,6 +1,7 @@
 'use strict';
 
 import HoverSlider from '../../components/hoverSlider/hoverSlider.js';
+import LikeButton from '../../components/likeButton/likeButton.js';
 import trimString from '../../modules/trimString.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './adsCard.hbs';
@@ -42,6 +43,10 @@ class AdsCard {
     const hoverSliderInstance = new HoverSlider(this.photosIMG);
     const card = this.#element.querySelector('.card');
     card.prepend(hoverSliderInstance.render());
+
+    const likeButtonInstance = new LikeButton();
+    const likeButton = this.#element.querySelector('.like-icon');
+    likeButton.appendChild(likeButtonInstance.render());
 
     this.#addFavoritesListener();
 
