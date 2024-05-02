@@ -5,19 +5,19 @@ import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
 
-/** Class representing a login page. */
+/** Class representing a Csat survey page. */
 export class Csat {
   #element;
 
   /**
-   * Initialize a login page.
+   * Initialize a Csat survey page.
    */
   constructor() {
     this.#element = document.createElement('div');
   }
 
   /**
-   * Render the login page.
+   * Render the Csat survey page.
    * @return {Element} - The element of login page.
    */
   render() {
@@ -27,7 +27,7 @@ export class Csat {
   }
 
   /**
-   * Render a template for a login page.
+   * Render a template for a Csat survey page.
    */
   #renderTemplate() {
     const templateParams = {

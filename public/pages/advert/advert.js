@@ -6,7 +6,6 @@ import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {parsePathParams, buildURL, getURLFromLocation, buildURLBySegments} from '../../modules/parsePathParams.js';
-import convertDate from '../../modules/convertDate.js';
 import formatDate from '../../modules/formatDate.js';
 import trimString from '../../modules/trimString.js';
 import ajax from '../../modules/ajax.js';
@@ -55,7 +54,6 @@ export class Advert {
   async #addListeners() {
     this.#addCarouselListeners();
     this.#addPathListener();
-    // this.#addCartAddListener();
     await this.#addAddCartDialogListener();
     this.#addMerchantPageListener();
     this.#addCloseListener();
@@ -117,18 +115,6 @@ export class Advert {
         router.pushPage(ev, address);
       });
     }
-    // const cityPath = adPath.querySelector('.city').childNodes[1];
-    // const categoryPath = adPath.querySelector('.category').childNodes[1];
-
-    // cityPath.addEventListener('click', (ev) => {
-    //   const address = cityPath.href;
-    //   router.pushPage(ev, address);
-    // });
-
-    // categoryPath.addEventListener('click', (ev) => {
-    //   const address = categoryPath.href;
-    //   router.pushPage(ev, address);
-    // });
   }
 
   /**
@@ -157,7 +143,7 @@ export class Advert {
   }
 
   /**
-   *
+   * Adds cart dialog listener.
    * @param {*} addToBlackListButton
    * @param {*} overlayContainer
    */
@@ -172,7 +158,7 @@ export class Advert {
   }
 
   /**
-   *
+   * Adds add to favorites listener.
    * @param {*} addToBlackListButton
    * @param {*} overlayContainer
    */
@@ -203,7 +189,7 @@ export class Advert {
       setTimeout(() => {
         message.classList.add('message--hidden');
         message.classList.remove('message--active');
-      }, 1500);
+      }, 1000);
     });
   }
 
@@ -240,7 +226,7 @@ export class Advert {
 
           const {id, title, description, price, isUsed, created, inFavourites, inCart} = advert;
           this.id = id;
-          const createdDate = convertDate(created);
+          const createdDate = formatDate(created);
           const cityName = city.name;
           const categoryName = category.name;
           const isAuthor = ajax.auth.id === advert.userId;
@@ -259,8 +245,6 @@ export class Advert {
               [city['translation']]);
           const editPath = buildURLBySegments(router.host,
               ['edit', advert['id']]);
-          // const closePath = buildURLBySegments(router.host,
-          //     ['close', advert['id']]);
 
           const adPathElement = document.createElement('div');
           const paths = [

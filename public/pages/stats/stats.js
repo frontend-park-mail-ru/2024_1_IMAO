@@ -2,13 +2,13 @@ import StatsContainer from '../../components/stats/stats';
 import ajax from '../../modules/ajax';
 
 /**
- *
+ * Class represents a Csas statistics page.
  */
 export class Stats {
   #element;
 
   /**
-   *
+   * Constructor for statistics page.
    * @param {*} header
    */
   constructor(header) {
@@ -18,7 +18,7 @@ export class Stats {
   }
 
   /**
-   *
+   * Returns a statistics page.
    * @return {HTMLElement}
    */
   render() {
@@ -28,7 +28,7 @@ export class Stats {
   }
 
   /**
-   *
+   * Render a statistics page.
    */
   #renderTemplate() {
     this.#element.appendChild(this.header.render());

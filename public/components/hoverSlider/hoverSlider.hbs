@@ -1,18 +1,14 @@
 <div class="hover-slider-parent">
-  <div class="hover-slider" data-mode="slide" style="top: 0px; width: 215px;">
-      {{#each photos}}
-        <div class="item_hover_slider" style="width: 215px;">
-          <img src="data:image;base64,{{this}}" alt="Hover slider">
-        </div>
-      {{/each}}
-      
-      {{!-- <div class="item_hover_slider" style="width: 215px;">
-        <img src="https://avatars.mds.yandex.net/i?id=d30be66ec603a2dd78e92858ee33d24d_sr-4593579-images-thumbs&n=13" alt="Hover slider">
-      </div> --}}
-  </div>
-  <div class="ellipse-line">
-    {{#each photos}}
-     <div class="ellipse"></div>
-    {{/each}}
-  </div>
+    <div class="hover-slider" data-mode="slide" style="top: 0px; width: 215px;">
+        {{#each photos}}
+            <div class="item_hover_slider" style="width: 215px;">
+                <img src="data:image;base64,{{this}}" alt="Hover slider">
+            </div>
+        {{/each}}
+    </div>
+    <div class="ellipse-line">
+        {{#each photos}}
+            <div class="ellipse"></div>
+        {{/each}}
+    </div>
 </div>

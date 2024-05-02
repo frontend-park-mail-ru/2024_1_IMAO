@@ -1,58 +1,58 @@
 .card {
-    width: 215px;
-    height: 295px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border-radius: 10px;
-    position: relative;
-    display: inline-block;
-    background: white;
+  width: 215px;
+  height: 295px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 10px;
+  position: relative;
+  display: inline-block;
+  background: white;
 }
 
 .card img {
-    border-radius: 10px 10px 0 0;
-    width: 100%;
-    height: 215px;
-    object-fit: cover;
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+  height: 215px;
+  object-fit: cover;
 }
 
 .card p {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 
 .card .cost {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .card .like-icon {
-    height: 27.13px;
-    position: absolute;
-    bottom: 60px;
-    right: 15px;
-    width: 30px;
+  height: 27.13px;
+  position: absolute;
+  bottom: 60px;
+  right: 15px;
+  width: 30px;
 }
 
 .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .card .container {
-    padding: 2px 16px;
+  padding: 2px 16px;
 }
 
 .container p {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
 
 .vector-arch {
-    width: 60px;
-    height: 15px;
-    left: 155px;
-    top: 202px;
-    position: absolute;
-    
+  width: 60px;
+  height: 15px;
+  left: 155px;
+  top: 202px;
+  position: absolute;
+  
 }
 
 .message {
@@ -78,78 +78,77 @@
 }
 
 [data-tooltip] {
-    --arrow-size: 5px;
-    position: relative;
-  }
-  
-  [data-tooltip]:before,
+  --arrow-size: 5px;
+  position: relative;
+}
+
+[data-tooltip]:before,
+[data-tooltip]:after {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  left: -100%;
+  bottom: calc(100% + var(--arrow-size));
+  pointer-events: none;
+  transition: 0.2s;
+  will-change: transform;
+}
+
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  padding: 10px 18px;
+  min-width: 50px;
+  max-width: 300px;
+  width: max-content;
+  width: -moz-max-content;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: rgba(59, 72, 80, 0.9);
+  background-image: linear-gradient(30deg,
+    rgba(59, 72, 80, 0.44),
+    rgba(59, 68, 75, 0.44),
+    rgba(60, 82, 88, 0.44));
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  text-align: center;
+  white-space: pre-wrap;
+  transform: translate(-50%,  calc(0px - var(--arrow-size))) scale(0.5);
+}
+
+[data-tooltip]:after {
+  content: '';
+  border-style: solid;
+  transition-duration: 0s;
+  border-width: var(--arrow-size)  var(--arrow-size) 0px var(--arrow-size);
+  border-color:  rgba(55, 64, 70, 0.9) transparent transparent  transparent ;
+  left: 50%;
+  transform-origin: top;
+  transform: translateX(-50%) scaleY(0);
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  opacity: 1;
+}
+
+[data-tooltip]:hover:before {
+  transition-delay: 0.3s;
+  transform: translate(-50%, calc(0px - var(--arrow-size))) scale(1);
+}
+
+[data-tooltip]:hover:after {
+  transition-delay: 0.5s; 
+  transition-duration: 0.2s;
+  transform: translateX(-50%) scaleY(1);
+}
+
+@media (max-width: 750px) {
+
   [data-tooltip]:after {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    left: -100%;
-    bottom: calc(100% + var(--arrow-size));
-    pointer-events: none;
-    transition: 0.2s;
-    will-change: transform;
+    bottom: calc(100% + 3px);
   }
-  
-  [data-tooltip]:before {
-    content: attr(data-tooltip);
-    padding: 10px 18px;
-    min-width: 50px;
-    max-width: 300px;
-    width: max-content;
-    width: -moz-max-content;
-    border-radius: 8px;
-    font-size: 14px;
-    background-color: rgba(59, 72, 80, 0.9);
-    background-image: linear-gradient(30deg,
-      rgba(59, 72, 80, 0.44),
-      rgba(59, 68, 75, 0.44),
-      rgba(60, 82, 88, 0.44));
-    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.2);
-    color: #fff;
-    text-align: center;
-    white-space: pre-wrap;
-    transform: translate(-50%,  calc(0px - var(--arrow-size))) scale(0.5);
-  
-  }
-  
   [data-tooltip]:after {
-    content: '';
-    border-style: solid;
-    transition-duration: 0s;
-    border-width: var(--arrow-size)  var(--arrow-size) 0px var(--arrow-size);
-    border-color:  rgba(55, 64, 70, 0.9) transparent transparent  transparent ;
-    left: 50%;
-    transform-origin: top;
-    transform: translateX(-50%) scaleY(0);
+    border-width: 7px 7px 0px 7px;
   }
-  
-  [data-tooltip]:hover:before,
-  [data-tooltip]:hover:after {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  [data-tooltip]:hover:before {
-    transition-delay: 0.3s;
-    transform: translate(-50%, calc(0px - var(--arrow-size))) scale(1);
-  }
-  
-  [data-tooltip]:hover:after {
-    transition-delay: 0.5s; 
-    transition-duration: 0.2s;
-    transform: translateX(-50%) scaleY(1);
-  }
-  
-  @media (max-width: 750px) {
-  
-    [data-tooltip]:after {
-      bottom: calc(100% + 3px);
-    }
-    [data-tooltip]:after {
-      border-width: 7px 7px 0px 7px;
-    }
-  }
+}

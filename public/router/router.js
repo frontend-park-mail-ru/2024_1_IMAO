@@ -84,7 +84,7 @@ class Router {
   }
 
   /**
-   *
+   * Switch page without pushing.
    * @param {URL} url
    */
   go(url) {
@@ -94,7 +94,7 @@ class Router {
     this.#locationResolver(url, main);
   }
   /**
-   *
+   * On observable function.
    * @param {*} event
    * @param {*} callback
    */
@@ -106,7 +106,7 @@ class Router {
   }
 
   /**
-   *
+   * Emit observable function.
    * @param {*} event
    * @param {*} data
    */

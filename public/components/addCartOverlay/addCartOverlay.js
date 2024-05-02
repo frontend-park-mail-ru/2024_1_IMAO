@@ -8,14 +8,14 @@ import ajax from '../../modules/ajax.js';
 import cartModel from '../../models/cart.js';
 
 /**
- *
+ * Class represented an overlay to add into cart.
  */
 class AddCartOverlay {
   #element;
   #model;
   /**
-   *
-   * @param {*} button
+   * Constructor for overlay.
+   * @param {HTMLElement} button
    */
   constructor(button) {
     this.button = button;
@@ -23,7 +23,7 @@ class AddCartOverlay {
   }
 
   /**
-   *
+   * Returns an overlay.
    * @return {HTMLElement}
    */
   async render() {
@@ -35,14 +35,14 @@ class AddCartOverlay {
   }
 
   /**
-   *
+   * Renders an overlay.
    */
   #renderTemplate() {
     this.#element = stringToHtmlElement(template());
   }
 
   /**
-   *
+   * Add listeners for overlay.
    */
   async #addListeners() {
     const myButton = this.button;

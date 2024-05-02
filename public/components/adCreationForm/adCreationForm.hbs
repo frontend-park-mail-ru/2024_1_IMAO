@@ -52,8 +52,7 @@
         </div>
         <label class="form__label" for="description">Описание</label>
         <div>
-            <textarea class="form__textarea form__input--description" id="description"
-                name="description">{{description}}</textarea>
+            <textarea class="form__textarea form__input--description" id="description" name="description">{{description}}</textarea>
             <div class="form__description">До 3000 символов</div>
             <div class="description__error error"></div>
         </div>
@@ -66,9 +65,9 @@
         <label class="form__label" for="phone">Телефон<span class="asterisk">*</span></label>
         <input class="form__input form__input--min" type="tel" id="phone" name="phone" min="0" required>
         {{#if create}}
-        <input type="submit" class="form__button" value="Разместить объявление">
+            <input type="submit" class="form__button" value="Разместить объявление">
         {{^}}
-        <input type="submit" class="form__button" value="Сохранить изменения">
+            <input type="submit" class="form__button" value="Сохранить изменения">
         {{/if}}
         <input type="hidden" name="CSRFToken" value="{{CSRFToken}}">
     </form>

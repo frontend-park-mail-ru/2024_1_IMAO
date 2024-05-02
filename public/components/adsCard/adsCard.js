@@ -12,7 +12,7 @@ import favoritesModel from '../../models/favorites.js';
 const MAX_TITLE_LENGTH = 20;
 
 /**
- * Render an AdsCard template.
+ * Class represented an AdsCard.
  * @param {string} title - The title of the product.
  * @param {string | number} price - The price of the product.
  * @param {string | number} id - Product ID in database.
@@ -22,7 +22,7 @@ class AdsCard {
   #element;
 
   /**
-   *
+   * Constructor for AdsCart.
    * @param {*} title
    * @param {*} price
    * @param {*} id
@@ -40,7 +40,7 @@ class AdsCard {
   }
 
   /**
-   *
+   * Returns an AdsCart.
    * @return {HTMLElement}
    */
   render() {
@@ -61,7 +61,7 @@ class AdsCard {
   }
 
   /**
-   *
+   * Add listeners for fovorites button.
    */
   #addFavoritesListener() {
     const likeBtn = this.#element.querySelector('.like-icon');
@@ -89,12 +89,12 @@ class AdsCard {
       setTimeout(() => {
         message.classList.add('message--hidden');
         message.classList.remove('message--active');
-      }, 1500);
+      }, 1000);
     });
   }
 
   /**
-   *
+   * Render an AdsCard template.
    */
   #renderTemplate() {
     const titleTrim = trimString(this.title, MAX_TITLE_LENGTH);

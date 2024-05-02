@@ -5,13 +5,13 @@ import template from './blackListOverlay.hbs';
 import styles from './blackListOverlay.scss';
 
 /**
- *
+ * Class represented an overlay to add into blacklist.
  */
 class BlackListOverlay {
   #element;
 
   /**
-   *
+   * Constructor for overlay.
    * @param {*} button
    */
   constructor(button) {
@@ -19,7 +19,7 @@ class BlackListOverlay {
   }
 
   /**
-   *
+   * Returns an overlay.
    * @return {HTMLElement}
    */
   render() {
@@ -31,14 +31,14 @@ class BlackListOverlay {
   }
 
   /**
-   *
+   * Renders an overlay.
    */
   #renderTemplate() {
     this.#element = stringToHtmlElement(template());
   }
 
   /**
-   *
+   * Add listeners for overlay.
    */
   #addListeners() {
     const myButton = this.button;

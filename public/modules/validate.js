@@ -133,7 +133,7 @@ export function validateInput(input) {
 }
 
 /**
- * 
+ *
  * @param {*} phone
  * @return {boolean}
  */

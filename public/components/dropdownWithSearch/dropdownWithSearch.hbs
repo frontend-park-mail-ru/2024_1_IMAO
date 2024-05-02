@@ -1,7 +1,7 @@
 <div class="dropdown-with-search">
     <select class="select-display-none" name="">
         {{#each items}}
-        <option value="{{value}}">{{label}}</option>
+            <option value="{{value}}">{{label}}</option>
         {{/each}}
     </select>
     <div class="dropdown-select wide" tabindex="0">
@@ -13,8 +13,7 @@
             </div>
             <ul>
                 {{#each items}}
-                <li class="option {{#if isSelected}}selected{{/if}}" data-value="{{value}}" data-id="{{this.id}}"
-                    data-display-text="">{{label}}</li>
+                    <li class="option {{#if isSelected}}selected{{/if}}" data-value="{{value}}" data-id="{{this.id}}" data-display-text="">{{label}}</li>
                 {{/each}}
             </ul>
         </div>

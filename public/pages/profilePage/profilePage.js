@@ -57,7 +57,7 @@ export class ProfilePage {
   }
 
   /**
-   *
+   *  Gets Url params.
    */
   #getSlug() {
     const url = getURLFromLocation(window.location.href, router.host);
@@ -65,7 +65,7 @@ export class ProfilePage {
   }
 
   /**
-   *
+   * Add listener for section switching.
    */
   #addListeners() {
     const verticalInputs = this.#element.querySelectorAll('.verticle-button-group-profile input[type="radio"]');
@@ -86,7 +86,7 @@ export class ProfilePage {
   }
 
   /**
-   *
+   * Add section switching logic.
    * @param {*} event
    */
   async handleSectionClick(event) {
@@ -179,7 +179,7 @@ export class ProfilePage {
   }
 
   /**
-   *
+   * Adds sections states.
    * @param {*} container
    * @param {*} buttonGroupItemes
    * @param {*} sectionState
@@ -218,7 +218,7 @@ export class ProfilePage {
   }
 
   /**
-   *
+   * Adds adverts states.
    * @param {*} event
    */
   advertsHandleClick(event) {
@@ -243,7 +243,7 @@ export class ProfilePage {
   }
 
   /**
-   *
+   * Adds orders states.
    * @param {*} event
    */
   orderHandleClick(event) {

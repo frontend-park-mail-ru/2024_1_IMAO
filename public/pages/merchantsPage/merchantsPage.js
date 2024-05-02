@@ -14,7 +14,7 @@ import {buildURL, getURLFromLocation, parsePathParams, buildURLBySegments} from 
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
-/** Class representing a main page. */
+/** Class representing a merchant page. */
 export class MerchantsPage {
   #element;
   #isBottomReached;
@@ -54,7 +54,7 @@ export class MerchantsPage {
   }
 
   /**
-   *
+   * Adds state listeners.
    */
   async #addListeners() {
     const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
@@ -67,7 +67,7 @@ export class MerchantsPage {
   }
 
   /**
-   *
+   * Adds section switching logic.
    * @param {*} event
    */
   handleClick(event) {
@@ -115,7 +115,7 @@ export class MerchantsPage {
   }
 
   /**
-   *
+   * Render advert cards by codition.
    * @param {*} merchantsPageRightSection
    * @param {*} alreadyRendered
    */

@@ -10,13 +10,12 @@ import {Advert} from './pages/advert/advert.js';
 import {AdCreation} from './pages/advert/adCreation.js';
 import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
 import {ProfilePage} from './pages/profilePage/profilePage.js';
-import {ProfileEdit} from './pages/profilePage/profileEdit.js';
 import {Cart} from './pages/cart/cart.js';
 import {Stats} from './pages/stats/stats.js';
-import cartModel from './models/cart.js';
-import favoritesModel from './models/favorites.js';
 import {Order} from './pages/order/order.js';
 import {Csat} from './pages/csat/csat.js';
+import cartModel from './models/cart.js';
+import favoritesModel from './models/favorites.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
 
@@ -46,7 +45,6 @@ router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
 router.init('merchantsPage', renderMerchantsPage);
 router.init('profilePage', loginRequired(renderProfilePage));
-router.init('profileEdit', loginRequired(renderProfileEdit));
 router.init('mainPage', renderMain);
 router.init('adsListByCity', renderMain);
 router.init('adsListByCategory', renderMain);
@@ -154,17 +152,6 @@ function renderProfilePage() {
   const profilePage = new ProfilePage(header);
 
   return profilePage.render();
-}
-
-/**
- * Return profile page.
- * @return {HTMLElement} - The merchant's page.
- */
-function renderProfileEdit() {
-  mainElement.innerHTML = '';
-  const profileEdit = new ProfileEdit(header);
-
-  return profileEdit.render();
 }
 
 /**

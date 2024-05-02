@@ -13,6 +13,7 @@ const MAX_TITLE_LENGTH = 40;
  * @param {string} title - The title of the product.
  * @param {string | number} price - The price of the product.
  * @param {string} path
+ * @param {string} photo
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
 export default function renderCartBlock(id, title, price, path, photo) {

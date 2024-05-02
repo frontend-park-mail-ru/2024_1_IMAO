@@ -6,13 +6,13 @@ import template from './csatComp.hbs';
 import styles from './csatComp.scss';
 
 /**
- *
+ * Class represented a Csat survey component.
  */
 class CsatComp {
   #element;
 
   /**
-   *
+   * Constructor for Csat.
    * @param {*} items
    */
   constructor(items) {
@@ -20,7 +20,7 @@ class CsatComp {
   }
 
   /**
-   *
+   * Returns a Csat survey component.
    * @return {*}
    */
   render() {
@@ -32,14 +32,14 @@ class CsatComp {
   }
 
   /**
-   *
+   * Renders a Csat survey template.
    */
   #renderTemplate() {
     this.#element = stringToHtmlElement(template(this.items));
   }
 
   /**
-   *
+   * Add listener for close button.
    */
   #addlistenerCloseCsat() {
     const closeBtn = this.#element.querySelector('.add-to-cart-dialog__close-icon');
@@ -49,7 +49,7 @@ class CsatComp {
   }
 
   /**
-   *
+   * Implements a question switching.
    */
   #questuonSwitch() {
     const radioBtns = this.#element.querySelectorAll('.custom-radioBtn');
@@ -57,7 +57,9 @@ class CsatComp {
     const questionary = {};
     const questionaryContent = {};
 
-    /** */
+    /**
+     * Saves answers' results.
+    */
     function readAnswers() {
       inputFields.forEach((input)=>{
         if (input.checked) {
@@ -68,8 +70,8 @@ class CsatComp {
     }
 
     /**
-     *
-     * @param {*} question
+     * Turns into next question.
+     * @param {HTMLElement} question
      */
     function turnQuestion(question) {
       question.classList.remove('interactive-widget__body--active');

@@ -98,7 +98,7 @@ export class Main {
   }
 
   /**
-   *
+   * Catches iframe close signale.
    */
   #closeIframe() {
     const iframe = this.#element.querySelector('[id="iframe"]');

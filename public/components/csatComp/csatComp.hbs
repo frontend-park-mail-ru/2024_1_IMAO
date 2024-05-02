@@ -1,36 +1,36 @@
 <form class="survey">
-<div class="interactive-widget interactive-widget--blue">
-  <div class="interactive-widget__header">
-  <h3>{{CsatTitle}}</h3>
-  </div>
-  <div class="add-to-cart-dialog__close-icon">
-    <div class="add-to-cart-dialog__line add-to-cart-dialog__line--1"></div>
-    <div class="add-to-cart-dialog__line add-to-cart-dialog__line--2"></div>
-  </div>
-  {{#each questions}}
-  <div class="interactive-widget__body interactive-widget__body--active" id="q{{this.num}}">
-    <div class="interactive-widget__body__header">
-      <h4>{{this.title}}</h4>
-      <p>{{this.postTitle}}</p>
+    <div class="interactive-widget interactive-widget--blue">
+        <div class="interactive-widget__header">
+            <h3>{{CsatTitle}}</h3>
+        </div>
+        <div class="add-to-cart-dialog__close-icon">
+            <div class="add-to-cart-dialog__line add-to-cart-dialog__line--1"></div>
+            <div class="add-to-cart-dialog__line add-to-cart-dialog__line--2"></div>
+        </div>
+        {{#each questions}}
+            <div class="interactive-widget__body interactive-widget__body--active" id="q{{this.num}}">
+                <div class="interactive-widget__body__header">
+                    <h4>{{this.title}}</h4>
+                    <p>{{this.postTitle}}</p>
+                </div>
+                <div class="interactive-widget__body__body">
+                    <div class="questionary-wrapper">
+                        {{#each this.options}}
+                            <label class="custom-radioBtn">
+                                <input type="radio" name="{{../num}}" value="{{this.value}}">
+                                <span class="checkmark">{{this.option}}</span>
+                            </label>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+        <div class="interactive-widget__body" id="result">
+            <div class="result--soloPlus">
+                <p class="result__price">Спасибо за ваш ответ!
+                    <p class="result__plan">Мы учтем ваше мнение при дальнейшем улучшении сервиса</p>
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="interactive-widget__body__body">
-    <div class="questionary-wrapper">
-      {{#each this.options}}
-        <label class="custom-radioBtn">
-          <input type="radio" name="{{../num}}" value="{{this.value}}">
-          <span class="checkmark">{{this.option}}</span>
-        </label>
-      {{/each}}
-    </div>
-    </div>
-  </div>
-  {{/each}}
-  <div class="interactive-widget__body" id="result">
-    <div class="result--soloPlus">
-      <p class="result__price">Спасибо за ваш ответ!
-      <p class="result__plan">Мы учтем ваше мнение при дальнейшем улучшении сервиса</p>
-      </p>
-    </div>
-  </div>
-</div>
 </form>

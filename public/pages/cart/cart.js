@@ -38,7 +38,7 @@ export class Cart {
   }
 
   /**
-   *
+   * Adds all listeners.
    */
   #addListeners() {
     const allCheckbox = this.#element.querySelector('[name="cartBlocks"]');
@@ -65,7 +65,7 @@ export class Cart {
   }
 
   /**
-   *
+   * Adds submit listener.
    * @param {*} submit
    * @param {*} ads
    */
@@ -87,7 +87,7 @@ export class Cart {
   }
 
   /**
-   *
+   * Adds checks logic.
    * @param {HTMLElement} allCheckbox
    * @param {NodeListOf} ads
    */
@@ -110,7 +110,7 @@ export class Cart {
   }
 
   /**
-   *
+   * Adds listener for all checked cart delete.
    * @param {HTMLElement} button
    * @param {HTMLElement} quantity
    * @param {HTMLElement} headQuantity
@@ -140,7 +140,7 @@ export class Cart {
   }
 
   /**
-   *
+   * Adds listener for cart delete.
    * @param {NodeListOf} ads
    * @param {HTMLElement} quantity
    * @param {HTMLElement} headQuantity
@@ -164,7 +164,7 @@ export class Cart {
   }
 
   /**
-   * Render a template for a main page.
+   * Render a template for a cart page.
    */
   async #renderTemplate() {
     this.#element.appendChild(this.header.render());
