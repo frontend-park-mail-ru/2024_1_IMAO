@@ -11,7 +11,7 @@ import formatDate from '../../modules/formatDate.js';
 import trimString from '../../modules/trimString.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-import cartModel from '../../models/cart.js';
+import favoritesModel from '../../models/favorites.js';
 
 /** Class representing advert page. */
 export class Advert {
@@ -26,6 +26,7 @@ export class Advert {
     this.#element = document.createElement('div');
     this.#element.classList.add('main-page');
     this.header = header;
+    this.id = NaN;
   }
 
   /**
@@ -58,6 +59,7 @@ export class Advert {
     await this.#addAddCartDialogListener();
     this.#addMerchantPageListener();
     this.#addCloseListener();
+    this.#addFavoritesListener();
   }
 
   /**
@@ -164,9 +166,40 @@ export class Advert {
     if (addCartButton == null) {
       return;
     }
-    const addCartOverlay = new AddCartOverlay(addCartButton, cartModel);
+    const addCartOverlay = new AddCartOverlay(addCartButton);
     const advertBlock = this.#element.querySelector('.advert-block');
     advertBlock.appendChild(await addCartOverlay.render());
+  }
+
+  /**
+   *
+   * @param {*} addToBlackListButton
+   * @param {*} overlayContainer
+   */
+  #addFavoritesListener() {
+    const addFavoritesButton = this.#element.querySelector('.btn-favourite');
+    if (addFavoritesButton == null) {
+      return;
+    }
+    addFavoritesButton.addEventListener('click', async () => {
+      console.log(addFavoritesButton.children);
+      const result = await favoritesModel.changeFavorites(this.id);
+      const message = this.#element.querySelector('.message');
+      addFavoritesButton.children[0].classList.toggle('active');
+      if (result) {
+        addFavoritesButton.children[1].innerHTML = 'Удалить из избранного';
+        message.innerHTML = 'Объявление добавлено в избранное';
+      } else {
+        addFavoritesButton.children[1].innerHTML = 'Добавить в избранное';
+        message.innerHTML = 'Объявление удалено из избранного';
+      }
+      message.classList.remove('message--hidden');
+      message.classList.add('message--active');
+      setTimeout(() => {
+        message.classList.add('message--hidden');
+        message.classList.remove('message--active');
+      }, 1500);
+    });
   }
 
   /**
@@ -178,6 +211,7 @@ export class Advert {
       router.pushPage(ev, merchantAddress.href);
     });
   }
+
   /**
    * Render the advert page template.
    */
@@ -196,21 +230,15 @@ export class Advert {
     await ajax.get(
         apiRoute,
         (body) => {
-          const items = body['items'];
-          const advert = items['advert'];
-          const city = items['city'];
-          const category = items['category'];
+          const {items} = body;
+          const {advert, city, category, photosIMG} = items;
 
-          const id = advert['id'];
-          const adTitle = advert['title'];
-          const description = advert['description'];
-          const price = advert['price'];
-          const isUsed = advert['isUsed'];
-          const created = convertDate(advert['created']);
-          const cityName = city['name'];
-          const categoryName = category['name'];
-          const isAuthor = ajax.auth.id === advert['userId'];
-          const photos = items['photosIMG'];
+          const {id, title, description, price, isUsed, created, inFavourites, inCart} = advert;
+          this.id = id;
+          const createdDate = convertDate(created);
+          const cityName = city.name;
+          const categoryName = category.name;
+          const isAuthor = ajax.auth.id === advert.userId;
 
           let state = '';
           if (isUsed) {
@@ -241,21 +269,22 @@ export class Advert {
             },
             {
               path: '#',
-              title: adTitle,
+              title: title,
             },
           ];
           adPathElement.appendChild(renderAdPathTemplate({paths}));
           content.appendChild(adPathElement);
 
           const adContainer = renderAdContainerTemplate(
-              adTitle, cityName, categoryName, description, created,
-              price, isAuthor, editPath, id, state, photos);
+              title, cityName, categoryName, description, createdDate,
+              price, isAuthor, editPath, id, state, photosIMG, inFavourites);
           adContainer.classList.add('ad-container');
           content.appendChild(adContainer);
-          document.title += ' ' + trimString(adTitle, 40);
+
+          document.title += ' ' + trimString(title, 40);
           const addCartButton = this.#element.querySelector('.cart');
           if (addCartButton !== null) {
-            if (cartModel.cartItems.includes(id)) {
+            if (inCart) {
               addCartButton.innerHTML = 'Удалить из корзины';
             }
           }

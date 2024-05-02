@@ -24,13 +24,13 @@ class AdsCard {
    *
    * @param {*} items
    */
-  constructor(title, price, id, path, photosIMG) {
+  constructor(title, price, id, inFavorites, path, photosIMG) {
     this.title = title;
     this.price = price;
     this.id = id;
     this.path = path;
     this.photosIMG = photosIMG;
-    this.inFavorites = favoritesModel.favoritesItems.includes(Number(this.id));
+    this.inFavorites = inFavorites;
   }
 
   /**
@@ -60,18 +60,23 @@ class AdsCard {
   #addFavoritesListener() {
     const likeBtn = this.#element.querySelector('.like-icon');
     
-    likeBtn.addEventListener('click', (event) => {
+    likeBtn.addEventListener('click', async (event) => {
       event.preventDefault();
-      //const card = this.#element.querySelector('.card');
-      //const href = card.href;
-      //card.href = '';
-      const result = favoritesModel.changeFavorites(this.id);
-      if (!result) {
-        likeBtn.src = 'images/like_fill_red_28.svg';
+      const result = await favoritesModel.changeFavorites(this.id);
+      const message = this.#element.querySelector('.message');
+      if (result) {
+        likeBtn.dataset.tooltip = 'Удалить\nиз избранного';
+        message.innerHTML = 'Объявление добавлено в избранное';
       } else {
-        likeBtn.src = 'images/like_outline_28.svg';
+        likeBtn.dataset.tooltip = 'Добавить\nв избранное';
+        message.innerHTML = 'Объявление удалено из избранного'
       }
-      //card.href = href;
+      message.classList.remove('message--hidden');
+      message.classList.add('message--active');
+      setTimeout(() => {
+        message.classList.add('message--hidden');
+        message.classList.remove('message--active');
+      }, 1500);
     });
   }
 
@@ -88,7 +93,7 @@ class AdsCard {
       id: this.id,
       path: this.path,
       photo: this.photosIMG,
-      inFavorites: favoritesModel.favoritesItems.includes(Number(this.id)),
+      inFavorites: this.inFavorites,
     };
 
     this.#element = stringToHtmlElement(template(context));

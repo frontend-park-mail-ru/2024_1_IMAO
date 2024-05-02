@@ -38,8 +38,6 @@ ajax.initialize(AUTH, API_ROUTES);
 router.initialize(AUTH, PAGES_ROUTES, serverHost);
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
-await cartModel.initialize();
-await favoritesModel.initialize();
 const header = new Header(cartModel, favoritesModel);
 cartModel.on('cartChange', header.changeCartQuantity.bind(header));
 favoritesModel.on('favoritesChange', header.changeFavoritesQuantity.bind(header));

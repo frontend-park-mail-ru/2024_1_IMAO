@@ -18,7 +18,7 @@
 .ad-container .favourite {
     /* width: 20%; */
     display: flex;
-    align-items: end;
+    align-items: center;
     justify-content: flex-end;
     font-size: 14px;
 }
@@ -142,4 +142,34 @@
 .seller-block__btn:hover {
     background: rgb(59, 92, 199);
 
+}
+
+@mixin css3-prefix($property, $value) {
+  #{$property}: #{$value};
+}
+
+.btn-favourite{
+  display: flex;
+  align-items: center;
+
+  &:hover{
+    .like-heart:not(.active) svg{
+    stroke: gray; 
+    }
+  }
+
+  &:active{
+    .like-heart {
+      @include css3-prefix(transform, scale(0.75) translateY(2px));
+    }
+  }
+
+  .like-heart{
+    height: 18px;
+    width: 20px;
+    svg{
+      height: 18px;
+      width: 20px;
+    }
+  }
 }

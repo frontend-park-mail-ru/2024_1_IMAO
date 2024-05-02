@@ -17,10 +17,11 @@ import styles from './adContainer.scss';
  * @param {*} id
  * @param {*} state
  * @param {Array} photos
+ * @param {*} inFavorites
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the advert.
  */
 export default function renderAdContainerTemplate(title, city, category, description,
-    created, price, isAuthor, editPath, id, state, photos) {
+    created, price, isAuthor, editPath, id, state, photos, inFavorites) {
   return stringToHtmlElement(template({title, city, category, description, created, price,
-    isAuthor, editPath, id, state, photos}));
+    isAuthor, editPath, id, state, photos, inFavorites}));
 }

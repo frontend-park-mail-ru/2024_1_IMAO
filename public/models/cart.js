@@ -7,35 +7,11 @@ import ajax from '../modules/ajax';
  * Model represented a cart behavior
  */
 class Cart {
-  #cartItems;
-
   /**
    *
    */
   constructor() {
-    this.#cartItems = [];
     this.listeners = {};
-  }
-
-  /**
-   *
-   */
-  async initialize() {
-    this.isInitialized = true;
-    const tempItems = await this.getCart();
-    const adverts = [];
-    tempItems.forEach((item) => {
-      const {advert} = item;
-      adverts.push(advert.id);
-    });
-    this.#cartItems = adverts;
-  }
-
-  /**
-   *
-   */
-  get cartItems() {
-    return this.#cartItems;
   }
 
   /**
@@ -70,14 +46,14 @@ class Cart {
         (body) => {
           const {isAppended} = body;
           if (isAppended) {
-            this.#cartItems.push(advertId);
+            ajax.auth.cartNum++;
           } else {
-            this.#cartItems.pop(advertId);
+            ajax.auth.cartNum--;
           }
           result = isAppended;
         },
     );
-    this.emit('cartChange', this.#cartItems.length);
+    this.emit('cartChange', ajax.auth.cartNum);
 
     return result;
   }
@@ -92,9 +68,9 @@ class Cart {
         {advertIDs},
         (body)=>{
           advertIDs.forEach((advertId) => {
-            this.#cartItems.pop(advertId);
+            ajax.auth.cartNum--;
           });
-          this.emit('cartChange', this.#cartItems.length);
+          this.emit('cartChange', ajax.auth.cartNum);
 
           return;
         },

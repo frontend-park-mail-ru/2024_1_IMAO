@@ -137,7 +137,7 @@ export class ProfilePage {
 
         const merchantsCardContainer = document.createElement('div');
         merchantsCardContainer.classList.add('cards-container-merchant');
-        this.#renderCards(merchantsCardContainer, currentState);
+        this.#renderCards(merchantsCardContainer, currentState, found.categoryLabelValue);
         newProfilePageContentContainer.appendChild(merchantsCardContainer);
         break;
 
@@ -160,6 +160,14 @@ export class ProfilePage {
 
         const emptyOrderPlug = new EmptyOrderPlug(header, content);
         newProfilePageContentContainer.appendChild(emptyOrderPlug.render());
+        break;
+
+      case 'favorites':
+        const favoritesCardContainer = document.createElement('div');
+        favoritesCardContainer.classList.add('cards-container-merchant');
+        console.log(found.categoryLabelValue);
+        this.#renderCards(favoritesCardContainer, currentState, found.categoryLabelValue);
+        newProfilePageContentContainer.appendChild(favoritesCardContainer);
         break;
 
       case 'settings':
@@ -227,7 +235,7 @@ export class ProfilePage {
       newMerchantsCardContainer.classList.add('cards-container-merchant');
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
       this.sectionState.setSectionState(event.target.value, 'isRendered', true);
-      this.#renderCards(newMerchantsCardContainer, isRendered);
+      this.#renderCards(newMerchantsCardContainer, isRendered, 'adverts');
     } else {
       const stashedMerchantsCardContainer = this.sectionState.getSectionState(event.target.value, 'render');
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
@@ -292,8 +300,9 @@ export class ProfilePage {
    * Render advert cards by codition.
    * @param {HTMLElement} merchantsPageRightSection
    * @param {*} alreadyRendered
+   * @param {*} sectionState
    */
-  async #renderCards(merchantsPageRightSection, alreadyRendered) {
+  async #renderCards(merchantsPageRightSection, alreadyRendered, sectionState) {
     const cards = document.getElementsByClassName('card');
     const startID = cards.length == 0 ?
       1 :
@@ -307,9 +316,20 @@ export class ProfilePage {
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('userId', id);
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('deleted', state);
 
+    let apiRoute = null;
+    switch (sectionState) {
+      case 'adverts':
+        apiRoute = ajax.routes.ADVERT.GET_ADS_LIST;
+        break;
+
+      case 'favorites':
+        apiRoute = ajax.routes.FAVORITES.GET_FAVORITES_LIST;
+        break;
+    }
+
     let adverts = {};
     await ajax.get(
-        ajax.routes.ADVERT.GET_ADS_LIST,
+        apiRoute,
         (body) => {
           adverts = body['items'];
         },
@@ -332,10 +352,10 @@ export class ProfilePage {
     }
 
     adverts.forEach((inner) => {
-      const {price, title, id, city, category, photosIMG} = inner;
+      const {price, title, id, inFavourites, city, category, photosIMG} = inner;
 
       const path = buildURLBySegments(router.host, [city, category, id]);
-      const adsCardInstance = new AdsCard(title, price, id, path, photosIMG);
+      const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
       merchantsPageRightSection.appendChild(adsCardInstance.render());
     });
 

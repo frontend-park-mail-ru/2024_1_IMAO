@@ -13,29 +13,7 @@ class Favorites {
    *
    */
   constructor() {
-    this.#favoritesItems = [];
     this.listeners = {};
-  }
-
-  /**
-   *
-   */
-  async initialize() {
-    this.isInitialized = true;
-    // const tempItems = await this.getFavorites();
-    const adverts = [101, 115, 121];
-    // tempItems.forEach((item) => {
-    //   const {advert} = item;
-    //   adverts.push(advert.id);
-    // });
-    this.#favoritesItems = adverts;
-  }
-
-  /**
-   *
-   */
-  get favoritesItems() {
-    return this.#favoritesItems;
   }
 
   /**
@@ -65,30 +43,21 @@ class Favorites {
    * @return {Promise}
    */
   async changeFavorites(advertId) {
-    const result = this.#favoritesItems.includes(advertId);
-    if (!result) {
-      this.#favoritesItems.push(advertId);
-    } else {
-      const ind = this.favoritesItems.indexOf(advertId);
-      this.#favoritesItems.splice(ind, 1);
-    }
-
-    // ДОБАВИТЬ AJAX
-
-    // await ajax.post(
-    //     ajax.routes.CART.CHANGE_CART_ITEM_STATUS,
-    //     {advertId},
-    //     (body) => {
-    //       const {isAppended} = body;
-    //       if (isAppended) {
-    //         this.#favoritesItems.push(advertId);
-    //       } else {
-    //         this.#favoritesItems.pop(advertId);
-    //       }
-    //       result = isAppended;
-    //     },
-    // );
-    this.emit('favoritesChange', this.#favoritesItems.length);
+    let result = false;
+    await ajax.post(
+        ajax.routes.FAVORITES.CHANGE_FAVORITES_ITEM_STATUS,
+        {advertId},
+        (body) => {
+          const {isAppended} = body;
+          if (isAppended) {
+            ajax.auth.favNum++;
+          } else {
+            ajax.auth.favNum--;
+          }
+          result = isAppended;
+        },
+    );
+    this.emit('favoritesChange', ajax.auth.favNum);
 
     return result;
   }

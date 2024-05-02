@@ -44,6 +44,11 @@ export const API_ROUTES = {
     CHANGE_CART_ITEM_STATUS: new URL('/api/cart/change', api),
     DELETE_CART_ITEM: new URL('/api/cart/delete', api),
   },
+  FAVORITES: {
+    GET_FAVORITES_LIST: new URL('/api/favourites/list', api),
+    CHANGE_FAVORITES_ITEM_STATUS: new URL('/api/favourites/change', api),
+    DELETE_FAVORITES_ITEM: new URL('/api/favourites/delete', api),
+  },
   ORDER: {
     GET_ORDERS_LIST: new URL('/api/order/list', api),
     CREATE_ORDERS: new URL('/api/order/create', api),
@@ -141,87 +146,76 @@ export const PAGES_ROUTES = {
  */
 export const AUTH = {
   isAuth: false,
+  id: NaN,
+  email: '',
+  avatar: '',
+  cartNum: 0,
+  favNum: 0,
 };
 
 export const CATEGORIES = [
   {
     name: 'Женский гардероб',
     translation: 'zhenskij_garderob',
-    url: new URL('/Moscow/zhenskij_garderob', serverHost),
   },
   {
     name: 'Мужской гардероб',
     translation: 'muzhskoj_garderob',
-    url: new URL('/Moscow/muzhskoj_garderob', serverHost),
   },
   {
     name: 'Детский гардероб',
     translation: 'detskij_garderob',
-    url: new URL('/Moscow/detskij_garderob', serverHost),
   },
   {
     name: 'Детские товары',
     translation: 'detskie_tovary',
-    url: new URL('/Moscow/detskie_tovary', serverHost),
   },
   {
     name: 'Хэндмэйд',
     translation: 'handmade',
-    url: new URL('/Moscow/handmade', serverHost),
   },
   {
     name: 'Телефоны и планшеты',
     translation: 'telefony_i_planshety',
-    url: new URL('/Moscow/telefony_i_planshety', serverHost),
   },
   {
     name: 'Фото и видеокамеры',
     translation: 'foto_i_videokamery',
-    url: new URL('/Moscow/foto_i_videokamery', serverHost),
   },
   {
     name: 'Компьютерная техника',
     translation: 'kompyuternaya_texnika',
-    url: new URL('/Moscow/kompyuternaya_texnika', serverHost),
   },
   {
     name: 'ТВ, аудио и видео',
     translation: 'tv_audio_i_video',
-    url: new URL('/Moscow/tv_audio_i_video', serverHost),
   },
   {
     name: 'Бытовая техника',
     translation: 'bytovaya_texnika',
-    url: new URL('/Moscow/bytovaya_texnika', serverHost),
   },
   {
     name: 'Для дома и дачи',
     translation: 'dlya_doma_i_dachi',
-    url: new URL('/Moscow/dlya_doma_i_dachi', serverHost),
   },
   {
     name: 'Стройматериалы и инструменты',
     translation: 'strojmaterialy_i_instrumenty',
-    url: new URL('/Moscow/strojmaterialy_i_instrumenty', serverHost),
   },
   {
     name: 'Красота и здоровье',
     translation: 'krasota_i_zdorove',
-    url: new URL('/Moscow/krasota_i_zdorove', serverHost),
   },
   {
     name: 'Спорт и отдых',
     translation: 'sport_i_otdyx',
-    url: new URL('/Moscow/sport_i_otdyx', serverHost),
   },
   {
     name: 'Хобби и развлечения',
     translation: 'xobbi_i_razvlecheniya',
-    url: new URL('/Moscow/xobbi_i_razvlecheniya', serverHost),
   },
   {
     name: 'Прочее',
     translation: 'prochee',
-    url: new URL('/Moscow/prochee', serverHost),
   },
 ];

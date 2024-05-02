@@ -14,13 +14,9 @@ export class Header {
 
   /**
    * Initialize a header.
-   * @param {cart} cartModel
-   * @param {favorites} favoritesModel
    */
-  constructor(cartModel, favoritesModel) {
+  constructor() {
     this.#header = document.createElement('header');
-    this.cartModel = cartModel;
-    this.favoritesModel = favoritesModel;
   }
 
   /**
@@ -110,8 +106,8 @@ export class Header {
 
     const flag = router.auth.isAuth;
     const avatar = router.auth.avatar;
-    const cartQuantity = this.cartModel.cartItems.length;
-    const favoritesQuantity = this.favoritesModel.favoritesItems.length;
+    const cartQuantity = router.auth.cartNum;
+    const favoritesQuantity = router.auth.favNum;
     while (this.#header.firstChild) {
       this.#header.removeChild(this.#header.lastChild);
     }

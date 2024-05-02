@@ -5,6 +5,7 @@ import template from './addCartOverlay.hbs';
 import './addCartOverlay.scss';
 import router from '../../router/router.js';
 import ajax from '../../modules/ajax.js';
+import cartModel from '../../models/cart.js';
 
 /**
  *
@@ -15,11 +16,10 @@ class AddCartOverlay {
   /**
    *
    * @param {*} button
-   * @param {*} model
    */
-  constructor(button, model) {
+  constructor(button) {
     this.button = button;
-    this.#model = model;
+    this.#model = cartModel;
   }
 
   /**

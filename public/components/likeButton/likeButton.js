@@ -13,7 +13,7 @@ class LikeButton {
 
   /**
    *
-   * @param {*} items
+   * @param {*} inFavorites
    */
   constructor(inFavorites) {
     this.inFavorites = inFavorites;
@@ -36,17 +36,17 @@ class LikeButton {
    */
   #renderTemplate() {
     const context = {
-        inFavorites: this.inFavorites,
+      inFavorites: this.inFavorites,
     };
     this.#element = stringToHtmlElement(template(context));
   }
 
-    #addEventListener() {
-        const el = this.#element
-        this.#element.addEventListener('click', explode);
-        function explode(e) {
-            el.classList.toggle('active');
-        }
-    }
+  /**
+   *
+   */
+  #addEventListener() {
+    const el = this.#element;
+    this.#element.addEventListener('click', () => el.classList.toggle('active'));
+  }
 }
 export default LikeButton;

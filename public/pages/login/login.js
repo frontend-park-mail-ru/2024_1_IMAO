@@ -4,7 +4,6 @@ import renderAuthForm from '../../components/authForm/authForm.js';
 import {emailError, validateEmail} from '../../modules/validate.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-import cartModel from '../../models/cart.js';
 
 const authError = 'Неверный логин или пароль!';
 
@@ -88,7 +87,6 @@ export class Login {
           data,
           (body) => {
             if (body?.isAuth === true) {
-              cartModel.initialize();
               history.back();
 
               return;

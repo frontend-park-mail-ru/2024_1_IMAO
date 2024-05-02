@@ -145,7 +145,7 @@ export class Main {
             const iframe = this.#element.querySelector('[id="iframe"]');
             setTimeout(()=> {
               iframe.hidden = !iframe.hidden;
-            }, 2000);
+            }, 120000);
             this.#closeIframe();
           },
       );
@@ -185,10 +185,10 @@ export class Main {
           const ids = [];
 
           adverts.forEach((inner) => {
-            const {price, title, id, city, category, photosIMG} = inner;
+            const {price, title, id, inFavourites, city, category, photosIMG} = inner;
             ids.push(id);
             const path = buildURLBySegments(router.host, [city, category, id]);
-            const adsCardInstance = new AdsCard(title, price, id, path, photosIMG);
+            const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
             cardsContainer.appendChild(adsCardInstance.render());
           });
 
@@ -198,10 +198,8 @@ export class Main {
           ids.forEach((id) => {
             const address = this.#element.querySelector(`[id="${id}"]`);
             address.addEventListener('click', (ev) => {
-              console.log(ev.srcElement)
               if ((ev.target.matches('path')) || (ev.target.matches('svg')) || (ev.target.matches('.like-icon'))) {
-              
-                return
+                return;
               }
               router.pushPage(ev, address.href);
             });
