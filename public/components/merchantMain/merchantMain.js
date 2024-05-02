@@ -5,7 +5,7 @@ import template from './merchantMain.hbs';
 import styles from './merchantMain.scss';
 
 /**
- * Render an orderIte template.
+ * Render an merchant main section template.
  * @return {HTMLElement}
  */
 export default function renderMerchantMain() {

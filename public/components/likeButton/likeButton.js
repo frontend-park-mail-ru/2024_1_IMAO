@@ -4,15 +4,14 @@ import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './likeButton.hbs';
 import styles from './likeButton.scss';
 
-
 /**
- *
+ * Class represents a like button instance.
  */
 class LikeButton {
   #element;
 
   /**
-   *
+   * Constructor for a like button.
    * @param {*} inFavorites
    */
   constructor(inFavorites) {
@@ -20,7 +19,7 @@ class LikeButton {
   }
 
   /**
-   *
+   * Returns a like button.
    * @return {HTMLElement}
    */
   render() {
@@ -32,7 +31,7 @@ class LikeButton {
   }
 
   /**
-   *
+   * Renders a like button.
    */
   #renderTemplate() {
     const context = {
@@ -42,7 +41,7 @@ class LikeButton {
   }
 
   /**
-   *
+   * Adds listeners for a like button.
    */
   #addEventListener() {
     const el = this.#element;

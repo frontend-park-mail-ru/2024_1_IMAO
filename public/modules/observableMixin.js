@@ -2,7 +2,7 @@
 
 const ObservableMixin = {
   /**
-   *
+   * On observable method.
    * @param {*} event
    * @param {*} callback
    */
@@ -14,7 +14,7 @@ const ObservableMixin = {
   },
 
   /**
-   *
+   * Emit observable method.
    * @param {*} event
    * @param {*} data
    */

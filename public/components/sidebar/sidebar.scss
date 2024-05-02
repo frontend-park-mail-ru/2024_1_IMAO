@@ -4,38 +4,38 @@
   position: absolute;
   left: 930px;
   top: 23px;
-  }
-  
-  .sidebar__promo-block {
+}
+
+.sidebar__promo-block {
   width: 300px;
   height: 156px;
   position: absolute;
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  }
-  
-  .sidebar__item-count {
+}
+
+.sidebar__item-count {
   width: 65px;
   height: 20px;
   position: absolute;
   left: 24px;
-  top: 19.50px;
+  top: 19.5px;
   color: black;
   font-size: 15px;
   font-weight: 400;
   line-height: 20px;
-  }
-  
-  .sidebar__separator {
+}
+
+.sidebar__separator {
   width: 182.42px;
   height: 1px;
   position: absolute;
-  left: 88.30px;
-  top: 34.50px;
-  }
-  
-  .sidebar__price {
+  left: 88.3px;
+  top: 34.5px;
+}
+
+.sidebar__price {
   height: 22px;
   position: absolute;
   left: 218px;
@@ -45,9 +45,9 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 22px;
-  }
-  
-  .sidebar__description {
+}
+
+.sidebar__description {
   width: 160px;
   height: 22px;
   position: absolute;
@@ -57,10 +57,10 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 22px;
-  }
-  
-  .sidebar__button {
-  font-family: "OpenSans", sans-serif;
+}
+
+.sidebar__button {
+  font-family: 'OpenSans', sans-serif;
   width: 255px;
   height: 50px;
   padding: 8px 20px;
@@ -68,7 +68,7 @@
   left: 24px;
   top: 85px;
   padding: 8px 20px;
-  background: #7092FE;
+  background: #7092fe;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
   border-radius: 8px;
   justify-content: center;
@@ -84,15 +84,13 @@
   transition: background-color 0.3s; /* плавное изменение цвета фона при наведении */
 }
 
-  .sidebar__button:hover {
-    background: #4b74f8
-  }
-  .sidebar__button-text {
+.sidebar__button:hover {
+  background: #4b74f8;
+}
+.sidebar__button-text {
   text-align: center;
   color: white;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  }
-
-  
+}

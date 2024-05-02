@@ -6,6 +6,7 @@ import renderSidebar from '../../components/sidebar/sidebar.js';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
+import favoritesModel from '../../models/favorites.js';
 
 /** Class representing a main page. */
 export class Cart {
@@ -54,9 +55,12 @@ export class Cart {
 
     this.#addDeleteListener(des, quantity, headQuantity, priceSum);
 
+    const likes = this.#element.querySelectorAll('.cart-block__item-like-icon');
+
+    this.#addFavoritesListener(likes);
+
     const button = this.#element.querySelector('.selection-panel__action');
 
-    // eslint-disable-next-line max-len
     this.#addDeleteCheckedListener(button, quantity, headQuantity, priceSum, ads);
 
     const submit = this.#element.querySelector('.sidebar__button');
@@ -164,6 +168,32 @@ export class Cart {
   }
 
   /**
+   * Adds listener for cart like.
+   * @param {NodeListOf} likes
+   */
+  #addFavoritesListener(likes) {
+    for (const element of likes) {
+      element.addEventListener('click', async (ev) => {
+        const id = Number(element.dataset.id);
+        const result = await favoritesModel.changeFavorites(id);
+        const message = this.#element.querySelector('.message');
+        element.children[0].classList.toggle('active');
+        if (result) {
+          message.innerHTML = 'Объявление добавлено в избранное';
+        } else {
+          message.innerHTML = 'Объявление удалено из избранного';
+        }
+        message.classList.remove('message--hidden');
+        message.classList.add('message--active');
+        setTimeout(() => {
+          message.classList.add('message--hidden');
+          message.classList.remove('message--active');
+        }, 1000);
+      });
+    }
+  }
+
+  /**
    * Render a template for a cart page.
    */
   async #renderTemplate() {
@@ -184,13 +214,13 @@ export class Cart {
       const {advert, photosIMG} = item;
       city = city.translation;
       category = category.translation;
-      const {id, price, title} = advert;
+      const {id, price, title, inFavourites} = advert;
       this.#items[ajax.auth.id][id] = advert;
       ids.push(id);
       priceSum += Number(price);
       const photo = photosIMG?.[0] ? photosIMG[0] : null;
       const path = buildURLBySegments(router.host, [city, category, id]);
-      selectPanel.appendChild(renderCartBlock(id, title, price, path, photo));
+      selectPanel.appendChild(renderCartBlock(id, title, price, path, photo, inFavourites));
     });
 
     ids.forEach((id) => {

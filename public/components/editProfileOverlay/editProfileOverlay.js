@@ -8,24 +8,27 @@ import template from './editProfileOverlay.hbs';
 import styles from './editProfileOverlay.scss';
 
 /**
- *
+ * Class represented an overlays for profile form.
  */
 class EditProfileOverlay {
   #element;
+
   /**
-   *
-   * @param {*} button
-   * @param {*} data
-   * @param {*} currentCity
+   * Constructor for overlay.
+   * @param {HTMLElement} button
+   * @param {object} data
+   * @param {string} currentCity
+   * @param {string} CSRFToken
    */
   constructor(button, data, currentCity, CSRFToken) {
     this.button = button;
     this.data = data;
     this.currentCity = currentCity;
-    this.CSRFToken = CSRFToken
+    this.CSRFToken = CSRFToken;
   }
+
   /**
-   *
+   * Returns an overlay.
    * @return {HTMLElement}
    */
   render() {
@@ -36,7 +39,7 @@ class EditProfileOverlay {
   }
 
   /**
-   *
+   * Renders an overlay.
    */
   #renderTemplate() {
     const context = {
@@ -45,9 +48,9 @@ class EditProfileOverlay {
       id: this.data.id,
       hasAvatar: this.data.hasAvatar,
       avatar: this.data.avatar,
-      CSRFToken : this.CSRFToken,
+      CSRFToken: this.CSRFToken,
     };
-    
+
     this.#element = stringToHtmlElement(template(context));
 
     if (context.fields[0].isCitySearch) {
@@ -68,7 +71,7 @@ class EditProfileOverlay {
   }
 
   /**
-   *
+   * Add listeners for overlay.
    */
   #addListeners() {
     const myDialog = this.#element;
@@ -91,7 +94,7 @@ class EditProfileOverlay {
   }
 
   /**
-   * Add listener for the avatar uploading
+   * Add listener for the avatar uploading.
    */
   #addAvatarListener() {
     /**
@@ -121,23 +124,25 @@ class EditProfileOverlay {
   }
 
   /**
-   *
+   * Add listener for the phone field.
    */
   #addDynamicPhoneForm() {
     const input = this.#element.querySelector('#phone');
     let keyCode;
 
     /**
-     *
+     * Matches input on mask.
      * @param {Event} event
      */
     function mask(event) {
       event.keyCode && (keyCode = event.keyCode);
+      // eslint-disable-next-line no-invalid-this
       const pos = this.selectionStart;
       if (pos < 3) event.preventDefault();
       const matrix = '+7 (___) ___-__-__';
       let i = 0;
       const def = matrix.replace(/\D/g, '');
+      // eslint-disable-next-line no-invalid-this
       const val = this.value.replace(/\D/g, '');
       let newValue = matrix.replace(/[_\d]/g, function(a) {
         return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
@@ -149,6 +154,7 @@ class EditProfileOverlay {
       }
 
       let reg = matrix
+          // eslint-disable-next-line no-invalid-this
           .substr(0, this.value.length)
           .replace(/_+/g, function(a) {
             return '\\d{1,' + a.length + '}';
@@ -156,12 +162,14 @@ class EditProfileOverlay {
           .replace(/[+()]/g, '\\$&');
       reg = new RegExp('^' + reg + '$');
       if (
-        !reg.test(this.value) ||
-          this.value.length < 5 ||
+        // eslint-disable-next-line no-invalid-this
+        !reg.test(this.value) || this.value.length < 5 ||
           (keyCode > 47 && keyCode < 58)
       ) {
+        // eslint-disable-next-line no-invalid-this
         this.value = newValue;
       }
+      // eslint-disable-next-line no-invalid-this
       if (event.type == 'blur' && this.value.length < 5) this.value = '';
     }
 

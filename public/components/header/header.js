@@ -72,18 +72,14 @@ export class Header {
 
     logoutBtn.addEventListener('click', (ev) => {
       ev.preventDefault();
-      ajax.post(
-          ajax.routes.AUTH.LOGOUT,
-          null,
-          (body) => {
-            // eslint-disable-next-line camelcase
-            ajax.auth.isAuth = body.isAuth;
-            this.#renderHeaderTemplate('Москва');
-            this.#addListeners();
-            const main = document.querySelector('main');
-            router.popPage(ev, main);
-          },
-      );
+      ajax.post(ajax.routes.AUTH.LOGOUT, null, (body) => {
+        // eslint-disable-next-line camelcase
+        ajax.auth.isAuth = body.isAuth;
+        this.#renderHeaderTemplate('Москва');
+        this.#addListeners();
+        const main = document.querySelector('main');
+        router.popPage(ev, main);
+      });
     });
   }
 
@@ -103,7 +99,6 @@ export class Header {
     const slugProfileFavorites = ['profile', 'favorites'];
     const urlProfileFavorites = buildURLBySegments(serverHost, slugProfileFavorites);
 
-
     const flag = router.auth.isAuth;
     const avatar = router.auth.avatar;
     const cartQuantity = router.auth.cartNum;
@@ -119,24 +114,28 @@ export class Header {
 
       return {name, url};
     });
-    this.#header.appendChild(stringToHtmlElement(template({
-      urlMain,
-      urlLogin,
-      urlCreate,
-      urlCart,
-      urlProfile,
-      urlProfileFavorites,
-      flag,
-      location,
-      CategoriesWithUrl,
-      avatar,
-      cartQuantity,
-      favoritesQuantity,
-    })));
+    this.#header.appendChild(
+        stringToHtmlElement(
+            template({
+              urlMain,
+              urlLogin,
+              urlCreate,
+              urlCart,
+              urlProfile,
+              urlProfileFavorites,
+              flag,
+              location,
+              CategoriesWithUrl,
+              avatar,
+              cartQuantity,
+              favoritesQuantity,
+            }),
+        ),
+    );
   }
 
   /**
-   *
+   * Reactively changes cart quantity.
    * @param {*} quantity
    */
   changeCartQuantity(quantity) {
@@ -145,7 +144,7 @@ export class Header {
   }
 
   /**
-   *
+   * Reactively changes favorites quantity.
    * @param {*} quantity
    */
   changeFavoritesQuantity(quantity) {

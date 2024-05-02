@@ -5,13 +5,15 @@ import template from './dropdownWithSearch.hbs';
 import styles from './dropdownWithSearch.scss';
 
 /**
- *
+ * Class representes a dropdown form field.
  */
 class DropdownWithSearch {
   #element;
+
   /**
-   *
-   * @param {*} items
+   * Constructor for a dropdown form field.
+   * @param {Array} items
+   * @param {string} current
    */
   constructor(items, current) {
     this.items = items;
@@ -19,17 +21,18 @@ class DropdownWithSearch {
   }
 
   /**
-   *
+   * Returns a dropdown form field component.
    * @return {HTMLElement}
    */
   render() {
     this.#renderTemplate();
     this.#addListeners(this.#element);
+
     return this.#element;
   }
 
   /**
-   *
+   * Renders a dropdown form field template.
    */
   #renderTemplate() {
     const context = {
@@ -40,39 +43,47 @@ class DropdownWithSearch {
     this.#element = stringToHtmlElement(template(context));
   }
 
+  /**
+   * Adds listeners for a dropdown form field.
+   * @param {HTMLElement} element
+   */
   #addListeners(element) {
     // Open/close
-    element.addEventListener('click', function(event) {
+    element.addEventListener('click', (event) => {
       const dropdownSelect = event.target.closest('.dropdown-select');
-      if (dropdownSelect) {
-        if (event.target.classList.contains('dd-searchbox')) {
-          return;
-        }
-        element.querySelectorAll('.dropdown-select').forEach(function(ds) {
-          if (ds !== dropdownSelect) {
-            ds.classList.remove('open');
-          }
-        });
-        dropdownSelect.classList.toggle('open');
-        if (dropdownSelect.classList.contains('open')) {
-          dropdownSelect.querySelectorAll('.option').forEach(function(option) {
-            option.setAttribute('tabindex', '0');
-          });
-          dropdownSelect.querySelector('.selected').focus();
-        } else {
-          dropdownSelect.querySelectorAll('.option').forEach(function(option) {
-            option.removeAttribute('tabindex');
-          });
-          dropdownSelect.focus();
-        }
-      } else {
-        element.querySelectorAll('.dropdown-select').forEach(function(ds) {
+      const allDropdownSelects = element.querySelectorAll('.dropdown-select');
+
+      if (!dropdownSelect) {
+        allDropdownSelects.forEach((ds) => {
           ds.classList.remove('open');
-          ds.querySelectorAll('.option').forEach(function(option) {
-            option.removeAttribute('tabindex');
-          });
+          ds.querySelectorAll('.option').forEach((option) => option.removeAttribute('tabindex'));
         });
+
+        return;
       }
+
+      if (event.target.classList.contains('dd-searchbox')) {
+        return;
+      }
+
+      allDropdownSelects.forEach((ds) => {
+        if (ds !== dropdownSelect) {
+          ds.classList.remove('open');
+        }
+      });
+
+      dropdownSelect.classList.toggle('open');
+      const allOptions = dropdownSelect.querySelectorAll('.option');
+
+      if (dropdownSelect.classList.contains('open')) {
+        allOptions.forEach((option) => option.setAttribute('tabindex', '0'));
+        dropdownSelect.querySelector('.selected').focus();
+
+        return;
+      }
+
+      allOptions.forEach((option) => option.removeAttribute('tabindex'));
+      dropdownSelect.focus();
     });
 
     // Option click
@@ -93,46 +104,66 @@ class DropdownWithSearch {
     // Keyboard events
     element.addEventListener('keydown', function(event) {
       const dropdownSelect = event.target.closest('.dropdown-select');
-      if (dropdownSelect) {
-        const focusedOption = dropdownSelect.querySelector('.list .option:focus') || dropdownSelect.querySelector('.list .option.selected');
-        if (event.keyCode === 13) {
-          if (dropdownSelect.classList.contains('open')) {
+
+      if (!dropdownSelect) {
+        return;
+      }
+
+      const focusedOption = dropdownSelect.querySelector('.list .option:focus') ||
+          dropdownSelect.querySelector('.list .option.selected');
+      const isOpend = dropdownSelect.classList.contains('open');
+
+      let buttonPressed = true;
+      switch (event.code) {
+        case 'Enter':
+          if (isOpend) {
             focusedOption.click();
           } else {
             dropdownSelect.click();
           }
-          event.preventDefault();
-        } else if (event.keyCode === 40) {
-          if (!dropdownSelect.classList.contains('open')) {
+          break;
+
+        case 'ArrowDown':
+          if (!isOpend) {
             dropdownSelect.click();
           } else {
             focusedOption.nextElementSibling.focus();
           }
-          event.preventDefault();
-        } else if (event.keyCode === 38) {
-          if (!dropdownSelect.classList.contains('open')) {
+          break;
+
+        case 'ArrowUp':
+          if (!isOpend) {
             dropdownSelect.click();
           } else {
             focusedOption.previousElementSibling.focus();
           }
-          event.preventDefault();
-        } else if (event.keyCode === 27) {
-          if (dropdownSelect.classList.contains('open')) {
+          break;
+
+        case 'Escape':
+          if (isOpend) {
             dropdownSelect.click();
           }
-          event.preventDefault();
-        }
+          break;
+
+        default:
+          buttonPressed = false;
+          break;
+      }
+
+      if (buttonPressed) {
+        event.preventDefault();
       }
     });
-
 
     const txtSearchValue = element.querySelector('.txtSearchValue');
     txtSearchValue.addEventListener('keyup', filter);
 
-
+    /**
+     * Auxiliary filter function.
+     */
     function filter() {
       const valThis = element.querySelector('.txtSearchValue').value;
-      element.querySelectorAll('.dropdown-select ul > li').forEach(function(li) {
+      element.querySelectorAll('.dropdown-select ul > li').forEach((li) => {
         const text = li.textContent.toLowerCase();
         if (text.indexOf(valThis.toLowerCase()) > -1) {
           li.style.display = '';
@@ -143,6 +174,12 @@ class DropdownWithSearch {
     }
   }
 
+  /**
+   *
+   * @param {*} input
+   * @param {*} selectedName
+   * @return {Array}
+   */
   transformData(input, selectedName) {
     // Проверяем, что входные данные имеют ожидаемый формат
     if (!input || !input.city_list || !input.city_list.CityItems) {
@@ -154,13 +191,9 @@ class DropdownWithSearch {
       value: item.translation,
       label: item.name,
       id: item.id,
-      isSelected: item.name === selectedName, // Устанавливаем isSelected в true только для selectedName
+      isSelected: item.name === selectedName,
     }));
   }
-
-  // #handleClick(event) {
-  //     console.log(event.target.value);
-  // }
 }
 
 export default DropdownWithSearch;

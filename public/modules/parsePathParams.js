@@ -24,7 +24,7 @@ export function parsePathParams(routerUrl, userUrl) {
 }
 
 /**
- *
+ * Build URL using params.
  * @param {URL} url
  * @param {Object} params
  * @return {URL}

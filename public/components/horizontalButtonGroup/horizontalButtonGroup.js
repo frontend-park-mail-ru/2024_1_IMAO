@@ -5,20 +5,21 @@ import template from './horizontalButtonGroup.hbs';
 import styles from './horizontalButtonGroup.scss';
 
 /**
- *
+ * Class represents a state buttons.
  */
 class HorizontalButtonGroup {
   #element;
+
   /**
-   *
-   * @param {*} items
+   * Constructor for a state button group.
+   * @param {object} items
    */
   constructor(items) {
     this.items = items;
   }
 
   /**
-   *
+   * Returns a state button group.
    * @return {HTMLElement}
    */
   render() {
@@ -29,7 +30,7 @@ class HorizontalButtonGroup {
   }
 
   /**
-   *
+   * Renders a state button group.
    */
   #renderTemplate() {
     const context = {
@@ -37,18 +38,6 @@ class HorizontalButtonGroup {
     };
     this.#element = stringToHtmlElement(template(context));
   }
-
-  // #addListeners() {
-  //     const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
-
-  //     inputs.forEach(input => {
-  //         input.addEventListener('click', this.handleClick);
-  //     });
-  // }
-
-  // #handleClick(event) {
-  //     console.log(event.target.value);
-  // }
 }
 
 export default HorizontalButtonGroup;

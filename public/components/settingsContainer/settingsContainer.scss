@@ -1,91 +1,86 @@
 .personal-data-list {
-    margin: 20px 0;
-    padding: 3%;
+  margin: 20px 0;
+  padding: 3%;
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
+  width: 94%;
+
+  h3 {
+    margin: 0;
+  }
+
+  .settings-block {
+    background: white;
     border-radius: 8px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
-    width: 94%;
+    display: flex;
+    margin-top: 15px;
+    width: 100%;
+    height: auto;
 
-    h3 {
-        margin: 0;
+    &:not(:last-child) {
+      border-bottom: 1px solid #f5f5f5;
+      padding-bottom: 1%;
     }
 
-    .settings-block {
-        background: white;
-        border-radius: 8px;
-        display: flex;
-        margin-top: 15px;
-        width: 100%;
-        height: auto;
-
-        &:not(:last-child) {
-            border-bottom: 1px solid #F5F5F5;
-            padding-bottom: 1%;
-        }
-
-        &__header {
-            color: #858585;
-            width: 15%;
-            align-self: center;
-        }
-
-        &__details {
-          width: 60%;
-        }
-
-        &__hint {
-          width: 60%;
-          color: #858585;
-        }
-
-        &__set-or-edit-label {
-          font-family: "OpenSans", sans-serif;
-          color: #7092FE;
-          font-size: 14px;
-          width: 15%;
-          margin-left: auto;
-        }
-
-
+    &__header {
+      color: #858585;
+      width: 15%;
+      align-self: center;
     }
 
-    img {
-        width: 24px;
-        height: 24px;
-        position: relative;
-        border-radius: 12px;
+    &__details {
+      width: 60%;
     }
 
-    
-
-    .atribute-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        font-size: 14px;
-        margin-top: 15px;
+    &__hint {
+      width: 60%;
+      color: #858585;
     }
 
-    button {
-        border-radius: 0;
-        border-color: #ffffff;
-        border-style: none;
-        background-color: #ffffff;
-        cursor: pointer;
+    &__set-or-edit-label {
+      font-family: 'OpenSans', sans-serif;
+      color: #7092fe;
+      font-size: 14px;
+      width: 15%;
+      margin-left: auto;
     }
+  }
 
-    .merchant-profile {
-        display: flex;
-        align-items: center;
-        gap: 2%;
+  img {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    border-radius: 12px;
+  }
 
-        &__name {
-            width: 90%;
-        }
+  .atribute-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    margin-top: 15px;
+  }
+
+  button {
+    border-radius: 0;
+    border-color: #ffffff;
+    border-style: none;
+    background-color: #ffffff;
+    cursor: pointer;
+  }
+
+  .merchant-profile {
+    display: flex;
+    align-items: center;
+    gap: 2%;
+
+    &__name {
+      width: 90%;
     }
+  }
 
-    .merchant-avatar {
-        width: 5%;
-    }
-
+  .merchant-avatar {
+    width: 5%;
+  }
 }

@@ -1,70 +1,65 @@
-
 .hover-slider-parent {
- width: 215px;
- height: 215px;
- position: absolute;
+  width: 215px;
+  height: 215px;
+  position: absolute;
 }
 
 .item_hover_slider {
- float: left;
- height: 215px;
- position: relative;
+  float: left;
+  height: 215px;
+  position: relative;
 }
 
 .item_hover_slider img {
- width: 100%;
- height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .hover_slider_nuv {
- position: absolute;
- width: 100%;
- height: 100%;
- left: 0;
- top: 0;
- opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0;
 }
 
 .hover_slider_nuv:hover {
- opacity: 1;
+  opacity: 1;
 }
 
-.hover-slider{
- position: absolute;
- width: 215px;
- height: 215px;
+.hover-slider {
+  position: absolute;
+  width: 215px;
+  height: 215px;
 }
 
 .hover_slider_nuv div {
- height: 100%;
- float: left;
- -webkit-transition: all .25s ease;
- transition: all .25s ease;
+  height: 100%;
+  float: left;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 
 .hover_slider_nuv div:last-child {
- margin-right: 0;
+  margin-right: 0;
 }
 
 .ellipse {
- width: 6px;
- height: 6px;
- border-radius: 50%;
- background: rgb(255, 255, 255, 0.64);
- box-shadow: rgba(51, 51, 51, 0.24) 0px 0px 0px 1px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(255, 255, 255, 0.64);
+  box-shadow: rgba(51, 51, 51, 0.24) 0px 0px 0px 1px;
 }
 
-.ellipse-line{
- display: none;
- flex-direction: row;
- gap: 25px;
- position: absolute;
- bottom: 0;
- left: 50%;
- transform: translateX(-50%);
- margin-bottom: 8px;
+.ellipse-line {
+  display: none;
+  flex-direction: row;
+  gap: 25px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
 }
-
-
-
-

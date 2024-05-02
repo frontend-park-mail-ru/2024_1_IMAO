@@ -5,7 +5,7 @@ import template from './profileMain.hbs';
 import styles from './profileMain.scss';
 
 /**
- * Render an orderIte template.
+ * Render an profile main section template.
  * @return {HTMLElement}
  */
 export default function renderProfileMain() {

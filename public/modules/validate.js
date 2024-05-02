@@ -1,10 +1,11 @@
 'use strict';
 
-/* eslint-disable-next-line max-len, no-useless-escape */
-const emailRegex = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
+const emailRegex =
+  /* eslint-disable-next-line max-len, no-useless-escape */
+  /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
 const inputRegex = /^[^\s].(?!.* {2,}).*$/;
-/* eslint-disable-next-line max-len */
-export const passwordError = 'Пароль должен быть от 8 до 32 символов, содержать цифру, строчную, прописную буквы и специальный символ!';
+export const passwordError =
+  'Пароль должен быть от 8 до 32 символов, содержать цифру, строчную, прописную буквы и специальный символ!';
 export const emailError = 'Неверный формат почты!';
 export const inputError = 'Значение не должно начинаться с пробела или иметь 2 пробела подряд!';
 
@@ -133,7 +134,7 @@ export function validateInput(input) {
 }
 
 /**
- *
+ * Returns true if phone is valide.
  * @param {*} phone
  * @return {boolean}
  */

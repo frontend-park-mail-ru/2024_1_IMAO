@@ -1,123 +1,124 @@
 .signup .form-input {
-    margin: 30px 0px;
+  margin: 30px 0px;
 }
 
 .signup .form-input input {
-    width: 100%;
-    height: 40px;
-    padding: 15px 40px 15px 15px;
-    font-size: 16px;
-    border: 2px solid rgba(0, 0, 0, 0.12);
-    background-color: rgba(242, 243, 245, 1);
-    border-radius: 8px;
-    box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  padding: 15px 40px 15px 15px;
+  font-size: 16px;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  background-color: rgba(242, 243, 245, 1);
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 
 .signup .btn-primary {
-    width: 100%;
-    height: 40px;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 1);
-    background: rgba(112, 146, 254, 1);
-    border: none;
-    border-radius: 8px;
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 1);
+  background: rgba(112, 146, 254, 1);
+  border: none;
+  border-radius: 8px;
 }
 
 .signup .btn-secondary {
-    width: 100%;
-    height: 40px;
-    font-size: 16px;
-    color: rgba(0, 0, 0, 1);
-    background: rgba(255, 255, 255, 1);
-    border: solid 1px rgba(0, 0, 0, 0.12);
-    border-radius: 8px;
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 1);
+  background: rgba(255, 255, 255, 1);
+  border: solid 1px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
 }
 
 .signup {
-    width: 720px;
-    height: 500px;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
+  width: 720px;
+  height: 500px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
 }
 
-.signup .signup-main, .signup-info {
-    width: 50%;
-    padding: 28px 28px;
-    box-sizing: border-box;
+.signup .signup-main,
+.signup-info {
+  width: 50%;
+  padding: 28px 28px;
+  box-sizing: border-box;
 }
 
 .signup .signup-info {
-    background: rgba(249, 249, 249, 1);
-    font-weight: normal;
+  background: rgba(249, 249, 249, 1);
+  font-weight: normal;
 }
 
 .signup .signup-main {
-    background: rgba(255, 255, 255, 1);
-    text-align: center;
+  background: rgba(255, 255, 255, 1);
+  text-align: center;
 }
 
 .signup .form-h1 {
-    margin: 0;
-    font-size: 20px;
+  margin: 0;
+  font-size: 20px;
 }
 
 .signup .form-h2 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: normal;
+  margin: 0;
+  font-size: 18px;
+  font-weight: normal;
 }
 
 .signup .label {
-    margin: 5px;
-    font-size: 12px;
-    font-weight: bold;
+  margin: 5px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .signup .text-secondary {
-    color: rgba(109, 120, 133, 1);
+  color: rgba(109, 120, 133, 1);
 }
 
 .signup .labeled-icon {
-    display: flex;
-    align-items: center;
-    margin: 16px 0px;
+  display: flex;
+  align-items: center;
+  margin: 16px 0px;
 }
 
 .signup .labeled-icon .icon-text {
-    flex-grow: 1;
-    display: block;
+  flex-grow: 1;
+  display: block;
 }
 
 .signup .labeled-icon .icon {
-    margin-right: 16px;
+  margin-right: 16px;
 }
 
 .signup .labels-group {
-    margin: 0;
-    margin-top: 17px;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  margin-top: 17px;
+  padding: 0;
+  list-style: none;
 }
 
 .signup .logo {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 10px;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 10px;
 }
 
 .signup .name {
-    color: rgba(45, 129, 224, 1);
+  color: rgba(45, 129, 224, 1);
 }
 
 .signup .mt-10 {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
-.signup .error{
-    text-align: center;
-    font-size: 14px;
-    margin-top: 15px;
+.signup .error {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 15px;
 }
 
 .error {

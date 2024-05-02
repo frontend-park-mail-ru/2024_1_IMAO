@@ -1,17 +1,18 @@
 'use strict';
 
 /**
- *
+ * Class represents a state storage.
  */
 class StageStorage {
   /**
-   *
+   * constructor for a state storage.
    */
   constructor() {
     this.state = {};
   }
+
   /**
-   *
+   * Sets a state section.
    * @param {*} section
    * @param {*} key
    * @param {*} value
@@ -22,7 +23,7 @@ class StageStorage {
   }
 
   /**
-   *
+   * Gets a state section.
    * @param {*} section
    * @param {*} key
    * @return {string}

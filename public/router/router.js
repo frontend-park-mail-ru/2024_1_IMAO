@@ -4,7 +4,7 @@ import {getURLFromLocation} from '../modules/parsePathParams.js';
 
 /**
  * Class represents a router.
-*/
+ */
 class Router {
   /**
    * Set a router's config.
@@ -64,8 +64,7 @@ class Router {
     }
 
     if (location) {
-      this.#locationResolver(getURLFromLocation(location, this.host),
-          container);
+      this.#locationResolver(getURLFromLocation(location, this.host), container);
     }
   }
 

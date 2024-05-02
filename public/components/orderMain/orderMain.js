@@ -5,7 +5,7 @@ import template from './orderMain.hbs';
 import styles from './orderMain.scss';
 
 /**
- * Render an orderIte template.
+ * Render an order main section template.
  * @param {number} num
  * @param {number} id
  * @param {string} title - The title of the product.

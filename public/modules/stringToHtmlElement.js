@@ -1,6 +1,7 @@
 'use strict';
 
 /**
+ * Returns an HTMLElement from string.
  * @param {String} string HTML элемент в виде строки
  * @return {Element}
  */

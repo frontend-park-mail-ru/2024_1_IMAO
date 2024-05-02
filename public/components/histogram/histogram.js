@@ -3,11 +3,13 @@ import styles from './histogram.scss';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import ajax from '../../modules/ajax.js';
 
-/** */
+/**
+ * Class represents a statistics histogram.
+ */
 class Histogram {
   #element;
   /**
-   *
+   * Constructor for a histogram.
    * @param {*} items
    */
   constructor(items) {
@@ -15,7 +17,7 @@ class Histogram {
   }
 
   /**
-   *
+   * Returns a statistics histogram.
    * @return {HTMLElement}
    */
   render() {
@@ -26,7 +28,7 @@ class Histogram {
   }
 
   /**
-   *
+   * Renders a statistics histogram.
    */
   #renderTemplate() {
     const templateParams = {
@@ -155,28 +157,25 @@ class Histogram {
 
     let results = [];
     const apiRoute = ajax.routes.SURVEY.STATISTICS;
-    ajax.get(
-        apiRoute,
-        (body) => {
-          results = body.body.results;
-          const rowData = [];
+    ajax.get(apiRoute, (body) => {
+      results = body.body.results;
+      const rowData = [];
 
-          for (const i of results) {
-            const j = i.QuestionResults.reverse();
-            for ( const k of j) {
-              rowData.push(k);
-            }
-          }
-          console.log(rowData);
+      for (const i of results) {
+        const j = i.QuestionResults.reverse();
+        for (const k of j) {
+          rowData.push(k);
+        }
+      }
+      console.log(rowData);
 
-          const color = '#B6DCFE';
+      const color = '#B6DCFE';
 
-          chartBars.forEach((item, index) => {
-            item.style.width = 70*rowData[index]+'px';
-            item.style.backgroundColor = color;
-          });
-        },
-    );
+      chartBars.forEach((item, index) => {
+        item.style.width = 70 * rowData[index] + 'px';
+        item.style.backgroundColor = color;
+      });
+    });
   }
 }
 

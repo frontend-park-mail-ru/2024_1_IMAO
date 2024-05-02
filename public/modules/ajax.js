@@ -6,7 +6,7 @@ const POST = 'POST';
 /** Class implements AJAX requests. */
 class Ajax {
   /**
-   *
+   * Constructor for an ajax class.
    * @param {*} auth
    * @param {*} routes
    */
@@ -34,7 +34,7 @@ class Ajax {
   }
 
   /**
-   * Make a post request with multipart/form-data.
+   * Make a POST request with multipart/form-data.
    * @param {URL} url - The request path.
    * @param {FormData} body - The request body.
    * @param {Function} callback - The callback function.
@@ -69,21 +69,17 @@ class Ajax {
   }
 
   /**
-   *
+   * Checks auth and user's data.
    */
   async checkAuth() {
-    await this.get(
-        this.routes.AUTH.CHECKAUTH,
-        (body) => {
-          // eslint-disable-next-line camelcase
-          this.auth.isAuth = body.isAuth;
-          this.auth.id = body.user.id;
-          this.auth.email = body.user.email;
-          this.auth.avatar = body.avatarImg;
-          this.auth.cartNum = Number(body.cartNum);
-          this.auth.favNum = Number(body.favNum);
-        },
-    );
+    await this.get(this.routes.AUTH.CHECKAUTH, (body) => {
+      this.auth.isAuth = body.isAuth;
+      this.auth.id = body.user.id;
+      this.auth.email = body.user.email;
+      this.auth.avatar = body.avatarImg;
+      this.auth.cartNum = Number(body.cartNum);
+      this.auth.favNum = Number(body.favNum);
+    });
   }
 
   /**
@@ -93,10 +89,6 @@ class Ajax {
    * @param {object} init - Options of the request.
    */
   async #ajax(url, callback, init) {
-    // caches.open('aaa')
-    //     .then((cache) => {
-    //       return cache.add(url);
-    //     });
     await fetch(url, init)
         .then((response) => {
           if (response.ok) {

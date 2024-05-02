@@ -8,7 +8,7 @@ import styles from './orderItem.scss';
 const MAX_TITLE_LENGTH = 40;
 
 /**
- * Render an orderIte template.
+ * Render an orderItem template.
  * @param {number} num
  * @param {number} id
  * @param {string} title - The title of the product.
