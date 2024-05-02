@@ -1,6 +1,6 @@
 'use strict';
 
-const api = 'http://127.0.0.1:8080';
+const api = 'http://localhost:8080';
 export const serverHost = 'http://127.0.0.1:8008';
 
 /**
@@ -24,6 +24,7 @@ export const API_ROUTES = {
     GET_ADVERT_BY_ID: new URL('/api/adverts/:id', api),
     DELETE_ADVERT: new URL('/api/adverts/delete/:id', api),
     CLOSE_ADVERT: new URL('/api/adverts/close/:id', api),
+    GET_SUGGESTIONS: new URL ('/api/adverts/suggestions', api),
   },
   PROFILE: {
     GET_PROFILE: new URL('/api/profile/:id', api),

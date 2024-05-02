@@ -7,6 +7,7 @@ import styles from './header.scss';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
+import debounce from '../../modules/debouncer.js';
 
 /** Class representing a header component. */
 export class Header {
@@ -31,6 +32,33 @@ export class Header {
   }
 
   /**
+   * Build API URL from slug parameters in path.
+   * @param {int} startID - Start ID in database.
+   * @return {URL} - Route in API.
+   */
+  #getRoute(title) {
+    let apiRoute = ajax.routes.ADVERT.GET_SUGGESTIONS;
+    
+    apiRoute.searchParams.delete('num');
+    apiRoute.searchParams.delete('title');
+
+    apiRoute.searchParams.append('num', 8);
+    apiRoute.searchParams.append('title', title);
+
+    return apiRoute;
+  }
+
+  #debounce(func, wait = 300) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, wait);
+    };
+  }
+
+  /**
    * Add event listeners for a header.
    */
   #addListeners() {
@@ -42,6 +70,66 @@ export class Header {
     this.#addLogoutListener(logoutBtn);
 
     // const cartButton = this.#header.querySelector('.cart-action');
+
+    const search = this.#header.querySelector('.search');
+    const inputField = this.#header.querySelector('.search-input');
+
+    const debouncedHandleInput = this.#debounce(this.#handleInput, 500);
+    
+    inputField.addEventListener('input', debouncedHandleInput);
+
+    inputField.addEventListener('focus', function() {
+      console.log('Поле ввода получило фокус');
+      search.classList.toggle('search-focused');
+    });
+
+    inputField.addEventListener('blur', function() {
+      console.log('Поле ввода потеряло фокус');
+      search.classList.toggle('search-focused');
+    });
+
+    
+  }
+
+  #handleInput(event) {
+    console.log('Обработка ввода:', event.target.value);
+
+    const searchValue = this.#header.querySelector('.search-input').value;
+    const results = this.#header.querySelector('.results');
+    console.log('searchValue',searchValue)
+    const apiRoute = this.#getRoute(searchValue) 
+
+    ajax.get(
+      apiRoute,
+      (body) => {
+        
+        while (results.firstChild) {
+          results.removeChild(results.firstChild);
+        }
+
+        if (!body.items){
+          const listItem = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = '#';
+          link.textContent = 'По вашему запросу ничего не найдено ;(';
+          listItem.appendChild(link);
+          results.appendChild(listItem);
+
+          return
+        }
+
+        body.items.forEach(function(item) {
+          const listItem = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = '#';
+          link.textContent = item;
+          listItem.appendChild(link);
+          results.appendChild(listItem);
+        });
+      },
+    );
+
+
   }
 
   /**
