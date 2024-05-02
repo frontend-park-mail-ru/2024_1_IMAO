@@ -181,8 +181,13 @@ export class Advert {
     if (addFavoritesButton == null) {
       return;
     }
-    addFavoritesButton.addEventListener('click', async () => {
-      console.log(addFavoritesButton.children);
+    addFavoritesButton.addEventListener('click', async (event) => {
+      if (!router.auth.isAuth) {
+        router.pushPage(event, router.routes.loginPage.href.href);
+
+        return;
+      }
+
       const result = await favoritesModel.changeFavorites(this.id);
       const message = this.#element.querySelector('.message');
       addFavoritesButton.children[0].classList.toggle('active');

@@ -6,6 +6,7 @@ import trimString from '../../modules/trimString.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './adsCard.hbs';
 import styles from './adsCard.scss';
+import router from '../../router/router.js';
 import favoritesModel from '../../models/favorites.js';
 
 const MAX_TITLE_LENGTH = 20;
@@ -22,7 +23,12 @@ class AdsCard {
 
   /**
    *
-   * @param {*} items
+   * @param {*} title
+   * @param {*} price
+   * @param {*} id
+   * @param {*} inFavorites
+   * @param {*} path
+   * @param {*} photosIMG
    */
   constructor(title, price, id, inFavorites, path, photosIMG) {
     this.title = title;
@@ -59,9 +65,16 @@ class AdsCard {
    */
   #addFavoritesListener() {
     const likeBtn = this.#element.querySelector('.like-icon');
-    
+
     likeBtn.addEventListener('click', async (event) => {
       event.preventDefault();
+
+      if (!router.auth.isAuth) {
+        router.pushPage(event, router.routes.loginPage.href.href);
+
+        return;
+      }
+
       const result = await favoritesModel.changeFavorites(this.id);
       const message = this.#element.querySelector('.message');
       if (result) {
@@ -69,7 +82,7 @@ class AdsCard {
         message.innerHTML = 'Объявление добавлено в избранное';
       } else {
         likeBtn.dataset.tooltip = 'Добавить\nв избранное';
-        message.innerHTML = 'Объявление удалено из избранного'
+        message.innerHTML = 'Объявление удалено из избранного';
       }
       message.classList.remove('message--hidden');
       message.classList.add('message--active');
