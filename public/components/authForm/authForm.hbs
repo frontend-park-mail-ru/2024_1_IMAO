@@ -1,39 +1,39 @@
 <div class="signup">
-  <div class="signup-info">
-    <h2 class="form-h2">Войдите, чтобы использовать все возможности</h2>
-    <ul class="labels-group">
-      <li class="labeled-icon">
-        <div class="icon">
-	  <img src="images/cloud.svg">
-        </div>
-        <span class="text-secondary icon-text">Общение об объявлениях в чатах</span>
-      </li>
-      <li class="labeled-icon">
-        <div class="icon">
-	  <img src="images/ruble.svg">
-        </div>
-        <span class="text-secondary icon-text">Бесплатное размещение объявлений</span>
-      </li>
-      <li class="images/labeled-icon">
-        <div class="icon">
-	  <img src="images/shield.svg">
-        </div>
-        <span class="text-secondary icon-text">Покупки со скидкой по безопасной сделке</span>
-      </li>
-    </ul>
-  </div>     
-  <div class="signup-main">
-    <img class="logo" src="images/vol4ok.svg">
-    <h1 class="form-h1">{{title}}</h1>
-    <form class="form">
-      {{#each inputs}}
-      <div class="form-input">
-        <input name="{{this.name}}" type="{{this.type}}" placeholder="{{this.placeholder}}">
-      </div>
-      {{/each}}
-      <button type="submit" class="btn-primary">{{buttonText}}</button>
-      <p class="label">{{askText}} <a href="{{url}}" data-url="{{url}}">{{anchorText}}</a></p>
-    </form>
-    <div class="error"></div>
-  </div>
+    <div class="signup-info">
+        <h2 class="form-h2">Войдите, чтобы использовать все возможности</h2>
+        <ul class="labels-group">
+            <li class="labeled-icon">
+                <div class="icon">
+                    <img src="images/cloud.svg">
+                </div>
+                <span class="text-secondary icon-text">Общение об объявлениях в чатах</span>
+            </li>
+            <li class="labeled-icon">
+                <div class="icon">
+                    <img src="images/ruble.svg">
+                </div>
+                <span class="text-secondary icon-text">Бесплатное размещение объявлений</span>
+            </li>
+            <li class="images/labeled-icon">
+                <div class="icon">
+                    <img src="images/shield.svg">
+                </div>
+                <span class="text-secondary icon-text">Покупки со скидкой по безопасной сделке</span>
+            </li>
+        </ul>
+    </div>     
+    <div class="signup-main">
+        <img class="logo" src="images/vol4ok.svg">
+        <h1 class="form-h1">{{title}}</h1>
+        <form class="form">
+            {{#each inputs}}
+                <div class="form-input">
+                    <input name="{{this.name}}" type="{{this.type}}" placeholder="{{this.placeholder}}">
+                </div>
+            {{/each}}
+            <button type="submit" class="btn-primary">{{buttonText}}</button>
+            <p class="label">{{askText}} <a href="{{url}}" data-url="{{url}}">{{anchorText}}</a></p>
+        </form>
+        <div class="error"></div>
+    </div>
 </div>

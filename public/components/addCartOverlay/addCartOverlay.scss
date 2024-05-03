@@ -44,6 +44,7 @@
     padding: 30px;
     position: absolute;
     top: 16px;
+    left: 0;
     background: white;
     border-radius: 8px;
     overflow: hidden;
@@ -108,7 +109,7 @@
         word-wrap: break-word;
 
         &--action {
-          background: #7092FE;
+          background: #7092fe;
           box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
           color: white;
 
@@ -118,7 +119,7 @@
         }
 
         &--cancel {
-          background: #EBEBEB;
+          background: #ebebeb;
           box-shadow: 0px 2px 4px rgba(51, 51, 51, 0.02);
           color: #333333;
 
@@ -129,19 +130,4 @@
       }
     }
   }
-}
-
-
-
-#myDialog {
-  width: 440px;
-  height: 250px;
-  z-index: 5;
-  padding: 0;
-}
-
-dialog {
-  border: none;
-  overflow: hidden;
-  border-radius: 8px;
 }

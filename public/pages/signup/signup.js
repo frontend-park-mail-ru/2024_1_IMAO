@@ -89,8 +89,7 @@ export class Signup {
           data,
           (body) => {
             if (body?.isAuth === true) {
-              const main = document.querySelector('main');
-              router.popPage(ev, main);
+              history.go(-2);
 
               return;
             }

@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- *
+ * Formats date.
  * @param {string} isoString
  * @return {string}
  */

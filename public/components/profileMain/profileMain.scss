@@ -26,10 +26,23 @@
 
 .merchant-page-content .text-underline-hover:hover {
   text-decoration: underline;
-  text-decoration-color: #7092FE;
-  color: #7092FE;
+  text-decoration-color: #7092fe;
+  color: #7092fe;
 }
 
 .merchant-page-content label {
   cursor: pointer;
+}
+
+.profile-page-right-section-header {
+  align-self: stretch;
+  height: 32.53px;
+  padding-bottom: 0.54px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: flex;
+
+  font-size: 24px;
+  font-weight: bold;
 }

@@ -1,10 +1,13 @@
 'use strict';
 
-/* eslint-disable-next-line max-len, no-useless-escape */
-const emailRegex = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
-/* eslint-disable-next-line max-len */
-export const passwordError = 'Пароль должен быть от 8 до 32 символов, содержать цифру, строчную, прописную буквы и специальный символ!';
+const emailRegex =
+  /* eslint-disable-next-line max-len, no-useless-escape */
+  /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
+const inputRegex = /^[^\s].(?!.* {2,}).*$/;
+export const passwordError =
+  'Пароль должен быть от 8 до 32 символов, содержать цифру, строчную, прописную буквы и специальный символ!';
 export const emailError = 'Неверный формат почты!';
+export const inputError = 'Значение не должно начинаться с пробела или иметь 2 пробела подряд!';
 
 /**
  * Returns true if parameter is a string.
@@ -24,7 +27,7 @@ export function assertString(input) {
   const isStr = isString(input);
 
   if (!isStr) {
-    throw new TypeError('Expected a string');
+    throw new TypeError('Expected string');
   }
 }
 
@@ -104,4 +107,41 @@ export function validatePassword(password) {
   }
 
   return hasUpper && hasLower && hasDigit;
+}
+
+/**
+ * Check if string not empty and doesn`t contain numbers.
+ * @param {String} name
+ * @return {boolean}
+ */
+export function validateName(name) {
+  const notEmpty = name !== '';
+  const isStr = /^[a-zA-Zа-яА-Я]+$/.test(name);
+
+  return notEmpty && isStr;
+}
+
+/**
+ * Returns true if parameter satisfies input regex.
+ * @param {string} input - string to be checked.
+ * @return {boolean} result of check.
+ * @throws {TypeRrror} when parameter is not a string.
+ */
+export function validateInput(input) {
+  assertString(input);
+
+  return inputRegex.test(input);
+}
+
+/**
+ * Returns true if phone is valide.
+ * @param {*} phone
+ * @return {boolean}
+ */
+export function validatePhone(phone) {
+  if (phone.length < 18) {
+    return false;
+  }
+
+  return true;
 }

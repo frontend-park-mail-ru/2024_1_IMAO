@@ -5,7 +5,7 @@ import template from './sidebar.hbs';
 import styles from './sidebar.scss';
 
 /**
- * Render an CartBlock template.
+ * Render a sidebar template.
  * @param {string | number} quantity - The title of the product.
  * @param {string | number} priceSum - The price of the product.
  * @return {Handlebars.TemplateDelegate} - The template of card.

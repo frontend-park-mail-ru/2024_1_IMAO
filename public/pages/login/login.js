@@ -87,8 +87,7 @@ export class Login {
           data,
           (body) => {
             if (body?.isAuth === true) {
-              const main = document.querySelector('main');
-              router.popPage(ev, main);
+              history.back();
 
               return;
             }

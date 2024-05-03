@@ -38,5 +38,6 @@ module.exports = {
     'newline-before-return': 'error', // Перенос строки перед return
     'no-irregular-whitespace': 'error', // Запрет неправильных пробелов
     'no-multi-spaces': 'error', // Запрет множественных пробелов
+    'no-case-declarations': 'off',
   },
 };

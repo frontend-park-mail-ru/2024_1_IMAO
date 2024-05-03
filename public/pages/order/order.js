@@ -32,14 +32,9 @@ export class Order {
   }
 
   /**
-   *
+   * Adds listeners for rder page.
    */
   #addListeners() {
-    // const allCheckbox = this.#element.querySelector('[name="cartBlocks"]');
-    // const ads = this.#element.querySelectorAll('[name="product"]');
-
-    // this.#addCheckboxesListener(allCheckbox, ads);
-
     const quantity = this.#element.querySelector('[id="quantity"]');
     const priceSum = this.#element.querySelector('[id="priceSum"]');
 
@@ -54,7 +49,7 @@ export class Order {
   }
 
   /**
-   *
+   * Adds submit listener.
    * @param {*} submit
    * @param {*} form
    * @param {*} ads
@@ -110,7 +105,7 @@ export class Order {
   }
 
   /**
-   *
+   * Adds delete from order listener.
    * @param {NodeListOf} ads
    * @param {HTMLElement} quantity
    * @param {HTMLElement} priceSum

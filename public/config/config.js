@@ -12,6 +12,7 @@ export const API_ROUTES = {
     CHECKAUTH: new URL('/api/auth/check_auth', api),
     LOGOUT: new URL('/api/auth/logout', api),
     SIGNUP: new URL('/api/auth/signup', api),
+    CSRF: new URL('/api/auth/csrf', api),
   },
   ADVERT: {
     CREATE_ADVERT: new URL('/api/adverts/create', api),
@@ -30,22 +31,32 @@ export const API_ROUTES = {
     SET_PROFILE_APPROVED: new URL('/api/profile/approved', api),
     PROFILE_EDIT: new URL('/api/profile/edit', api),
     SET_PROFILE_PHONE: new URL('/api/profile/phone', api),
-    SET_PROFILE_AVATAR: new URL('/api/profile/avatar', api),
+    SET_PROFILE_AVATAR: new URL('/api/profile/edit', api),
     SET_PROFILE_CITY: new URL('/api/profile/city', api),
     SET_PROFILE_CITY_BY_ID: new URL('/api/profile/:id/adverts', api),
     EDIT_USER_EMAIL: new URL('/api/auth/edit/email', api),
   },
   CITY: {
-    GET_CITY_LIST: new URL('/api/profile/city', api),
+    GET_CITY_LIST: new URL('/api/city', api),
   },
   CART: {
     GET_CART_LIST: new URL('/api/cart/list', api),
     CHANGE_CART_ITEM_STATUS: new URL('/api/cart/change', api),
     DELETE_CART_ITEM: new URL('/api/cart/delete', api),
   },
+  FAVORITES: {
+    GET_FAVORITES_LIST: new URL('/api/favourites/list', api),
+    CHANGE_FAVORITES_ITEM_STATUS: new URL('/api/favourites/change', api),
+    DELETE_FAVORITES_ITEM: new URL('/api/favourites/delete', api),
+  },
   ORDER: {
     GET_ORDERS_LIST: new URL('/api/order/list', api),
     CREATE_ORDERS: new URL('/api/order/create', api),
+  },
+  SURVEY: {
+    CREATE: new URL('/api/survey/create', api),
+    CHECK: new URL('/api/survey/check/1', api),
+    STATISTICS: new URL('/api/survey/statistics', api),
   },
 };
 
@@ -55,68 +66,78 @@ export const API_ROUTES = {
 export const PAGES_ROUTES = {
   mainPage: {
     href: new URL('/', serverHost),
-    name: 'main',
+    name: 'Волчок - доска объявлений',
     re: new RegExp(/\/$/),
+  },
+  csatPage: {
+    href: new URL('/csat', serverHost),
+    name: 'Размещение объявления',
+    re: new RegExp(/^\/csat$/),
   },
   adCreationPage: {
     href: new URL('/create', serverHost),
-    name: 'create',
+    name: 'Размещение объявления',
     re: new RegExp(/^\/create$/),
   },
   adEditingPage: {
     href: new URL('/edit/:id', serverHost),
-    name: 'edit',
+    name: 'Редактирование объявления - ',
     re: new RegExp(/^\/edit\/\d+$/),
   },
   loginPage: {
     href: new URL('/login', serverHost),
-    name: 'login',
+    name: 'Волчок - авторизация',
     re: new RegExp(/^\/login$/),
   },
   signupPage: {
     href: new URL('/signup', serverHost),
-    name: 'signup',
+    name: 'Волчок - регистрация',
     re: new RegExp(/^\/signup$/),
   },
   cartPage: {
     href: new URL('/cart', serverHost),
-    name: 'cart',
+    name: 'Волчок - корзина',
     re: new RegExp(/^\/cart$/),
   },
   orderPage: {
     href: new URL('/order', serverHost),
-    name: 'order',
+    name: 'Оформление заказа',
     re: new RegExp(/^\/order$/),
+  },
+  adminPage: {
+    href: new URL('/statistics', serverHost),
+    name: 'Статистика по опросам',
+    re: new RegExp(/^\/stats$/),
   },
   merchantsPage: {
     href: new URL('/merchant/:id', serverHost),
-    name: 'merchant',
+    name: 'Продавец - ',
     re: new RegExp(/^\/merchant+\/\d+$/),
   },
   profilePage: {
-    href: new URL('/profile', serverHost),
-    name: 'profile',
-    re: new RegExp(/^\/profile$/),
+    href: new URL('/profile/:state', serverHost),
+    name: 'Профиль',
+    re: new RegExp(/^\/profile\/[a-zA-Z_]+$/),
   },
   profileEdit: {
     href: new URL('/profile/edit', serverHost),
-    name: 'edit profile',
+    name: 'Редактирование профиля',
     re: new RegExp(/^\/profile\/edit$/),
   },
   adsListByCity: {
     href: new URL('/:city', serverHost),
-    name: 'city',
-    re: new RegExp(/\/[a-zA-Z]+(?![\w/])/g),
+    name: 'Волчок - доска объявлений',
+    re: new RegExp(/\/[a-zA-Z_]+(?![\w/])/g),
   },
   adsListByCategory: {
     href: new URL('/:city/:category', serverHost),
-    name: 'category',
-    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+$/),
+    name: 'Волчок - доска объявлений',
+    re: new RegExp(/\/[a-zA-Z_]+\/[a-zA-Z_]+$/),
   },
   adPage: {
     href: new URL('/:city/:category/:id', serverHost),
-    name: 'advert',
-    re: new RegExp(/\/[a-zA-Z]+\/[a-zA-Z_]+\/\d+$/),
+    name: 'Объявление - ',
+    re: new RegExp(/\/[a-zA-Z_]+\/[a-zA-Z_]+\/\d+$/),
   },
 };
 
@@ -125,6 +146,11 @@ export const PAGES_ROUTES = {
  */
 export const AUTH = {
   isAuth: false,
+  id: NaN,
+  email: '',
+  avatar: '',
+  cartNum: 0,
+  favNum: 0,
 };
 
 export const CATEGORIES = [

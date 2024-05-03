@@ -1,20 +1,24 @@
 'use strict';
 
 import renderProfileMain from '../../components/profileMain/profileMain.js';
-import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
+import AdsCard from '../../components/adsCard/adsCard.js';
+import SettingsContainer from '../../components/settingsContainer/settingsContainer';
 import ProfileCard from '../../components/profileCard/profileCard.js';
+import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
+import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import formatDate from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
-import {buildURL, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-
+import {serverHost} from '../../config/config.js';
+import {buildURL, buildURLBySegments, getURLFromLocation, parsePathParams} from '../../modules/parsePathParams.js';
 
 /** Class representing a main page. */
 export class ProfilePage {
   #element;
+  #slug;
   #isBottomReached;
 
   /**
@@ -26,7 +30,16 @@ export class ProfilePage {
     this.#element.classList.add('main-page');
     this.header = header;
     this.sectionState = new StageStorage();
+    this.sectionStateV = new StageStorage();
+    this.sectionStateS = new StageStorage();
     this.#isBottomReached = false;
+
+    this.labelsAndValues = [
+      {categoryLabel: 'Мои объявления', categoryLabelValue: 'adverts'},
+      {categoryLabel: 'Мои заказы', categoryLabelValue: 'orders'},
+      {categoryLabel: 'Избранное', categoryLabelValue: 'favorites'},
+      {categoryLabel: 'Настройки', categoryLabelValue: 'settings'},
+    ];
   }
 
   /**
@@ -34,6 +47,7 @@ export class ProfilePage {
    * @return {Element} - The element of main page.
    */
   async render() {
+    this.#getSlug();
     await this.#renderTemplate();
 
     this.#addListeners();
@@ -42,23 +56,171 @@ export class ProfilePage {
   }
 
   /**
-   *
+   *  Gets Url params.
    */
-  async #addListeners() {
-    const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
-
-    inputs.forEach(function(input) {
-      input.addEventListener('click', this.handleClick.bind(this));
-    }.bind(this));
-
-    this.#addScrollListener();
+  #getSlug() {
+    const url = getURLFromLocation(window.location.href, router.host);
+    this.#slug = parsePathParams(router.routes.profilePage.href, url);
   }
 
   /**
-   *
+   * Add listener for section switching.
+   */
+  #addListeners() {
+    const verticalInputs = this.#element.querySelectorAll('.verticle-button-group-profile input[type="radio"]');
+
+    verticalInputs.forEach((input) => {
+      input.addEventListener('click', (event) => {
+        this.handleSectionClick(event);
+        const temp = ['profile', event.target.value];
+        const url = buildURLBySegments(serverHost, temp);
+        const path = url.pathname;
+        history.pushState({page: path}, path, path);
+        const radioButton = this.#element.querySelector(`input[value="${this.#slug.state}"]`);
+        radioButton.parentElement.previousElementSibling.classList.remove('icon--action');
+      });
+    });
+
+    // this.#addScrollListener();
+  }
+
+  /**
+   * Add section switching logic.
    * @param {*} event
    */
-  handleClick(event) {
+  async handleSectionClick(event) {
+    const targetValue = event.target.value;
+
+    const found =
+      this.labelsAndValues.find((item) => item.categoryLabelValue === targetValue) || this.labelsAndValues[0];
+    this.#element.querySelector('.profile-page-right-section-header').innerText = found.categoryLabel;
+    const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
+    const isRendered = this.sectionStateV.getSectionState(found.categoryLabelValue, 'isRendered');
+
+    const currentButtonChecked = this.sectionStateV.getSectionState('serviceField', 'isChecked');
+    this.sectionStateV.setSectionState('serviceField', 'isChecked', found.categoryLabelValue);
+
+    this.sectionStateV.setSectionState(currentButtonChecked, 'render', profilePageContentContainer);
+
+    document.title = 'Профиль - ' + found.categoryLabel;
+
+    if (isRendered) {
+      const stashedMerchantsCardContainer = this.sectionStateV.getSectionState(found.categoryLabelValue, 'render');
+      profilePageContentContainer.replaceWith(stashedMerchantsCardContainer);
+
+      return;
+    }
+
+    const newProfilePageContentContainer = document.createElement('div');
+    newProfilePageContentContainer.classList.add('profile-page-right-section-content');
+    profilePageContentContainer.replaceWith(newProfilePageContentContainer);
+    this.sectionStateV.setSectionState(found.categoryLabelValue, 'isRendered', true);
+
+    let buttonGroupItemes = [];
+    let currentState = '';
+
+    switch (found.categoryLabelValue) {
+      case 'adverts':
+        buttonGroupItemes = [
+          {
+            categoryLabel: 'Активные',
+            count: this.profile.activeAddsCount,
+            checked: true,
+            categoryLabelValue: 'active',
+          },
+          {categoryLabel: 'Проданные', count: this.profile.soldAddsCount, checked: false, categoryLabelValue: 'sold'},
+        ];
+
+        currentState = this.#addHorizontalSectionState(
+            newProfilePageContentContainer,
+            buttonGroupItemes,
+            this.sectionState,
+            this.advertsHandleClick,
+        );
+
+        const merchantsCardContainer = document.createElement('div');
+        merchantsCardContainer.classList.add('cards-container-merchant');
+        this.#renderCards(merchantsCardContainer, currentState, found.categoryLabelValue);
+        newProfilePageContentContainer.appendChild(merchantsCardContainer);
+        break;
+
+      case 'orders':
+        buttonGroupItemes = [
+          {categoryLabel: 'Покупки', count: '', checked: true, categoryLabelValue: 'purchases'},
+          {categoryLabel: 'Продажи', count: '', checked: false, categoryLabelValue: 'sales'},
+        ];
+
+        currentState = this.#addHorizontalSectionState(
+            newProfilePageContentContainer,
+            buttonGroupItemes,
+            this.sectionStateS,
+            this.orderHandleClick,
+        );
+
+        const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
+        const header = isPerchasesChecked ? 'Нет покупок' : 'Не продаж';
+        const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
+
+        const emptyOrderPlug = new EmptyOrderPlug(header, content);
+        newProfilePageContentContainer.appendChild(emptyOrderPlug.render());
+        break;
+
+      case 'favorites':
+        const favoritesCardContainer = document.createElement('div');
+        favoritesCardContainer.classList.add('cards-container-merchant');
+        console.log(found.categoryLabelValue);
+        this.#renderCards(favoritesCardContainer, currentState, found.categoryLabelValue);
+        newProfilePageContentContainer.appendChild(favoritesCardContainer);
+        break;
+
+      case 'settings':
+        const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
+        const settingsContainerElement = await settingsContainer.render();
+        newProfilePageContentContainer.appendChild(settingsContainerElement);
+        break;
+    }
+  }
+
+  /**
+   * Adds sections states.
+   * @param {*} container
+   * @param {*} buttonGroupItemes
+   * @param {*} sectionState
+   * @param {*} handleClick
+   * @return {string}
+   */
+  #addHorizontalSectionState(container, buttonGroupItemes, sectionState, handleClick) {
+    buttonGroupItemes.forEach((item) => {
+      sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
+      if (item.checked) {
+        sectionState.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
+      }
+    });
+
+    const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
+    container.appendChild(horizontalButtonGroupInstance.render());
+
+    const currentState = sectionState.getSectionState(buttonGroupItemes.categoryLabelValue, 'isRendered');
+    if (!currentState) {
+      this.sectionState.setSectionState(buttonGroupItemes.categoryLabelValue, 'isRendered', true);
+    }
+
+    const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
+
+    inputs.forEach(
+        function(input) {
+          input.addEventListener('click', handleClick.bind(this));
+        }.bind(this),
+    );
+
+    return currentState;
+  }
+
+  /**
+   * Adds adverts states.
+   * @param {*} event
+   */
+  advertsHandleClick(event) {
     const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
     const isRendered = this.sectionState.getSectionState(event.target.value, 'isRendered');
 
@@ -71,10 +233,38 @@ export class ProfilePage {
       const newMerchantsCardContainer = document.createElement('div');
       newMerchantsCardContainer.classList.add('cards-container-merchant');
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
-      this.sectionState.setSectionState(event.target.value, 'isRendered', merchantsCardContainer);
-      this.#renderCards(newMerchantsCardContainer, isRendered);
+      this.sectionState.setSectionState(event.target.value, 'isRendered', true);
+      this.#renderCards(newMerchantsCardContainer, isRendered, 'adverts');
     } else {
       const stashedMerchantsCardContainer = this.sectionState.getSectionState(event.target.value, 'render');
+      merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
+    }
+  }
+
+  /**
+   * Adds orders states.
+   * @param {*} event
+   */
+  orderHandleClick(event) {
+    const merchantsCardContainer = this.#element.querySelector('.empty-orders-main-container');
+    const isRendered = this.sectionStateS.getSectionState(event.target.value, 'isRendered');
+
+    const currentButtonChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked');
+    this.sectionStateS.setSectionState('serviceField', 'isChecked', event.target.value);
+
+    this.sectionStateS.setSectionState(currentButtonChecked, 'render', merchantsCardContainer);
+
+    if (!isRendered) {
+      this.sectionStateS.setSectionState(event.target.value, 'isRendered', true);
+
+      const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
+      const header = isPerchasesChecked ? 'Нет покупок' : 'Нет продаж';
+      const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
+
+      const emptyOrderPlug = new EmptyOrderPlug(header, content);
+      merchantsCardContainer.replaceWith(emptyOrderPlug.render());
+    } else {
+      const stashedMerchantsCardContainer = this.sectionStateS.getSectionState(event.target.value, 'render');
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
     }
   }
@@ -103,136 +293,126 @@ export class ProfilePage {
   }
 
   /**
-   *
-   * @param {*} merchantsPageRightSection
+   * Render advert cards by codition.
+   * @param {HTMLElement} merchantsPageRightSection
    * @param {*} alreadyRendered
+   * @param {*} sectionState
    */
-  #renderCards(merchantsPageRightSection, alreadyRendered) {
+  async #renderCards(merchantsPageRightSection, alreadyRendered, sectionState) {
     const cards = document.getElementsByClassName('card');
-    const startID = cards.length == 0 ?
-      1 :
-      parseInt(cards[cards.length - 1].dataset['id']) + 1;
+    const startID = cards.length == 0 ? 1 : parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('count');
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('startId');
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('deleted');
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('userId');
+    const isActive = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active';
+    const state = isActive ? 0 : 1;
+    const id = ajax.auth.id;
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('userId', id);
+    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('deleted', state);
 
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('count', 28);
-    ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('startId', startID);
+    let apiRoute = null;
+    switch (sectionState) {
+      case 'adverts':
+        apiRoute = ajax.routes.ADVERT.GET_ADS_LIST;
+        break;
 
-    ajax.get(
-        ajax.routes.ADVERT.GET_ADS_LIST,
-        (body) => {
-          const adverts = body['items'];
-          if (!(adverts && Array.isArray(adverts))) {
-            return;
-          }
+      case 'favorites':
+        apiRoute = ajax.routes.FAVORITES.GET_FAVORITES_LIST;
+        break;
+    }
 
-          const cardsContainer = !alreadyRendered ?
-          document.createElement('div') :
-          document.querySelector('.cards-container-merchant');
-          if (!alreadyRendered) {
-            cardsContainer.classList.add('cards-container-merchant');
-          }
+    let adverts = {};
+    await ajax.get(apiRoute, (body) => {
+      adverts = body['items'];
+    });
 
-          adverts.forEach((inner) => {
-            const {price, title, id, city, category} = inner;
+    if (!(adverts && Array.isArray(adverts))) {
+      const content = isActive ? 'активные' : 'проданные';
+      const emptyAdvertsPlug = new EmptyAdvertsPlug(content);
+      merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
 
-            const path = buildURLBySegments(router.host, [city, category, id]);
+      return;
+    }
 
-            merchantsPageRightSection.appendChild(
-                renderAdsCardTemplate(title, price, id, path),
-            );
-          });
+    const cardsContainer = !alreadyRendered ?
+      document.createElement('div') :
+      document.querySelector('.cards-container-merchant');
+    if (!alreadyRendered) {
+      cardsContainer.classList.add('cards-container-merchant');
+    }
 
-          this.#isBottomReached = false;
-        },
-    );
+    adverts.forEach((inner) => {
+      const {price, title, id, inFavourites, city, category, photosIMG} = inner;
+
+      const path = buildURLBySegments(router.host, [city, category, id]);
+      const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
+      merchantsPageRightSection.appendChild(adsCardInstance.render());
+    });
+
+    this.#isBottomReached = false;
   }
 
   /**
-   * Render a temlate for a merchant page.
+   * Render a temlate for a profile page.
    */
   async #renderTemplate() {
-    const urlMain = router.routes.mainPage.href;
     this.#element.appendChild(this.header.render());
     const root = renderProfileMain();
     this.#element.appendChild(root);
     const id = ajax.auth.id;
-    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {'id': id});
-    await ajax.get(
-        path,
-        (body) => {
-          const profile = body['profile'];
+    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id: id});
+    const apiCSRF = ajax.routes.AUTH.CSRF;
 
-          const merchantsName = profile.merchantsName;
-          const ratingValue = profile.rating;
+    await ajax.get(apiCSRF, (body) => {
+      this.CSRFToken = body['tokenBody'];
+    });
 
-          // const merchantPageTitleItems = {
-          // merchantsName: merchantsName,
-          // urlMain: urlMain,
-          // };
-          // const merchantPageTitleInstance = new MerchantPageTitle(merchantPageTitleItems);
-          // this.#element.insertBefore(merchantPageTitleInstance.render(), this.#element.lastChild);
+    let profile = {};
+    await ajax.get(path, (body) => {
+      profile = body['profile'];
+    });
 
-          const merchantCartItems = {
-            merchantsName: merchantsName,
-            location: profile.city.translation,
-            registrationDate: formatDate(profile.regTime),
-            isProfileVerified: profile.approved,
-            reviewCount: profile.reactionsCount,
-            subscribersCount: profile.subersCount,
-            subscribtionsCount: profile.subonsCount,
-            urlOrder: '/cart',
-            urlSettings: router.routes.profileEdit.href,
-            urlMerchant: '#',
-          };
-          const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
-          const profileCardInstance = new ProfileCard(merchantCartItems);
-          merchantsCardSection.appendChild(profileCardInstance.render());
+    const merchantsName = profile.merchantsName;
+    const ratingValue = profile.rating;
 
-          const rating = this.#element.querySelector('.rating');
-          const ratingBarInstance = new RatingBar(ratingValue);
-          const ratingBar = ratingBarInstance.render();
-          rating.appendChild(ratingBar);
+    this.profile = {
+      merchantsName: profile.merchantsName,
+      ratingValue: profile.rating,
+      name: profile.name,
+      surname: profile.surname,
+      phone: profile.phoneNumber,
+      email: ajax.auth.email,
+      city: profile.city.name,
+      location: profile.city.translation,
+      registrationDate: formatDate(profile.regTime),
+      isProfileVerified: profile.approved,
+      reviewCount: profile.reactionsCount,
+      subscribersCount: profile.subersCount,
+      subscribtionsCount: profile.subonsCount,
+      avatarImg: profile.avatarImg,
+      activeAddsCount: profile.activeAddsCount,
+      soldAddsCount: profile.soldAddsCount,
+    };
 
-          const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
-          const buttonGroupItemes = [
-            {categoryLabel: 'Активные', count: '', checked: true, categoryLabelValue: 'active'},
-            {categoryLabel: 'Проданные', count: '', checked: false, categoryLabelValue: 'sold'},
-          ];
-          buttonGroupItemes.forEach((item) => {
-            this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
-          });
-          buttonGroupItemes.forEach((item) => {
-            if (item.checked) {
-              this.sectionState.setSectionState('serviceField', 'isChecked', item.categoryLabelValue);
+    const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
+    const profileCardInstance = new ProfileCard(this.profile);
+    merchantsCardSection.appendChild(profileCardInstance.render());
 
-              return;
-            }
-          });
-          const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
-          merchantsPageRightSection.appendChild(horizontalButtonGroupInstance.render());
-        },
-    );
+    const rating = this.#element.querySelector('.rating');
+    const ratingBarInstance = new RatingBar(ratingValue);
+    const ratingBar = ratingBarInstance.render();
+    rating.appendChild(ratingBar);
 
-    const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
-    const currentState = this.sectionState.getSectionState('active', 'isRendered');
-    this.#renderCards(merchantsCardContainer, currentState);
-    if (!currentState) {
-      this.sectionState.setSectionState('active', 'isRendered', true);
-    }
+    const event = {
+      target: {
+        value: this.#slug.state,
+      },
+    };
 
-    // const alreadyRendered = document.querySelector('.merchant-page-right-section') != null;
-    // const merchantsPageRightSection = alreadyRendered ?
-    //   document.querySelector('.merchant-page-right-section') :
-    //   document.createElement('div');
+    const radioButton = this.#element.querySelector(`[value="${this.#slug.state}"]`);
+    radioButton.checked = true;
+    radioButton.parentElement.previousElementSibling.classList.add('icon--action');
 
-    // if (!alreadyRendered) {
-
-    // }
-
-    // console.log('aboba');
-
-    // this.#renderCards(merchantsPageRightSection, alreadyRendered);
+    this.handleSectionClick(event);
   }
 }

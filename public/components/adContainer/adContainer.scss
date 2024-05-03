@@ -1,142 +1,174 @@
 .advert-block {
-    width: 75%;
+  width: 75%;
 }
 
 .seller-block {
-    width: 25%;
+  width: 25%;
 }
 
 .ad-container .top-panel {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .ad-container .title {
-    width: 75%;
+  width: 75%;
 }
 
 .ad-container .favourite {
-    /* width: 20%; */
-    display: flex;
-    align-items: end;
-    justify-content: flex-end;
-    font-size: 14px;
+  /* width: 20%; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 14px;
 }
 
 .ad-container .btn-favourite {
-    text-decoration: none;
-    padding: 0;
-    cursor: pointer;
-    color: black;
+  text-decoration: none;
+  padding: 0;
+  cursor: pointer;
+  color: black;
 }
 
 .ad-container .btn-favourite:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .ad-container .like-img {
-    width: 20px;
-    height: 20px;
-    vertical-align: bottom;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
 }
 
 .ad-container h1 {
-    margin: 0;
+  margin: 0;
 }
 
 .advert-description {
-    margin-top: 4%;
-    font-size: 16px;
+  margin-top: 4%;
+  font-size: 16px;
 }
 
 .ad-container ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .ad-container li {
-    display: flex;
-    margin-bottom: 2%;
+  display: flex;
+  margin-bottom: 2%;
 }
 
 .ad-container .property-name {
-    color: #858585;
-    flex: 0 0 30%;
+  color: #858585;
+  flex: 0 0 30%;
 }
 
 .ad-container .end-of-block {
-    margin-bottom: 3%;
+  margin-bottom: 3%;
 }
 
 .advert-images {
-    margin-top: 3%;
-    position: relative;
-    width: 100%;
-    overflow: hidden;
+  margin-top: 3%;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .advert-images .carousel {
-    display: flex;
-    position: relative;
-    transition: transform 0.5s ease;
+  display: flex;
+  position: relative;
+  transition: transform 0.5s ease;
 }
 
 .advert-images .images {
-    display: flex;
+  display: flex;
+  width: 100%;
+  height: 450px;
 }
 
 .advert-images img {
-    width: 40%;
-    height: 450px;
-    padding-right: 3px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding-right: 3px;
 }
 
 .advert-images .btn-container {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .advert-images button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    border: 2px solid #ffffff;
-    cursor: pointer;
-    position: relative;
-    margin: 1%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  position: relative;
+  margin: 1%;
 }
 
 .advert-images button:hover {
-    background-color: #dfdfdf;
-    border: 0px;
+  background-color: #dfdfdf;
+  border: 0px;
 }
 
 .seller-block {
-    padding-left: 50px;
+  padding-left: 50px;
 }
 
 .seller-block__btn {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    height: 30px;
-    display: block;
-    text-align: center;
-    padding-top: 10px;
-    text-decoration: none;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 1);
-    background: rgba(112, 146, 254, 1);
-    border: none;
-    border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: 30px;
+  display: block;
+  text-align: center;
+  padding-top: 10px;
+  text-decoration: none;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 1);
+  background: rgba(112, 146, 254, 1);
+  border: none;
+  border-radius: 8px;
 }
 
 .seller-block__btn:hover {
-    background: rgb(59, 92, 199);
+  background: rgb(59, 92, 199);
+}
 
+@mixin css3-prefix($property, $value) {
+  #{$property}: #{$value};
+}
+
+.btn-favourite {
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    .like-heart:not(.active) svg {
+      stroke: gray;
+    }
+  }
+
+  &:active {
+    .like-heart {
+      @include css3-prefix(transform, scale(0.75) translateY(2px));
+    }
+  }
+
+  .like-heart {
+    height: 18px;
+    width: 20px;
+    svg {
+      height: 18px;
+      width: 20px;
+    }
+  }
 }

@@ -10,21 +10,14 @@ import {Advert} from './pages/advert/advert.js';
 import {AdCreation} from './pages/advert/adCreation.js';
 import {MerchantsPage} from './pages/merchantsPage/merchantsPage.js';
 import {ProfilePage} from './pages/profilePage/profilePage.js';
-import {ProfileEdit} from './pages/profilePage/profileEdit.js';
 import {Cart} from './pages/cart/cart.js';
+import {Stats} from './pages/stats/stats.js';
 import {Order} from './pages/order/order.js';
+import {Csat} from './pages/csat/csat.js';
+import cartModel from './models/cart.js';
+import favoritesModel from './models/favorites.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js', {scope: '/'})
-      .then((reg) => {
-        console.log(reg);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-}
 
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
@@ -34,11 +27,14 @@ ajax.initialize(AUTH, API_ROUTES);
 router.initialize(AUTH, PAGES_ROUTES, serverHost);
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
 
+const header = new Header(cartModel, favoritesModel);
+cartModel.on('cartChange', header.changeCartQuantity.bind(header));
+favoritesModel.on('favoritesChange', header.changeFavoritesQuantity.bind(header));
+
 router.init('loginPage', logoutRequired(renderLogin));
 router.init('signupPage', logoutRequired(renderSignup));
 router.init('merchantsPage', renderMerchantsPage);
 router.init('profilePage', loginRequired(renderProfilePage));
-router.init('profileEdit', loginRequired(renderProfileEdit));
 router.init('mainPage', renderMain);
 router.init('adsListByCity', renderMain);
 router.init('adsListByCategory', renderMain);
@@ -47,9 +43,14 @@ router.init('adCreationPage', loginRequired(renderAdCreation));
 router.init('adEditingPage', loginRequired(renderAdEditing));
 router.init('cartPage', loginRequired(renderCart));
 router.init('orderPage', loginRequired(renderOrder));
+router.init('adminPage', renderStats);
+router.init('csatPage', renderCsat);
 
+window.addEventListener('popstate', (event) => {
+  router.popPage(event, mainElement);
+});
 
-const header = new Header();
+router.popPage(null, mainElement);
 
 /**
  * logout Required Decorator.
@@ -58,9 +59,9 @@ const header = new Header();
  */
 function logoutRequired(render) {
   return function() {
-    if (AUTH.is_auth === true) {
+    if (AUTH.isAuth === true) {
       history.replaceState({page: '/'}, 'main', '/');
-      document.title = 'main';
+      document.title = 'Волчок - доска объявлений';
 
       return renderMain();
     }
@@ -76,15 +77,26 @@ function logoutRequired(render) {
  */
 function loginRequired(render) {
   return function() {
-    if (AUTH.is_auth !== true) {
+    if (AUTH.isAuth !== true) {
       history.replaceState({page: '/login'}, 'login', '/login');
-      document.title = 'login';
+      document.title = 'Волчок - авторизация';
 
       return renderLogin();
     }
 
     return render();
   };
+}
+
+/**
+ * Return csat page.
+ * @return {HTMLElement} - The csat page.
+ */
+function renderCsat() {
+  mainElement.innerHTML = '';
+  const csat = new Csat();
+
+  return csat.render();
 }
 
 /**
@@ -129,17 +141,6 @@ function renderProfilePage() {
   const profilePage = new ProfilePage(header);
 
   return profilePage.render();
-}
-
-/**
- * Return profile page.
- * @return {HTMLElement} - The merchant's page.
- */
-function renderProfileEdit() {
-  mainElement.innerHTML = '';
-  const profileEdit = new ProfileEdit(header);
-
-  return profileEdit.render();
 }
 
 /**
@@ -192,7 +193,7 @@ function renderAdEditing() {
  */
 function renderCart() {
   mainElement.innerHTML = '';
-  const cart = new Cart(header);
+  const cart = new Cart(header, cartModel);
 
   return cart.render();
 }
@@ -208,8 +209,13 @@ function renderOrder() {
   return order.render();
 }
 
-window.addEventListener('popstate', (event) => {
-  router.popPage(event, mainElement);
-});
+/**
+ * Return statistics page.
+ * @return {HTMLElement}
+ */
+function renderStats() {
+  mainElement.innerHTML = '';
+  const stats = new Stats(header);
 
-router.popPage(null, mainElement);
+  return stats.render();
+}

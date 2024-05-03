@@ -5,69 +5,73 @@ import template from './addCartOverlay.hbs';
 import './addCartOverlay.scss';
 import router from '../../router/router.js';
 import ajax from '../../modules/ajax.js';
+import cartModel from '../../models/cart.js';
 
 /**
- *
+ * Class represented an overlay to add into cart.
  */
 class AddCartOverlay {
   #element;
-
+  #model;
   /**
-   *
-   * @param {*} button
+   * Constructor for overlay.
+   * @param {HTMLElement} button
    */
   constructor(button) {
     this.button = button;
+    this.#model = cartModel;
   }
 
   /**
-   *
+   * Returns an overlay.
    * @return {HTMLElement}
    */
-  render() {
+  async render() {
     this.#renderTemplate();
 
-    this.#addListeners();
+    await this.#addListeners();
 
     return this.#element;
   }
 
   /**
-   *
+   * Renders an overlay.
    */
   #renderTemplate() {
     this.#element = stringToHtmlElement(template());
   }
 
   /**
-   *
+   * Add listeners for overlay.
    */
-  #addListeners() {
+  async #addListeners() {
     const myButton = this.button;
-    myButton.addEventListener('click', (ev) => {
+    myButton.addEventListener('click', async (ev) => {
+      if (!ajax.auth.isAuth) {
+        router.pushPage(ev, router.routes.loginPage.href.href);
+
+        return;
+      }
+
       myDialog.showModal();
       ev.preventDefault();
       const advertId = Number(myButton.dataset['id']);
 
-      ajax.post(
-          ajax.routes.CART.CHANGE_CART_ITEM_STATUS,
-          {advertId},
-          (body) => {
-            const {isAppended} = body;
+      const isAppended = await this.#model.changeCart(advertId);
 
-            if (isAppended === undefined) {
-              return;
-            }
+      if (isAppended === undefined) {
+        return;
+      }
 
-            const textToChange = this.#element.querySelector('.add-to-cart-dialog__text-to-change');
+      const textToChange = this.#element.querySelector('.add-to-cart-dialog__text-to-change');
 
-            if (isAppended) {
-              textToChange.innerHTML = 'Товар добавлен в корзину';
-            } else {
-              textToChange.innerHTML = 'Товар удалён из корзины';
-            }
-          },
-      );
+      if (isAppended) {
+        myButton.innerHTML = 'Удалить из корзины';
+        textToChange.innerHTML = 'Товар добавлен в корзину';
+      } else {
+        myButton.innerHTML = 'Добавить в корзину';
+        textToChange.innerHTML = 'Товар удалён из корзины';
+      }
     });
 
     const myDialog = this.#element;

@@ -1,0 +1,15 @@
+.chart {
+  width: 600px;
+  height: auto;
+  background: #ddd;
+  border: 1px solid #bbb;
+  list-style: none;
+  padding: 15px 20px;
+
+  &__bar {
+    height: 20px;
+    border: 1px solid gray;
+    padding: 20px;
+    margin: 10px 0;
+  }
+}

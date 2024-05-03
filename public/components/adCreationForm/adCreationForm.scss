@@ -1,121 +1,132 @@
 .ad__creation {
-    gap: 10px;
-    margin: auto;
-    padding: 20px;
-    width: 1215px;
-    margin: 0 auto;
+  gap: 10px;
+  margin: auto;
+  padding: 20px;
+  width: 1215px;
+  margin: 0 auto;
 }
 
 .ad__creation .form {
-    display: grid;
-    grid-template-columns: auto auto;
-    float: inline-start;
-    gap: 10px;
-    margin: auto;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: auto auto;
+  float: inline-start;
+  gap: 10px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-bottom: 100px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .ad__creation .form__title {
-    font-size: 2em;
-    font-weight: 500;
-    line-height: 36px;
-    padding-bottom: 20px;
+  font-size: 2em;
+  font-weight: 500;
+  line-height: 36px;
+  padding-bottom: 20px;
 }
 
 /* Элементы формы */
 .ad__creation .form__label {
-    min-width: 200px;
-    text-align: left;
-    padding-right: 10px;
-    display: block;
-    margin-bottom: 20px;
-    color: #858585;
-    display: flex;
-    align-items: center;
-    font-family: "Roboto", Open Sans;
-    font-size: 16px;
+  min-width: 200px;
+  text-align: left;
+  padding-right: 10px;
+  display: block;
+  margin-bottom: 20px;
+  color: #858585;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
 }
 
 .ad__creation .form__input,
 .ad__creation .form__select,
 .ad__creation .form__textarea {
-    /* min-width: 640px; */
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    color: #000000;
-    background-color: #fff;
-    background-clip: padding-box;
-    font-family: "Roboto", Open Sans;
-    font-size: 16px;
+  /* min-width: 640px; */
+  font-family: 'OpenSans', sans-serif;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: solid 1px #eee;
+  box-shadow: 0px 2px 5px 0px rgba(155, 155, 155, 0.5);
+  box-sizing: border-box;
+  color: #000000;
+  background-color: #fff;
+  background-clip: padding-box;
+  font-size: 16px;
 }
 
 .ad__creation .form__select {
-    max-width: 290px;
+  max-width: 290px;
 }
 
 .ad__creation .form__textarea {
-    width: 615px;
-    height: 130px;
+  width: 615px;
+  height: 130px;
 }
 
 .ad__creation .form__description {
-    color: #8b8a8a;
+  color: #8b8a8a;
 }
 
 .ad__creation .form__input--description {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.input__error {
+  border-color: #ff0000 !important;
 }
 
 .ad__creation .form__input--min {
-    max-width: 180px;
+  max-width: 180px;
 }
 
-.preform .form__input[type="file"] {
-    border: none;
+.preform .form__input[type='file'] {
+  border: none;
 }
 
-.preform .form__button {
-    width: 284px;
-    height: 40px;
-    padding: 8px 20px;
-    background: #7092FE;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
-    border-radius: 8px;
-    justify-content: center;
-    align-items: center;
-    display: inline-flex;
-    text-decoration: none;
-    color: white; /* белый цвет текста */
-    border: none; /* без границ */
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 18px; /* размер шрифта */
-    cursor: pointer; /* курсор в виде указателя */
-    transition: background-color 0.3s; /* плавное изменение цвета фона при наведении */
+.form__button {
+  width: 284px;
+  height: 40px;
+  padding: 8px 20px;
+  background: #7092fe;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  text-decoration: none;
+  color: white; /* белый цвет текста */
+  border: none; /* без границ */
+  padding: 10px 20px;
+  font-size: 18px; /* размер шрифта */
+  cursor: pointer; /* курсор в виде указателя */
+  transition: background-color 0.3s; /* плавное изменение цвета фона при наведении */
 }
 
 .ad__creation .asterisk {
-    color: #ff0000;
+  color: #ff0000;
 }
 
 .ad__creation .form__button:hover {
-    background-color: #4b74f8;
+  background-color: #4b74f8;
 }
 
 /* Модификаторы */
 .ad__creation .form__input--error {
-    border-color: #ff0000;
+  border-color: #ff0000;
 }
 
 .ad__creation .form__button--disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.location-place {
+  max-width: 290px;
+  margin-bottom: 20px;
+}
+.ruble {
+  font-size: x-large;
 }

@@ -26,7 +26,30 @@ class ProfileCard {
    */
   render() {
     this.#renderTemplate();
-    const overlayContainer = this.#element.querySelector('.overlay-container-blacklist');
+
+    let previousCheckedRadio = this.#element.
+        querySelector('input[type="radio"][name="radio-vertical"][value="adverts"]:checked');
+
+    const changeHandler = function(event) {
+      const currentCheckedRadio = event.target;
+      const name = currentCheckedRadio.name;
+
+      if (name !== 'radio-vertical') return;
+
+      if (previousCheckedRadio && previousCheckedRadio !== currentCheckedRadio) {
+        const svgPath = previousCheckedRadio.parentNode.previousElementSibling.firstElementChild.firstElementChild;
+        svgPath.setAttribute('fill', '#333333');
+      }
+
+      if (currentCheckedRadio.checked) {
+        const svgPath = currentCheckedRadio.parentNode.previousElementSibling.firstElementChild.firstElementChild;
+        svgPath.setAttribute('fill', '#7092FE');
+      }
+
+      previousCheckedRadio = currentCheckedRadio;
+    };
+
+    this.#element.addEventListener('change', changeHandler, false);
 
     return this.#element;
   }
@@ -43,9 +66,7 @@ class ProfileCard {
       reviewCount: this.items.reviewCount,
       subscribersCount: this.items.subscribersCount,
       subscribtionsCount: this.items.subscribtionsCount,
-      urlOrder: this.items.urlOrder,
-      urlSettings: this.items.urlSettings,
-      urlMerchant: this.items.urlMerchant.href,
+      avatar: this.items.avatarImg,
     };
     this.#element = stringToHtmlElement(template(context));
   }

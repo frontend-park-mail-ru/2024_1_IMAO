@@ -2,12 +2,14 @@
 
 import {getURLFromLocation} from '../modules/parsePathParams.js';
 
-/** */
+/**
+ * Class represents a router.
+ */
 class Router {
   /**
-   *
-   * @param {*} auth
-   * @param {*} routes
+   * Set a router's config.
+   * @param {object} auth
+   * @param {object} routes
    * @param {string} serverHost
    */
   initialize(auth, routes, serverHost) {
@@ -27,10 +29,10 @@ class Router {
   }
 
   /**
- * Router.
- * @param {URL} href - The route to follow.
- * @param {HTMLElement} parent - The container for a page.
- */
+   * Router.
+   * @param {URL} href - The route to follow.
+   * @param {HTMLElement} parent - The container for a page.
+   */
   async #locationResolver(href, parent) {
     await this.emit('checkAuth');
 
@@ -62,14 +64,13 @@ class Router {
     }
 
     if (location) {
-      this.#locationResolver(getURLFromLocation(location, this.host),
-          container);
+      this.#locationResolver(getURLFromLocation(location, this.host), container);
     }
   }
 
   /**
-   *
-   * @param {*} event
+   * Push a new page state.
+   * @param {object} event
    * @param {string} href
    */
   pushPage(event, href) {
@@ -82,7 +83,7 @@ class Router {
   }
 
   /**
-   *
+   * Switch page without pushing.
    * @param {URL} url
    */
   go(url) {
@@ -92,7 +93,7 @@ class Router {
     this.#locationResolver(url, main);
   }
   /**
-   *
+   * On observable function.
    * @param {*} event
    * @param {*} callback
    */
@@ -104,7 +105,7 @@ class Router {
   }
 
   /**
-   *
+   * Emit observable function.
    * @param {*} event
    * @param {*} data
    */

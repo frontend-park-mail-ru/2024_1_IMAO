@@ -6,21 +6,25 @@ import renderSidebar from '../../components/sidebar/sidebar.js';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
+import favoritesModel from '../../models/favorites.js';
 
 /** Class representing a main page. */
 export class Cart {
   #element;
   #items;
+  #model;
 
   /**
    * Initialize a main page.
    * @param {*} header
+   * @param {*} model
    */
-  constructor(header) {
+  constructor(header, model) {
     this.#element = document.createElement('div');
     this.#element.classList.add('main-page');
     this.#items = {};
     this.header = header;
+    this.#model = model;
   }
 
   /**
@@ -35,7 +39,7 @@ export class Cart {
   }
 
   /**
-   *
+   * Adds all listeners.
    */
   #addListeners() {
     const allCheckbox = this.#element.querySelector('[name="cartBlocks"]');
@@ -51,9 +55,12 @@ export class Cart {
 
     this.#addDeleteListener(des, quantity, headQuantity, priceSum);
 
+    const likes = this.#element.querySelectorAll('.cart-block__item-like-icon');
+
+    this.#addFavoritesListener(likes);
+
     const button = this.#element.querySelector('.selection-panel__action');
 
-    // eslint-disable-next-line max-len
     this.#addDeleteCheckedListener(button, quantity, headQuantity, priceSum, ads);
 
     const submit = this.#element.querySelector('.sidebar__button');
@@ -62,7 +69,7 @@ export class Cart {
   }
 
   /**
-   *
+   * Adds submit listener.
    * @param {*} submit
    * @param {*} ads
    */
@@ -84,7 +91,7 @@ export class Cart {
   }
 
   /**
-   *
+   * Adds checks logic.
    * @param {HTMLElement} allCheckbox
    * @param {NodeListOf} ads
    */
@@ -107,7 +114,7 @@ export class Cart {
   }
 
   /**
-   *
+   * Adds listener for all checked cart delete.
    * @param {HTMLElement} button
    * @param {HTMLElement} quantity
    * @param {HTMLElement} headQuantity
@@ -132,18 +139,12 @@ export class Cart {
         quantity.innerHTML = Number(quantity.innerHTML) - 1;
         headQuantity.innerHTML = quantity.innerHTML;
       }
-      ajax.post(
-          ajax.routes.CART.DELETE_CART_ITEM,
-          {advertIDs},
-          (body)=>{
-            return;
-          },
-      );
+      this.#model.deleteFromCart(advertIDs);
     });
   }
 
   /**
-   *
+   * Adds listener for cart delete.
    * @param {NodeListOf} ads
    * @param {HTMLElement} quantity
    * @param {HTMLElement} headQuantity
@@ -161,34 +162,43 @@ export class Cart {
         quantity.innerHTML = Number(quantity.innerHTML) - 1;
         headQuantity.innerHTML = quantity.innerHTML;
         const advertIDs = [Number(id)];
-        ajax.post(
-            ajax.routes.CART.DELETE_CART_ITEM,
-            {advertIDs},
-            (body)=>{
-              return;
-            },
-        );
+        this.#model.deleteFromCart(advertIDs);
       });
     }
   }
 
   /**
-   * Render a template for a main page.
+   * Adds listener for cart like.
+   * @param {NodeListOf} likes
+   */
+  #addFavoritesListener(likes) {
+    for (const element of likes) {
+      element.addEventListener('click', async (ev) => {
+        const id = Number(element.dataset.id);
+        const result = await favoritesModel.changeFavorites(id);
+        const message = this.#element.querySelector('.message');
+        element.children[0].classList.toggle('active');
+        if (result) {
+          message.innerHTML = 'Объявление добавлено в избранное';
+        } else {
+          message.innerHTML = 'Объявление удалено из избранного';
+        }
+        message.classList.remove('message--hidden');
+        message.classList.add('message--active');
+        setTimeout(() => {
+          message.classList.add('message--hidden');
+          message.classList.remove('message--active');
+        }, 1000);
+      });
+    }
+  }
+
+  /**
+   * Render a template for a cart page.
    */
   async #renderTemplate() {
     this.#element.appendChild(this.header.render());
-    let adverts ={};
-
-    await ajax.get(
-        ajax.routes.CART.GET_CART_LIST,
-        (body) => {
-          adverts = body['items'];
-        },
-    );
-
-    if (!(adverts && Array.isArray(adverts))) {
-      return;
-    }
+    const adverts = await this.#model.getCart();
     const quantity = adverts.length;
     this.#element.appendChild(renderCartMain(quantity));
 
@@ -201,15 +211,16 @@ export class Cart {
 
     adverts.forEach((item) => {
       let {city, category} = item;
-      const {advert} = item;
+      const {advert, photosIMG} = item;
       city = city.translation;
       category = category.translation;
-      const {id, price, title} = advert;
+      const {id, price, title, inFavourites} = advert;
       this.#items[ajax.auth.id][id] = advert;
       ids.push(id);
       priceSum += Number(price);
+      const photo = photosIMG?.[0] ? photosIMG[0] : null;
       const path = buildURLBySegments(router.host, [city, category, id]);
-      selectPanel.appendChild(renderCartBlock(id, title, price, path));
+      selectPanel.appendChild(renderCartBlock(id, title, price, path, photo, inFavourites));
     });
 
     ids.forEach((id) => {

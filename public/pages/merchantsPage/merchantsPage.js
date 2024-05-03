@@ -1,18 +1,20 @@
 'use strict';
 
-import renderProfileMain from '../../components/profileMain/profileMain.js';
-import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
+import renderMerchantMain from '../../components/merchantMain/merchantMain.js';
+import AdsCard from '../../components/adsCard/adsCard.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
+import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import formatDate from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
+import trimString from '../../modules/trimString.js';
 import {buildURL, getURLFromLocation, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
-/** Class representing a main page. */
+/** Class representing a merchant page. */
 export class MerchantsPage {
   #element;
   #isBottomReached;
@@ -52,7 +54,7 @@ export class MerchantsPage {
   }
 
   /**
-   *
+   * Adds state listeners.
    */
   async #addListeners() {
     const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
@@ -65,7 +67,7 @@ export class MerchantsPage {
   }
 
   /**
-   *
+   * Adds section switching logic.
    * @param {*} event
    */
   handleClick(event) {
@@ -81,7 +83,7 @@ export class MerchantsPage {
       const newMerchantsCardContainer = document.createElement('div');
       newMerchantsCardContainer.classList.add('cards-container-merchant');
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
-      this.sectionState.setSectionState(event.target.value, 'isRendered', merchantsCardContainer);
+      this.sectionState.setSectionState(event.target.value, 'isRendered', true);
       this.#renderCards(newMerchantsCardContainer, isRendered);
     } else {
       const stashedMerchantsCardContainer = this.sectionState.getSectionState(event.target.value, 'render');
@@ -113,7 +115,7 @@ export class MerchantsPage {
   }
 
   /**
-   *
+   * Render advert cards by codition.
    * @param {*} merchantsPageRightSection
    * @param {*} alreadyRendered
    */
@@ -138,6 +140,9 @@ export class MerchantsPage {
         (body) => {
           const adverts = body['items'];
           if (!(adverts && Array.isArray(adverts))) {
+            const test = new EmptyAdvertsPlug('aboba');
+            merchantsPageRightSection.appendChild(test.render());
+
             return;
           }
 
@@ -149,12 +154,12 @@ export class MerchantsPage {
           }
 
           adverts.forEach((inner) => {
-            const {price, title, id, city, category} = inner;
+            const {price, title, id, inFavourites, city, category, photosIMG} = inner;
 
             const path = buildURLBySegments(router.host, [city, category, id]);
-            // const path = city + '/' + category + '/' + id;
-
-            merchantsPageRightSection.appendChild(renderAdsCardTemplate(title, price, id, path));
+            const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
+            merchantsPageRightSection.appendChild(adsCardInstance.render(),
+            );
           });
 
           this.#isBottomReached = false;
@@ -175,7 +180,7 @@ export class MerchantsPage {
 
     const urlMain = router.routes.mainPage.href;
 
-    const root = renderProfileMain();
+    const root = renderMerchantMain();
     content.appendChild(root);
 
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, this.#slug);
@@ -186,6 +191,7 @@ export class MerchantsPage {
 
           const merchantsName = profile.merchantsName;
           const ratingValue = profile.rating;
+          document.title += ' ' + trimString(merchantsName, 40);
 
           const paths = [
             {
@@ -204,12 +210,13 @@ export class MerchantsPage {
 
           const merchantCartItems = {
             merchantsName: merchantsName,
-            location: profile.city.translation,
+            location: profile.city.name,
             registrationDate: formatDate(profile.regTime),
             isProfileVerified: profile.approved,
             reviewCount: profile.reactionsCount,
             subscribersCount: profile.subersCount,
             subscribtionsCount: profile.subonsCount,
+            avatarImg: profile.avatarImg,
           };
           const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
           const merchantCardInstance = new MerchantCard(merchantCartItems);
@@ -222,8 +229,8 @@ export class MerchantsPage {
 
           const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
           const buttonGroupItemes = [
-            {categoryLabel: 'Активные', count: '', checked: true, categoryLabelValue: 'active'},
-            {categoryLabel: 'Проданные', count: '', checked: false, categoryLabelValue: 'sold'},
+            {categoryLabel: 'Активные', count: profile.activeAddsCount, checked: true, categoryLabelValue: 'active'},
+            {categoryLabel: 'Проданные', count: profile.soldAddsCount, checked: false, categoryLabelValue: 'sold'},
           ];
           buttonGroupItemes.forEach((item) => {
             this.sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
@@ -246,18 +253,5 @@ export class MerchantsPage {
     if (!currentState) {
       this.sectionState.setSectionState('active', 'isRendered', true);
     }
-
-    // const alreadyRendered = document.querySelector('.merchant-page-right-section') != null;
-    // const merchantsPageRightSection = alreadyRendered ?
-    //   document.querySelector('.merchant-page-right-section') :
-    //   document.createElement('div');
-
-    // if (!alreadyRendered) {
-
-    // }
-
-    // console.log('aboba');
-
-    // this.#renderCards(merchantsPageRightSection, alreadyRendered);
   }
 }

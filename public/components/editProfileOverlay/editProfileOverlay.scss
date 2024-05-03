@@ -1,92 +1,172 @@
 .profile-edit-dialog {
-    dialog {
-        border: none;
-        overflow: visible;
-        border-radius: 8px;
-    }
+  dialog {
+    border: none;
+    overflow: visible;
+    border-radius: 8px;
+  }
 
-    .profile-container {
-        width: auto;
-        height: auto;
-    }
+  .profile-container {
+    width: 360px;
+    height: auto;
+  }
 
-    .profile-modal {
-        padding: 0;
-        position: relative;
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+  .profile-modal {
+    padding: 0;
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .profile-modal-content {
-        padding: 6px;
-    }
+  .profile-modal-content {
+    padding: 6px;
+  }
 
-    .profile-header-title {
-        color: #333333;
-        width: 360px;
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 32px;
-    }
+  .profile-header-title {
+    color: #333333;
+    width: 360px;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 32px;
+  }
 
-    .profile-modal-buttons {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-top: auto;
-    }
+  .profile-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: auto;
+  }
 
-    .profile-action-button:hover {
-        background: #7b9afe;
-    }
+  .profile-action-button:hover {
+    background: #7b9afe;
+  }
 
-    .profile-cancel-button:hover {
-        background: #f0f0f0;
-    }
+  .profile-cancel-button:hover {
+    background: #f0f0f0;
+  }
 
-    .profile-close-block {
-        width: 32px;
-        height: 32px;
-        position: absolute;
-        right: -10px;
-        top: -10px;
-        color: #000000;
-        background-color: #ffffff;
-        border-radius: 50%;
-        box-shadow: 0px 4px 12px rgba(51, 51, 51, 0.13);
-        display: flex;
-    }
+  .profile-close-block {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    color: #000000;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0px 4px 12px rgba(51, 51, 51, 0.13);
+    display: flex;
+  }
 
-    .profile-close-btn {
-        font-size: 24px;
-        line-height: 32px;
-        margin: auto;
-        font-weight: lighter;
-    }
+  .profile-close-btn {
+    font-size: 24px;
+    line-height: 32px;
+    margin: auto;
+    font-weight: lighter;
+  }
 
-    .profile-close-block:hover {
-        cursor: pointer;
-    }
+  .profile-close-block:hover {
+    cursor: pointer;
+  }
 
-    input,
-    .submit-btn {
-        margin-top: 16px;
-        width: 96%;
-        padding: 1% 2%;
-        font-size: 14px;
-        border-radius: 8px;
-        border: 1px solid rgb(235, 235, 235);
-        height: 40px;
-    }
+  .profile-text,
+  .submit-btn {
+    margin-top: 16px;
+    width: 338px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid rgb(235, 235, 235);
+    height: 40px;
+  }
 
-    .submit-btn {
-        background: #7092FE;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
-        color: white;
-        width: 100%;
-    }
+  .submit-btn {
+    background: #7092fe;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+    color: white;
+    width: 100%;
+  }
+
+  .avatar-upload {
+    position: relative;
+    max-width: 205px;
+    margin: 20px auto;
+  }
+
+  .avatar-upload .avatar-edit {
+    position: absolute;
+    right: 12px;
+    z-index: 1;
+    top: 10px;
+  }
+
+  .avatar-upload .avatar-edit input {
+    display: none;
+  }
+
+  .avatar-upload .avatar-edit input + label {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 0;
+    border-radius: 100%;
+    background: #ffffff;
+    border: 1px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    font-weight: normal;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .avatar-upload .avatar-edit input + label:hover {
+    background: #f1f1f1;
+    border-color: #d6d6d6;
+  }
+
+  .avatar-upload .avatar-edit input + label:after {
+    content: '\f040';
+    font-family: 'FontAwesome';
+    color: #757575;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: auto;
+  }
+
+  .avatar-upload .avatar-preview {
+    width: 192px;
+    height: 192px;
+    position: relative;
+    border-radius: 100%;
+    border: 6px solid #f8f8f8;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .avatar-upload .avatar-preview > div {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .error {
+    color: red;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+
+  .dropdown-with-search {
+    margin: 16px 0;
+    width: 338px;
+    padding: 5px 10px;
+    height: auto;
+    overflow: visible;
+  }
 }

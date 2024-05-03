@@ -1,15 +1,14 @@
 <div class="ActiveSoldSwitch">
     <div class="ActiveSoldList">
         {{#each items}}
-        <div class="activeSoldNoSelectedButton cursor-hand-hover">
-            <label class="Active">
-                <div class="ActiveSoldInsideTextDiv radio-group-horizontal">
-                    <input type="radio" name="radio" value="{{categoryLabelValue}}" {{#if checked}}checked{{/if}} />
-                    <span class="ActiveSoldBlackText">{{categoryLabel}} {{count}}</span>
-                </div>
-            </label>
-        </div>
-
+            <div class="activeSoldNoSelectedButton cursor-hand-hover">
+                <label class="Active">
+                    <div class="ActiveSoldInsideTextDiv radio-group-horizontal">
+                        <input type="radio" name="radio" value="{{categoryLabelValue}}" {{#if checked}}checked{{/if}} />
+                        <span class="ActiveSoldBlackText">{{categoryLabel}} {{count}}</span>
+                    </div>
+                </label>
+            </div>
         {{/each}}
     </div>
 </div>

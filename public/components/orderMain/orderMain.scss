@@ -5,7 +5,6 @@
   height: 100%;
   position: relative;
   /* background: #FAFAFA; */
-  
 }
 
 .order__title {
@@ -18,11 +17,11 @@
   margin-bottom: 20px;
   font-weight: 500;
   line-height: 36px;
-  }
+}
 
 .order-page__container {
   width: 1215px;
-  
+
   position: relative;
 }
 
@@ -30,36 +29,36 @@
   max-width: 400px;
   border-radius: 8px;
   margin-bottom: 40px;
-  }
-  
-  .recipient-form__title {
+}
+
+.recipient-form__title {
   margin-bottom: 16px;
   text-align: left;
   font-size: 24px;
-  }
-  
-  .recipient-form__label {
+}
+
+.recipient-form__label {
   display: block;
   margin-top: 16px;
   font-size: 18px;
-  }
-  
-  .recipient-form__input {
+}
+
+.recipient-form__input {
   width: 400px;
   padding: 8px;
   margin-top: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  }
-  
-  .recipient-form__note {
+}
+
+.recipient-form__note {
   display: block;
   margin-top: 4px;
   font-size: 14px;
   color: #666;
-  }
-  
-  .recipient-form__submit-button {
+}
+
+.recipient-form__submit-button {
   display: block;
   width: 100%;
   padding: 10px;
@@ -69,7 +68,4 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  }
-  
-
-  
+}

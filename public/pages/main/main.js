@@ -1,10 +1,11 @@
 'use strict';
 
-import renderAdsCardTemplate from '../../components/adsCard/adsCard.js';
+import {CATEGORIES} from '../../config/config.js';
+import AdsCard from '../../components/adsCard/adsCard.js';
+import renderIframe from '../../components/iframe/iframe.js';
 import {getURLFromLocation, buildURL, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
-
 
 /** Class representing a main page. */
 export class Main {
@@ -84,8 +85,7 @@ export class Main {
     } else if (this.#slug.category === undefined) {
       apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST_BY_CITY, this.#slug);
     } else {
-      apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST_BY_CATEGORY,
-          this.#slug);
+      apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST_BY_CATEGORY, this.#slug);
     }
 
     apiRoute.searchParams.delete('count');
@@ -95,6 +95,18 @@ export class Main {
     apiRoute.searchParams.append('startId', startID);
 
     return apiRoute;
+  }
+
+  /**
+   * Catches iframe close signale.
+   */
+  #closeIframe() {
+    const iframe = this.#element.querySelector('[id="iframe"]');
+    window.onmessage = function(event) {
+      if (event.data == 'reply') {
+        iframe.hidden = !iframe.hidden;
+      }
+    };
   }
 
   /**
@@ -117,6 +129,26 @@ export class Main {
       const title = document.createElement('h1');
       title.innerHTML = 'Все объявления';
       content.appendChild(title);
+
+      const apiRoute = ajax.routes.SURVEY.CHECK;
+      ajax.get(
+          apiRoute,
+          (body) => {
+            if (body?.isChecked === undefined) {
+              return;
+            }
+            if (body.isChecked) {
+              return;
+            }
+            const iframeRoute = router.routes.csatPage.href.href;
+            this.#element.appendChild(renderIframe(iframeRoute));
+            const iframe = this.#element.querySelector('[id="iframe"]');
+            setTimeout(()=> {
+              iframe.hidden = !iframe.hidden;
+            }, 120000);
+            this.#closeIframe();
+          },
+      );
     }
 
     const cards = document.getElementsByClassName('card');
@@ -129,7 +161,7 @@ export class Main {
         apiRoute,
         (body) => {
           const adverts = body['items'];
-          // console.log(adverts);
+
           if (!(adverts && Array.isArray(adverts))) {
             return;
           }
@@ -139,15 +171,25 @@ export class Main {
             document.querySelector('.cards-container');
           if (!alreadyRendered) {
             cardsContainer.classList.add('cards-container');
+            if (this.#slug.category !== undefined) {
+              for (const category of CATEGORIES) {
+                if (category.translation !== this.#slug.category) {
+                  continue;
+                }
+                document.title += ' - ' + category.name;
+                const title = document.querySelector('h1');
+                title.innerHTML = category.name;
+              }
+            }
           }
-
           const ids = [];
 
           adverts.forEach((inner) => {
-            const {price, title, id, city, category} = inner;
+            const {price, title, id, inFavourites, city, category, photosIMG} = inner;
             ids.push(id);
             const path = buildURLBySegments(router.host, [city, category, id]);
-            cardsContainer.appendChild(renderAdsCardTemplate(title, price, id, path));
+            const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
+            cardsContainer.appendChild(adsCardInstance.render());
           });
 
           content.appendChild(cardsContainer);
@@ -155,12 +197,14 @@ export class Main {
 
           ids.forEach((id) => {
             const address = this.#element.querySelector(`[id="${id}"]`);
-            // console.log(id);
-            // console.log(address);
             address.addEventListener('click', (ev) => {
+              if ((ev.target.matches('path')) || (ev.target.matches('svg')) || (ev.target.matches('.like-icon'))) {
+                return;
+              }
               router.pushPage(ev, address.href);
             });
           });
-        });
+        },
+    );
   }
 }

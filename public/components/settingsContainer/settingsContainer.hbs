@@ -1,54 +1,51 @@
-<div>
-    <h1>Личные данные</h1>
+<div class="personal-data-list">
+    <h3>Личные данные</h3>
     <div class="atribute-list">
         <div class="settings-block">
-            <div class="settings-header">Профиль</div>
-            <div class="settings-details">
+            <div class="settings-block__header">Профиль</div>
+            <div class="settings-block__details">
                 <div class="merchant-profile">
-                    <div class="merchant-avatar">
-                        <img src="https://via.placeholder.com/24x24">
-                    </div>
-                    <div class="merchant-name">
-                        <div class="User">{{merchantsName}}</div>
+                    <div class="merchant-profile__name">
+                        {{merchantsName}}
                     </div>
                 </div>
             </div>
-            <button class="set-or-edit-label">Редактировать</button>
+            <button class="settings-block__set-or-edit-label">Редактировать</button>
         </div>
         <div class="settings-block">
-            <div class="settings-header">Телефон</div>
-            {{#if (is_null phone)}}
-            <div class="settings-hint">
-                Укажите номер телефона, по которому с вами смогут связаться покупатели
-            </div>
-            <button class="set-or-edit-label">Указать</button>
-            {{^}}
-            <div class="settings-details">
-                {{phone}}
-            </div>
-            <button class="set-or-edit-label">Редактировать</button>
-            {{/if}}
+            <div class="settings-block__header">Телефон</div>
+                {{#if (is_null phone)}}
+                    <div class="settings-block__hint">
+                        Укажите номер телефона, по которому с вами смогут связаться покупатели
+                    </div>
+                    <button class="settings-block__set-or-edit-label">Указать</button>
+                {{^}}
+                    <div class="settings-block__details">
+                        {{phone}}
+                    </div>
+                    <button class="settings-block__set-or-edit-label">Редактировать</button>
+                {{/if}}
         </div>
         <div class="settings-block">
-            <div class="settings-header">E-mail</div>
-            <div class="settings-details">
+            <div class="settings-block__header">E-mail</div>
+            <div class="settings-block__details">
                 {{email}}
             </div>
-            <button class="set-or-edit-label">Редактировать</button>
+            <button class="settings-block__set-or-edit-label">Редактировать</button>
         </div>
         <div class="settings-block">
-            <div class="settings-header">Город</div>
-            {{#if (is_null city)}}
-            <div class="settings-hint">
-                Не указано
-            </div>
-            <button class="set-or-edit-label">Указать</button>
-            {{^}}
-            <div class="settings-details">
-                {{city}}
-            </div>
-            <button class="set-or-edit-label">Редактировать</button>
-            {{/if}}
+            <div class="settings-block__header">Город</div>
+                {{#if (is_null city)}}
+                    <div class="settings-block__hint">
+                        Не указано
+                    </div>
+                    <button class="settings-block__set-or-edit-label">Указать</button>
+                {{^}}
+                    <div class="settings-block__details">
+                        {{city}}
+                    </div>
+                    <button class="settings-block__set-or-edit-label">Редактировать</button>
+                {{/if}}
         </div>
     </div>
 </div>

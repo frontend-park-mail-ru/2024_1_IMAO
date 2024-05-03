@@ -1,9 +1,10 @@
 'use strict';
 
-import {CATEGORIES} from '../../config/config.js';
+import {CATEGORIES, serverHost} from '../../config/config.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './header.hbs';
 import styles from './header.scss';
+import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -71,18 +72,14 @@ export class Header {
 
     logoutBtn.addEventListener('click', (ev) => {
       ev.preventDefault();
-      ajax.post(
-          ajax.routes.AUTH.LOGOUT,
-          null,
-          (body) => {
-            // eslint-disable-next-line camelcase
-            ajax.auth.is_auth = body.isAuth;
-            this.#renderHeaderTemplate('Москва');
-            this.#addListeners();
-            const main = document.querySelector('main');
-            router.popPage(ev, main);
-          },
-      );
+      ajax.post(ajax.routes.AUTH.LOGOUT, null, (body) => {
+        // eslint-disable-next-line camelcase
+        ajax.auth.isAuth = body.isAuth;
+        this.#renderHeaderTemplate('Москва');
+        this.#addListeners();
+        const main = document.querySelector('main');
+        router.popPage(ev, main);
+      });
     });
   }
 
@@ -93,26 +90,65 @@ export class Header {
    * @return {void}
    */
   #renderHeaderTemplate(location) {
-    // eslint-disable-next-line no-undef
-    // const template = Handlebars.templates['header.hbs'];
     const urlMain = router.routes.mainPage.href.href;
     const urlLogin = router.routes.loginPage.href.href;
     const urlCreate = router.routes.adCreationPage.href.href;
     const urlCart = router.routes.cartPage.href.href;
-    const urlProfile = router.routes.profilePage.href.href;
-    const flag = router.auth.is_auth;
+    const slugProfileAdverts = ['profile', 'adverts'];
+    const urlProfile = buildURLBySegments(serverHost, slugProfileAdverts);
+    const slugProfileFavorites = ['profile', 'favorites'];
+    const urlProfileFavorites = buildURLBySegments(serverHost, slugProfileFavorites);
+
+    const flag = router.auth.isAuth;
+    const avatar = router.auth.avatar;
+    const cartQuantity = router.auth.cartNum;
+    const favoritesQuantity = router.auth.favNum;
     while (this.#header.firstChild) {
       this.#header.removeChild(this.#header.lastChild);
     }
-    this.#header.appendChild(stringToHtmlElement(template({
-      urlMain,
-      urlLogin,
-      urlCreate,
-      urlCart,
-      urlProfile,
-      flag,
-      location,
-      CATEGORIES,
-    })));
+    const CategoriesWithUrl = CATEGORIES.map((category) => {
+      const temp = ['Moscow', String(category.translation)];
+      const urlurl = buildURLBySegments(serverHost, temp);
+      const url = urlurl.href;
+      const {name} = category;
+
+      return {name, url};
+    });
+    this.#header.appendChild(
+        stringToHtmlElement(
+            template({
+              urlMain,
+              urlLogin,
+              urlCreate,
+              urlCart,
+              urlProfile,
+              urlProfileFavorites,
+              flag,
+              location,
+              CategoriesWithUrl,
+              avatar,
+              cartQuantity,
+              favoritesQuantity,
+            }),
+        ),
+    );
+  }
+
+  /**
+   * Reactively changes cart quantity.
+   * @param {*} quantity
+   */
+  changeCartQuantity(quantity) {
+    const quanSpan = this.#header.querySelector('.cart-quantity');
+    quanSpan.innerHTML = quantity;
+  }
+
+  /**
+   * Reactively changes favorites quantity.
+   * @param {*} quantity
+   */
+  changeFavoritesQuantity(quantity) {
+    const quanSpan = this.#header.querySelector('.favorites-quantity');
+    quanSpan.innerHTML = quantity;
   }
 }

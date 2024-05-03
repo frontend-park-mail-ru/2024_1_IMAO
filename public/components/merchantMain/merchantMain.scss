@@ -1,0 +1,39 @@
+.merchant-page-content {
+  margin-top: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.merchant-page-content .merchant-page-right-section {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+}
+
+.merchant-page-content .cards-container-merchant {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 2%;
+}
+
+.merchant-page-content .cursor-hand-hover:hover {
+  cursor: pointer;
+}
+
+.merchant-page-content .text-underline-hover:hover {
+  text-decoration: underline;
+  text-decoration-color: #7092fe;
+  color: #7092fe;
+}
+
+.merchant-page-content .text-highlighting-hover:hover {
+  color: #7092fe;
+}
+
+.merchant-page-content label {
+  cursor: pointer;
+}
