@@ -50,6 +50,13 @@ main {
     gap: 16px 36px;
 }
 
+.cards-container-skeleton {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 36px;
+}
+
 .ad-container {
     display: flex;
     margin-top: 20px;
