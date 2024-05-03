@@ -2,6 +2,7 @@
 
 import {CATEGORIES} from '../../config/config.js';
 import AdsCard from '../../components/adsCard/adsCard.js';
+import SkeletonCard from '../../components/skeletonCard/skeletonCard.js';
 import renderIframe from '../../components/iframe/iframe.js';
 import {getURLFromLocation, buildURL, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
@@ -117,18 +118,31 @@ export class Main {
     const content = alreadyRendered ?
       document.querySelector('.page-content') :
       document.createElement('div');
+    
+    const cardsContainerSkeleton = alreadyRendered ?
+      null :
+      document.createElement('div')
 
     if (!alreadyRendered) {
       this.#element.appendChild(this.header.render());
 
       content.classList.add('page-content');
       this.#element.appendChild(content);
-      content.classList.add('page-content');
-      this.#element.appendChild(content);
+      // content.classList.add('page-content');
+      // this.#element.appendChild(content);
 
       const title = document.createElement('h1');
       title.innerHTML = 'Все объявления';
       content.appendChild(title);
+
+      cardsContainerSkeleton.classList.add('cards-container-skeleton');
+
+      for (let i = 0; i < 20; i++) {
+        const adsCardSkeletonInstance = new SkeletonCard();
+        cardsContainerSkeleton.appendChild(adsCardSkeletonInstance.render());
+      }
+
+      content.appendChild(cardsContainerSkeleton);
 
       const apiRoute = ajax.routes.SURVEY.CHECK;
       ajax.get(
@@ -192,7 +206,14 @@ export class Main {
             cardsContainer.appendChild(adsCardInstance.render());
           });
 
-          content.appendChild(cardsContainer);
+          console.log('cardsContainerSkeleton', cardsContainerSkeleton)
+
+          if (!cardsContainerSkeleton) {
+            content.appendChild(cardsContainer);
+          } else {
+            cardsContainerSkeleton.replaceWith(cardsContainer);
+          }
+
           this.#isBottomReached = false;
 
           ids.forEach((id) => {
