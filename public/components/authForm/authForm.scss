@@ -21,6 +21,14 @@
   background: rgba(112, 146, 254, 1);
   border: none;
   border-radius: 8px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.btn-primary {
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .signup .btn-secondary {
@@ -123,4 +131,19 @@
 
 .error {
   color: red;
+}
+
+@media (max-width: 800px) {
+  .signup-info {
+    display: none;
+  }
+  .signup-main {
+    width: 100% !important;
+  }
+  .signup .form-input input {
+    font-size: clamp(16px, 5vw, 20px);
+  }
+  .signup .btn-primary {
+    font-size: clamp(16px, 5vw, 20px);
+  }
 }

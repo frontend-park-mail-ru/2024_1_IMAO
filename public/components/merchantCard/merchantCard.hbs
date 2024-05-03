@@ -10,7 +10,7 @@
                 {{#if (is_null avatar)}}
                     <img class="avatar-image" src="public/images/img_avatar.png" />
                 {{^}}
-                    <img class="avatar-image" src="data:image;base64,{{avatar}}" />
+                    <img class="avatar-image" src="data:image/png;base64,{{avatar}}" />
                 {{/if}}
                     <div class="avatar-overlay"></div>
             </div>

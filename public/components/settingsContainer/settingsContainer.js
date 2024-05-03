@@ -15,55 +15,54 @@ const wrongSurnameFormat = 'Фамилия должна содержать то�
 const wrongPhoneFormat = 'Неправильный формат телефона';
 
 /**
- *
+ * Class represents a profile settings form.
  */
 class SettingsContainer {
   #element;
 
   /**
-   *
-   * @param {*} profileData
-   * @param {*} CSRFToken
+   * Constructor for a settings container.
+   * @param {object} profileData
+   * @param {string} CSRFToken
    */
   constructor(profileData, CSRFToken) {
     this.profile = profileData;
     this.CSRFToken = CSRFToken;
-    this.forms = [{
-      title: 'Изменить профиль',
-      fields: [{type: 'text', value: this.profile.name, name: 'name',
-        place: 'Имя'},
-      {type: 'text', value: this.profile.surname, name: 'surname',
-        place: 'Фамилия'}],
-      apiRoute: ajax.routes.PROFILE.SET_PROFILE_AVATAR,
-      hasAvatar: true,
-      avatar: this.profile.avatarImg,
-      id: 1,
-    },
-    {
-      title: 'Номер телефона',
-      fields: [{type: 'text', value: this.profile.phone,
-        name: 'phone', isPhone: true, place: '+7(___)___-__-__'}],
-      apiRoute: ajax.routes.PROFILE.SET_PROFILE_PHONE,
-      id: 2,
-    },
-    {
-      title: 'E-mail',
-      fields: [{type: 'text', value: this.profile.email, name: 'email'}],
-      apiRoute: ajax.routes.PROFILE.EDIT_USER_EMAIL,
-      id: 3,
-    },
-    {
-      title: 'Город',
-      fields: [{type: 'text', value: this.profile.city, name: 'id',
-        isCitySearch: true}],
-      apiRoute: ajax.routes.PROFILE.SET_PROFILE_CITY,
-      id: 4,
-    },
+    this.forms = [
+      {
+        title: 'Изменить профиль',
+        fields: [
+          {type: 'text', value: this.profile.name, name: 'name', place: 'Имя'},
+          {type: 'text', value: this.profile.surname, name: 'surname', place: 'Фамилия'},
+        ],
+        apiRoute: ajax.routes.PROFILE.SET_PROFILE_AVATAR,
+        hasAvatar: true,
+        avatar: this.profile.avatarImg,
+        id: 1,
+      },
+      {
+        title: 'Номер телефона',
+        fields: [{type: 'text', value: this.profile.phone, name: 'phone', isPhone: true, place: '+7(___)___-__-__'}],
+        apiRoute: ajax.routes.PROFILE.SET_PROFILE_PHONE,
+        id: 2,
+      },
+      {
+        title: 'E-mail',
+        fields: [{type: 'text', value: this.profile.email, name: 'email'}],
+        apiRoute: ajax.routes.PROFILE.EDIT_USER_EMAIL,
+        id: 3,
+      },
+      {
+        title: 'Город',
+        fields: [{type: 'text', value: this.profile.city, name: 'id', isCitySearch: true}],
+        apiRoute: ajax.routes.PROFILE.SET_PROFILE_CITY,
+        id: 4,
+      },
     ];
   }
 
   /**
-   *
+   * Returns a settings container.
    * @return {HTMLElement}
    */
   async render() {
@@ -77,7 +76,7 @@ class SettingsContainer {
   }
 
   /**
-   *
+   * Gets a profile data.
    * @return {object}
    */
   getProfileData() {
@@ -85,7 +84,7 @@ class SettingsContainer {
   }
 
   /**
-   *
+   * Get forms data.
    * @return {Array}
    */
   getForms() {
@@ -93,7 +92,7 @@ class SettingsContainer {
   }
 
   /**
-   *
+   * Adds an error.
    * @param {*} form
    * @param {*} error
    */
@@ -104,7 +103,7 @@ class SettingsContainer {
   }
 
   /**
-   *
+   * Renders a settings container template.
    */
   #renderTemplate() {
     const context = {
@@ -118,7 +117,7 @@ class SettingsContainer {
   }
 
   /**
-   *
+   * Renders dialogs for form fields.
    */
   #renderDialogs() {
     const btns = this.#element.querySelectorAll('.settings-block__set-or-edit-label');
@@ -167,19 +166,15 @@ class SettingsContainer {
           console.log(avatar);
 
           let profile = {};
-          await ajax.postMultipart(
-              forms[i].apiRoute,
-              formData,
-              (body) => {
-                if (body.profile != null) {
-                  profile = body['profile'];
+          await ajax.postMultipart(forms[i].apiRoute, formData, (body) => {
+            if (body.profile != null) {
+              profile = body['profile'];
 
-                  return;
-                }
-                submit.disabled = false;
-                console.error('Ошибка редактирования профиля');
-              },
-          );
+              return;
+            }
+            submit.disabled = false;
+            console.error('Ошибка редактирования профиля');
+          });
           const profileAvatar = document.querySelector('.avatar-image');
           const headerAvatar = document.querySelector('.profile-icon');
           const profileName = document.querySelector('.card-header').childNodes[1];
@@ -203,12 +198,11 @@ class SettingsContainer {
 
           profileName.innerHTML = profile.merchantsName;
           profileAvatar.src = profile.avatarImg ?
-            `data:image;base64,${profile.avatarImg}` :
+            `data:image/png;base64,${profile.avatarImg}` :
             'images/img_avatar.png';
           headerAvatar.src = profileAvatar.src;
 
-          const profilePageContentContainer =
-                  document.querySelector('.profile-page-right-section-content');
+          const profilePageContentContainer = document.querySelector('.profile-page-right-section-content');
           const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
           profilePageContentContainer.lastElementChild.replaceWith(await settingsContainer.render());
           this.#addListenersForOverlays(settingsContainer.getForms());
@@ -250,17 +244,13 @@ class SettingsContainer {
 
           default:
             const id = this.#element.querySelector('.selected').dataset.id;
-            data = {'id': parseInt(id)};
+            data = {id: parseInt(id)};
             break;
         }
         let dataBody = {};
-        await ajax.post(
-            forms[i].apiRoute,
-            data,
-            (body) => {
-              dataBody = body;
-            },
-        );
+        await ajax.post(forms[i].apiRoute, data, (body) => {
+          dataBody = body;
+        });
 
         if (dataBody.status === 'This email is already in use') {
           this.#addError(form, emailAlreadyExists);
@@ -293,8 +283,7 @@ class SettingsContainer {
           this.profile.email = dataBody.user.email;
         }
 
-        const profilePageContentContainer =
-          document.querySelector('.profile-page-right-section-content');
+        const profilePageContentContainer = document.querySelector('.profile-page-right-section-content');
         const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
         profilePageContentContainer.lastElementChild.replaceWith(await settingsContainer.render());
       });
@@ -303,4 +292,3 @@ class SettingsContainer {
 }
 
 export default SettingsContainer;
-

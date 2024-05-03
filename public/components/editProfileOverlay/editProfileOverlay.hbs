@@ -20,7 +20,7 @@
                             {{#if (is_null avatar)}}
                                 <div id="imagePreview" style="background-image: url(images/img_avatar.png);"></div>
                             {{^}}
-                                <div id="imagePreview" style="background-image: url(data:image;base64,{{avatar}});"></div>
+                                <div id="imagePreview" style="background-image: url(data:image/png;base64,{{avatar}});"></div>
                             {{/if}}
                         </div>
                     </div>

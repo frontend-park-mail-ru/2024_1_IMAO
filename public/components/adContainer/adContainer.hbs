@@ -39,7 +39,7 @@
             <div class="carousel">
                 <div class="images">
                     {{#each photos}}
-                        <img class="img-carousel" src="data:image;base64,{{this}}" alt="Image 1">
+                        <img class="img-carousel" src="data:image/png;base64,{{this}}" alt="Image 1">
                     {{/each}}
                 </div>
             </div>
@@ -71,7 +71,7 @@
             </li>
             <li>
                 <span class="property-name">Просмотры</span>
-                <span class="property-description">100</span>
+                <span class="property-description">{{views}}</span>
             </li>
             <li>
                 <span class="property-name">Размещено</span>

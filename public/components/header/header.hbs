@@ -67,7 +67,7 @@
                 {{#if (is_null avatar)}}
                     <img class="profile-icon" src="images/img_avatar.png">
                 {{^}}
-                    <img class="profile-icon" src="data:image;base64,{{avatar}}">
+                    <img class="profile-icon" src="data:image/png;base64,{{avatar}}">
                 {{/if}}
                 <div class="dropdown-content dropdown-content-right">
                     <a href="{{urlProfile}}" data-url="{{urlProfile}}">Профиль</a>

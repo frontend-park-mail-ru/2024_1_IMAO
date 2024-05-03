@@ -18,10 +18,39 @@ import styles from './adContainer.scss';
  * @param {*} state
  * @param {Array} photos
  * @param {*} inFavorites
+ * @param {*} views
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the advert.
  */
-export default function renderAdContainerTemplate(title, city, category, description,
-    created, price, isAuthor, editPath, id, state, photos, inFavorites) {
-  return stringToHtmlElement(template({title, city, category, description, created, price,
-    isAuthor, editPath, id, state, photos, inFavorites}));
+export default function renderAdContainerTemplate(
+    title,
+    city,
+    category,
+    description,
+    created,
+    price,
+    isAuthor,
+    editPath,
+    id,
+    state,
+    photos,
+    inFavorites,
+    views,
+) {
+  return stringToHtmlElement(
+      template({
+        title,
+        city,
+        category,
+        description,
+        created,
+        price,
+        isAuthor,
+        editPath,
+        id,
+        state,
+        photos,
+        inFavorites,
+        views,
+      }),
+  );
 }

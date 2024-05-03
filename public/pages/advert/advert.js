@@ -91,11 +91,11 @@ export class Advert {
 
       let newPosition = 0;
       if (index !== elemsOnPage - 1) {
-        newPosition = -index * 100 * currentWidth / carouselWidth;
+        newPosition = (-index * 100 * currentWidth) / carouselWidth;
       } else {
         const lastWidth = images[images.length - 1].offsetWidth;
         const offset = lastWidth - (carouselWidth - currentWidth);
-        newPosition = -index * 100 * offset / carouselWidth;
+        newPosition = (-index * 100 * offset) / carouselWidth;
       }
 
       carousel.style.transform = `translateX(${newPosition}%)`;
@@ -127,17 +127,13 @@ export class Advert {
       closeBtn.addEventListener('click', (ev) => {
         ev.preventDefault();
         const id = closeBtn.dataset['id'];
-        const apiRoute = buildURL(ajax.routes.ADVERT.CLOSE_ADVERT, {'id': id});
+        const apiRoute = buildURL(ajax.routes.ADVERT.CLOSE_ADVERT, {id: id});
 
-        ajax.post(
-            apiRoute,
-            null,
-            (body) => {
-              router.go(router.routes.mainPage.href);
+        ajax.post(apiRoute, null, (body) => {
+          router.go(router.routes.mainPage.href);
 
-              return;
-            },
-        );
+          return;
+        });
       });
     }
   }
@@ -218,102 +214,105 @@ export class Advert {
 
     let userId = 0;
 
-    await ajax.get(
-        apiRoute,
-        (body) => {
-          const {items} = body;
-          const {advert, city, category, photosIMG} = items;
+    await ajax.get(apiRoute, (body) => {
+      const {items} = body;
+      const {advert, city, category, photosIMG} = items;
 
-          const {id, title, description, price, isUsed, created, inFavourites, inCart} = advert;
-          this.id = id;
-          const createdDate = formatDate(created);
-          const cityName = city.name;
-          const categoryName = category.name;
-          const isAuthor = ajax.auth.id === advert.userId;
+      const {id, title, description, price, isUsed, created, inFavourites, inCart, views} = advert;
+      this.id = id;
+      const createdDate = formatDate(created);
+      const cityName = city.name;
+      const categoryName = category.name;
+      const isAuthor = ajax.auth.id === advert.userId;
 
-          let state = '';
-          if (isUsed) {
-            state = 'Б/У';
-          } else {
-            state = 'Новый';
-          }
-          userId = advert['userId'];
+      let state = '';
+      if (isUsed) {
+        state = 'Б/У';
+      } else {
+        state = 'Новый';
+      }
+      userId = advert['userId'];
 
-          const categoryPath = buildURLBySegments(router.host,
-              [city['translation'], category['translation']]);
-          const cityPath = buildURLBySegments(router.host,
-              [city['translation']]);
-          const editPath = buildURLBySegments(router.host,
-              ['edit', advert['id']]);
+      const categoryPath = buildURLBySegments(router.host, [city['translation'], category['translation']]);
+      const cityPath = buildURLBySegments(router.host, [city['translation']]);
+      const editPath = buildURLBySegments(router.host, ['edit', advert['id']]);
 
-          const adPathElement = document.createElement('div');
-          const paths = [
-            {
-              path: cityPath,
-              title: cityName,
-            },
-            {
-              path: categoryPath,
-              title: categoryName,
-            },
-            {
-              path: '#',
-              title: title,
-            },
-          ];
-          adPathElement.appendChild(renderAdPathTemplate({paths}));
-          content.appendChild(adPathElement);
-
-          const adContainer = renderAdContainerTemplate(
-              title, cityName, categoryName, description, createdDate,
-              price, isAuthor, editPath, id, state, photosIMG, inFavourites);
-          adContainer.classList.add('ad-container');
-          content.appendChild(adContainer);
-
-          document.title += ' ' + trimString(title, 40);
-          const addCartButton = this.#element.querySelector('.cart');
-          if (addCartButton !== null) {
-            if (inCart) {
-              addCartButton.innerHTML = 'Удалить из корзины';
-            }
-          }
+      const adPathElement = document.createElement('div');
+      const paths = [
+        {
+          path: cityPath,
+          title: cityName,
         },
-    );
+        {
+          path: categoryPath,
+          title: categoryName,
+        },
+        {
+          path: '#',
+          title: title,
+        },
+      ];
+      adPathElement.appendChild(renderAdPathTemplate({paths}));
+      content.appendChild(adPathElement);
+
+      const adContainer = renderAdContainerTemplate(
+          title,
+          cityName,
+          categoryName,
+          description,
+          createdDate,
+          price,
+          isAuthor,
+          editPath,
+          id,
+          state,
+          photosIMG,
+          inFavourites,
+          views,
+      );
+      adContainer.classList.add('ad-container');
+      content.appendChild(adContainer);
+
+      document.title += ' ' + trimString(title, 40);
+      const addCartButton = this.#element.querySelector('.cart');
+      if (addCartButton !== null) {
+        if (inCart) {
+          addCartButton.innerHTML = 'Удалить из корзины';
+        }
+      }
+    });
 
     const sellerSection = this.#element.querySelector('.seller-block');
 
     const id = userId;
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
-    await ajax.get(
-        path,
-        (body) => {
-          const profile = body['profile'];
-          const merchantsName = profile.merchantsName;
-          const ratingValue = profile.rating;
-          const id = profile.id;
-          const path = buildURL(router.routes.merchantsPage.href, {id});
+    await ajax.get(path, (body) => {
+      const profile = body['profile'];
+      const merchantsName = profile.merchantsName;
+      const ratingValue = profile.rating;
+      const id = profile.id;
+      const path = buildURL(router.routes.merchantsPage.href, {id});
 
-          const merchantCartItems = {
-            id: id,
-            path: path,
-            merchantsName: merchantsName,
-            location: profile.city.translation,
-            registrationDate: formatDate(profile.regTime),
-            isProfileVerified: profile.approved,
-            reviewCount: profile.reactionsCount,
-            subscribersCount: profile.subersCount,
-            subscribtionsCount: profile.subonsCount,
-            avatarImg: profile.avatarImg,
-          };
+      const merchantCartItems = {
+        id: id,
+        path: path,
+        merchantsName: merchantsName,
+        location: profile.city.translation,
+        registrationDate: formatDate(profile.regTime),
+        isProfileVerified: profile.approved,
+        reviewCount: profile.reactionsCount,
+        subscribersCount: profile.subersCount,
+        subscribtionsCount: profile.subonsCount,
+        avatarImg: profile.avatarImg,
+      };
 
-          const merchantCardInstance = new MerchantCard(merchantCartItems);
-          sellerSection.appendChild(merchantCardInstance.render());
+      const merchantCardInstance = new MerchantCard(merchantCartItems);
+      sellerSection.appendChild(merchantCardInstance.render());
 
-          const rating = this.#element.querySelector('.rating');
-          const ratingBarInstance = new RatingBar(ratingValue);
-          const ratingBar = ratingBarInstance.render();
-          rating.appendChild(ratingBar);
-        },
-    );
+      const rating = this.#element.querySelector('.rating');
+      const ratingBarInstance = new RatingBar(ratingValue);
+      const ratingBar = ratingBarInstance.render();
+      rating.appendChild(ratingBar);
+    });
   }
 }
