@@ -31,7 +31,7 @@ export class Header {
     const url = getURLFromLocation(window.location.href, router.host);
     const titleValue = url.searchParams.get('title');
     if (titleValue !== null) {
-      this.#header.querySelector('.search-input').value = titleValue;
+      this.#header.querySelector('.search__input').value = titleValue;
     }
 
     return this.#header;
