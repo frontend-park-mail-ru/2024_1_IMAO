@@ -24,7 +24,8 @@ export const API_ROUTES = {
     GET_ADVERT_BY_ID: new URL('/api/adverts/:id', api),
     DELETE_ADVERT: new URL('/api/adverts/delete/:id', api),
     CLOSE_ADVERT: new URL('/api/adverts/close/:id', api),
-    GET_SUGGESTIONS: new URL ('/api/adverts/suggestions', api),
+    GET_SUGGESTIONS: new URL('/api/adverts/suggestions', api),
+    SEARCH: new URL('api/adverts/search', api),
   },
   PROFILE: {
     GET_PROFILE: new URL('/api/profile/:id', api),

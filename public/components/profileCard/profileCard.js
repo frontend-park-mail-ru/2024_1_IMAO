@@ -5,7 +5,6 @@ import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './profileCard.hbs';
 import styles from './profileCard.scss';
 
-
 /**
  *
  */
@@ -27,8 +26,9 @@ class ProfileCard {
   render() {
     this.#renderTemplate();
 
-    let previousCheckedRadio = this.#element.
-        querySelector('input[type="radio"][name="radio-vertical"][value="adverts"]:checked');
+    let previousCheckedRadio = this.#element.querySelector(
+        'input[type="radio"][name="radio-vertical"][value="adverts"]:checked',
+    );
 
     const changeHandler = function(event) {
       const currentCheckedRadio = event.target;
@@ -37,13 +37,13 @@ class ProfileCard {
       if (name !== 'radio-vertical') return;
 
       if (previousCheckedRadio && previousCheckedRadio !== currentCheckedRadio) {
-        const svgPath = previousCheckedRadio.parentNode.previousElementSibling.firstElementChild.firstElementChild;
-        svgPath.setAttribute('fill', '#333333');
+        const img = previousCheckedRadio.parentNode.previousElementSibling;
+        img.classList.remove('icon--action');
       }
 
       if (currentCheckedRadio.checked) {
-        const svgPath = currentCheckedRadio.parentNode.previousElementSibling.firstElementChild.firstElementChild;
-        svgPath.setAttribute('fill', '#7092FE');
+        const img = currentCheckedRadio.parentNode.previousElementSibling;
+        img.classList.add('icon--action');
       }
 
       previousCheckedRadio = currentCheckedRadio;

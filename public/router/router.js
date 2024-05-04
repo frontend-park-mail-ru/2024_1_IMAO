@@ -75,9 +75,9 @@ class Router {
    */
   pushPage(event, href) {
     const url = getURLFromLocation(href, this.host);
-    const path = url.pathname;
+    const urlHref = url.href;
     event.preventDefault();
-    history.pushState({page: path}, path, path);
+    history.pushState({page: urlHref}, urlHref, urlHref);
     const main = document.getElementsByTagName('main')[0];
     this.#locationResolver(url, main);
   }
@@ -87,7 +87,7 @@ class Router {
    * @param {URL} url
    */
   go(url) {
-    const path = url.pathname;
+    const path = url.href;
     history.replaceState({page: path}, path, path);
     const main = document.getElementsByTagName('main')[0];
     this.#locationResolver(url, main);

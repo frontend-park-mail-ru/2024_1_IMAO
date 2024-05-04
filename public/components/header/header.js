@@ -4,7 +4,7 @@ import {CATEGORIES, serverHost} from '../../config/config.js';
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './header.hbs';
 import styles from './header.scss';
-import {buildURLBySegments} from '../../modules/parsePathParams.js';
+import {buildURLBySegments, getURLFromLocation} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import debounce from '../../modules/debouncer.js';
@@ -28,17 +28,23 @@ export class Header {
     this.#renderHeaderTemplate('Москва');
     this.#addListeners();
 
+    const url = getURLFromLocation(window.location.href, router.host);
+    const titleValue = url.searchParams.get('title');
+    if (titleValue !== null) {
+      this.#header.querySelector('.search-input').value = titleValue;
+    }
+
     return this.#header;
   }
 
   /**
    * Build API URL from slug parameters in path.
-   * @param {int} startID - Start ID in database.
+   * @param {string} title - Start ID in database.
    * @return {URL} - Route in API.
    */
   #getRoute(title) {
-    let apiRoute = ajax.routes.ADVERT.GET_SUGGESTIONS;
-    
+    const apiRoute = ajax.routes.ADVERT.GET_SUGGESTIONS;
+
     apiRoute.searchParams.delete('num');
     apiRoute.searchParams.delete('title');
 
@@ -48,8 +54,15 @@ export class Header {
     return apiRoute;
   }
 
+  /**
+   *
+   * @param {*} func
+   * @param {*} wait
+   * @return {Function}
+   */
   #debounce(func, wait = 300) {
     let timer;
+
     return (...args) => {
       clearTimeout(timer);
       timer = setTimeout(() => {
@@ -69,67 +82,98 @@ export class Header {
 
     this.#addLogoutListener(logoutBtn);
 
-    // const cartButton = this.#header.querySelector('.cart-action');
-
     const search = this.#header.querySelector('.search');
     const inputField = this.#header.querySelector('.search-input');
 
     const debouncedHandleInput = this.#debounce(this.#handleInput, 500);
-    
+
     inputField.addEventListener('input', debouncedHandleInput);
 
-    inputField.addEventListener('focus', function() {
-      console.log('Поле ввода получило фокус');
+    inputField.addEventListener('focus', (event) => {
       search.classList.toggle('search-focused');
+      this.#handleInput(event);
     });
 
-    inputField.addEventListener('blur', function() {
-      console.log('Поле ввода потеряло фокус');
-      search.classList.toggle('search-focused');
+    inputField.addEventListener('focusout', () => {
+      setTimeout(() => search.classList.toggle('search-focused'), 200);
     });
 
-    
+    const searchButton = this.#header.querySelector('.search__button');
+    this.#addSearchListener(searchButton);
   }
 
+  /**
+   *
+   * @param {*} button
+   */
+  #addSearchListener(button) {
+    button.addEventListener('click', (ev) => {
+      const searchValue = this.#header.querySelector('.search-input').value;
+      if (searchValue == '') {
+        router.pushPage(ev, router.routes.mainPage.href.href);
+
+        return;
+      }
+
+      ev.preventDefault();
+      const searchUrl = new URL(router.routes.mainPage.href.href);
+      searchUrl.searchParams.set('title', searchValue);
+      router.pushPage(ev, searchUrl.href);
+    });
+  }
+
+  /**
+   *
+   * @param {*} element
+   * @param {*} title
+   */
+  #addSuggestionListener(element, title) {
+    element.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const searchUrl = new URL(router.routes.mainPage.href.href);
+      searchUrl.searchParams.set('title', title);
+      router.pushPage(ev, searchUrl.href);
+    });
+  }
+
+  /**
+   *
+   * @param {*} event
+   */
   #handleInput(event) {
     console.log('Обработка ввода:', event.target.value);
 
     const searchValue = this.#header.querySelector('.search-input').value;
     const results = this.#header.querySelector('.results');
-    console.log('searchValue',searchValue)
-    const apiRoute = this.#getRoute(searchValue) 
+    console.log('searchValue', searchValue);
+    const apiRoute = this.#getRoute(searchValue);
 
-    ajax.get(
-      apiRoute,
-      (body) => {
-        
-        while (results.firstChild) {
-          results.removeChild(results.firstChild);
-        }
+    ajax.get(apiRoute, (body) => {
+      while (results.firstChild) {
+        results.removeChild(results.firstChild);
+      }
 
-        if (!body.items){
-          const listItem = document.createElement('li');
-          const link = document.createElement('a');
-          link.href = '#';
-          link.textContent = 'По вашему запросу ничего не найдено ;(';
-          listItem.appendChild(link);
-          results.appendChild(listItem);
+      if (!body.items) {
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = 'По вашему запросу ничего не найдено ;(';
+        listItem.appendChild(link);
+        results.appendChild(listItem);
 
-          return
-        }
+        return;
+      }
 
-        body.items.forEach(function(item) {
-          const listItem = document.createElement('li');
-          const link = document.createElement('a');
-          link.href = '#';
-          link.textContent = item;
-          listItem.appendChild(link);
-          results.appendChild(listItem);
-        });
-      },
-    );
-
-
+      body.items.forEach((item) => {
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = item;
+        listItem.appendChild(link);
+        results.appendChild(listItem);
+        this.#addSuggestionListener(listItem, item);
+      });
+    });
   }
 
   /**

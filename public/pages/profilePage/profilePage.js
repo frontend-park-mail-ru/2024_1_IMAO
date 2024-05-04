@@ -15,7 +15,6 @@ import router from '../../router/router.js';
 import {serverHost} from '../../config/config.js';
 import {buildURL, buildURLBySegments, getURLFromLocation, parsePathParams} from '../../modules/parsePathParams.js';
 
-
 /** Class representing a main page. */
 export class ProfilePage {
   #element;
@@ -92,9 +91,8 @@ export class ProfilePage {
   async handleSectionClick(event) {
     const targetValue = event.target.value;
 
-    const found = this.labelsAndValues
-        .find((item) => item.categoryLabelValue === targetValue) ||
-        this.labelsAndValues[0];
+    const found =
+      this.labelsAndValues.find((item) => item.categoryLabelValue === targetValue) || this.labelsAndValues[0];
     this.#element.querySelector('.profile-page-right-section-header').innerText = found.categoryLabel;
     const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
     const isRendered = this.sectionStateV.getSectionState(found.categoryLabelValue, 'isRendered');
@@ -124,7 +122,12 @@ export class ProfilePage {
     switch (found.categoryLabelValue) {
       case 'adverts':
         buttonGroupItemes = [
-          {categoryLabel: 'Активные', count: this.profile.activeAddsCount, checked: true, categoryLabelValue: 'active'},
+          {
+            categoryLabel: 'Активные',
+            count: this.profile.activeAddsCount,
+            checked: true,
+            categoryLabelValue: 'active',
+          },
           {categoryLabel: 'Проданные', count: this.profile.soldAddsCount, checked: false, categoryLabelValue: 'sold'},
         ];
 
@@ -186,12 +189,7 @@ export class ProfilePage {
    * @param {*} handleClick
    * @return {string}
    */
-  #addHorizontalSectionState(
-      container,
-      buttonGroupItemes,
-      sectionState,
-      handleClick,
-  ) {
+  #addHorizontalSectionState(container, buttonGroupItemes, sectionState, handleClick) {
     buttonGroupItemes.forEach((item) => {
       sectionState.setSectionState(item.categoryLabelValue, 'isRendered', false);
       if (item.checked) {
@@ -202,17 +200,18 @@ export class ProfilePage {
     const horizontalButtonGroupInstance = new HorizontalButtonGroup(buttonGroupItemes);
     container.appendChild(horizontalButtonGroupInstance.render());
 
-    const currentState = sectionState
-        .getSectionState(buttonGroupItemes.categoryLabelValue, 'isRendered');
+    const currentState = sectionState.getSectionState(buttonGroupItemes.categoryLabelValue, 'isRendered');
     if (!currentState) {
       this.sectionState.setSectionState(buttonGroupItemes.categoryLabelValue, 'isRendered', true);
     }
 
     const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
 
-    inputs.forEach(function(input) {
-      input.addEventListener('click', handleClick.bind(this));
-    }.bind(this));
+    inputs.forEach(
+        function(input) {
+          input.addEventListener('click', handleClick.bind(this));
+        }.bind(this),
+    );
 
     return currentState;
   }
@@ -258,10 +257,10 @@ export class ProfilePage {
     if (!isRendered) {
       this.sectionStateS.setSectionState(event.target.value, 'isRendered', true);
 
-      const header = this.sectionStateS.
-          getSectionState('serviceField', 'isChecked') == 'purchases' ? 'Нет покупок' : 'Нет продаж';
-      const content = this.sectionStateS.
-          getSectionState('serviceField', 'isChecked') == 'purchases' ?
+      const header =
+        this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ? 'Нет покупок' : 'Нет продаж';
+      const content =
+        this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?
           'Заказы по купленным товарам' :
           'Заказы по проданным товарам';
 
@@ -304,14 +303,11 @@ export class ProfilePage {
    */
   async #renderCards(merchantsPageRightSection, alreadyRendered, sectionState) {
     const cards = document.getElementsByClassName('card');
-    const startID = cards.length == 0 ?
-      1 :
-      parseInt(cards[cards.length - 1].dataset['id']) + 1;
+    const startID = cards.length == 0 ? 1 : parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('deleted');
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('userId');
-    const state = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ?
-      0 : 1;
+    const state = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ? 0 : 1;
     const id = ajax.auth.id;
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('userId', id);
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('deleted', state);
@@ -328,25 +324,22 @@ export class ProfilePage {
     }
 
     let adverts = {};
-    await ajax.get(
-        apiRoute,
-        (body) => {
-          adverts = body['items'];
-        },
-    );
+    await ajax.get(apiRoute, (body) => {
+      adverts = body['items'];
+    });
 
     if (!(adverts && Array.isArray(adverts))) {
-      const content = this.sectionState.
-          getSectionState('serviceField', 'isChecked') == 'active' ? 'активные' : 'проданные';
-      const emptyAdvertsPlug = new EmptyAdvertsPlug(content);
+      const content =
+        this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ? 'активные' : 'проданные';
+      const emptyAdvertsPlug = new EmptyAdvertsPlug({content});
       merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
 
       return;
     }
 
     const cardsContainer = !alreadyRendered ?
-          document.createElement('div') :
-          document.querySelector('.cards-container-merchant');
+      document.createElement('div') :
+      document.querySelector('.cards-container-merchant');
     if (!alreadyRendered) {
       cardsContainer.classList.add('cards-container-merchant');
     }
@@ -370,23 +363,17 @@ export class ProfilePage {
     const root = renderProfileMain();
     this.#element.appendChild(root);
     const id = ajax.auth.id;
-    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {'id': id});
+    const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id: id});
     const apiCSRF = ajax.routes.AUTH.CSRF;
 
-    await ajax.get(
-        apiCSRF,
-        (body) => {
-          this.CSRFToken = body['tokenBody'];
-        },
-    );
+    await ajax.get(apiCSRF, (body) => {
+      this.CSRFToken = body['tokenBody'];
+    });
 
     let profile = {};
-    await ajax.get(
-        path,
-        (body) => {
-          profile = body['profile'];
-        },
-    );
+    await ajax.get(path, (body) => {
+      profile = body['profile'];
+    });
 
     const merchantsName = profile.merchantsName;
     const ratingValue = profile.rating;

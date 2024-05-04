@@ -58,6 +58,7 @@ export class Advert {
     this.#addMerchantPageListener();
     this.#addCloseListener();
     this.#addFavoritesListener();
+    this.#addEditListener();
   }
 
   /**
@@ -154,13 +155,26 @@ export class Advert {
   }
 
   /**
+   *
+   */
+  #addEditListener() {
+    const editAddress = this.#element.querySelector('.btn-edit');
+    if (editAddress === null) {
+      return;
+    }
+    editAddress.addEventListener('click', (ev) => {
+      router.pushPage(ev, editAddress.href);
+    });
+  }
+
+  /**
    * Adds add to favorites listener.
    * @param {*} addToBlackListButton
    * @param {*} overlayContainer
    */
   #addFavoritesListener() {
     const addFavoritesButton = this.#element.querySelector('.btn-favourite');
-    if (addFavoritesButton == null) {
+    if (addFavoritesButton === null) {
       return;
     }
     addFavoritesButton.addEventListener('click', async (event) => {
