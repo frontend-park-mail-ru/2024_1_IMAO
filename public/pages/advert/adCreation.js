@@ -197,7 +197,7 @@ export class AdCreation {
     this.#element.appendChild(content);
 
     const form = document.createElement('div');
-    form.classList.add('ad__creation');
+    form.classList.add('ad-creation');
 
     let CSRFToken = '';
     const apiCSRF = ajax.routes.AUTH.CSRF;

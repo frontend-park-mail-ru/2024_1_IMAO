@@ -1,12 +1,12 @@
-.ad__creation {
+.ad-creation {
   gap: 10px;
   margin: auto;
   padding: 20px;
-  width: 1215px;
+  width: 100%;
   margin: 0 auto;
 }
 
-.ad__creation .form {
+.ad-creation .form {
   display: grid;
   grid-template-columns: auto auto;
   float: inline-start;
@@ -19,8 +19,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.ad__creation .form__title {
-  font-size: 2em;
+.ad-creation .form__title {
+  font-size: 30px;
   font-weight: 500;
   line-height: 36px;
   padding-bottom: 20px;
@@ -39,9 +39,9 @@
   font-size: 16px;
 }
 
-.ad__creation .form__input,
-.ad__creation .form__select,
-.ad__creation .form__textarea {
+.ad-creation .form__input,
+.ad-creation .form__select,
+.ad-creation .form__textarea {
   /* min-width: 640px; */
   font-family: 'OpenSans', sans-serif;
   width: 100%;
@@ -57,20 +57,20 @@
   font-size: 16px;
 }
 
-.ad__creation .form__select {
+.ad-creation .form__select {
   max-width: 290px;
 }
 
-.ad__creation .form__textarea {
+.ad-creation .form__textarea {
   width: 615px;
   height: 130px;
 }
 
-.ad__creation .form__description {
+.ad-creation .form__description {
   color: #8b8a8a;
 }
 
-.ad__creation .form__input--description {
+.ad-creation .form__input--description {
   margin-bottom: 5px;
 }
 
@@ -78,7 +78,7 @@
   border-color: #ff0000 !important;
 }
 
-.ad__creation .form__input--min {
+.ad-creation .form__input--min {
   max-width: 180px;
 }
 
@@ -105,20 +105,20 @@
   transition: background-color 0.3s; /* плавное изменение цвета фона при наведении */
 }
 
-.ad__creation .asterisk {
+.ad-creation .asterisk {
   color: #ff0000;
 }
 
-.ad__creation .form__button:hover {
+.ad-creation .form__button:hover {
   background-color: #4b74f8;
 }
 
 /* Модификаторы */
-.ad__creation .form__input--error {
+.ad-creation .form__input--error {
   border-color: #ff0000;
 }
 
-.ad__creation .form__button--disabled {
+.ad-creation .form__button--disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
@@ -129,4 +129,11 @@
 }
 .ruble {
   font-size: x-large;
+}
+
+@media (max-width: 800px) {
+  .form__title {
+    text-align: center;
+    font-size: 20px !important;
+  }
 }
