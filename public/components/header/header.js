@@ -82,8 +82,8 @@ export class Header {
 
     this.#addLogoutListener(logoutBtn);
 
-    const search = this.#header.querySelector('.search');
-    const inputField = this.#header.querySelector('.search-input');
+    const search = this.#header.querySelector('.navbar__search');
+    const inputField = this.#header.querySelector('.search__input');
 
     const debouncedHandleInput = this.#debounce(this.#handleInput, 500);
 
@@ -108,7 +108,7 @@ export class Header {
    */
   #addSearchListener(button) {
     button.addEventListener('click', (ev) => {
-      const searchValue = this.#header.querySelector('.search-input').value;
+      const searchValue = this.#header.querySelector('.search__input').value;
       if (searchValue == '') {
         router.pushPage(ev, router.routes.mainPage.href.href);
 
@@ -143,7 +143,7 @@ export class Header {
   #handleInput(event) {
     console.log('Обработка ввода:', event.target.value);
 
-    const searchValue = this.#header.querySelector('.search-input').value;
+    const searchValue = this.#header.querySelector('.search__input').value;
     const results = this.#header.querySelector('.results');
     console.log('searchValue', searchValue);
     const apiRoute = this.#getRoute(searchValue);
