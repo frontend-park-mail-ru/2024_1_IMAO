@@ -487,12 +487,46 @@ header {
         justify-content: flex-end;
     }
 
-    .dropdown__content {
-        top: 45%;
+    .dropdown__content{
+        
+        border-radius: 0;
+        
+        a{
+            padding: 12px 28px;
+        }
+    }
+
+    .dropdown-content-right a{
+        
+        font-size:xx-large;
+    }
+
+    .dropdown-content-left {
+        width: 100vw;
+        left: -18%;
+    }
+
+    .dropdown-content-right {
+        width: 105vw;
+        right: -7.5vw;
     }
 
 }
 
+@media (max-height: 760px){
+    .dropdown__content{
+        
+        border-radius: 0;
+        overflow: auto scroll;
+        height: calc(-48px + 100vh);
+
+        a{
+            padding: 12px 28px;
+        }
+
+    }
+}
+
 .display-block {
-    display: block;
+    display: block;  
 }
