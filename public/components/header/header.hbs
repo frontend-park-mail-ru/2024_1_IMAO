@@ -40,15 +40,16 @@
     </div>
 
     <div class="navbar">
-        <a href="{{urlMain}}" data-url="{{urlMain}}">
-            <img class="logo" src="images/vol4ok.svg">
-        </a>
-        <a class="navbar__name" href="{{urlMain}}" data-url="{{urlMain}}">ВОЛЧОК</a>
-
+        <div class="navbar__logo">
+            <a href="{{urlMain}}" data-url="{{urlMain}}">
+                <img class="logo" src="images/vol4ok.svg">
+            </a>
+            <a class="name" href="{{urlMain}}" data-url="{{urlMain}}">ВОЛЧОК</a>
+        </div>
         <div class="navbar__dropdown">
             <button class="dropbtn">
                 <i class="fa fa-list-ul"></i>
-                Категории
+                <span>Категории</span>
             </button>
             <div class="dropdown-content">
                 {{#each CategoriesWithUrl}}
@@ -63,21 +64,21 @@
         </form>
         <a class="btn-success" href="{{urlCreate}}" data-url="{{urlCreate}}">Разместить объявление</a>
         {{#if flag}}
-            <div class="navbar__dropdown">
-                {{#if (is_null avatar)}}
-                    <img class="profile-icon" src="images/img_avatar.png">
-                {{^}}
-                    <img class="profile-icon" src="data:image/png;base64,{{avatar}}">
-                {{/if}}
-                <div class="dropdown-content dropdown-content-right">
-                    <a href="{{urlProfile}}" data-url="{{urlProfile}}">Профиль</a>
-                    <a href="{{urlCart}}" data-url="{{urlCart}}">Корзина</a>
-                    <a href="{{urlProfileFavorites}}" data-url="{{urlProfileFavorites}}">Избранное</a>
-                    <a href="/logout" class="logout">Выйти</a>
-                </div>
+        <div class="navbar__dropdown navbar__dropdown-avatar">
+            {{#if (is_null avatar)}}
+                <img class="profile-icon" src="images/img_avatar.png">
+            {{^}}
+                <img class="profile-icon" src="data:image/png;base64,{{avatar}}">
+            {{/if}}
+            <div class="dropdown-content dropdown-content-right">
+                <a href="{{urlProfile}}" data-url="{{urlProfile}}">Профиль</a>
+                <a href="{{urlCart}}" data-url="{{urlCart}}">Корзина</a>
+                <a href="{{urlProfileFavorites}}" data-url="{{urlProfileFavorites}}">Избранное</a>
+                <a href="/logout" class="logout">Выйти</a>
             </div>
+        </div>
         {{^}}
-            <a class="btn-secondary" href="{{urlLogin}}" data-url="{{urlLogin}}">Войти</a>
+        <a class="btn-secondary" href="{{urlLogin}}" data-url="{{urlLogin}}">Войти</a>
         {{/if}}
     </div>
 </div>
