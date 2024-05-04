@@ -132,6 +132,10 @@ header {
         color: rgba(51, 51, 51, 1);
         margin-left: 16px;
     }
+
+    .unlogged-user {
+        display: none;
+    }
 }
 
 .navbar__dropdown .dropdown__button {
@@ -420,6 +424,25 @@ header {
         .search-focused {
             border: solid 1px rgb(235, 235, 235);
         }
+
+        .btn-secondary {
+            order: 3;
+            width: 15%;
+            background-color:#fff;
+            flex-grow: 0;
+            flex-shrink: 0;
+            margin: 0;
+            padding: 0;
+            justify-content: flex-end;
+
+            span {
+                display: none;
+            }
+
+            .unlogged-user {
+                display: block;
+            }
+        }
     }
 
     .navbar__search {
@@ -513,7 +536,7 @@ header {
 
 }
 
-@media (max-height: 760px){
+@media (max-height: 760px) {
     .dropdown__content{
         
         border-radius: 0;
