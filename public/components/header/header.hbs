@@ -59,8 +59,10 @@
         </div>
         <form class="navbar__search">
             <i class="fa fa-search"></i>
-            <input type="text" placeholder="Поиск по объявлениям" name="search">
-            <button type="submit">Найти</button>
+            <input class="search-input" type="text" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="Поиск по объявлениям" name="search">
+            <button class="search__button" type="submit">Найти</button>
+            <ul class="results" >
+		    </ul>
         </form>
         <a class="btn-success" href="{{urlCreate}}" data-url="{{urlCreate}}">Разместить объявление</a>
         {{#if flag}}
