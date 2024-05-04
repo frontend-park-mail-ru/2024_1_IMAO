@@ -181,6 +181,28 @@ export class Header {
    * @param {HTMLCollectionOf<Element>} buttons - Interface buttons elements.
    */
   #addButtonsListeners(buttons) {
+    const categoryButton = this.#header.querySelector('.dropdown__button')
+    const caregoryList = this.#header.querySelector('.dropdown-content-left') 
+    categoryButton.addEventListener('click', (ev) => {
+      caregoryList.classList.toggle('display-block');
+    });
+
+    const avatarImg = this.#header.querySelector('.profile-icon')
+    const optionList = this.#header.querySelector('.dropdown-content-right') 
+    avatarImg.addEventListener('click', (ev) => {
+      optionList.classList.toggle('display-block');
+    });
+
+    window.addEventListener('mousedown', (ev) => {
+      if (!caregoryList.contains(ev.target) && !categoryButton.contains(ev.target)) {
+        caregoryList.classList.remove('display-block');
+      }
+
+      if (!optionList.contains(ev.target) && !avatarImg.contains(ev.target)) {
+        optionList.classList.remove('display-block');
+      }
+    });
+
     for (const anchor of buttons) {
       if (anchor.dataset.url == undefined) {
         continue;

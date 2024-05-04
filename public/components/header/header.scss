@@ -134,7 +134,7 @@ header {
     }
 }
 
-.navbar__dropdown .dropbtn {
+.navbar__dropdown .dropdown__button {
     font-size: 16px;
     border: none;
     font-family: 'OpenSans', sans-serif;
@@ -144,28 +144,67 @@ header {
     background-color: rgba(115, 146, 190, 1);
     color: white;
     margin: 0 16px;
+    cursor: pointer;
 }
 
 .navbar__dropdown {
     display: flex;
+    position: relative;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 88px;
-    background-color: #f9f9f9;
-    min-width: 160px;
+.dropdown__content {
+    display: none; 
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    max-height: none;
+    position: absolute;
+    
+    top: 100%;
+
+    transform: translateY(10px);
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(235, 235, 235);
+    animation-name: hYfEzu;
+    animation-duration: 0.2s;
 }
 
 .dropdown-content-right {
-    transform: translate3d(-70%, 0, 0);
-    align-self: flex-end;
+    right: 4px;
+    min-width: 150px;
 }
 
-.dropdown-content a {
+.dropdown-content-left {
+    min-width: 290px;
+}
+
+@media (min-width: $main-width) {
+    .dropdown-content-right::before,
+    .dropdown-content-right::after {
+        bottom: 100%;
+        right: 8px;
+        border: solid transparent;
+        content: " ";
+        height: 0px;
+        width: 0px;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .dropdown-content-right::before {
+        border-bottom-color: rgb(235, 235, 235);
+        border-width: 11px;
+        margin-right: -1px;
+    }
+
+    .dropdown-content-right::after {
+        border-bottom-color: rgb(255, 255, 255);
+        border-width: 10px;
+    }
+}
+
+
+.dropdown__content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -173,12 +212,8 @@ header {
     text-align: left;
 }
 
-.dropdown-content a:hover {
+.dropdown__content a:hover {
     background-color: #ddd;
-}
-
-.navbar__dropdown:hover .dropdown-content {
-    display: block;
 }
 
 .navbar__search {
@@ -355,6 +390,7 @@ header {
     border-radius: 50%;
     margin-left: 32px;
     align-self: center;
+    cursor: pointer;
 }
 
 @media (max-width: $main-width) {
@@ -424,7 +460,7 @@ header {
         width: 15%;
         justify-content: flex-start;
 
-        .dropbtn {
+        .dropdown__button {
             margin: 0;
             background-color: white;
             color: black;
@@ -451,4 +487,12 @@ header {
         justify-content: flex-end;
     }
 
+    .dropdown__content {
+        top: 45%;
+    }
+
+}
+
+.display-block {
+    display: block;
 }

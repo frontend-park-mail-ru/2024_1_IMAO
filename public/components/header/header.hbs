@@ -47,11 +47,11 @@
             <a class="name" href="{{urlMain}}" data-url="{{urlMain}}">ВОЛЧОК</a>
         </div>
         <div class="navbar__dropdown">
-            <button class="dropbtn">
+            <button class="dropdown__button">
                 <i class="fa fa-list-ul"></i>
                 <span>Категории</span>
             </button>
-            <div class="dropdown-content">
+            <div class="dropdown__content dropdown-content-left">
                 {{#each CategoriesWithUrl}}
                     <a href="{{this.url}}" data-url="{{this.url}}">{{this.name}}</a>
                 {{/each}}
@@ -72,7 +72,7 @@
             {{^}}
                 <img class="profile-icon" src="data:image/png;base64,{{avatar}}">
             {{/if}}
-            <div class="dropdown-content dropdown-content-right">
+            <div class="dropdown__content dropdown-content-right">
                 <a href="{{urlProfile}}" data-url="{{urlProfile}}">Профиль</a>
                 <a href="{{urlCart}}" data-url="{{urlCart}}">Корзина</a>
                 <a href="{{urlProfileFavorites}}" data-url="{{urlProfileFavorites}}">Избранное</a>
