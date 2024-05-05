@@ -99,7 +99,7 @@ header {
 /* ---------- */
 
 *:focus {
-  outline: none;
+    outline: none;
 }
 
 .navbar {
@@ -282,34 +282,34 @@ header {
     }
 
     .results {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    padding: 9px 0px;
-    list-style: none;
-    margin: 8px 0px 0px;
-    
-    top: 100%;
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-    border-radius: 8px;
-    border: 1px solid rgb(235, 235, 235);
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        padding: 9px 0px;
+        list-style: none;
+        margin: 8px 0px 0px;
+        
+        top: 100%;
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+        border-radius: 8px;
+        border: 1px solid rgb(235, 235, 235);
     }
     
     .results li {
-    display: block;
+        display: block;
     }
     
     .results li:first-child {
-    margin-top: -1px;
+        margin-top: -1px;
     }
     
     .results li:first-child:before,
     .results li:first-child:after {
         display: block;
-        content: '';
+            content: '';
             width: 0;
             height: 0;
             position: absolute;
@@ -399,8 +399,8 @@ header {
 }
 
 .navbar .search-focused button {
-  background: rgba(115, 146, 190, 1);
-  color: rgb(231, 234, 238);
+    background: rgba(115, 146, 190, 1);
+    color: rgb(231, 234, 238);
 }
 
 .navbar .search-focused .results {
