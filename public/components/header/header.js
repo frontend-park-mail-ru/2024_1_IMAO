@@ -84,11 +84,12 @@ export class Header {
 
     const search = this.#header.querySelector('.navbar__search');
     const inputField = this.#header.querySelector('.search__input');
+    const searchResults = this.#header.querySelector('.results');
 
     const debouncedHandleInput = this.#debounce(this.#handleInput, 500);
 
     inputField.addEventListener('input', debouncedHandleInput);
-
+    
     inputField.addEventListener('focus', (event) => {
       search.classList.toggle('search-focused');
       this.#handleInput(event);
@@ -99,6 +100,20 @@ export class Header {
     });
 
     const searchButton = this.#header.querySelector('.search__button');
+
+    inputField.addEventListener('input', () => {
+      if (inputField.value.trim() === '') {
+        searchButton.disabled = true;
+        searchResults.classList.add('display-none');
+      } else {
+        searchButton.disabled = false;
+        searchResults.classList.remove('display-none');
+      }
+    });
+
+    searchButton.disabled = true;
+    searchResults.classList.add('display-none');
+
     this.#addSearchListener(searchButton);
   }
 
@@ -141,13 +156,19 @@ export class Header {
    * @param {*} event
    */
   #handleInput(event) {
-    console.log('Обработка ввода:', event.target.value);
-
     const searchValue = this.#header.querySelector('.search__input').value;
     const results = this.#header.querySelector('.results');
-    console.log('searchValue', searchValue);
     const apiRoute = this.#getRoute(searchValue);
 
+    if (searchValue.trim() === '')
+    {
+      while (results.firstChild) {
+        results.removeChild(results.firstChild);
+      }
+      
+      return;
+    }
+    
     ajax.get(apiRoute, (body) => {
       while (results.firstChild) {
         results.removeChild(results.firstChild);
@@ -156,6 +177,7 @@ export class Header {
       if (!body.items) {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
+        link.classList.add('nothith-was-found');
         link.href = '#';
         link.textContent = 'По вашему запросу ничего не найдено ;(';
         listItem.appendChild(link);
@@ -187,9 +209,7 @@ export class Header {
       caregoryList.classList.toggle('display-block');
     });
 
-    console.log(this.#header);
     const avatarImg = this.#header.querySelector('.profile-icon');
-    console.log(avatarImg);
     const optionList = this.#header.querySelector('.dropdown-content-right');
     if (avatarImg) {
       avatarImg.addEventListener('click', (ev) => {

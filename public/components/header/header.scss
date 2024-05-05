@@ -279,6 +279,7 @@ header {
 
     input:focus + .results {
         display: block;
+        
     }
 
     .results {
@@ -297,11 +298,15 @@ header {
         border-radius: 8px;
         border: 1px solid rgb(235, 235, 235);
     }
-    
+
     .results li {
         display: block;
+
+        .nothith-was-found {
+            pointer-events: none;
+        }  
     }
-    
+
     .results li:first-child {
         margin-top: -1px;
     }
@@ -348,6 +353,7 @@ header {
         text-align: left;
         border: 1px solid transparent;
         border-radius: 8px;
+
     }
     
     .results a span {
@@ -368,6 +374,7 @@ header {
         text-decoration: none;
         background: rgb(245, 245, 245);
     }
+
     
     :-moz-placeholder {
         color: #a7aabc;
@@ -405,7 +412,11 @@ header {
 
 .navbar .search-focused .results {
     display: block;
-  }
+}
+
+.navbar .search-focused .display-none {
+    display: none;  
+}
   
 .navbar .search-focused {
     border: solid 1px rgba(115, 146, 190, 1);
@@ -575,3 +586,4 @@ header {
 .display-block {
     display: block;  
 }
+
