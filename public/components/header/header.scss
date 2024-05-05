@@ -171,6 +171,7 @@ header {
     border: 1px solid rgb(235, 235, 235);
     animation-name: hYfEzu;
     animation-duration: 0.2s;
+
 }
 
 .dropdown-content-right {
@@ -204,6 +205,20 @@ header {
     .dropdown-content-right::after {
         border-bottom-color: rgb(255, 255, 255);
         border-width: 10px;
+    }
+
+    @media (max-height: 860px) {
+        .dropdown-content-left{
+            
+            border-radius: 0;
+            overflow: auto scroll;
+            height: calc(-48px + 90vh);
+    
+            a {
+                padding: 12px 28px;
+            }
+    
+        }
     }
 }
 
@@ -542,19 +557,18 @@ header {
         right: -7.5vw;
     }
 
-}
-
-@media (max-height: 760px) {
-    .dropdown-content-left{
-        
-        border-radius: 0;
-        overflow: auto scroll;
-        height: calc(-48px + 100vh);
-
-        a {
-            padding: 12px 28px;
+    @media (max-height: 760px) {
+        .dropdown-content-left{
+            
+            border-radius: 0;
+            overflow: auto scroll;
+            height: calc(-48px + 100vh);
+    
+            a {
+                padding: 12px 28px;
+            }
+    
         }
-
     }
 }
 
