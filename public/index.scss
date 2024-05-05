@@ -28,6 +28,10 @@ body {
   .auth-page {
     background: #fff;
   }
+
+  body {
+    background: #fff !important;
+  }
 }
 
 main {
@@ -46,6 +50,10 @@ main {
 }
 
 @media (max-width: $main-width) {
+  body {
+    background: $background-color;
+  }
+
   .main-page {
     width: 100%;
   }

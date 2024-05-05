@@ -12,6 +12,7 @@ header {
   top: 0px;
   display: flex;
   justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .pre-header {
@@ -384,6 +385,10 @@ header {
       width: max(300px, 60%);
       max-width: 1000px;
       transition: bottom 0.3s;
+
+      &--disabled {
+        display: none !important;
+      }
     }
 
     .search-focused {

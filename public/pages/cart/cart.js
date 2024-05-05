@@ -215,7 +215,7 @@ export class Cart {
       city = city.translation;
       category = category.translation;
       const {id, price, title, inFavourites} = advert;
-      this.#items[ajax.auth.id][id] = advert;
+      this.#items[ajax.auth.id][id] = {advert, photosIMG};
       ids.push(id);
       priceSum += Number(price);
       const photo = photosIMG?.[0] ? photosIMG[0] : null;
