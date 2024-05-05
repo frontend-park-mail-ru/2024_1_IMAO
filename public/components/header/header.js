@@ -100,6 +100,9 @@ export class Header {
 
     const searchButton = this.#header.querySelector('.search__button');
     this.#addSearchListener(searchButton);
+
+    const AdCreationButton = this.#header.querySelector('.btn-success');
+    this.#addScrollListener(AdCreationButton);
   }
 
   /**
@@ -213,6 +216,27 @@ export class Header {
         router.popPage(ev, main);
       });
     });
+  }
+
+  /**
+   *@param {*} button
+   */
+  #addScrollListener(button) {
+    let prevScrollpos = window.scrollY;
+
+    window.onscroll = function() {
+      const mediaQuery = window.matchMedia('(max-width: 1219px)');
+      if (!mediaQuery.matches) {
+        return;
+      }
+      const currentScrollPos = window.scrollY;
+      if (prevScrollpos > currentScrollPos) {
+        button.style.bottom = '25px';
+      } else {
+        button.style.bottom = '-55px';
+      }
+      prevScrollpos = currentScrollPos;
+    };
   }
 
   /**

@@ -1,64 +1,71 @@
 .skeleton-advert-vector-item {
-    width: 215px;
-    height: 295px;
+  width: clamp(129px, 37.5vw, 215px);
+  height: clamp(177px, 51vw, 295px);
 
-    position: relative;
-    overflow: hidden;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px 2px rgba(0,0,0, 0.05);
-    
-    display: flex;
-    flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  flex-direction: column;
 }
 
-  @mixin skeleton-loader {
-    &:before {
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(-80deg, rgba(235, 235,235,1) 0%, rgba(235, 235,235,1) 45%, rgba(245, 245,245,1) 50%, rgba(235, 235,235,1) 55%, rgba(235, 235,235,1) 200%);
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      animation: 1.2s infinite slide;
-      opacity: 0.5;
-    }
-  }
-  
-  @keyframes slide {
-    from {
-      left: -100%;
-    }
-  
-    to {
-      left: 100%;
-    }
-  }
-  
-  .card__image__skeleton {
-    border-bottom: 1px solid white;
-    @include skeleton-loader;
-    position: relative;
-    overflow: hidden;
-    flex: 7;
-    background-color: #ebebeb;
-  }
-  
-  .card__content__skeleton {
-    padding: 1rem;
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    justify-content: center;
-    background-color: #ffffff;
-  }
-  
-  .card__content__skeleton-item {
-    overflow: hidden;
-    position: relative;
+@mixin skeleton-loader {
+  &:before {
+    height: 100%;
     width: 100%;
-    height: 1rem;
-    @include skeleton-loader;
-    background-color: #ebebeb;
+    background: linear-gradient(
+      -80deg,
+      rgba(235, 235, 235, 1) 0%,
+      rgba(235, 235, 235, 1) 45%,
+      rgba(245, 245, 245, 1) 50%,
+      rgba(235, 235, 235, 1) 55%,
+      rgba(235, 235, 235, 1) 200%
+    );
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: 1.2s infinite slide;
+    opacity: 0.5;
   }
+}
+
+@keyframes slide {
+  from {
+    left: -100%;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+.card__image__skeleton {
+  border-bottom: 1px solid white;
+  @include skeleton-loader;
+  position: relative;
+  overflow: hidden;
+  flex: 7;
+  background-color: #ebebeb;
+}
+
+.card__content__skeleton {
+  padding: 1rem;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.card__content__skeleton-item {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 1rem;
+  @include skeleton-loader;
+  background-color: #ebebeb;
+}

@@ -232,7 +232,7 @@ export class Advert {
       const {items} = body;
       const {advert, city, category, photosIMG} = items;
 
-      const {id, title, description, price, isUsed, created, inFavourites, inCart, views} = advert;
+      const {id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} = advert;
       this.id = id;
       const createdDate = formatDate(created);
       const cityName = city.name;
@@ -283,6 +283,7 @@ export class Advert {
           photosIMG,
           inFavourites,
           views,
+          favouritesNum,
       );
       adContainer.classList.add('ad-container');
       content.appendChild(adContainer);
