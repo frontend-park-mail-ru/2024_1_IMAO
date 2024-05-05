@@ -311,7 +311,7 @@ export class Advert {
         id: id,
         path: path,
         merchantsName: merchantsName,
-        location: profile.city.translation,
+        location: profile.city.name,
         registrationDate: formatDate(profile.regTime),
         isProfileVerified: profile.approved,
         reviewCount: profile.reactionsCount,
