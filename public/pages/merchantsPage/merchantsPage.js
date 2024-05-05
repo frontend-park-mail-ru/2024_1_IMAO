@@ -8,6 +8,7 @@ import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizo
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import formatDate from '../../modules/formatDate.js';
+import SkeletonCard from '../../components/skeletonCard/skeletonCard.js';
 import StageStorage from '../../modules/stateStorage.js';
 import trimString from '../../modules/trimString.js';
 import {buildURL, getURLFromLocation, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
@@ -19,6 +20,8 @@ export class MerchantsPage {
   #element;
   #isBottomReached;
   #slug;
+  #activeAdverts;
+  #soldAdverts;
 
   /**
    * Initialize a main page.
@@ -74,6 +77,8 @@ export class MerchantsPage {
     const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
     const isRendered = this.sectionState.getSectionState(event.target.value, 'isRendered');
 
+    const section = event.target.value;
+
     const currentButtonChecked = this.sectionState.getSectionState('serviceField', 'isChecked');
     this.sectionState.setSectionState('serviceField', 'isChecked', event.target.value);
 
@@ -84,7 +89,7 @@ export class MerchantsPage {
       newMerchantsCardContainer.classList.add('cards-container-merchant');
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
       this.sectionState.setSectionState(event.target.value, 'isRendered', true);
-      this.#renderCards(newMerchantsCardContainer, isRendered);
+      this.#renderCards(newMerchantsCardContainer, isRendered, section);
     } else {
       const stashedMerchantsCardContainer = this.sectionState.getSectionState(event.target.value, 'render');
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
@@ -119,7 +124,7 @@ export class MerchantsPage {
    * @param {*} merchantsPageRightSection
    * @param {*} alreadyRendered
    */
-  #renderCards(merchantsPageRightSection, alreadyRendered) {
+  #renderCards(merchantsPageRightSection, alreadyRendered, section) {
     const cards = document.getElementsByClassName('card');
     const startID = cards.length == 0 ?
       1 :
@@ -134,6 +139,23 @@ export class MerchantsPage {
     const {id} = params;
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('userId', id);
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('deleted', state);
+
+    const cardsContainerSkeleton = document.createElement('div');
+
+    const skeletonCardsCount = section == 'sold' ?
+      this.#soldAdverts : this.#activeAdverts;
+
+    if (skeletonCardsCount != 0){
+    cardsContainerSkeleton.classList.add('cards-container-merchant');
+
+      for (let i = 0; i < skeletonCardsCount; i++) {
+        const adsCardSkeletonInstance = new SkeletonCard();
+        cardsContainerSkeleton.appendChild(adsCardSkeletonInstance.render());
+      }
+    
+    merchantsPageRightSection.replaceWith(cardsContainerSkeleton);
+    }  
+    //content.appendChild(cardsContainerSkeleton);
 
     ajax.get(
         ajax.routes.ADVERT.GET_ADS_LIST,
@@ -162,6 +184,9 @@ export class MerchantsPage {
             );
           });
 
+          if (this.#activeAdverts != 0){
+            cardsContainerSkeleton.replaceWith(merchantsPageRightSection);
+          }
           this.#isBottomReached = false;
         },
     );
@@ -228,6 +253,10 @@ export class MerchantsPage {
           rating.appendChild(ratingBar);
 
           const merchantsPageRightSection = this.#element.querySelector('.merchant-page-right-section-switch');
+
+          this.#activeAdverts = profile.activeAddsCount;
+          this.#soldAdverts = profile.soldAddsCount
+
           const buttonGroupItemes = [
             {categoryLabel: 'Активные', count: profile.activeAddsCount, checked: true, categoryLabelValue: 'active'},
             {categoryLabel: 'Проданные', count: profile.soldAddsCount, checked: false, categoryLabelValue: 'sold'},
