@@ -1,6 +1,5 @@
 /* Блок "order-item" */
 .order-item {
-  //width: 570px;
   max-width: 900px;
   width: calc(90vw - 300px);
   height: 200px;
@@ -23,10 +22,6 @@
 
 /* Элемент "order-item__heading" */
 .order-item__heading {
-  //height: 30px;
-  // left: 0px;
-  // top: 0px;
-  // position: absolute;
   color: black;
   font-size: 26px;
   grid-area: heading;
@@ -41,9 +36,6 @@
   grid-area: image;
   width: 100px;
   height: 75px;
-  // left: 0px;
-  // top: 46px;
-  // position: absolute;
   padding-bottom: 5px;
   object-fit: cover;
   border-radius: 12px;
@@ -53,9 +45,6 @@
 .order-item__image-overlay {
   width: 100px;
   height: 75px;
-  // left: 0px;
-  // top: 46px;
-  // position: absolute;
   background: rgba(0, 0, 0, 0.04);
   border-radius: 12px;
 }
@@ -64,12 +53,8 @@
 .order-item__price {
   height: 18px;
   grid-area: price;
-  // left: 0px;
-  // top: 125px;
-  // position: absolute;
   color: #757575;
   font-size: 13px;
-
   font-weight: 400;
   line-height: 18px;
   word-wrap: break-word;
@@ -96,7 +81,6 @@
   text-align: center;
   color: black;
   font-size: 15px;
-
   font-weight: 400;
   line-height: 22px;
   word-wrap: break-word;
@@ -106,12 +90,8 @@
 .order-item__delivery-info {
   grid-area: delivery;
   height: 22px;
-  /* left: 247px;  */
-  // top: 150px;
-  // position: absolute;
   color: black;
   font-size: 15px;
-
   font-weight: 400;
   line-height: 22px;
   word-wrap: break-word;
@@ -122,16 +102,10 @@
   width: 20px;
   height: 20px;
   grid-area: delete;
-  // left: 740px;
-  // top: 7px;
-  // position: absolute;
 }
 
 /* Элемент "order-item__delete-icon" */
 .order-item__delete-icon {
   width: 16px;
   height: 17px;
-  // left: 2px;
-  // top: 1.5px;
-  // position: absolute;
 }

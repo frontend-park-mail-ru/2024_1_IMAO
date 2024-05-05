@@ -1,8 +1,4 @@
 .hover-slider-parent {
-  // width: 215px;
-  // height: 215px;
-  // width: 129px;
-  // height: 129px;
   transition: 0.3s;
   width: clamp(129px, 37.5vw, 215px);
   height: clamp(129px, 37.5vw, 215px);
@@ -11,8 +7,6 @@
 
 .item_hover_slider {
   float: left;
-  // height: 215px;
-  // height: 129px;
   transition: 0.3s;
   width: clamp(129px, 37.5vw, 215px);
   height: clamp(129px, 37.5vw, 215px);
@@ -39,12 +33,7 @@
 
 .hover-slider {
   position: absolute;
-  // width: 215px;
-  // height: 215px;
-  // width: 129px;
-  // height: 129px;
   top: 0px;
-  //transition: 0.3s;
   width: clamp(129px, 37.5vw, 215px);
   height: clamp(129px, 37.5vw, 215px);
 }

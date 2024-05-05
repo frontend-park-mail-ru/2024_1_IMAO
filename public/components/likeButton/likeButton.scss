@@ -7,7 +7,6 @@
   display: inline-block;
   font-size: 45px;
   outline: none;
-  //@include css3-prefix(user-drag, none);
   @include css3-prefix(user-select, none);
   @include css3-prefix(tap-highlight-color, rgba(255, 255, 255, 0));
   @include css3-prefix(transition, all 80ms ease-in-out);
