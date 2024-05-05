@@ -187,9 +187,7 @@ export class Header {
       caregoryList.classList.toggle('display-block');
     });
 
-    console.log(this.#header);
     const avatarImg = this.#header.querySelector('.profile-icon');
-    console.log(avatarImg);
     const optionList = this.#header.querySelector('.dropdown-content-right');
     if (avatarImg) {
       avatarImg.addEventListener('click', (ev) => {
