@@ -269,8 +269,9 @@ export class Header {
       const urlurl = buildURLBySegments(serverHost, temp);
       const url = urlurl.href;
       const {name} = category;
+      const {translation} = category;
 
-      return {name, url};
+      return {name, translation, url};
     });
     this.#header.appendChild(
         stringToHtmlElement(

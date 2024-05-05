@@ -53,7 +53,10 @@
             </button>
             <div class="dropdown__content dropdown-content-left">
                 {{#each CategoriesWithUrl}}
-                    <a href="{{this.url}}" data-url="{{this.url}}">{{this.name}}</a>
+                    <a href="{{this.url}}" data-url="{{this.url}}">
+                        <img src="images/icons/{{this.translation}}.png" class="category-icon">
+                        <span>{{this.name}}</span>
+                        </a>
                 {{/each}}
             </div>
         </div>
