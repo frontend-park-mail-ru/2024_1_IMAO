@@ -412,8 +412,13 @@ header {
         margin-left: 8px !important;
     }
 
-    .profile-icon {
+    .btn-secondary {
         margin-left: 8px !important;
+        margin-right: 0 !important;
+    }
+
+    .profile-icon {
+        margin-right: 8px !important;
     }
 
     .dropdown__button {
@@ -463,7 +468,7 @@ header {
     cursor: pointer;
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 1080px) {
     .pre-header {
         display: none;
     }
