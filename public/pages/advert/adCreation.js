@@ -248,9 +248,10 @@ export class AdCreation {
             const description = advert['description'];
             const price = advert['price'];
             const cityName = city['name'];
+            const phone = advert['phone'];
 
             form.appendChild(renderAdCreationForm(false, CSRFToken, adTitle, price,
-                description, cityName));
+                description, cityName, phone));
 
             document.title += trimString(adTitle, 40);
           },

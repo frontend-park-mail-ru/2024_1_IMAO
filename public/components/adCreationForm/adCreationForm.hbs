@@ -63,7 +63,7 @@
         {{!-- <input class="form__input" type="text" id="location" name="city" value="{{city}}" required> --}}
         <div class="location-place"></div>
         <label class="form__label" for="phone">Телефон<span class="asterisk">*</span></label>
-        <input class="form__input form__input--min" type="tel" id="phone" name="phone" min="0" required>
+        <input class="form__input form__input--min" type="tel" id="phone" name="phone" min="0" value="{{phone}}" required>
         {{#if create}}
             <input type="submit" class="form__button" value="Разместить объявление">
         {{^}}
