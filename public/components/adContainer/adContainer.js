@@ -36,7 +36,7 @@ export default function renderAdContainerTemplate(
     photos,
     inFavorites,
     views,
-    favoritesNum,
+    favouritesNum,
 ) {
   return stringToHtmlElement(
       template({
@@ -53,7 +53,7 @@ export default function renderAdContainerTemplate(
         photos,
         inFavorites,
         views,
-        favoritesNum,
+        favouritesNum,
       }),
   );
 }
