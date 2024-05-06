@@ -216,6 +216,20 @@
     }
 }
 
+@media (max-width: 700px) {
+    .post-images {
+        margin-top: 0;
+
+        .images {
+            height: auto;
+        }
+
+        .img-carousel {
+            padding: 0;
+        }
+    }
+}
+
 @media (max-width: 900px) {
     .top-panel,
     .post-description {
@@ -302,17 +316,13 @@
                 display: none;
             }
         }
-    }
 
-    .post-images {
-        margin-top: 0;
-
-        .images {
-            height: auto;
+        .favourite {
+            width: 5%;
         }
 
-        .img-carousel {
-            padding: 0;
+        .title {
+            width: 95%;
         }
     }
 
