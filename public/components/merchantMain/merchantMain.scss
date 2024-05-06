@@ -5,7 +5,7 @@
   justify-content: space-between;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .merchant-page {
     padding: 0px 20px 0px 20px;
     flex-direction: column;
@@ -21,6 +21,12 @@
 
   .merchant-page-right-section {
     width: 100% !important;
+  }
+}
+
+@media (max-width: 1219px) and (min-width: 900px) {
+  .user-card-main-div {
+    margin: 0 15px;
   }
 }
 

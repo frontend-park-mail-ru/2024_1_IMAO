@@ -33,7 +33,7 @@
   display: flex;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .card-container {
     align-items: center;
   }
@@ -156,7 +156,7 @@
 .approved-card__icon-container {
   display: inline-flex;
   align-items: center;
-  width: 10%;
+  width: 5%;
   justify-content: center;
   height: 30px;
 
@@ -178,7 +178,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
+  width: 85%;
 
   .status {
     font-size: 14px;
