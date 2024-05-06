@@ -7,13 +7,12 @@
   display: inline-block;
   font-size: 45px;
   outline: none;
-  //@include css3-prefix(user-drag, none);
   @include css3-prefix(user-select, none);
   @include css3-prefix(tap-highlight-color, rgba(255, 255, 255, 0));
   @include css3-prefix(transition, all 80ms ease-in-out);
   svg {
-    height: 27.13px;
-    width: 30px;
+    height: clamp(18px, 5vw, 27.13px);
+    width: clamp(20px, 5.2vw, 30px);
     fill: transparent;
     stroke: black;
     stroke-width: 10px;
@@ -28,8 +27,8 @@
 .like-heart {
   color: transparent;
   @extend %like-btn-shared;
-  height: 27.13px;
-  width: 30px;
+  height: clamp(18px, 5vw, 27.13px);
+  width: clamp(20px, 5.2vw, 30px);
   justify-content: center;
   align-items: center;
   display: inline-flex;

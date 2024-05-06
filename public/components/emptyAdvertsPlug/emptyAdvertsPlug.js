@@ -21,10 +21,7 @@ class EmptyAdvertsPlug {
    * @return {HTMLElement}
    */
   render() {
-    const context = {
-      content: this.content,
-    };
-    const root = stringToHtmlElement(template(context));
+    const root = stringToHtmlElement(template(this.content));
 
     return root;
   }

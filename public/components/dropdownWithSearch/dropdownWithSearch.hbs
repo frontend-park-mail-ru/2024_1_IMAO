@@ -11,7 +11,7 @@
                 <input id="txtSearchValue" placeholder="Введите название города" autocomplete="off"
                     class="dd-searchbox txtSearchValue" type="text">
             </div>
-            <ul>
+            <ul class="dd-citylist">
                 {{#each items}}
                     <li class="option {{#if isSelected}}selected{{/if}}" data-value="{{value}}" data-id="{{this.id}}" data-display-text="">{{label}}</li>
                 {{/each}}

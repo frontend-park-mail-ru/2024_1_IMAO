@@ -1,6 +1,6 @@
 'use strict';
 
-const api = 'http://127.0.0.1:8080';
+const api = 'http://localhost:8080';
 export const serverHost = 'http://127.0.0.1:8008';
 
 /**
@@ -24,6 +24,8 @@ export const API_ROUTES = {
     GET_ADVERT_BY_ID: new URL('/api/adverts/:id', api),
     DELETE_ADVERT: new URL('/api/adverts/delete/:id', api),
     CLOSE_ADVERT: new URL('/api/adverts/close/:id', api),
+    GET_SUGGESTIONS: new URL('/api/adverts/suggestions', api),
+    SEARCH: new URL('api/adverts/search', api),
   },
   PROFILE: {
     GET_PROFILE: new URL('/api/profile/:id', api),
@@ -127,7 +129,7 @@ export const PAGES_ROUTES = {
   adsListByCity: {
     href: new URL('/:city', serverHost),
     name: 'Волчок - доска объявлений',
-    re: new RegExp(/\/[a-zA-Z_]+(?![\w/])/g),
+    re: new RegExp(/\/[a-zA-Z_]+$/),
   },
   adsListByCategory: {
     href: new URL('/:city/:category', serverHost),

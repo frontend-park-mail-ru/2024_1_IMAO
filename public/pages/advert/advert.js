@@ -58,6 +58,8 @@ export class Advert {
     this.#addMerchantPageListener();
     this.#addCloseListener();
     this.#addFavoritesListener();
+    this.#addEditListener();
+    this.#addScrollListener();
   }
 
   /**
@@ -65,7 +67,7 @@ export class Advert {
    */
   #addCarouselListeners() {
     const carousel = this.#element.querySelector('.carousel');
-    const imagesContainer = this.#element.querySelector('.images');
+    const imagesContainer = this.#element.querySelector('.post-images');
     const prevBtn = this.#element.querySelector('.prev-btn');
     const nextBtn = this.#element.querySelector('.next-btn');
     const images = imagesContainer.querySelectorAll('.img-carousel');
@@ -99,6 +101,27 @@ export class Advert {
       }
 
       carousel.style.transform = `translateX(${newPosition}%)`;
+    };
+  }
+
+  /**
+   *
+   */
+  #addScrollListener() {
+    const button = this.#element.querySelector('.cart');
+    let prevScrollpos = window.scrollY;
+    window.onscroll = function() {
+      const mediaQuery = window.matchMedia('(max-width: 900px)');
+      if (!mediaQuery.matches) {
+        return;
+      }
+      const currentScrollPos = window.scrollY;
+      if (prevScrollpos > currentScrollPos) {
+        button.style.bottom = '25px';
+      } else {
+        button.style.bottom = '-55px';
+      }
+      prevScrollpos = currentScrollPos;
     };
   }
 
@@ -149,8 +172,21 @@ export class Advert {
       return;
     }
     const addCartOverlay = new AddCartOverlay(addCartButton);
-    const advertBlock = this.#element.querySelector('.advert-block');
+    const advertBlock = this.#element.querySelector('.post-block');
     advertBlock.appendChild(await addCartOverlay.render());
+  }
+
+  /**
+   *
+   */
+  #addEditListener() {
+    const editAddress = this.#element.querySelector('.btn-edit');
+    if (editAddress === null) {
+      return;
+    }
+    editAddress.addEventListener('click', (ev) => {
+      router.pushPage(ev, editAddress.href);
+    });
   }
 
   /**
@@ -160,7 +196,7 @@ export class Advert {
    */
   #addFavoritesListener() {
     const addFavoritesButton = this.#element.querySelector('.btn-favourite');
-    if (addFavoritesButton == null) {
+    if (addFavoritesButton === null) {
       return;
     }
     addFavoritesButton.addEventListener('click', async (event) => {
@@ -193,7 +229,7 @@ export class Advert {
    * Event listener to redirect on merchant page.
    */
   #addMerchantPageListener() {
-    const merchantAddress = this.#element.querySelector('.merchant-address');
+    const merchantAddress = this.#element.querySelector('.card-container__merchant-address');
     merchantAddress.addEventListener('click', (ev) => {
       router.pushPage(ev, merchantAddress.href);
     });
@@ -208,6 +244,7 @@ export class Advert {
     this.#element.appendChild(this.header.render());
 
     content.classList.add('page-content');
+    content.classList.add('post-page');
     this.#element.appendChild(content);
 
     const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT, this.#slug);
@@ -218,7 +255,7 @@ export class Advert {
       const {items} = body;
       const {advert, city, category, photosIMG} = items;
 
-      const {id, title, description, price, isUsed, created, inFavourites, inCart, views} = advert;
+      const {id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} = advert;
       this.id = id;
       const createdDate = formatDate(created);
       const cityName = city.name;
@@ -269,8 +306,9 @@ export class Advert {
           photosIMG,
           inFavourites,
           views,
+          favouritesNum,
       );
-      adContainer.classList.add('ad-container');
+      adContainer.classList.add('post-container');
       content.appendChild(adContainer);
 
       document.title += ' ' + trimString(title, 40);
@@ -297,7 +335,7 @@ export class Advert {
         id: id,
         path: path,
         merchantsName: merchantsName,
-        location: profile.city.translation,
+        location: profile.city.name,
         registrationDate: formatDate(profile.regTime),
         isProfileVerified: profile.approved,
         reviewCount: profile.reactionsCount,

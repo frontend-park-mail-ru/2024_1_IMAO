@@ -44,7 +44,7 @@ class HoverSlider {
    * Adds listeners for a slider.
    */
   #addEventListener() {
-    const slider = ['.hover-slider'];
+    const slider = ['.hover-slider__main'];
 
     let nmvItem = 0;
     const fnshPosItem = [];
@@ -75,22 +75,24 @@ class HoverSlider {
       sliderDiv.parentNode.style.overflow = 'hidden';
 
       // Коориктеровка .hover_slider_nuv
-      const nuvItems = sliderDiv.querySelectorAll('.item_hover_slider');
+      const nuvItems = sliderDiv.querySelectorAll('.hover_slider__item');
       nuvItems.forEach(function() {
         const nuvItem = document.createElement('div');
         nuvDiv.insertBefore(nuvItem, nuvDiv.firstChild);
         nmvItem++;
       });
-      const nuvW = 215 / nmvItem;
+      const nuvWmax = 215 / nmvItem;
+      const nuvWclamp = 37.5 / nmvItem;
+      const nuvWmin = 129 / nmvItem;
       const nuvDivItems = nuvDiv.querySelectorAll('div');
       nuvDivItems.forEach(function(item, index) {
-        item.style.width = nuvW + 'px';
+        item.style.width = `clamp(${nuvWmin}px, ${nuvWclamp}vw, ${nuvWmax}px)`;
       });
     }
 
-    // Получение отступов .item_hover_slider
+    // Получение отступов .hover_slider__item
     for (let i = 0; i < slider.length; i++) {
-      const sliderItems = this.#element.querySelectorAll(slider[i] + ' > .item_hover_slider');
+      const sliderItems = this.#element.querySelectorAll(slider[i] + ' > .hover_slider__item');
       let initialOffset = 0;
       sliderItems.forEach(function(item) {
         posItem += initialOffset + ',';
@@ -105,27 +107,30 @@ class HoverSlider {
     // Функционал
     const theElement = this.#element;
     this.#element.querySelectorAll('.hover_slider_nuv div').forEach(function(item) {
-      item.addEventListener('mouseover', function() {
-        // eslint-disable-next-line no-invalid-this
-        const obj = this;
-        const pictureArray = Array.from(obj.parentNode.previousElementSibling.children);
-        const helpArray = Array.from(obj.parentNode.children);
-        const indItem = helpArray.indexOf(obj);
-        for (let i = 0; i < slider.length; i++) {
-          const sliderElement = theElement.querySelector(slider[i]);
-          const takwData = sliderElement.getAttribute('data-mode');
-          if (takwData === 'slide') {
-            sliderElement.style.top = -fnshPosItem[i][indItem] + 'px';
-          } else if (takwData === 'fade') {
-            sliderElement.style.top = -fnshPosItem[i][indItem] + 'px';
+      ['mouseover', 'touchenter'].forEach((evt) => {
+        item.addEventListener(evt, function() {
+          // eslint-disable-next-line no-invalid-this
+          const obj = this;
+          const pictureArray = Array.from(obj.parentNode.previousElementSibling.children);
+          const helpArray = Array.from(obj.parentNode.children);
+          const width = pictureArray[0].offsetWidth;
+          const indItem = helpArray.indexOf(obj);
+          for (let i = 0; i < slider.length; i++) {
+            const sliderElement = theElement.querySelector(slider[i]);
+            const takwData = sliderElement.getAttribute('data-mode');
+            if (takwData === 'slide') {
+              sliderElement.style.top = -width * indItem + 'px';
+            } else if (takwData === 'fade') {
+              sliderElement.style.top = -width * indItem + 'px';
+            }
           }
-        }
+        });
       });
     });
 
     this.#element.querySelectorAll('.hover_slider_nuv > div').forEach((hoverDiv, index) => {
       hoverDiv.addEventListener('mouseover', () => {
-        const ellipseDivs = this.#element.querySelectorAll('.ellipse-line > .ellipse');
+        const ellipseDivs = this.#element.querySelectorAll('.hover-slider__ellipse-line > .hover-slider__ellipse');
         ellipseDivs.forEach((ellipseDiv, ellipseIndex) => {
           if (ellipseIndex === index) {
             ellipseDiv.style.background = 'rgb(255, 255, 255)'; // Change color to red
@@ -137,18 +142,18 @@ class HoverSlider {
     });
 
     this.#element.addEventListener('mouseleave', () => {
-      this.#element.querySelector('.ellipse-line').style.display = 'none'; // Hide ellipse-line
+      this.#element.querySelector('.hover-slider__ellipse-line').style.display = 'none';
     });
 
     this.#element.addEventListener('mouseenter', () => {
-      this.#element.querySelector('.ellipse-line').style.display = 'flex';
+      this.#element.querySelector('.hover-slider__ellipse-line').style.display = 'flex';
     });
 
     this.#element.addEventListener('mouseleave', () => {
-      this.#element.querySelector('.hover-slider').style.top = '0';
+      this.#element.querySelector('.hover-slider__main').style.top = '0';
     });
 
-    this.#element.querySelectorAll('.hover-slider').forEach(function(slider) {
+    this.#element.querySelectorAll('.hover-slider__main').forEach(function(slider) {
       slider.style.width = slider.parentNode.offsetWidth + 'px';
     });
   }

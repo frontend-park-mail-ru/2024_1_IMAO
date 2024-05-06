@@ -2,8 +2,8 @@
     <div class="pre-header">
         <div class="internal-div">
             <div class="section-nav">
-                <div class="location-label">Местоположение:&nbsp;</div>
-                <div class="location-value">
+                <div class="section-nav__location-label">Местоположение:&nbsp;</div>
+                <div class="section-nav__location-value">
                     <div class="location-icon">
                         <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="section-nav-actions">
-                <a class="like-action" href="{{urlProfileFavorites}}" data-url="{{urlProfileFavorites}}">
+                <a class="section-nav-actions__like-action" href="{{urlProfileFavorites}}" data-url="{{urlProfileFavorites}}">
                     <div class="like-icon">
                         <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -25,7 +25,7 @@
                     </div>
                     <div class="like-text">Избранное{{#if flag}}&nbsp;&#40;<span class="favorites-quantity">{{favoritesQuantity}}</span>&#41;{{/if}}</div>
                 </a>
-                <a class="cart-action" href="{{urlCart}}" data-url="{{urlCart}}">
+                <a class="section-nav-actions__cart-action" href="{{urlCart}}" data-url="{{urlCart}}">
                     <div class="cart-icon">
                         <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -40,44 +40,53 @@
     </div>
 
     <div class="navbar">
-        <a href="{{urlMain}}" data-url="{{urlMain}}">
-            <img class="logo" src="images/vol4ok.svg">
-        </a>
-        <a class="name" href="{{urlMain}}" data-url="{{urlMain}}">ВОЛЧОК</a>
-
-        <div class="dropdown">
-            <button class="dropbtn">
+        <div class="navbar__logo">
+            <a href="{{urlMain}}" data-url="{{urlMain}}">
+                <img class="logo" src="images/vol4ok.svg">
+            </a>
+            <a class="name" href="{{urlMain}}" data-url="{{urlMain}}">ВОЛЧОК</a>
+        </div>
+        <div class="navbar__dropdown">
+            <button class="dropdown__button">
                 <i class="fa fa-list-ul"></i>
-                Категории
+                <span>Категории</span>
             </button>
-            <div class="dropdown-content">
+            <div class="dropdown__content dropdown-content-left">
                 {{#each CategoriesWithUrl}}
-                    <a href="{{this.url}}" data-url="{{this.url}}">{{this.name}}</a>
+                    <a href="{{this.url}}" data-url="{{this.url}}">
+                        <img src="images/icons/{{this.translation}}.png" class="category-icon">
+                        <span>{{this.name}}</span>
+                    </a>
                 {{/each}}
             </div>
         </div>
-        <form class="search">
+        <form class="navbar__search">
             <i class="fa fa-search"></i>
-            <input type="text" placeholder="Поиск по объявлениям" name="search">
-            <button type="submit">Найти</button>
+            <input class="search__input" type="text" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="Поиск по объявлениям" name="search">
+            <button class="search__button" type="submit">Найти</button>
+            <ul class="results" >
+		    </ul>
         </form>
         <a class="btn-success" href="{{urlCreate}}" data-url="{{urlCreate}}">Разместить объявление</a>
         {{#if flag}}
-            <div class="dropdown">
-                {{#if (is_null avatar)}}
-                    <img class="profile-icon" src="images/img_avatar.png">
-                {{^}}
-                    <img class="profile-icon" src="data:image/png;base64,{{avatar}}">
-                {{/if}}
-                <div class="dropdown-content dropdown-content-right">
-                    <a href="{{urlProfile}}" data-url="{{urlProfile}}">Профиль</a>
-                    <a href="{{urlCart}}" data-url="{{urlCart}}">Корзина</a>
-                    <a href="{{urlProfileFavorites}}" data-url="{{urlProfileFavorites}}">Избранное</a>
-                    <a href="/logout" class="logout">Выйти</a>
-                </div>
+        <div class="navbar__dropdown navbar__dropdown-avatar">
+            {{#if (is_null avatar)}}
+                <img class="profile-icon" src="images/img_avatar.png">
+            {{^}}
+                <img class="profile-icon" src="data:image/png;base64,{{avatar}}">
+            {{/if}}
+            <div class="dropdown__content dropdown-content-right">
+                <a href="{{urlProfile}}" data-url="{{urlProfile}}">Профиль</a>
+                <a href="{{urlCart}}" data-url="{{urlCart}}">Корзина</a>
+                <a href="{{urlProfileFavorites}}" data-url="{{urlProfileFavorites}}">Избранное</a>
+                <a href="/logout" class="logout">Выйти</a>
             </div>
+        </div>
         {{^}}
-            <a class="btn-secondary" href="{{urlLogin}}" data-url="{{urlLogin}}">Войти</a>
+        <a class="btn-secondary" href="{{urlLogin}}" data-url="{{urlLogin}}">
+            <img class="unlogged-user" src="images/unlogged_user.svg">
+            <span>Войти</span>
+        </a>
         {{/if}}
     </div>
 </div>

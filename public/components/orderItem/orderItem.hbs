@@ -1,7 +1,10 @@
 <div class="order-item" id="{{id}}" >
     <div class="order-item__heading" >Заказ №{{num}}, {{title}}</div>
-    <img class="order-item__image"  src="https://via.placeholder.com/100x75"/>
-    <div class="order-item__image-overlay" ></div>
+    {{#if photo}}
+        <img class="order-item__image" src="data:image/png;base64,{{photo}}">
+    {{^}}
+        <img class="order-item__image" src="images/cart_placeholder_image.png">
+    {{/if}}
     <div class="order-item__price" ><span class="price">{{price}}</span> ₽</div>
     <div class="order-item__delivery-info">Доставка от 1 дня, 49₽</div>
     <div class="order-item__delete" >

@@ -1,17 +1,42 @@
-.merchant-page-content {
+.merchant-page {
   margin-top: 2%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.merchant-page-content .merchant-page-right-section {
+@media (max-width: 900px) {
+  .merchant-page {
+    padding: 0px 20px 0px 20px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cards-container-merchant {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, clamp(129px, 37.5vw, 215px));
+    justify-content: space-evenly;
+    gap: 16px 36px;
+  }
+
+  .merchant-page-right-section {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 1219px) and (min-width: 900px) {
+  .user-card-main-div {
+    margin: 0 15px;
+  }
+}
+
+.merchant-page .merchant-page-right-section {
   display: flex;
   flex-direction: column;
   width: 75%;
 }
 
-.merchant-page-content .cards-container-merchant {
+.merchant-page .cards-container-merchant {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -20,20 +45,20 @@
   margin-top: 2%;
 }
 
-.merchant-page-content .cursor-hand-hover:hover {
+.merchant-page .cursor-hand-hover:hover {
   cursor: pointer;
 }
 
-.merchant-page-content .text-underline-hover:hover {
+.merchant-page .text-underline-hover:hover {
   text-decoration: underline;
   text-decoration-color: #7092fe;
   color: #7092fe;
 }
 
-.merchant-page-content .text-highlighting-hover:hover {
+.merchant-page .text-highlighting-hover:hover {
   color: #7092fe;
 }
 
-.merchant-page-content label {
+.merchant-page label {
   cursor: pointer;
 }

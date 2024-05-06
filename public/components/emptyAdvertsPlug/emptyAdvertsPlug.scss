@@ -5,7 +5,7 @@
   gap: 8px;
   display: inline-flex;
   width: 100%;
-  padding: 10% 20px;
+  padding: 10% 0;
 }
 
 .empty-adverts-inner-container {
@@ -28,6 +28,15 @@
   justify-content: flex-start;
   align-items: center;
   display: flex;
+}
+
+.empty-adverts-message-header {
+  text-align: center;
+  color: #333333;
+  font-size: 20px;
+  font-weight: 1000;
+  line-height: 32px;
+  word-wrap: break-word;
 }
 
 .empty-adverts-message-text {

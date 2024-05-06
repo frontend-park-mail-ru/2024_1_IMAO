@@ -67,7 +67,7 @@ export class ProfilePage {
    * Add listener for section switching.
    */
   #addListeners() {
-    const verticalInputs = this.#element.querySelectorAll('.verticle-button-group-profile input[type="radio"]');
+    const verticalInputs = this.#element.querySelectorAll('.vertical-group input[type="radio"]');
 
     verticalInputs.forEach((input) => {
       input.addEventListener('click', (event) => {
@@ -103,6 +103,16 @@ export class ProfilePage {
     this.sectionStateV.setSectionState(currentButtonChecked, 'render', profilePageContentContainer);
 
     document.title = 'Профиль - ' + found.categoryLabel;
+
+    const profileCard = this.#element.querySelector('.merchant-card__section');
+    const sectionHeader = this.#element.querySelector('.profile-page-right-section-header');
+    if (found.categoryLabelValue === 'settings') {
+      profileCard.classList.add('disable-card');
+      sectionHeader.classList.add('disable-card');
+    } else {
+      profileCard.classList.remove('disable-card');
+      sectionHeader.classList.remove('disable-card');
+    }
 
     if (isRendered) {
       const stashedMerchantsCardContainer = this.sectionStateV.getSectionState(found.categoryLabelValue, 'render');
@@ -205,7 +215,7 @@ export class ProfilePage {
       this.sectionState.setSectionState(buttonGroupItemes.categoryLabelValue, 'isRendered', true);
     }
 
-    const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
+    const inputs = this.#element.querySelectorAll('.active-sold__list input[type="radio"]');
 
     inputs.forEach(
         function(input) {
@@ -257,9 +267,12 @@ export class ProfilePage {
     if (!isRendered) {
       this.sectionStateS.setSectionState(event.target.value, 'isRendered', true);
 
-      const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
-      const header = isPerchasesChecked ? 'Нет покупок' : 'Нет продаж';
-      const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
+      const header =
+        this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ? 'Нет покупок' : 'Нет продаж';
+      const content =
+        this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?
+          'Заказы по купленным товарам' :
+          'Заказы по проданным товарам';
 
       const emptyOrderPlug = new EmptyOrderPlug(header, content);
       merchantsCardContainer.replaceWith(emptyOrderPlug.render());
@@ -304,8 +317,7 @@ export class ProfilePage {
 
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('deleted');
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('userId');
-    const isActive = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active';
-    const state = isActive ? 0 : 1;
+    const state = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ? 0 : 1;
     const id = ajax.auth.id;
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('userId', id);
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('deleted', state);
@@ -327,8 +339,9 @@ export class ProfilePage {
     });
 
     if (!(adverts && Array.isArray(adverts))) {
-      const content = isActive ? 'активные' : 'проданные';
-      const emptyAdvertsPlug = new EmptyAdvertsPlug(content);
+      const content =
+        this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ? 'активные' : 'проданные';
+      const emptyAdvertsPlug = new EmptyAdvertsPlug({content});
       merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
 
       return;

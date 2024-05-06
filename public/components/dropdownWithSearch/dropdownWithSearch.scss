@@ -125,7 +125,6 @@
   left: 0;
   z-index: 999;
   max-height: 250px;
-  overflow: auto;
   border: 1px solid #ddd;
 }
 
@@ -138,15 +137,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .dropdown-select .dd-searchbox {
   width: 90%;
-  padding: 0.5rem;
-  border: 1px solid #999;
-  border-color: #999;
-  border-radius: 4px;
+  padding: 0.2rem;
+  font-size: 16px;
+  border: none;
   outline: none;
 }
 
@@ -192,4 +190,10 @@
 
 .dropdown-select a:hover {
   color: #666;
+}
+
+.dd-citylist{
+  overflow: auto scroll;
+  height: 200px;
+  border-top: 2px solid #ddd;
 }

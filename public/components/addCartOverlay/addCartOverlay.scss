@@ -42,7 +42,7 @@
 
   &__modal {
     padding: 30px;
-    position: absolute;
+    //position: absolute;
     top: 16px;
     left: 0;
     background: white;
@@ -59,8 +59,13 @@
       width: 360px;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: flex-start;
       gap: 24px;
+    }
+
+    @media (max-width: 800px) {
+      &-content {
+        width: 100%;
+      }
     }
 
     &-header {
@@ -72,7 +77,7 @@
 
       &-text {
         color: #333333;
-        width: 360px;
+
         font-size: 20px;
         font-family: 'Fira Sans', sans-serif;
         font-weight: 500;
@@ -91,16 +96,17 @@
     }
 
     &-buttons {
-      display: inline-flex;
-      justify-content: flex-start;
-      align-items: flex-start;
+      display: flex;
+      flex-grow: 1;
       gap: 10px;
 
       &-button {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 8px 58.64px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        flex-grow: 1;
         border-radius: 8px;
         font-size: 16px;
         font-family: 'Open Sans', sans-serif;

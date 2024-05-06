@@ -1,4 +1,4 @@
-.ActiveSoldSwitch {
+.active-sold {
   height: 50.01px;
   flex-direction: column;
   justify-content: flex-start;
@@ -7,16 +7,15 @@
   border-bottom: 1px #ebebeb solid;
 }
 
-.ActiveSoldList {
+.active-sold__list {
   align-self: stretch;
-  padding-right: 689.91px;
   justify-content: flex-start;
   align-items: flex-start;
   display: inline-flex;
   gap: 24px;
 }
 
-.ActiveSoldSelectedButton {
+.active-sold--selected {
   align-self: stretch;
   padding-top: 8.2px;
   padding-bottom: 2px;
@@ -26,14 +25,14 @@
   display: flex;
 }
 
-.Active {
+.active-sold__label {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   display: inline-flex;
 }
 
-.ActiveSoldInsideTextDiv {
+.active-sold__text {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-right: 0.01px;
@@ -42,7 +41,7 @@
   display: inline-flex;
 }
 
-.ActiveSoldGrayText {
+.gray-text {
   text-align: center;
   color: #333333;
   font-size: 14px;
@@ -51,15 +50,7 @@
   word-wrap: break-word;
 }
 
-.ButtonMargin {
-  padding-left: 24px;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  display: inline-flex;
-}
-
-.activeSoldNoSelectedButton {
+.active-sold--no-selected {
   padding-top: 8.2px;
   padding-bottom: 1.81px;
   justify-content: center;
@@ -67,7 +58,7 @@
   display: inline-flex;
 }
 
-.ActiveSoldBlackText {
+.active-sold__black-text {
   text-align: center;
   color: #858585;
   font-size: 14px;
