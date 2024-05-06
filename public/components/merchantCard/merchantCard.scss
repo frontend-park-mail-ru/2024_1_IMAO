@@ -204,6 +204,17 @@
     }
 }
 
+@media (max-width: 900px) {
+    .actions-container__button {
+        padding: 12px 0;
+        margin: 0 !important;
+    }
+
+    .actions-container {
+        margin: 10px 0;
+    }
+}
+
 
 
 .rating {
