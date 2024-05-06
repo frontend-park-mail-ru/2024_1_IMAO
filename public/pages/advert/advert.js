@@ -59,6 +59,7 @@ export class Advert {
     this.#addCloseListener();
     this.#addFavoritesListener();
     this.#addEditListener();
+    this.#addScrollListener();
   }
 
   /**
@@ -100,6 +101,27 @@ export class Advert {
       }
 
       carousel.style.transform = `translateX(${newPosition}%)`;
+    };
+  }
+
+  /**
+   *
+   */
+  #addScrollListener() {
+    const button = this.#element.querySelector('.cart');
+    let prevScrollpos = window.scrollY;
+    window.onscroll = function() {
+      const mediaQuery = window.matchMedia('(max-width: 900px)');
+      if (!mediaQuery.matches) {
+        return;
+      }
+      const currentScrollPos = window.scrollY;
+      if (prevScrollpos > currentScrollPos) {
+        button.style.bottom = '25px';
+      } else {
+        button.style.bottom = '-55px';
+      }
+      prevScrollpos = currentScrollPos;
     };
   }
 

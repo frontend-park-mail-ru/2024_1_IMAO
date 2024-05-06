@@ -1,382 +1,382 @@
 .post-block {
-    width: 75%;
+  width: 75%;
 }
-  
+
 .seller-block {
-    width: 25%;
-    position: sticky;
-    height: fit-content;
-    top: 100px;
-    padding-left: 50px;
+  width: 25%;
+  position: sticky;
+  height: fit-content;
+  top: 100px;
+  padding-left: 50px;
 }
 
 .post-container {
+  display: flex;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
+
+  .title {
+    width: 65%;
+  }
+
+  .favourite {
     display: flex;
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 14px;
+    width: 35%;
+  }
 
-    .title {
-        width: 65%;
+  .btn-edit {
+    text-decoration: none;
+    padding: 0;
+    cursor: pointer;
+    color: black;
+    display: flex;
+
+    &:hover {
+      text-decoration: underline;
     }
 
-    .favourite {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        font-size: 14px;
-        width: 35%;
+    .edit-pencil {
+      display: none;
+      height: 18px;
+      width: auto;
     }
+  }
 
-    .btn-edit {
-        text-decoration: none;
-        padding: 0;
-        cursor: pointer;
-        color: black;
-        display: flex;
+  .btn-favourite {
+    text-decoration: none;
+    padding: 0;
+    cursor: pointer;
+    color: black;
 
-        &:hover {
-            text-decoration: underline;
-        }
-
-        .edit-pencil {
-            display: none;
-            height: 18px;
-            width: auto;
-        }
+    &:hover {
+      text-decoration: underline;
     }
+  }
 
-    .btn-favourite {
-        text-decoration: none;
-        padding: 0;
-        cursor: pointer;
-        color: black;
+  .like-img {
+    width: 20px;
+    height: 20px;
+    vertical-align: bottom;
+  }
 
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+  h1 {
+    margin: 0;
+  }
 
-    .like-img {
-        width: 20px;
-        height: 20px;
-        vertical-align: bottom;
-    }
+  li {
+    display: flex;
+    margin-bottom: 15px;
+    line-height: 28px;
+  }
 
-    h1 {
-        margin: 0;
-    }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 
-    li {
-        display: flex;
-        margin-bottom: 15px;
-        line-height: 28px;
-    }
+  .property-name {
+    color: #858585;
+    flex: 0 0 30%;
+  }
 
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
+  .end-of-block {
+    margin-bottom: 25px;
+  }
 
-    .property-name {
-        color: #858585;
-        flex: 0 0 30%;
-    }
+  .top-panel {
+    display: flex;
+    justify-content: space-between;
+  }
 
-    .end-of-block {
-        margin-bottom: 25px;
-    }
-
-    .top-panel {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .price-mobile {
-        display: none;
-    }
+  .price-mobile {
+    display: none;
+  }
 }
 
 .post-description {
-    margin-top: 30px;
-    font-size: 16px;
+  margin-top: 30px;
+  font-size: 16px;
 
-    .location {
-        img {
-            display: none;
-        }
+  .location {
+    img {
+      display: none;
     }
+  }
 }
 
 .post-description__section:not(:last-child) {
-    border-bottom: 1px solid #ebebeb;
-    margin-bottom: 15px;
+  border-bottom: 1px solid #ebebeb;
+  margin-bottom: 15px;
 }
-  
+
 .post-images {
-    margin-top: 20px;
-    position: relative;
-    width: 100%;
-    overflow: hidden;
+  margin-top: 20px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 
-    .carousel {
-        display: flex;
-        position: relative;
-        transition: transform 0.5s ease;
-    }
-
-    .images {
-        display: flex;
-        width: 100%;
-        height: 450px;
-    }
-
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        padding-right: 3px;
-    }
-
-    .btn-container {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    button {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: #ffffff;
-        border: 2px solid #ffffff;
-        cursor: pointer;
-        position: relative;
-        margin: 1%;
-
-        &:hover {
-            background-color: #dfdfdf;
-            border: 0px;
-        }
-    }
-}
-  
-.seller-block__btn {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    height: 30px;
-    display: block;
-    text-align: center;
-    padding-top: 10px;
-    text-decoration: none;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 1);
-    background: rgba(112, 146, 254, 1);
-    border: none;
-    border-radius: 8px;
-
-    &:hover {
-        background: rgb(59, 92, 199);
-    }
-}
-  
-@mixin css3-prefix($property, $value) {
-    #{$property}: #{$value};
-}
-  
-.btn-favourite {
+  .carousel {
     display: flex;
-    align-items: center;
-  
+    position: relative;
+    transition: transform 0.5s ease;
+  }
+
+  .images {
+    display: flex;
+    width: 100%;
+    height: 450px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding-right: 3px;
+  }
+
+  .btn-container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    position: relative;
+    margin: 1%;
+
     &:hover {
-        .like-heart:not(.active) svg {
-            stroke: gray;
-        }
+      background-color: #dfdfdf;
+      border: 0px;
     }
-  
-    &:active {
-        .like-heart {
-            @include css3-prefix(transform, scale(0.75) translateY(2px));
-        }
+  }
+}
+
+.seller-block__btn {
+  transition: 0.3s;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: 30px;
+  display: block;
+  text-align: center;
+  padding-top: 10px;
+  text-decoration: none;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 1);
+  background: rgba(112, 146, 254, 1);
+  border: none;
+  border-radius: 8px;
+
+  &:hover {
+    background: rgb(59, 92, 199);
+  }
+}
+
+@mixin css3-prefix($property, $value) {
+  #{$property}: #{$value};
+}
+
+.btn-favourite {
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    .like-heart:not(.active) svg {
+      stroke: gray;
     }
-  
+  }
+
+  &:active {
     .like-heart {
-        height: 18px;
-        width: 20px;
-        svg {
-                height: 18px;
-                width: 20px;
-        }
+      @include css3-prefix(transform, scale(0.75) translateY(2px));
     }
+  }
+
+  .like-heart {
+    height: 18px;
+    width: 20px;
+    svg {
+      height: 18px;
+      width: 20px;
+    }
+  }
 }
 
 @media (max-width: 700px) {
-    .post-images {
-        margin-top: 0;
+  .post-images {
+    margin-top: 0;
 
-        .images {
-            height: auto;
-        }
-
-        .img-carousel {
-            padding: 0;
-        }
+    .images {
+      height: auto;
     }
+
+    .img-carousel {
+      padding: 0;
+    }
+  }
 }
 
 @media (max-width: 900px) {
-    .top-panel,
-    .post-description {
-        margin: 0 10px;
-    }
+  .top-panel,
+  .post-description {
+    margin: 0 10px;
+  }
 
-    .post-container {
-        flex-direction: column;
-        margin-top: 0;
-        padding: 0;
-    }
+  .post-container {
+    flex-direction: column;
+    margin-top: 0;
+    padding: 0;
+  }
 
-    .post-page {
-        margin: 0;
-        padding: 0;
-    }
+  .post-page {
+    margin: 0;
+    padding: 0;
+  }
 
-    .post-images {
-        margin-top: 10px;
-        order: 1;
-    }
+  .post-images {
+    margin-top: 10px;
+    order: 1;
+  }
 
-    .seller-block, 
-    .post-block {
-        width: 100%;
-        padding-left: 0;
-    }
+  .seller-block,
+  .post-block {
+    width: 100%;
+    padding-left: 0;
+  }
 
-    .seller-block {
+  .seller-block {
     padding: 0 10px;
     box-sizing: border-box;
-    
-        .price {
-            display: none;
-        }
+
+    .price {
+      display: none;
+    }
+  }
+
+  .seller-block__btn {
+    position: fixed;
+    bottom: 20px;
+    margin: 0;
+    width: 56%;
+    left: 22%;
+  }
+
+  .post-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-panel {
+    order: 2;
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #ebebeb;
+    padding-bottom: 10px;
+
+    h1 {
+      font-size: 20px !important;
     }
 
-    .seller-block__btn {
-        position: fixed;
-        bottom: 20px;
-        margin: 0;
-        width: 56%;
-        left: 22%;
+    .price-mobile {
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 20px;
     }
 
-    .post-block {
+    .btn-edit {
+      .edit-pencil {
+        display: block;
+      }
+
+      span {
+        display: none;
+      }
+    }
+
+    .btn-favourite {
+      span {
+        display: none;
+      }
+    }
+
+    .favourite {
+      width: 5%;
+    }
+
+    .title {
+      width: 95%;
+    }
+  }
+
+  .post-description {
+    order: 3;
+    margin-bottom: 0;
+    font-size: 14px;
+    margin-top: 15px;
+
+    .post-description__section {
+      border-bottom: 1px solid #ebebeb;
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-description__section:first-child {
+      li:nth-child(2) {
+        order: 3;
+        margin-bottom: 15px;
+      }
+
+      li:nth-child(3) {
+        order: 4;
+        margin-bottom: 15px;
+      }
+
+      li:last-child {
+        border-bottom: 1px solid #ebebeb;
+        margin-bottom: 15px;
         display: flex;
         flex-direction: column;
+        padding-bottom: 15px;
+        line-height: 24px;
+
+        .property-name {
+          display: none;
+        }
+      }
     }
 
-    .top-panel {
-        order: 2;
-        margin-top: 15px;
-        display: flex;
-        flex-wrap: wrap;
-        border-bottom: 1px solid #ebebeb;
-        padding-bottom: 10px;
+    .location {
+      border-bottom: 1px solid #ebebeb;
+      padding-bottom: 15px;
 
-        h1 {
-            font-size: 20px !important;
-        }
+      img {
+        display: block;
+        margin-right: 15px;
+      }
 
-        .price-mobile {
-            display: flex;
-            width: 100%;
-            justify-content: flex-start;
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 20px;
-        }
-
-        .btn-edit {
-            .edit-pencil {
-                display: block;
-            }
-
-            span {
-                display: none;
-            }
-        }
-
-        .btn-favourite {
-            span {
-                display: none;
-            }
-        }
-
-        .favourite {
-            width: 5%;
-        }
-
-        .title {
-            width: 95%;
-        }
+      .property-name {
+        display: none;
+      }
     }
-
-    .post-description {
-        order: 3;
-        margin-bottom: 0;
-        font-size: 14px;
-        margin-top: 15px;
-
-        .post-description__section {
-            border-bottom: 1px solid #ebebeb;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .post-description__section:first-child {
-            li:nth-child(2) {
-                order: 3;
-                margin-bottom: 15px;
-            }
-
-            li:nth-child(3) {
-                order: 4;
-                margin-bottom: 15px;
-            }
-
-            li:last-child {
-                border-bottom: 1px solid #ebebeb;
-                margin-bottom: 15px;
-                display: flex;
-                flex-direction: column;
-                padding-bottom: 15px;
-                line-height: 24px;
-
-
-                .property-name {
-                    display: none;
-                }
-            }
-        }
-
-        .location {
-            border-bottom: 1px solid #ebebeb;
-            padding-bottom: 15px;
-
-            img {
-                display: block;
-                margin-right: 15px;
-            }
-
-            .property-name {
-                display: none;
-            }
-        }
-    }
+  }
 }
