@@ -45,26 +45,28 @@ header {
     }
 
     .internal-div {
-        flex: 1 1 0;
         height: 16px;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
     }
 
     .section-nav {
-        flex: 1 1 0;
         height: 16px;
         display: flex;
         justify-content: flex-start;
-        align-items: flex-start;
+        width: 20%;
+        flex-grow: 0;
+        flex-shrink: 0;
     }
 
     .section-nav-actions {
         display: flex;
         justify-content: flex-end;
-        align-items: flex-start;
         gap: 10px;
+        width: 20%;
+        flex-grow: 0;
+        flex-shrink: 0;
     }
 }
 
@@ -183,7 +185,7 @@ header {
     min-width: 320px;
 }
 
-@media (min-width: $main-width) {
+@media (min-width: 1000px) {
     .dropdown-content-right::before,
     .dropdown-content-right::after {
         bottom: 100%;
@@ -259,11 +261,11 @@ header {
     }
 
     input[type='text'] {
-    font-family: 'OpenSans', sans-serif;
-    flex-grow: 1;
-    padding: 6px;
-    font-size: 17px;
-    border: none;
+        font-family: 'OpenSans', sans-serif;
+        flex-grow: 1;
+        padding: 6px;
+        font-size: 17px;
+        border: none;
     }
 
     button {
@@ -391,6 +393,52 @@ header {
     }       
 }
 
+
+@media (max-width: $main-width) {
+    .pre-header,
+    .navbar {
+        width: 96%;
+        margin: 0 2%;
+    }
+
+    header {
+        display: block;
+        padding: 12px 0;
+        width: 100%;
+    }
+
+    .navbar__search {
+        button {
+            width: 110px;
+            height: 43px;
+        }
+    }
+
+    .btn-success {
+        height: 22px;
+        margin-left: 8px !important;
+    }
+
+    .btn-secondary {
+        margin-left: 8px !important;
+        margin-right: 0 !important;
+    }
+
+    .profile-icon {
+        margin-right: 8px !important;
+    }
+
+    .dropdown__button {
+        margin: 0 8px !important;
+    }
+
+    .navbar__logo {
+        .name {
+            margin-right: 8px !important;
+        }
+    }
+}
+
 .navbar__logo {
     display: flex;
     align-items: center;
@@ -431,16 +479,13 @@ header {
     cursor: pointer;
 }
 
-@media (max-width: $main-width) {
+@media (max-width: 1080px) {
     .pre-header {
         display: none;
-        max-width: 100%;
     }
 
     header {
-        display: block;
         padding: 6px 0;
-        width: 100%;
     }
 
     .navbar {

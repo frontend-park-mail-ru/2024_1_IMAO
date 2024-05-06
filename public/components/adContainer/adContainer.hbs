@@ -1,5 +1,5 @@
 <div>
-    <div class="advert-block">
+    <div class="post-block">
         <div class="top-panel">
             <div class="title">
                 <h1>{{title}}</h1>
@@ -35,7 +35,7 @@
                 <div class="message message--hidden"></div>
             </div>
         </div>
-        <div class="advert-images">
+        <div class="post-images">
             <div class="carousel">
                 <div class="images">
                     {{#each photos}}
@@ -48,23 +48,25 @@
                 <button class="next-btn">&#10095;</button>
             </div>
         </div>
-        <ul class="advert-description">
-            <li>
-                <span class="property-name">Местоположение</span>
-                <span class="property-description">{{city}}</span>
-            </li>
-            <li class="end-of-block">
-                <span class="property-name">Категория</span>
-                <span class="property-description">{{category}}</span>
-            </li>
-            <li class="end-of-block">
-                <span class="property-name">Состояние</span>
-                <span class="property-description">{{state}}</span>
-            </li>
-            <li class="end-of-block">
-                <span class="property-name">Описание</span>
-                <span class="property-description">{{description}}</span> 
-            </li>
+        <ul class="post-description">
+            <div class="post-description--only">
+                <li>
+                    <span class="property-name">Местоположение</span>
+                    <span class="property-description">{{city}}</span>
+                </li>
+                <li class="end-of-block">
+                    <span class="property-name">Категория</span>
+                    <span class="property-description">{{category}}</span>
+                </li>
+                <li class="end-of-block">
+                    <span class="property-name">Состояние</span>
+                    <span class="property-description">{{state}}</span>
+                </li>
+                <li>
+                    <span class="property-name">Описание</span>
+                    <span class="property-description">{{description}}</span> 
+                </li>
+            </div>
             <li>
                 <span class="property-name">В избранном</span>
                 <span class="property-description">23</span>

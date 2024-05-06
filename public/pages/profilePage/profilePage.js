@@ -67,7 +67,7 @@ export class ProfilePage {
    * Add listener for section switching.
    */
   #addListeners() {
-    const verticalInputs = this.#element.querySelectorAll('.verticle-button-group-profile input[type="radio"]');
+    const verticalInputs = this.#element.querySelectorAll('.vertical-group input[type="radio"]');
 
     verticalInputs.forEach((input) => {
       input.addEventListener('click', (event) => {
@@ -205,7 +205,7 @@ export class ProfilePage {
       this.sectionState.setSectionState(buttonGroupItemes.categoryLabelValue, 'isRendered', true);
     }
 
-    const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
+    const inputs = this.#element.querySelectorAll('.active-sold__list input[type="radio"]');
 
     inputs.forEach(
         function(input) {

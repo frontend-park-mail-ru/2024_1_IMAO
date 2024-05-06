@@ -222,8 +222,10 @@ export class Header {
         caregoryList.classList.remove('display-block');
       }
 
-      if (!optionList.contains(ev.target) && !avatarImg.contains(ev.target)) {
-        optionList.classList.remove('display-block');
+      if (avatarImg) {
+        if (!optionList.contains(ev.target) && !avatarImg.contains(ev.target)) {
+          optionList.classList.remove('display-block');
+        }
       }
     });
 

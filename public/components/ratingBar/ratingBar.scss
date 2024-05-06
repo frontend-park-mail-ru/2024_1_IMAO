@@ -1,47 +1,33 @@
 .rating {
-  width: 175.98px;
-  padding-top: 6px;
-  padding-bottom: 0.99px;
-  left: 0px;
-  top: 51.97px;
-  justify-content: flex-start;
-  align-items: center;
-  display: inline-flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: inline-flex;
 }
 
-.rating-value {
-  padding-right: 3.62px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
-
-  font-size: 14px;
-  color: rgb(255, 205, 75);
+.rating__value {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    font-size: 14px;
+    color: rgb(255, 205, 75);
+    margin-right: 5px;
 }
 
-.rating-stars {
-  width: 95.95px;
-  padding-top: 0.03px;
-  justify-content: flex-start;
-  align-items: center;
-  display: flex;
+.rating__stars {
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
 }
 
 .star {
-  width: 15.99px;
-  height: 15.99px;
-  padding-top: 1.05px;
-  padding-bottom: 1px;
-  padding-left: 1.02px;
-  padding-right: 1.02px;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
-}
-
-.star .vector {
-  width: 13.95px;
-  height: 13.95px;
-  background: #ffcd4b;
+    width: 16px;
+    height: 16px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
 }
