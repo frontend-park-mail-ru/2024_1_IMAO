@@ -57,7 +57,7 @@ export class MerchantsPage {
    * Adds state listeners.
    */
   async #addListeners() {
-    const inputs = this.#element.querySelectorAll('.ActiveSoldList input[type="radio"]');
+    const inputs = this.#element.querySelectorAll('.active-sold__list input[type="radio"]');
 
     inputs.forEach(function(input) {
       input.addEventListener('click', this.handleClick.bind(this));

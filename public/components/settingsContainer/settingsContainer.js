@@ -177,7 +177,7 @@ class SettingsContainer {
           });
           const profileAvatar = document.querySelector('.avatar-image');
           const headerAvatar = document.querySelector('.profile-icon');
-          const profileName = document.querySelector('.card-header').childNodes[1];
+          const profileName = document.querySelector('.merchant-card__profile-name');
 
           this.profile = {
             merchantsName: profile.merchantsName,

@@ -222,6 +222,7 @@ export class Advert {
     this.#element.appendChild(this.header.render());
 
     content.classList.add('page-content');
+    content.classList.add('post-page');
     this.#element.appendChild(content);
 
     const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT, this.#slug);

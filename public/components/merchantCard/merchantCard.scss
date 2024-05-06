@@ -191,7 +191,7 @@
     text-decoration: underline;
 }
 
-@media (max-width: 1125px) {
+@media (max-width: 1125px) and (min-width: 900px) {
     .stats-container__item:first-child {
         width: 25%;
     }
