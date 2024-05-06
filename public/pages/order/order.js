@@ -75,7 +75,7 @@ export class Order {
       const deliveryPrice = this.#deliveriPrice;
       for (const orderItem in order) {
         if (Object.hasOwn(order, orderItem)) {
-          const advertID = order[orderItem].id;
+          const advertID = order[orderItem].advert.id;
           orderItems.adverts.push({
             advertID,
             phone,
@@ -86,17 +86,13 @@ export class Order {
           });
         }
       }
-      ajax.post(
-          ajax.routes.ORDER.CREATE_ORDERS,
-          orderItems,
-          (body)=>{
-            const {isCreated} = body;
+      ajax.post(ajax.routes.ORDER.CREATE_ORDERS, orderItems, (body) => {
+        const {isCreated} = body;
 
-            if (isCreated !== undefined) {
-              router.go(router.routes.cartPage.href);
-            }
-          },
-      );
+        if (isCreated !== undefined) {
+          router.go(router.routes.cartPage.href);
+        }
+      });
       //
       // Поставить редирект на страницу заказов в профиле
       //
@@ -117,8 +113,7 @@ export class Order {
         element.checked = false;
         const advert = this.#element.querySelector(`[id="${id}"]`);
         const price = Number(advert.querySelector('.price').innerHTML);
-        priceSum.innerHTML =
-          Number(priceSum.innerHTML) - price - this.#deliveriPrice;
+        priceSum.innerHTML = Number(priceSum.innerHTML) - price - this.#deliveriPrice;
         quantity.innerHTML = Number(quantity.innerHTML) - 1;
         const order = JSON.parse(sessionStorage.getItem(ajax.auth.id));
         delete order[id];
@@ -148,9 +143,10 @@ export class Order {
 
     for (const orderItem in order) {
       if (Object.hasOwn(order, orderItem)) {
-        const {id, title, price} = order[orderItem];
+        const {advert, photosIMG} = order[orderItem];
+        const {id, title, price} = advert;
         priceSum += Number(price) + this.#deliveriPrice;
-        selectPanel.appendChild(renderOrderItem(num, id, title, price));
+        selectPanel.appendChild(renderOrderItem(num, id, title, price, photosIMG?.[0]));
         num++;
       }
     }
@@ -158,8 +154,7 @@ export class Order {
     // eslint-disable-next-line max-len
     const mainCont = this.#element.querySelector('.order-page__container__sidebar');
     mainCont.appendChild(renderSidebar(quantity, priceSum));
-    this.#element.querySelector('.sidebar__description').innerHTML =
-      'Цена с доставкой';
+    this.#element.querySelector('.sidebar__description').innerHTML = 'Цена с доставкой';
 
     this.#addListeners();
   }

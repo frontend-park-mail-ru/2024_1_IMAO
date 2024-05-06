@@ -1,226 +1,98 @@
 .cart-block {
-  width: 880px;
-  height: 167px;
+  max-width: 870px;
+  width: calc(90vw - 300px);
   position: relative;
   background: white;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px 0px 20px 0px;
+}
+
+@media (max-width: 800px) {
+  .cart-block {
+    width: 90vw;
+
+    &__icons {
+      justify-content: flex-end;
+      flex-direction: column-reverse !important;
+    }
+
+    &__item-info {
+      justify-content: flex-end;
+      flex-direction: column-reverse !important;
+    }
+
+    &__item-description {
+      flex-grow: 0 !important;
+    }
+
+    &__item-price {
+      flex-grow: 0 !important;
+    }
+  }
+}
+
+.cart-block__item-info {
+  display: flex;
+  flex-grow: 1;
 }
 
 .cart-block__item {
-  width: 880px;
-  height: 167px;
-  position: absolute;
+  width: 100%;
   background: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .cart-block__item-header {
-  width: 358px;
-  height: 26px;
-  position: absolute;
   left: 25px;
   top: 24px;
-}
-
-.cart-block__item-header-text {
-  width: 158px;
-  height: 26px;
-  position: absolute;
-  color: #222222;
-  font-size: 21px;
-
-  font-weight: 700;
-  line-height: 26px;
-  word-wrap: break-word;
 }
 
 .cart-block__item-image {
   width: 106px;
   height: 110px;
-  position: absolute;
-  left: 25px;
-  top: 57px;
-  border-radius: 12px;
-}
-
-.cart-block__item-description {
-  width: 260px;
-  height: 111px;
-  position: absolute;
-  left: 164px;
-  top: 56px;
-  color: black;
-  font-size: 14px;
-
-  font-weight: 400;
-  line-height: 20.63px;
-  word-wrap: break-word;
-}
-
-.cart-block__item-price {
-  width: 70px;
-  height: 24px;
-  position: absolute;
-  left: 543px;
-  top: 58px;
-  color: #222222;
-  font-size: 18px;
-
-  font-weight: 700;
-  line-height: 24px;
-  word-wrap: break-word;
-}
-
-/* Стили для кнопки */
-.cart-block__item-button {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  left: 793px;
-  top: -19.05px;
-}
-
-/* Стили для иконки удаления */
-.cart-block__item-delete-icon {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  left: 810px;
-  top: 57px;
-}
-
-/* Стили для иконки сообщения */
-.cart-block__item-message-icon {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  left: 738px;
-  top: 57px;
-  opacity: 0.4;
-}
-
-/* Стили для иконки лайка */
-.cart-block__item-like-icon {
-  width: 18px;
-  height: 16px;
-  position: absolute;
-  left: 774px;
-  top: 57px;
-}
-
-/* Стили для чекбоксов */
-.cart-block__item-checkbox {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-}
-
-/* Первый чекбокс */
-.cart-block__item-checkbox:first-child {
-  left: 0px;
-  top: 24px;
-}
-
-/* Второй чекбокс */
-.cart-block__item-checkbox:last-child {
-  left: 0px;
-  top: 56px;
-}
-.cart-block {
-  width: 880px;
-  height: 167px;
-  position: relative;
-  background: white;
-}
-
-.cart-block__item {
-  width: 880px;
-  height: 167px;
-  position: absolute;
-  background: white;
-}
-
-.cart-block__item-header {
-  width: 358px;
-  height: 26px;
-  position: absolute;
-  left: 25px;
-  top: 24px;
-}
-
-.cart-block__item-header-text {
-  width: 158px;
-  height: 26px;
-  position: absolute;
-  color: #222222;
-  font-size: 21px;
-
-  font-weight: 700;
-  line-height: 26px;
-  word-wrap: break-word;
-}
-
-.cart-block__item-image {
-  width: 106px;
-  height: 110px;
-  position: absolute;
-  left: 25px;
-  top: 57px;
+  margin: 0px 20px 0px 10px;
   border-radius: 12px;
   object-fit: cover;
 }
 
 .cart-block__item-description {
-  width: 260px;
-  height: 111px;
-  position: absolute;
-  left: 164px;
-  top: 56px;
   color: black;
   font-size: 14px;
-
+  flex-grow: 1;
   font-weight: 400;
   line-height: 20.63px;
   word-wrap: break-word;
 }
 
 .cart-block__item-price {
-  width: 63px;
-  height: 24px;
-  position: absolute;
-  left: 543px;
-  top: 58px;
   color: #222222;
   font-size: 18px;
-
+  flex-grow: 1;
   font-weight: 700;
   line-height: 24px;
   word-wrap: break-word;
 }
-
-/* Стили для кнопки */
-.cart-block__item-button {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  left: 793px;
-  top: -19.05px;
+.cart-block__icons {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 5px 30px;
 }
 
 /* Стили для иконки удаления */
 .cart-block__item-delete-icon {
   width: 20px;
   height: 20px;
-  position: absolute;
-  left: 810px;
-  top: 57px;
+  padding: 5px;
 }
 
 /* Стили для иконки сообщения */
 .cart-block__item-message-icon {
   width: 20px;
   height: 20px;
-  position: absolute;
-  left: 738px;
-  top: 57px;
+  padding: 5px;
   opacity: 0.4;
 }
 
@@ -228,13 +100,13 @@
 .cart-block__item-like-icon {
   width: 18px;
   height: 16px;
-  position: absolute;
-  left: 774px;
-  top: 57px;
+  padding: 5px;
+  padding-top: 6px;
 
   .like-heart {
     height: 18px;
     width: 20px;
+
     svg {
       height: 18px;
       width: 20px;
@@ -250,7 +122,6 @@ svg:hover {
 .cart-block__item-checkbox {
   width: 20px;
   height: 20px;
-  position: absolute;
 }
 
 /* Первый чекбокс */

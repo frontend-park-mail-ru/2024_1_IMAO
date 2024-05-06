@@ -1,13 +1,15 @@
 <div>
-    <div class="advert-block">
+    <div class="post-block">
         <div class="top-panel">
+            <h3 class="price-mobile">{{price}} ₽</h3>
             <div class="title">
                 <h1>{{title}}</h1>
             </div>
             <div class="favourite">
                 {{#if isAuthor}}
                     <a class="btn-edit" href="{{editPath}}">
-                        Редактировать объявление
+                        <img src="images/pencil_12.svg" class="edit-pencil">
+                        <span>Редактировать объявление</span>
                     </a>
                 {{^}}
                     {{#if inFavorites}}
@@ -17,8 +19,7 @@
                                     <path d="M150.383 18.301a49.633 49.633 0 0 0-24.033-6.187c-15.394 0-29.18 7.015-38.283 18.015-9.146-11-22.919-18.015-38.334-18.015-8.704 0-16.867 2.259-24.013 6.187C10.388 26.792 0 43.117 0 61.878 0 67.249.874 72.4 2.457 77.219c8.537 38.374 85.61 86.771 85.61 86.771s77.022-48.396 85.571-86.771a49.09 49.09 0 0 0 2.466-15.341c0-18.754-10.388-35.074-25.721-43.577z"/>
                                 </svg>
                             </div>
-                            &nbsp;
-                            <span class="btn-favourite__text">Удалить из избранного</span>
+                            <span class="btn-favourite__text">&nbsp;Удалить из избранного</span>
                         </a>
                     {{^}}
                         <a class="btn-favourite">
@@ -27,15 +28,14 @@
                                     <path d="M150.383 18.301a49.633 49.633 0 0 0-24.033-6.187c-15.394 0-29.18 7.015-38.283 18.015-9.146-11-22.919-18.015-38.334-18.015-8.704 0-16.867 2.259-24.013 6.187C10.388 26.792 0 43.117 0 61.878 0 67.249.874 72.4 2.457 77.219c8.537 38.374 85.61 86.771 85.61 86.771s77.022-48.396 85.571-86.771a49.09 49.09 0 0 0 2.466-15.341c0-18.754-10.388-35.074-25.721-43.577z"/>
                                 </svg>
                             </div>
-                            &nbsp;
-                            <span class="btn-favourite__text">Добавить в избранное</span>
+                            <span class="btn-favourite__text">&nbsp;Добавить в избранное</span>
                         </a>
                     {{/if}} 
                 {{/if}}
                 <div class="message message--hidden"></div>
             </div>
         </div>
-        <div class="advert-images">
+        <div class="post-images">
             <div class="carousel">
                 <div class="images">
                     {{#each photos}}
@@ -48,35 +48,40 @@
                 <button class="next-btn">&#10095;</button>
             </div>
         </div>
-        <ul class="advert-description">
-            <li>
-                <span class="property-name">Местоположение</span>
-                <span class="property-description">{{city}}</span>
-            </li>
-            <li class="end-of-block">
-                <span class="property-name">Категория</span>
-                <span class="property-description">{{category}}</span>
-            </li>
-            <li class="end-of-block">
-                <span class="property-name">Состояние</span>
-                <span class="property-description">{{state}}</span>
-            </li>
-            <li class="end-of-block">
-                <span class="property-name">Описание</span>
-                <span class="property-description">{{description}}</span> 
-            </li>
-            <li>
-                <span class="property-name">В избранном</span>
-                <span class="property-description">{{favoritesNum}}</span>
-            </li>
-            <li>
-                <span class="property-name">Просмотры</span>
-                <span class="property-description">{{views}}</span>
-            </li>
-            <li>
-                <span class="property-name">Размещено</span>
-                <span class="property-description">{{created}}</span>
-            </li>
+        <ul class="post-description">
+            <div class="post-description__section">
+                <li class="location">
+                    <img src="images/location_map_outline_20.svg">
+                    <span class="property-name">Местоположение</span>
+                    <span class="property-description">{{city}}</span>
+                </li>
+                <li class="end-of-block">
+                    <span class="property-name">Категория</span>
+                    <span class="property-description">{{category}}</span>
+                </li>
+                <li class="end-of-block">
+                    <span class="property-name">Состояние</span>
+                    <span class="property-description">{{state}}</span>
+                </li>
+                <li>
+                    <span class="property-name">Описание</span>
+                    <span class="property-description">{{description}}</span> 
+                </li>
+            </div>
+            <div class="post-description__section">
+                <li>
+                    <span class="property-name">В избранном</span>
+                    <span class="property-description">{{favouritesNum}}</span>
+                </li>
+                <li>
+                    <span class="property-name">Просмотры</span>
+                    <span class="property-description">{{views}}</span>
+                </li>
+                <li>
+                    <span class="property-name">Размещено</span>
+                    <span class="property-description">{{created}}</span>
+                </li>
+            </div>
         </ul>
     </div>
     <div class="seller-block">

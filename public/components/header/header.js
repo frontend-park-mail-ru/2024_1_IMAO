@@ -31,7 +31,7 @@ export class Header {
     const url = getURLFromLocation(window.location.href, router.host);
     const titleValue = url.searchParams.get('title');
     if (titleValue !== null) {
-      this.#header.querySelector('.search-input').value = titleValue;
+      this.#header.querySelector('.search__input').value = titleValue;
     }
 
     return this.#header;
@@ -82,8 +82,9 @@ export class Header {
 
     this.#addLogoutListener(logoutBtn);
 
-    const search = this.#header.querySelector('.search');
-    const inputField = this.#header.querySelector('.search-input');
+    const search = this.#header.querySelector('.navbar__search');
+    const inputField = this.#header.querySelector('.search__input');
+    const searchResults = this.#header.querySelector('.results');
 
     const debouncedHandleInput = this.#debounce(this.#handleInput, 500);
 
@@ -99,7 +100,26 @@ export class Header {
     });
 
     const searchButton = this.#header.querySelector('.search__button');
+
+    inputField.addEventListener('input', () => {
+      if (inputField.value.trim() === '') {
+        searchButton.disabled = true;
+        searchResults.classList.add('display-none');
+      } else {
+        searchButton.disabled = false;
+        searchResults.classList.remove('display-none');
+      }
+    });
+
+    searchButton.disabled = true;
+    searchResults.classList.add('display-none');
+
     this.#addSearchListener(searchButton);
+
+    const AdCreationButton = this.#header.querySelector('.btn-success');
+    if (this.#isMainPage(AdCreationButton)) {
+      this.#addScrollListener(AdCreationButton);
+    }
   }
 
   /**
@@ -108,7 +128,7 @@ export class Header {
    */
   #addSearchListener(button) {
     button.addEventListener('click', (ev) => {
-      const searchValue = this.#header.querySelector('.search-input').value;
+      const searchValue = this.#header.querySelector('.search__input').value;
       if (searchValue == '') {
         router.pushPage(ev, router.routes.mainPage.href.href);
 
@@ -141,12 +161,17 @@ export class Header {
    * @param {*} event
    */
   #handleInput(event) {
-    console.log('Обработка ввода:', event.target.value);
-
-    const searchValue = this.#header.querySelector('.search-input').value;
+    const searchValue = this.#header.querySelector('.search__input').value;
     const results = this.#header.querySelector('.results');
-    console.log('searchValue', searchValue);
     const apiRoute = this.#getRoute(searchValue);
+
+    if (searchValue.trim() === '') {
+      while (results.firstChild) {
+        results.removeChild(results.firstChild);
+      }
+
+      return;
+    }
 
     ajax.get(apiRoute, (body) => {
       while (results.firstChild) {
@@ -156,6 +181,7 @@ export class Header {
       if (!body.items) {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
+        link.classList.add('nothith-was-found');
         link.href = '#';
         link.textContent = 'По вашему запросу ничего не найдено ;(';
         listItem.appendChild(link);
@@ -181,6 +207,32 @@ export class Header {
    * @param {HTMLCollectionOf<Element>} buttons - Interface buttons elements.
    */
   #addButtonsListeners(buttons) {
+    const categoryButton = this.#header.querySelector('.dropdown__button');
+    const caregoryList = this.#header.querySelector('.dropdown-content-left');
+    categoryButton.addEventListener('click', (ev) => {
+      caregoryList.classList.toggle('display-block');
+    });
+
+    const avatarImg = this.#header.querySelector('.profile-icon');
+    const optionList = this.#header.querySelector('.dropdown-content-right');
+    if (avatarImg) {
+      avatarImg.addEventListener('click', (ev) => {
+        optionList.classList.toggle('display-block');
+      });
+    }
+
+    window.addEventListener('mousedown', (ev) => {
+      if (!caregoryList.contains(ev.target) && !categoryButton.contains(ev.target)) {
+        caregoryList.classList.remove('display-block');
+      }
+
+      if (avatarImg) {
+        if (!optionList.contains(ev.target) && !avatarImg.contains(ev.target)) {
+          optionList.classList.remove('display-block');
+        }
+      }
+    });
+
     for (const anchor of buttons) {
       if (anchor.dataset.url == undefined) {
         continue;
@@ -216,6 +268,55 @@ export class Header {
   }
 
   /**
+   *
+   * @param {*} button
+   * @return {boolean}
+   */
+  #isMainPage(button) {
+    const routes = router.routes;
+    const href = new URL(window.location.href);
+    for (const key in routes) {
+      if (!Object.prototype.hasOwnProperty.call(routes, key)) {
+        continue;
+      }
+      const route = routes[key];
+      if (route.re.test(href.pathname)) {
+        if (key == 'mainPage' || key == 'adsListByCity' || key == 'adsListByCategory') {
+          button.classList.remove('btn-success--disabled');
+
+          return true;
+        }
+        button.classList.add('btn-success--disabled');
+
+        return false;
+      }
+    }
+    button.classList.add('btn-success--disabled');
+
+    return false;
+  }
+
+  /**
+   *@param {*} button
+   */
+  #addScrollListener(button) {
+    let prevScrollpos = window.scrollY;
+    window.onscroll = function() {
+      const mediaQuery = window.matchMedia('(max-width: 1219px)');
+      if (!mediaQuery.matches) {
+        return;
+      }
+      const currentScrollPos = window.scrollY;
+      if (prevScrollpos > currentScrollPos) {
+        button.style.bottom = '25px';
+      } else {
+        button.style.bottom = '-55px';
+      }
+      prevScrollpos = currentScrollPos;
+    };
+  }
+
+  /**
    * Renders a template for a header.
    * @private
    * @param {URL} location - The location to be displayed in the header.
@@ -243,8 +344,9 @@ export class Header {
       const urlurl = buildURLBySegments(serverHost, temp);
       const url = urlurl.href;
       const {name} = category;
+      const {translation} = category;
 
-      return {name, url};
+      return {name, translation, url};
     });
     this.#header.appendChild(
         stringToHtmlElement(

@@ -1,11 +1,20 @@
 .sidebar {
   width: 318px;
   height: 170px;
-  position: absolute;
-  left: 930px;
-  top: 23px;
+  position: fixed;
+  top: 200px;
+  right: 0px;
+  //right: inherit;
+  // position: absolute;
+  // left: 930px;
+  // top: 23px;
 }
 
+@media (min-width: 1240px) {
+  .sidebar {
+    right: calc(calc(100vw - 1280px) * 0.5);
+  }
+}
 .sidebar__promo-block {
   width: 300px;
   height: 156px;
@@ -77,8 +86,6 @@
   text-decoration: none;
   color: white; /* белый цвет текста */
   border: none; /* без границ */
-  /* border-radius: 25px; скругленные углы */
-  /* padding: 10px 20px; внутренние отступы */
   font-size: 18px; /* размер шрифта */
   cursor: pointer; /* курсор в виде указателя */
   transition: background-color 0.3s; /* плавное изменение цвета фона при наведении */
@@ -93,4 +100,98 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
+}
+
+@media (max-width: 800px) {
+  .sidebar {
+    border-radius: 8px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    top: auto;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+
+    &__promo-block {
+      position: relative;
+      padding: 20px;
+      padding-bottom: 400px;
+      width: auto;
+      height: auto;
+      display: grid;
+      grid-template-rows: 1fr 2fr 1fr;
+      grid-template-areas:
+        'quantity empty'
+        'desc price'
+        'button button';
+      background: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    &__item-count {
+      grid-area: quantity;
+      padding-bottom: 5px;
+      width: 65px;
+      height: 20px;
+      position: relative;
+      left: auto;
+      top: auto;
+      color: black;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 20px;
+    }
+
+    &__price {
+      grid-area: price;
+      height: 22px;
+      position: relative;
+      left: auto;
+      top: auto;
+      text-align: right;
+      color: #222222;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 22px;
+    }
+
+    &__description {
+      grid-area: desc;
+      width: 160px;
+      height: 22px;
+      position: relative;
+      left: auto;
+      top: auto;
+      color: #222222;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 22px;
+    }
+
+    &__button {
+      display: block !important;
+      grid-area: button;
+      font-family: 'OpenSans', sans-serif;
+      width: 100%;
+      height: 50px;
+      padding: 8px 20px;
+      position: absolute;
+      left: auto;
+      top: auto;
+      padding: 8px 20px;
+      background: #7092fe;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+      border-radius: 8px;
+      justify-content: center;
+      align-items: center;
+      display: inline-flex;
+      text-decoration: none;
+      color: white; /* белый цвет текста */
+      border: none; /* без границ */
+      font-size: 18px; /* размер шрифта */
+      cursor: pointer; /* курсор в виде указателя */
+      transition: background-color 0.3s; /* плавное изменение цвета фона при наведении */
+    }
+  }
 }

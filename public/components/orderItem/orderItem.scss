@@ -1,19 +1,31 @@
 /* Блок "order-item" */
 .order-item {
-  width: 570px;
+  max-width: 900px;
+  width: calc(90vw - 300px);
   height: 200px;
+  display: grid;
+  padding: 10px 20px 5px 20px;
+  grid-template-columns: 8fr 1fr;
+  grid-template-areas:
+    'heading heading'
+    'image delete'
+    'price price'
+    'delivery delivery';
   position: relative;
+}
+
+@media (max-width: 800px) {
+  .order-item {
+    width: 90%;
+  }
 }
 
 /* Элемент "order-item__heading" */
 .order-item__heading {
-  height: 30px;
-  left: 0px;
-  top: 0px;
-  position: absolute;
   color: black;
   font-size: 26px;
-
+  grid-area: heading;
+  padding-bottom: 5px;
   font-weight: 700;
   line-height: 30px;
   word-wrap: break-word;
@@ -21,11 +33,11 @@
 
 /* Элемент "order-item__image" */
 .order-item__image {
+  grid-area: image;
   width: 100px;
   height: 75px;
-  left: 0px;
-  top: 46px;
-  position: absolute;
+  padding-bottom: 5px;
+  object-fit: cover;
   border-radius: 12px;
 }
 
@@ -33,9 +45,6 @@
 .order-item__image-overlay {
   width: 100px;
   height: 75px;
-  left: 0px;
-  top: 46px;
-  position: absolute;
   background: rgba(0, 0, 0, 0.04);
   border-radius: 12px;
 }
@@ -43,12 +52,9 @@
 /* Элемент "order-item__price" */
 .order-item__price {
   height: 18px;
-  left: 0px;
-  top: 125px;
-  position: absolute;
+  grid-area: price;
   color: #757575;
   font-size: 13px;
-
   font-weight: 400;
   line-height: 18px;
   word-wrap: break-word;
@@ -75,7 +81,6 @@
   text-align: center;
   color: black;
   font-size: 15px;
-
   font-weight: 400;
   line-height: 22px;
   word-wrap: break-word;
@@ -83,13 +88,10 @@
 
 /* Элемент "order-item__delivery-info" */
 .order-item__delivery-info {
+  grid-area: delivery;
   height: 22px;
-  /* left: 247px;  */
-  top: 150px;
-  position: absolute;
   color: black;
   font-size: 15px;
-
   font-weight: 400;
   line-height: 22px;
   word-wrap: break-word;
@@ -99,16 +101,11 @@
 .order-item__delete {
   width: 20px;
   height: 20px;
-  left: 740px;
-  top: 7px;
-  position: absolute;
+  grid-area: delete;
 }
 
 /* Элемент "order-item__delete-icon" */
 .order-item__delete-icon {
   width: 16px;
   height: 17px;
-  left: 2px;
-  top: 1.5px;
-  position: absolute;
 }
