@@ -28,6 +28,10 @@ body {
   .auth-page {
     background: #fff;
   }
+
+  body {
+    background: #fff !important;
+  }
 }
 
 main {
@@ -46,6 +50,10 @@ main {
 }
 
 @media (max-width: $main-width) {
+  body {
+    background: $background-color;
+  }
+
   .main-page {
     width: 100%;
   }
@@ -61,16 +69,16 @@ main {
 }
 
 .cards-container {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, clamp(129px, 37.5vw, 215px));
+  justify-content: space-evenly;
   gap: 16px 36px;
 }
 
 .cards-container-skeleton {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, clamp(129px, 37.5vw, 215px));
+  justify-content: space-evenly;
   gap: 16px 36px;
 }
 

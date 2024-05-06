@@ -13,10 +13,11 @@ const MAX_TITLE_LENGTH = 40;
  * @param {number} id
  * @param {string} title - The title of the product.
  * @param {string | number} price - The price of the product.
+ * @param {string} photo
  * @return {Handlebars.TemplateDelegate} - The template of card.
  */
-export default function renderOrderItem(num, id, title, price) {
+export default function renderOrderItem(num, id, title, price, photo) {
   title = trimString(title, MAX_TITLE_LENGTH);
 
-  return stringToHtmlElement(template({num, id, title, price}));
+  return stringToHtmlElement(template({num, id, title, price, photo}));
 }

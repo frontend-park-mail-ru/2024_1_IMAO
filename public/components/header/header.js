@@ -89,7 +89,7 @@ export class Header {
     const debouncedHandleInput = this.#debounce(this.#handleInput, 500);
 
     inputField.addEventListener('input', debouncedHandleInput);
-    
+
     inputField.addEventListener('focus', (event) => {
       search.classList.toggle('search-focused');
       this.#handleInput(event);
@@ -115,6 +115,11 @@ export class Header {
     searchResults.classList.add('display-none');
 
     this.#addSearchListener(searchButton);
+
+    const AdCreationButton = this.#header.querySelector('.btn-success');
+    if (this.#isMainPage(AdCreationButton)) {
+      this.#addScrollListener(AdCreationButton);
+    }
   }
 
   /**
@@ -160,15 +165,14 @@ export class Header {
     const results = this.#header.querySelector('.results');
     const apiRoute = this.#getRoute(searchValue);
 
-    if (searchValue.trim() === '')
-    {
+    if (searchValue.trim() === '') {
       while (results.firstChild) {
         results.removeChild(results.firstChild);
       }
-      
+
       return;
     }
-    
+
     ajax.get(apiRoute, (body) => {
       while (results.firstChild) {
         results.removeChild(results.firstChild);
@@ -261,6 +265,55 @@ export class Header {
         router.popPage(ev, main);
       });
     });
+  }
+
+  /**
+   *
+   * @param {*} button
+   * @return {boolean}
+   */
+  #isMainPage(button) {
+    const routes = router.routes;
+    const href = new URL(window.location.href);
+    for (const key in routes) {
+      if (!Object.prototype.hasOwnProperty.call(routes, key)) {
+        continue;
+      }
+      const route = routes[key];
+      if (route.re.test(href.pathname)) {
+        if (key == 'mainPage' || key == 'adsListByCity' || key == 'adsListByCategory') {
+          button.classList.remove('btn-success--disabled');
+
+          return true;
+        }
+        button.classList.add('btn-success--disabled');
+
+        return false;
+      }
+    }
+    button.classList.add('btn-success--disabled');
+
+    return false;
+  }
+
+  /**
+   *@param {*} button
+   */
+  #addScrollListener(button) {
+    let prevScrollpos = window.scrollY;
+    window.onscroll = function() {
+      const mediaQuery = window.matchMedia('(max-width: 1219px)');
+      if (!mediaQuery.matches) {
+        return;
+      }
+      const currentScrollPos = window.scrollY;
+      if (prevScrollpos > currentScrollPos) {
+        button.style.bottom = '25px';
+      } else {
+        button.style.bottom = '-55px';
+      }
+      prevScrollpos = currentScrollPos;
+    };
   }
 
   /**
