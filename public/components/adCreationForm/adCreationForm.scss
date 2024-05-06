@@ -138,12 +138,15 @@
 }
 
 @media (max-width: 800px) {
-  .form__title {
-    text-align: center;
-    font-size: 20px !important;
-  }
+  .ad-creation {
+    .form__title {
+      text-align: center;
+      font-size: 20px ;
+    }
 
-  .ad-creation .form {
-    grid-template-columns: none;
+    .form {
+      grid-template-columns: none;
+    }
   }
+ 
 }
