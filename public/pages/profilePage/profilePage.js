@@ -104,6 +104,14 @@ export class ProfilePage {
 
     document.title = 'Профиль - ' + found.categoryLabel;
 
+    const profileCard = this.#element.querySelector('.merchant-card__section');
+    if (found.categoryLabelValue === 'settings') {
+      profileCard.style.display = 'none';
+    } else {
+      profileCard.style.display = 'flex';
+      profileCard.style['flex-direction'] = 'column';
+    }
+
     if (isRendered) {
       const stashedMerchantsCardContainer = this.sectionStateV.getSectionState(found.categoryLabelValue, 'render');
       profilePageContentContainer.replaceWith(stashedMerchantsCardContainer);
