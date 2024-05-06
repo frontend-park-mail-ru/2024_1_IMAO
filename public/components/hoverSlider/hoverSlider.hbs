@@ -1,14 +1,14 @@
-<div class="hover-slider-parent">
-    <div class="hover-slider" data-mode="fade">
+<div class="hover-slider">
+    <div class="hover-slider__main" data-mode="fade">
         {{#each photos}}
-            <div class="item_hover_slider">
+            <div class="hover_slider__item">
                 <img src="data:image/png;base64,{{this}}" alt="Hover slider">
             </div>
         {{/each}}
     </div>
-    <div class="ellipse-line">
+    <div class="hover-slider__ellipse-line">
         {{#each photos}}
-            <div class="ellipse"></div>
+            <div class="hover-slider__ellipse"></div>
         {{/each}}
     </div>
 </div>
