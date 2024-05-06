@@ -75,7 +75,7 @@ export class Order {
       const deliveryPrice = this.#deliveriPrice;
       for (const orderItem in order) {
         if (Object.hasOwn(order, orderItem)) {
-          const advertID = order[orderItem].id;
+          const advertID = order[orderItem].advert.id;
           orderItems.adverts.push({
             advertID,
             phone,
