@@ -105,11 +105,13 @@ export class ProfilePage {
     document.title = 'Профиль - ' + found.categoryLabel;
 
     const profileCard = this.#element.querySelector('.merchant-card__section');
+    const sectionHeader = this.#element.querySelector('.profile-page-right-section-header');
     if (found.categoryLabelValue === 'settings') {
-      profileCard.style.display = 'none';
+      profileCard.classList.add('disable-card');
+      sectionHeader.classList.add('disable-card');
     } else {
-      profileCard.style.display = 'flex';
-      profileCard.style['flex-direction'] = 'column';
+      profileCard.classList.remove('disable-card');
+      sectionHeader.classList.remove('disable-card');
     }
 
     if (isRendered) {
