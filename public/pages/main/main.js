@@ -102,7 +102,7 @@ export class Main {
     apiRoute.searchParams.delete('count');
     apiRoute.searchParams.delete('startId');
 
-    apiRoute.searchParams.append('count', 30);
+    apiRoute.searchParams.append('count', 20);
     apiRoute.searchParams.append('startId', startID);
 
     return apiRoute;
