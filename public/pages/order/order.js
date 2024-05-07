@@ -3,6 +3,8 @@
 import renderOrderItem from '../../components/orderItem/orderItem.js';
 import renderOrderMain from '../../components/orderMain/orderMain.js';
 import renderSidebar from '../../components/sidebar/sidebar.js';
+import {serverHost} from '../../config/config.js';
+import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -90,7 +92,9 @@ export class Order {
         const {isCreated} = body;
 
         if (isCreated !== undefined) {
-          router.go(router.routes.cartPage.href);
+          const slugProfileOrders = ['profile', 'orders'];
+          const urlProfileOrders = buildURLBySegments(serverHost, slugProfileOrders);
+          router.go(urlProfileOrders);
         }
       });
       //

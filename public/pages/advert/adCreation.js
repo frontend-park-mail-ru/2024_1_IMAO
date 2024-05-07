@@ -1,6 +1,5 @@
 'use strict';
 
-import {CATEGORIES} from '../../config/config.js';
 import renderAdCreationForm from '../../components/adCreationForm/adCreationForm.js';
 import DropdownWithSearch from '../../components/dropdownWithSearch/dropdownWithSearch.js';
 import {buildURL, parsePathParams, getURLFromLocation} from '../../modules/parsePathParams.js';
@@ -55,10 +54,26 @@ export class AdCreation {
 
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
+
       const submit = form.querySelector('[type="submit"]');
       submit.disabled = true;
 
       let flag = true;
+
+      const phoneInput = this.#element.querySelector('[type="tel"]');
+      const phoneInputError = this.#element.querySelector('.phone__error');
+      phoneInput.classList.remove('input__error');
+      phoneInputError.innerHTML = '';
+      const phone = phoneInput.value;
+      if (phone.length == 0) {
+        phoneInput.classList.add('input__error');
+        phoneInputError.innerHTML = 'Введите номер телефона.';
+        flag = false;
+      } else if (phone.length < 18) {
+        phoneInput.classList.add('input__error');
+        phoneInputError.innerHTML = 'Введите номер телефона полностью. Формат: +7 (999) 999-99-99';
+        flag = false;
+      }
 
       const titleInput = this.#element.querySelector('[id="title"]');
       const titleInputError = this.#element.querySelector('.title__error');
@@ -96,28 +111,26 @@ export class AdCreation {
         data.append('id', this.#slug['id']);
       }
 
-      const apiRoute = this.#create ?
-        ajax.routes.ADVERT.CREATE_ADVERT :
-        ajax.routes.ADVERT.EDIT_ADVERT;
+      const apiRoute = this.#create ? ajax.routes.ADVERT.CREATE_ADVERT : ajax.routes.ADVERT.EDIT_ADVERT;
 
-      ajax.postMultipart(
-          apiRoute,
-          data,
-          (body) => {
+      ajax
+          .postMultipart(apiRoute, data, (body) => {
             if (Object.prototype.hasOwnProperty.call(body, 'items')) {
               const items = body['items'];
               const params = {
-                'city': items['city']['translation'],
-                'category': items['category']['translation'],
-                'id': items['advert']['id'],
+                city: items['city']['translation'],
+                category: items['category']['translation'],
+                id: items['advert']['id'],
               };
               router.go(buildURL(router.routes.adPage.href, params));
 
               return;
             }
             submit.disabled = false;
-          },
-      );
+          })
+          .catch(() => {
+            submit.disabled = false;
+          });
     });
   }
 
@@ -136,7 +149,7 @@ export class AdCreation {
       event.keyCode && (keyCode = event.keyCode);
       // eslint-disable-next-line no-invalid-this
       const pos = this.selectionStart;
-      if (pos < 3) event.preventDefault();
+      // if (pos < 3) event.preventDefault();
       const matrix = '+7 (___) ___-__-__';
       let i = 0;
       const def = matrix.replace(/\D/g, '');
@@ -152,7 +165,7 @@ export class AdCreation {
       }
 
       let reg = matrix
-          // eslint-disable-next-line no-invalid-this
+      // eslint-disable-next-line no-invalid-this
           .substr(0, this.value.length)
           .replace(/_+/g, function(a) {
             return '\\d{1,' + a.length + '}';
@@ -161,8 +174,10 @@ export class AdCreation {
       reg = new RegExp('^' + reg + '$');
       if (
         // eslint-disable-next-line no-invalid-this
-        !reg.test(this.value) || this.value.length < 5 ||
-          (keyCode > 47 && keyCode < 58)
+        !reg.test(this.value) ||
+        // eslint-disable-next-line no-invalid-this
+        this.value.length < 5 ||
+        (keyCode > 47 && keyCode < 58)
       ) {
         // eslint-disable-next-line no-invalid-this
         this.value = newValue;
@@ -202,19 +217,15 @@ export class AdCreation {
     let CSRFToken = '';
     const apiCSRF = ajax.routes.AUTH.CSRF;
 
-    await ajax.get(
-        apiCSRF,
-        (body) => {
-          CSRFToken = body['tokenBody'];
-        },
-    );
+    await ajax.get(apiCSRF, (body) => {
+      CSRFToken = body['tokenBody'];
+    });
 
     if (this.#create) {
       form.appendChild(renderAdCreationForm(true, CSRFToken));
     } else {
       this.#getSlug();
-      const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT_BY_ID,
-          this.#slug);
+      const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT_BY_ID, this.#slug);
 
       let categoryTr = 0;
       let isUsed = 0;
@@ -222,44 +233,37 @@ export class AdCreation {
 
       const apiCSRF = ajax.routes.AUTH.CSRF;
 
-      await ajax.get(
-          apiCSRF,
-          (body) => {
-            CSRFToken = body['tokenBody'];
-          },
-      );
+      await ajax.get(apiCSRF, (body) => {
+        CSRFToken = body['tokenBody'];
+      });
 
-      await ajax.get(
-          apiRoute,
-          (body) => {
-            const items = body['items'];
-            const advert = items['advert'];
-            const city = items['city'];
-            categoryTr = items.category.translation;
-            isUsed = advert.isUsed;
+      await ajax.get(apiRoute, (body) => {
+        const items = body['items'];
+        const advert = items['advert'];
+        const city = items['city'];
+        categoryTr = items.category.translation;
+        isUsed = advert.isUsed;
 
-            if (ajax.auth.id !== advert['userId']) {
-              router.go(router.routes.mainPage.href);
+        if (ajax.auth.id !== advert['userId']) {
+          router.go(router.routes.mainPage.href);
 
-              return;
-            }
+          return;
+        }
 
-            const adTitle = advert['title'];
-            const description = advert['description'];
-            const price = advert['price'];
-            const cityName = city['name'];
-            const phone = advert['phone'];
+        const adTitle = advert['title'];
+        const description = advert['description'];
+        const price = advert['price'];
+        const cityName = city['name'];
+        const phone = advert['phone'];
 
-            form.appendChild(renderAdCreationForm(false, CSRFToken, adTitle, price,
-                description, cityName, phone));
+        form.appendChild(renderAdCreationForm(false, CSRFToken, adTitle, price, description, cityName, phone));
 
-            document.title += trimString(adTitle, 40);
-          },
-      );
+        document.title += trimString(adTitle, 40);
+      });
 
       const catSelect = form.querySelector('[id="category"]');
-      for ( let i = 0; i < catSelect.options.length; i++ ) {
-        if ( catSelect.options[i].value == categoryTr ) {
+      for (let i = 0; i < catSelect.options.length; i++) {
+        if (catSelect.options[i].value == categoryTr) {
           catSelect.options[i].selected = true;
         }
       }
@@ -273,16 +277,13 @@ export class AdCreation {
 
     content.appendChild(form);
     const pathCity = ajax.routes.CITY.GET_CITY_LIST;
-    await ajax.get(
-        pathCity,
-        (body) => {
-          const dropdownWithSearchDiv = this.#element.querySelector('.location-place');
-          const dropdownWithSearch = new DropdownWithSearch(body, 'Москва');
-          const dropdownWithSearchTempl = dropdownWithSearch.render();
-          dropdownWithSearchTempl.classList.remove('dropdown-with-search');
-          // dropdownWithSearchTempl.setProperty('height', '');
-          dropdownWithSearchDiv.appendChild(dropdownWithSearchTempl);
-        },
-    );
+    await ajax.get(pathCity, (body) => {
+      const dropdownWithSearchDiv = this.#element.querySelector('.location-place');
+      const dropdownWithSearch = new DropdownWithSearch(body, 'Москва');
+      const dropdownWithSearchTempl = dropdownWithSearch.render();
+      dropdownWithSearchTempl.classList.remove('dropdown-with-search');
+      // dropdownWithSearchTempl.setProperty('height', '');
+      dropdownWithSearchDiv.appendChild(dropdownWithSearchTempl);
+    });
   }
 }

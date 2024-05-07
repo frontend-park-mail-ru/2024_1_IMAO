@@ -2,6 +2,7 @@
 
 import renderProfileMain from '../../components/profileMain/profileMain.js';
 import AdsCard from '../../components/adsCard/adsCard.js';
+import renderOrderBlock from '../../components/orderBlock/orderBlock.js';
 import SettingsContainer from '../../components/settingsContainer/settingsContainer';
 import ProfileCard from '../../components/profileCard/profileCard.js';
 import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
@@ -168,6 +169,30 @@ export class ProfilePage {
         );
 
         const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
+        if (isPerchasesChecked) {
+          let adverts = {};
+          await ajax.get(ajax.routes.ORDER.GET_ORDERS_LIST, (body) => {
+            adverts = body['items'];
+          });
+
+          if (adverts && Array.isArray(adverts)) {
+            const merchantsCardContainer = document.createElement('div');
+            merchantsCardContainer.classList.add('empty-orders-main-container');
+            adverts.forEach((inner) => {
+              const {orderItem, advert} = inner;
+              const {status, adress, phone, name} = orderItem;
+              const ad = advert.advert;
+              const photo = advert.photosIMG?.[0];
+              const {id, title, price} = ad;
+              const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, adress, phone, name);
+              merchantsCardContainer.appendChild(orderBlockInstance);
+            });
+            newProfilePageContentContainer.appendChild(merchantsCardContainer);
+          }
+
+          return;
+        }
+
         const header = isPerchasesChecked ? 'Нет покупок' : 'Не продаж';
         const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
 
@@ -178,7 +203,6 @@ export class ProfilePage {
       case 'favorites':
         const favoritesCardContainer = document.createElement('div');
         favoritesCardContainer.classList.add('cards-container-merchant');
-        console.log(found.categoryLabelValue);
         this.#renderCards(favoritesCardContainer, currentState, found.categoryLabelValue);
         newProfilePageContentContainer.appendChild(favoritesCardContainer);
         break;
@@ -255,7 +279,7 @@ export class ProfilePage {
    * Adds orders states.
    * @param {*} event
    */
-  orderHandleClick(event) {
+  async orderHandleClick(event) {
     const merchantsCardContainer = this.#element.querySelector('.empty-orders-main-container');
     const isRendered = this.sectionStateS.getSectionState(event.target.value, 'isRendered');
 
@@ -266,13 +290,32 @@ export class ProfilePage {
 
     if (!isRendered) {
       this.sectionStateS.setSectionState(event.target.value, 'isRendered', true);
+      const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
+      if (isPerchasesChecked) {
+        let adverts = {};
+        await ajax.get(ajax.routes.ORDER.GET_ORDERS_LIST, (body) => {
+          adverts = body['items'];
+        });
+        if (adverts && Array.isArray(adverts)) {
+          const newMerchantsCardContainer = document.createElement('div');
+          newMerchantsCardContainer.classList.add('empty-orders-main-container');
+          adverts.forEach((inner) => {
+            const {orderItem, advert} = inner;
+            const {status, adress, phone, name} = orderItem;
+            const ad = advert.advert;
+            const photo = advert.photosIMG?.[0];
+            const {id, title, price} = ad;
+            const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, adress, phone, name);
+            newMerchantsCardContainer.appendChild(orderBlockInstance);
+          });
+          merchantsCardContainer.replaceWith(newMerchantsCardContainer);
+        }
 
-      const header =
-        this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ? 'Нет покупок' : 'Нет продаж';
-      const content =
-        this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?
-          'Заказы по купленным товарам' :
-          'Заказы по проданным товарам';
+        return;
+      }
+
+      const header = isPerchasesChecked ? 'Нет покупок' : 'Нет продаж';
+      const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
 
       const emptyOrderPlug = new EmptyOrderPlug(header, content);
       merchantsCardContainer.replaceWith(emptyOrderPlug.render());

@@ -108,7 +108,7 @@ export class Advert {
    *
    */
   #addScrollListener() {
-    const button = this.#element.querySelector('.cart');
+    const button = this.#element.querySelector('.seller-block__btn');
     let prevScrollpos = window.scrollY;
     window.onscroll = function() {
       const mediaQuery = window.matchMedia('(max-width: 900px)');
