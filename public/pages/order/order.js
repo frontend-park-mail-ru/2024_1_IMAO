@@ -70,7 +70,7 @@ export class Order {
       const name = inputs[1].trim();
       const phone = inputs[2].trim();
       const email = inputs[3].trim();
-      const adress = inputs[4];
+      const address = inputs[4];
 
       const orderItems = {adverts: []};
       const order = JSON.parse(sessionStorage.getItem(ajax.auth.id));
@@ -83,7 +83,7 @@ export class Order {
             phone,
             name,
             email,
-            adress,
+            address,
             deliveryPrice,
           });
         }
@@ -97,9 +97,6 @@ export class Order {
           router.go(urlProfileOrders);
         }
       });
-      //
-      // Поставить редирект на страницу заказов в профиле
-      //
       sessionStorage.removeItem(ajax.auth.id);
     });
   }

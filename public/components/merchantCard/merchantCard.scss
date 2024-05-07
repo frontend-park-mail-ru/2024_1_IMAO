@@ -59,39 +59,39 @@
 }
 
 @media (max-width: 900px) {
-    .actions-container__button {
-        padding: 12px 0;
-        margin: 0 !important;
+  .actions-container__button {
+    padding: 12px 0;
+    margin: 0 !important;
+  }
+
+  .actions-container {
+    margin: 10px 0;
+  }
+
+  .post-container {
+    .card-container {
+      align-items: flex-start;
     }
 
-    .actions-container {
-        margin: 10px 0;
+    .card-container__content {
+      flex-direction: row;
     }
-    
-    .post-container {
-        .card-container {
-            align-items: flex-start;
-        }
-        
-        .card-container__content {
-            flex-direction: row;
-        }
-        
-        .stats-container__item {
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-        }
-        
-        .stats-button {
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-        }
-          
-        .user-info {
-            align-items: flex-start !important;
-            padding-left: 16px !important;
-        }
+
+    .stats-container__item {
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
     }
+
+    .stats-button {
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+    }
+
+    .user-info {
+      align-items: flex-start !important;
+      padding-left: 16px !important;
+    }
+  }
 }
 
 .card-container__merchant-address {
@@ -207,6 +207,7 @@
   display: inline-flex;
   justify-content: space-between;
   align-items: flex-start;
+  width: 100%;
 }
 
 .stats-container__item {
