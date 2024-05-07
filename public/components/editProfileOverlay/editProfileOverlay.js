@@ -55,14 +55,11 @@ class EditProfileOverlay {
 
     if (context.fields[0].isCitySearch) {
       const pathCity = ajax.routes.CITY.GET_CITY_LIST;
-      ajax.get(
-          pathCity,
-          (body) => {
-            const dropdownWithSearchDiv = this.#element.querySelector('.ddws-div');
-            const dropdownWithSearch = new DropdownWithSearch(body, this.currentCity);
-            dropdownWithSearchDiv.appendChild(dropdownWithSearch.render());
-          },
-      );
+      ajax.get(pathCity, (body) => {
+        const dropdownWithSearchDiv = this.#element.querySelector('.ddws-div');
+        const dropdownWithSearch = new DropdownWithSearch(body, this.currentCity);
+        dropdownWithSearchDiv.appendChild(dropdownWithSearch.render());
+      });
     }
 
     if (context.fields[0].isPhone) {
@@ -102,12 +99,10 @@ class EditProfileOverlay {
      * @param {HTMLElement} input - File input.
      */
     function readURL(input) {
-      console.log(input.files);
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          document.getElementById('imagePreview').style.backgroundImage =
-            'url(' + e.target.result + ')';
+          document.getElementById('imagePreview').style.backgroundImage = 'url(' + e.target.result + ')';
         };
 
         reader.readAsDataURL(input.files[0]);
@@ -117,7 +112,6 @@ class EditProfileOverlay {
     const fileField = this.#element.querySelector('#imageUpload');
     if (fileField) {
       fileField.addEventListener('change', function() {
-        console.log('event');
         readURL(fileField);
       });
     }
@@ -154,7 +148,7 @@ class EditProfileOverlay {
       }
 
       let reg = matrix
-          // eslint-disable-next-line no-invalid-this
+      // eslint-disable-next-line no-invalid-this
           .substr(0, this.value.length)
           .replace(/_+/g, function(a) {
             return '\\d{1,' + a.length + '}';
@@ -163,8 +157,9 @@ class EditProfileOverlay {
       reg = new RegExp('^' + reg + '$');
       if (
         // eslint-disable-next-line no-invalid-this
-        !reg.test(this.value) || this.value.length < 5 ||
-          (keyCode > 47 && keyCode < 58)
+        !reg.test(this.value) ||
+        this.value.length < 5 ||
+        (keyCode > 47 && keyCode < 58)
       ) {
         // eslint-disable-next-line no-invalid-this
         this.value = newValue;

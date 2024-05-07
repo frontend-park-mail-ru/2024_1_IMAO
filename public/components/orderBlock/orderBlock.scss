@@ -1,0 +1,44 @@
+.order-block {
+  background-color: #fff;
+  display: grid;
+  grid-template-areas: 'img info';
+  grid-template-columns: 1fr 3fr;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: clamp(170px, 15vw, 200px);
+  border-radius: 8px;
+
+  &__item-image {
+    border-radius: 8px 0px 0px 8px;
+    grid-area: img;
+    object-fit: cover;
+    height: clamp(170px, 15vw, 200px);
+    width: 90%;
+  }
+  &__info {
+    grid-area: info;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  &__price {
+    font-weight: bolder;
+  }
+  &__title {
+    font-size: 1.5rem;
+  }
+  &__status {
+  }
+  &__name {
+  }
+  &__phone {
+  }
+  &__adress {
+  }
+}
+
+@media (max-width: 800px) {
+  .order-block {
+    grid-template-columns: 1fr 2fr;
+  }
+}

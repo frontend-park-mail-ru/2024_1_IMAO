@@ -163,7 +163,6 @@ class SettingsContainer {
           }
 
           const avatar = formData.get('avatar');
-          console.log(avatar);
 
           let profile = {};
           await ajax.postMultipart(forms[i].apiRoute, formData, (body) => {
@@ -278,7 +277,7 @@ class SettingsContainer {
             avatarImg: profile.avatarImg,
           };
         }
-        console.log(dataBody);
+
         if (dataBody.user) {
           this.profile.email = dataBody.user.email;
         }

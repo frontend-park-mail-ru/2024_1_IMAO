@@ -130,7 +130,6 @@ export class Main {
     const cardsContainerSkeleton = alreadyRendered ? null : document.createElement('div');
 
     const cards = document.getElementsByClassName('card');
-    console.log(Array.from(cards));
     const startID = cards.length == 0 ? 1 : parseInt(cards[cards.length - 1].dataset['id']) + 1;
 
     const apiRoute = this.#getRoute(startID);

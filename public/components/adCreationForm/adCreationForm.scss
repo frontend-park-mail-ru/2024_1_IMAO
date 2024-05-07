@@ -1,8 +1,8 @@
-.ad-creation-container{
+.ad-creation-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  float: inline-start; 
+  float: inline-start;
 }
 
 .ad-creation {
@@ -78,6 +78,10 @@
 
 .ad-creation .form__input--description {
   margin-bottom: 5px;
+}
+
+input:invalid {
+  border: 2px red;
 }
 
 .input__error {

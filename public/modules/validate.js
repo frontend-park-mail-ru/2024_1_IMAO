@@ -129,6 +129,13 @@ export function validateName(name) {
  */
 export function validateInput(input) {
   assertString(input);
+  if (input == '') {
+    return true;
+  }
+
+  if (input.length == 1 && input != ' ') {
+    return true;
+  }
 
   return inputRegex.test(input);
 }
