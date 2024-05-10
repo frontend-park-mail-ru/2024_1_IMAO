@@ -3,6 +3,7 @@
 import renderCartBlock from '../../components/cartBlock/cartBlock.js';
 import renderCartMain from '../../components/cartMain/cartMain.js';
 import renderSidebar from '../../components/sidebar/sidebar.js';
+import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
@@ -140,6 +141,9 @@ export class Cart {
         headQuantity.innerHTML = quantity.innerHTML;
       }
       this.#model.deleteFromCart(advertIDs);
+      if (Number(quantity.innerHTML) == 0) {
+        this.#renderEmptyPlug();
+      }
     });
   }
 
@@ -163,6 +167,9 @@ export class Cart {
         headQuantity.innerHTML = quantity.innerHTML;
         const advertIDs = [Number(id)];
         this.#model.deleteFromCart(advertIDs);
+        if (Number(quantity.innerHTML) == 0) {
+          this.#renderEmptyPlug();
+        }
       });
     }
   }
@@ -191,6 +198,17 @@ export class Cart {
         }, 1000);
       });
     }
+  }
+
+  /**
+   *
+   */
+  #renderEmptyPlug() {
+    const selectPanel = this.#element.querySelector('.selection-panel');
+    const header = 'Корзина пуста';
+    const content = 'Добавленные в корзину объявления';
+    const emptyPlugInstance = new EmptyOrderPlug(header, content);
+    selectPanel.appendChild(emptyPlugInstance.render());
   }
 
   /**
@@ -231,6 +249,10 @@ export class Cart {
         router.pushPage(ev, address.href);
       });
     });
+
+    if (quantity == 0) {
+      this.#renderEmptyPlug();
+    }
 
     const mainCont = this.#element.querySelector('.main-content');
 
