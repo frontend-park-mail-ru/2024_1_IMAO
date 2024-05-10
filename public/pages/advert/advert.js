@@ -68,8 +68,8 @@ export class Advert {
   #addCarouselListeners() {
     const carousel = this.#element.querySelector('.carousel');
     const imagesContainer = this.#element.querySelector('.post-images');
-    const prevBtn = this.#element.querySelector('.prev-btn');
-    const nextBtn = this.#element.querySelector('.next-btn');
+    const prevBtn = this.#element.querySelector('.btn-container__prev-btn');
+    const nextBtn = this.#element.querySelector('.btn-container__next-btn');
     const images = imagesContainer.querySelectorAll('.img-carousel');
 
     let currentIndex = 0;

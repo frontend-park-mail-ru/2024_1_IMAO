@@ -46,9 +46,9 @@
             </a>
             <a class="name" href="{{urlMain}}" data-url="{{urlMain}}">ВОЛЧОК</a>
         </div>
-        <div class="navbar__dropdown">
+        <div class="navbar__dropdown dropdown">
             <button class="dropdown__button">
-                <i class="fa fa-list-ul"></i>
+                <img class="dropdown__icon" src="images/profile_adverts_icon.svg" alt="profile_adverts_icon">
                 <span>Категории</span>
             </button>
             <div class="dropdown__content dropdown-content-left">
@@ -60,8 +60,8 @@
                 {{/each}}
             </div>
         </div>
-        <form class="navbar__search">
-            <i class="fa fa-search"></i>
+        <form class="navbar__search search">
+            <img class="search__logo" src="images/search_28.svg">
             <input class="search__input" type="text" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="Поиск по объявлениям" name="search">
             <button class="search__button" type="submit">Найти</button>
             <ul class="results" >
