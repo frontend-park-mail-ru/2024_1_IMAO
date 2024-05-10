@@ -338,7 +338,7 @@ export class ProfilePage {
       const winHeight = window.innerHeight;
       const docHeight = document.body.scrollHeight;
 
-      if (position + winHeight >= docHeight && !this.#isBottomReached) {
+      if (position + winHeight >= docHeight - 200 && !this.#isBottomReached) {
         const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
         const currentState = this.sectionState.getSectionState('active', 'isRendered');
         this.#renderCards(merchantsCardContainer, currentState);
@@ -392,6 +392,15 @@ export class ProfilePage {
       merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
 
       return;
+    }
+
+    if (adverts.length == 0) {
+      const content = {
+        header: 'В избранном пусто',
+        content: 'избранные',
+      };
+      const emptyAdvertsPlug = new EmptyAdvertsPlug(content);
+      merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
     }
 
     const cardsContainer = !alreadyRendered ?

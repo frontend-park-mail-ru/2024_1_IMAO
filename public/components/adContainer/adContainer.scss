@@ -123,7 +123,10 @@
   margin-top: 20px;
   position: relative;
   width: 100%;
-  overflow: hidden;
+
+  &__carousel {
+    overflow: hidden;
+  }
 
   .carousel {
     display: flex;
@@ -146,24 +149,53 @@
 
   .btn-container {
     position: absolute;
+    overflow: visible;
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
     display: flex;
     justify-content: space-between;
+
+    &__prev-container {
+      position: relative !important;
+      overflow: visible;
+    }
+
+    &__next-container {
+      position: relative !important;
+    }
+
+    &__prev-btn {
+      position: fixed;
+      left: -8px;
+    }
+
+    &__next-btn {
+      position: absolute;
+      left: -24px;
+    }
   }
 
   button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     background-color: #ffffff;
     border: 2px solid #ffffff;
+    padding: 4px;
+    transition: 0.3s;
     cursor: pointer;
-    position: relative;
-    margin: 1%;
+
+    display: table-cell;
+    vertical-align: middle;
+    z-index: 10 !important;
 
     &:hover {
+      z-index: 10 !important;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
+    }
+
+    &:active {
       background-color: #dfdfdf;
       border: 0px;
     }
@@ -261,6 +293,22 @@
   .post-block {
     width: 100%;
     padding-left: 0;
+
+    .btn-container {
+      &__prev-btn {
+        position: fixed;
+        left: 8px;
+      }
+
+      &__next-btn {
+        position: absolute;
+        left: -40px;
+      }
+    }
+
+    button {
+      border-radius: 50%;
+    }
   }
 
   .seller-block {

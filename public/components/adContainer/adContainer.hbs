@@ -36,16 +36,22 @@
             </div>
         </div>
         <div class="post-images">
-            <div class="carousel">
-                <div class="images">
-                    {{#each photos}}
-                        <img class="img-carousel" src="data:image/png;base64,{{this}}" alt="Image 1">
-                    {{/each}}
-                </div>
+            <div class="post-images__carousel">
+              <div class="carousel">
+                  <div class="images">
+                      {{#each photos}}
+                          <img class="img-carousel" src="data:image/png;base64,{{this}}" alt="Image 1">
+                      {{/each}}
+                  </div>
+              </div>
             </div>
             <div class="btn-container">
-                <button class="prev-btn">&#10094;</button>
-                <button class="next-btn">&#10095;</button>
+                <div class="btn-container__prev-container">
+                    <button class="btn-container__prev-btn"><img src="images/left-arrow-backup-2-svgrepo-com.svg"></button>
+                </div>
+                <div class="btn-container__next-container">
+                    <button class="btn-container__next-btn"><img src="images/right-arrow-backup-2-svgrepo-com.svg"></button>
+                </div>
             </div>
         </div>
         <ul class="post-description">
