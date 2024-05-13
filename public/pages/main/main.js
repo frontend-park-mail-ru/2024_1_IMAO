@@ -67,7 +67,6 @@ export class Main {
         if (position + winHeight >= docHeight - 200 && !this.#isBottomReached) {
           this.#isBottomReached = true;
           this.#renderTemplate();
-          console.log(this.#queryStartId);
         }
       }
     };
