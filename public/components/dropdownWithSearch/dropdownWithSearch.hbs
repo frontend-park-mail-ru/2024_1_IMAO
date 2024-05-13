@@ -1,11 +1,11 @@
 <div class="dropdown-with-search">
-    <select class="select-display-none" name="">
+    <select class="dropdown-with-search--none" name="">
         {{#each items}}
             <option value="{{value}}">{{label}}</option>
         {{/each}}
     </select>
-    <div class="dropdown-select wide" tabindex="0">
-        <span class="current">{{current}}</span>
+    <div class="dropdown-with-search--select wide" tabindex="0">
+        <span class="dropdown-with-search__current">{{current}}</span>
         <div class="list">
             <div class="dd-search">
                 <input id="txtSearchValue" placeholder="Введите название города" autocomplete="off"

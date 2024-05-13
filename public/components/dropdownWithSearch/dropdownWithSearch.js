@@ -50,8 +50,8 @@ class DropdownWithSearch {
   #addListeners(element) {
     // Open/close
     element.addEventListener('click', (event) => {
-      const dropdownSelect = event.target.closest('.dropdown-select');
-      const allDropdownSelects = element.querySelectorAll('.dropdown-select');
+      const dropdownSelect = event.target.closest('.dropdown-with-search--select');
+      const allDropdownSelects = element.querySelectorAll('.dropdown-with-search--select');
 
       if (!dropdownSelect) {
         allDropdownSelects.forEach((ds) => {
@@ -88,13 +88,13 @@ class DropdownWithSearch {
 
     // Option click
     element.addEventListener('click', function(event) {
-      const option = event.target.closest('.dropdown-select .option');
+      const option = event.target.closest('.dropdown-with-search--select .option');
       if (option) {
-        const dropdownSelect = option.closest('.dropdown-select');
+        const dropdownSelect = option.closest('.dropdown-with-search--select');
         dropdownSelect.querySelector('.selected').classList.remove('selected');
         option.classList.add('selected');
         const text = option.dataset.displayText || option.textContent;
-        dropdownSelect.querySelector('.current').textContent = text;
+        dropdownSelect.querySelector('.dropdown-with-search__current').textContent = text;
         const select = dropdownSelect.previousElementSibling;
         select.value = option.dataset.value;
         select.dispatchEvent(new Event('change'));
@@ -103,14 +103,14 @@ class DropdownWithSearch {
 
     // Keyboard events
     element.addEventListener('keydown', function(event) {
-      const dropdownSelect = event.target.closest('.dropdown-select');
+      const dropdownSelect = event.target.closest('.dropdown-with-search--select');
 
       if (!dropdownSelect) {
         return;
       }
 
-      const focusedOption = dropdownSelect.querySelector('.list .option:focus') ||
-          dropdownSelect.querySelector('.list .option.selected');
+      const focusedOption =
+        dropdownSelect.querySelector('.list .option:focus') || dropdownSelect.querySelector('.list .option.selected');
       const isOpend = dropdownSelect.classList.contains('open');
 
       let buttonPressed = true;
@@ -163,7 +163,7 @@ class DropdownWithSearch {
      */
     function filter() {
       const valThis = element.querySelector('.txtSearchValue').value;
-      element.querySelectorAll('.dropdown-select ul > li').forEach((li) => {
+      element.querySelectorAll('.dropdown-with-search--select ul > li').forEach((li) => {
         const text = li.textContent.toLowerCase();
         if (text.indexOf(valThis.toLowerCase()) > -1) {
           li.style.display = '';

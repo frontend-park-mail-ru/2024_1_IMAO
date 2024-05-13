@@ -25,8 +25,8 @@ class MerchantCard {
    */
   render() {
     this.#renderTemplate();
-    const addToBlackListButton = this.#element.querySelector('.add-to-blacklist-button');
-    const overlayContainer = this.#element.querySelector('.overlay-container-blacklist');
+    const addToBlackListButton = this.#element.querySelector('.blacklist-button');
+    const overlayContainer = this.#element.querySelector('.actions-container__blacklist-overlay');
     this.#addBlackListEventListener(addToBlackListButton, overlayContainer);
 
     return this.#element;

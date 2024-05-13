@@ -1,22 +1,22 @@
 <dialog class="profile-edit-dialog" id="my-dialog">
-    <div class="profile-close-block">
-        <div class="profile-close-btn">
+    <div class="profile-edit-dialog__close">
+        <div class="profile-edit-dialog__close-btn">
             &#10006
         </div>
     </div>
-    <div class="profile-container">
+    <div class="profile-edit-dialog__container">
         <div class="profile-modal">
-            <form class="profile-modal-content" enc-type="multipart/form-data" method="post" action="/submit">
-                <div class="profile-header-title">
+            <form class="profile-modal__content" enc-type="multipart/form-data" method="post" action="/submit">
+                <div class="profile-modal__header">
                     {{title}}
                 </div>
                 {{#if hasAvatar}}
-                    <div class="avatar-upload">
-                        <div class="avatar-edit">
+                    <div class="profile-modal__avatar-upload avatar">
+                        <div class="avatar__edit">
                             <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="avatar">
                             <label for="imageUpload"></label>
                         </div>
-                        <div class="avatar-preview">
+                        <div class="avatar__preview">
                             {{#if (is_null avatar)}}
                                 <div id="imagePreview" style="background-image: url(images/img_avatar.png);"></div>
                             {{^}}
@@ -27,14 +27,14 @@
                 {{/if}}
                 {{#each fields}}
                     {{#if this.isPhone}}
-                        <div class="profile-modal-fields">
+                        <div class="profile-modal__field">
                             <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" placeholder="{{this.place}}" class="profile-text" id="phone" required>
                         </div>
                     {{^}}
                         {{#if this.isCitySearch}}
-                            <div class="ddws-div"></div>
+                            <div class="profile-modal__ddws"></div>
                         {{^}}
-                            <div class="profile-modal-fields">
+                            <div class="profile-modal__field">
                                 <input type="{{this.type}}" value="{{this.value}}" name="{{this.name}}" class="profile-text" placeholder="{{this.place}}" required>
                             </div>
                         {{/if}}

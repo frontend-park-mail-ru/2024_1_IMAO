@@ -87,18 +87,18 @@
   color: rgba(109, 120, 133, 1);
 }
 
-.signup .labeled-icon {
+.signup .labels-group__icon {
   display: flex;
   align-items: center;
   margin: 16px 0px;
 }
 
-.signup .labeled-icon .icon-text {
+.signup .labels-group__icon .icon-text {
   flex-grow: 1;
   display: block;
 }
 
-.signup .labeled-icon .icon {
+.signup .labels-group__icon .icon {
   margin-right: 16px;
 }
 

@@ -166,7 +166,7 @@
     background: transparent;
   }
 
-  .icon-vector-white {
+  .icon-vector--white {
     width: 12px;
     height: 17px;
     position: absolute;
@@ -192,7 +192,7 @@
   align-items: center;
   width: 10%;
 
-  .icon-vector-gray {
+  .icon-vector--gray {
     width: 16px;
     height: 16px;
     opacity: 1;
@@ -231,7 +231,7 @@
     font-size: 14px;
   }
 
-  .button-number {
+  .stats-button__number {
     color: #7092fe;
     cursor: default;
   }
@@ -249,7 +249,7 @@
   }
 }
 
-.stats-container__item:hover .button-number {
+.stats-container__item:hover .stats-button__number {
   text-decoration: underline;
 }
 

@@ -220,7 +220,7 @@ export class Main {
           content: '',
         };
         const emptyAdvertsPlug = new EmptyAdvertsPlug(context).render();
-        const plugText = emptyAdvertsPlug.querySelector('.empty-adverts-message-text');
+        const plugText = emptyAdvertsPlug.querySelector('.empty-adverts__text');
         plugText.innerHTML = 'Мы не нашли то, что вы искали.<br/>Попробуйте изменить условие поиска или категорию.';
         cardsContainerSkeleton.replaceWith(emptyAdvertsPlug);
 

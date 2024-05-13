@@ -1,33 +1,33 @@
 .rating {
-    justify-content: flex-start;
-    align-items: flex-start;
-    display: inline-flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: inline-flex;
 }
 
 .rating__value {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    display: inline-flex;
-    font-size: 14px;
-    color: rgb(255, 205, 75);
-    margin-right: 5px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  font-size: 14px;
+  color: rgb(255, 205, 75);
+  margin-right: 5px;
 }
 
 .rating__stars {
-    justify-content: flex-start;
-    align-items: center;
-    display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
 }
 
 .star {
-    width: 16px;
-    height: 16px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 1px;
-    padding-right: 1px;
-    justify-content: center;
-    align-items: center;
-    display: inline-flex;
+  width: 16px;
+  height: 16px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
 }
