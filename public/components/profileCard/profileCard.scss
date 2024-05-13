@@ -26,7 +26,7 @@
   margin: 5px 0px;
 }
 
-.labels-group__icon .icon-text {
+.labels-group__icon .labels-group__text {
   flex-grow: 1;
   display: block;
 }
@@ -64,7 +64,7 @@
   filter: invert(52%) sepia(67%) saturate(2204%) hue-rotate(204deg) brightness(104%) contrast(99%);
 }
 
-.labels-group__icon:hover .icon img {
+.radio-group-vertical .labels-group__icon:hover .icon img {
   filter: invert(52%) sepia(67%) saturate(2204%) hue-rotate(204deg) brightness(104%) contrast(99%);
 }
 

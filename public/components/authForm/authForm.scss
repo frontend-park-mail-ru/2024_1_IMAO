@@ -1,8 +1,12 @@
-.signup .form-input {
+.auth-form {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form .form__input {
   margin: 30px 0px;
 }
 
-.signup .form-input input {
+.auth-form .form__input input {
   width: 100%;
   height: 40px;
   padding: 15px 40px 15px 15px;
@@ -13,7 +17,7 @@
   box-sizing: border-box;
 }
 
-.signup .btn-primary {
+.auth-form .btn-primary {
   width: 100%;
   height: 40px;
   font-size: 16px;
@@ -31,7 +35,7 @@
   }
 }
 
-.signup .btn-secondary {
+.auth-form .btn-secondary {
   width: 100%;
   height: 40px;
   font-size: 16px;
@@ -41,7 +45,7 @@
   border-radius: 8px;
 }
 
-.signup {
+.auth-form {
   width: 720px;
   height: 500px;
   border-radius: 10px;
@@ -49,81 +53,81 @@
   display: flex;
 }
 
-.signup .signup-main,
-.signup-info {
+.auth-form .auth-form__main,
+.auth-form__info {
   width: 50%;
   padding: 28px 28px;
   box-sizing: border-box;
 }
 
-.signup .signup-info {
+.auth-form .auth-form__info {
   background: rgba(249, 249, 249, 1);
   font-weight: normal;
 }
 
-.signup .signup-main {
+.auth-form .auth-form__main {
   background: rgba(255, 255, 255, 1);
   text-align: center;
 }
 
-.signup .form-h1 {
+.auth-form .auth-form__title {
   margin: 0;
   font-size: 20px;
 }
 
-.signup .form-h2 {
+.auth-form .auth-form__suggest {
   margin: 0;
   font-size: 18px;
   font-weight: normal;
 }
 
-.signup .label {
+.auth-form .form__label {
   margin: 5px;
   font-size: 12px;
   font-weight: bold;
 }
 
-.signup .text-secondary {
+.auth-form .labels-group__text--secondary {
   color: rgba(109, 120, 133, 1);
 }
 
-.signup .labels-group__icon {
+.auth-form .labels-group__icon {
   display: flex;
   align-items: center;
   margin: 16px 0px;
 }
 
-.signup .labels-group__icon .icon-text {
+.auth-form .labels-group__icon .labels-group__text {
   flex-grow: 1;
   display: block;
 }
 
-.signup .labels-group__icon .icon {
+.auth-form .labels-group__icon .icon {
   margin-right: 16px;
 }
 
-.signup .labels-group {
+.auth-form .labels-group {
   margin: 0;
   margin-top: 17px;
   padding: 0;
   list-style: none;
 }
 
-.signup .logo {
+.auth-form .logo {
   width: 64px;
   height: 64px;
   margin-bottom: 10px;
 }
 
-.signup .name {
+.auth-form .name {
   color: rgba(45, 129, 224, 1);
 }
 
-.signup .mt-10 {
+.auth-form .mt-10 {
   margin-top: 30px;
 }
 
-.signup .error {
+.auth-form .error {
   text-align: center;
   font-size: 14px;
   margin-top: 15px;
@@ -134,16 +138,16 @@
 }
 
 @media (max-width: 800px) {
-  .signup-info {
+  .auth-form__info {
     display: none;
   }
-  .signup-main {
+  .auth-form__main {
     width: 100% !important;
   }
-  .signup .form-input input {
+  .auth-form .form__input input {
     font-size: clamp(16px, 5vw, 20px);
   }
-  .signup .btn-primary {
+  .auth-form .btn-primary {
     font-size: clamp(16px, 5vw, 20px);
   }
 }

@@ -184,7 +184,7 @@ export class Cart {
         const id = Number(element.dataset.id);
         const result = await favoritesModel.changeFavorites(id);
         const message = this.#element.querySelector('.message');
-        element.children[0].classList.toggle('active');
+        element.children[0].classList.toggle('like-heart--active');
         if (result) {
           message.innerHTML = 'Объявление добавлено в избранное';
         } else {

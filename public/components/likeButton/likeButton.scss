@@ -35,7 +35,7 @@
   &:active {
     @include css3-prefix(transform, scale(0.75) translateY(2px));
   }
-  &.active svg {
+  &--active svg {
     fill: #ff5252;
     stroke: #ff5252;
   }

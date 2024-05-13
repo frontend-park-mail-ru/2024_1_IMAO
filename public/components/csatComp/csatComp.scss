@@ -8,6 +8,11 @@
   position: fixed;
   overflow: hidden;
   font-family: helvetica;
+
+  .dialog-close {
+    right: 10px;
+    left: 10px;
+  }
 }
 
 .interactive-widget--blue {

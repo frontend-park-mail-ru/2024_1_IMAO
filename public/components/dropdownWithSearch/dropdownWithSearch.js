@@ -56,13 +56,13 @@ class DropdownWithSearch {
       if (!dropdownSelect) {
         allDropdownSelects.forEach((ds) => {
           ds.classList.remove('open');
-          ds.querySelectorAll('.option').forEach((option) => option.removeAttribute('tabindex'));
+          ds.querySelectorAll('.citylist__option').forEach((option) => option.removeAttribute('tabindex'));
         });
 
         return;
       }
 
-      if (event.target.classList.contains('dd-searchbox')) {
+      if (event.target.classList.contains('search__box')) {
         return;
       }
 
@@ -73,11 +73,11 @@ class DropdownWithSearch {
       });
 
       dropdownSelect.classList.toggle('open');
-      const allOptions = dropdownSelect.querySelectorAll('.option');
+      const allOptions = dropdownSelect.querySelectorAll('.citylist__option');
 
       if (dropdownSelect.classList.contains('open')) {
         allOptions.forEach((option) => option.setAttribute('tabindex', '0'));
-        dropdownSelect.querySelector('.selected').focus();
+        dropdownSelect.querySelector('.citylist__option--selected').focus();
 
         return;
       }
@@ -88,11 +88,11 @@ class DropdownWithSearch {
 
     // Option click
     element.addEventListener('click', function(event) {
-      const option = event.target.closest('.dropdown-with-search--select .option');
+      const option = event.target.closest('.dropdown-with-search--select .citylist__option');
       if (option) {
         const dropdownSelect = option.closest('.dropdown-with-search--select');
-        dropdownSelect.querySelector('.selected').classList.remove('selected');
-        option.classList.add('selected');
+        dropdownSelect.querySelector('.citylist__option--selected').classList.remove('citylist__option--selected');
+        option.classList.add('citylist__option--selected');
         const text = option.dataset.displayText || option.textContent;
         dropdownSelect.querySelector('.dropdown-with-search__current').textContent = text;
         const select = dropdownSelect.previousElementSibling;
@@ -110,7 +110,8 @@ class DropdownWithSearch {
       }
 
       const focusedOption =
-        dropdownSelect.querySelector('.list .option:focus') || dropdownSelect.querySelector('.list .option.selected');
+        dropdownSelect.querySelector('.dropdown-with-search__list .citylist__option:focus') ||
+        dropdownSelect.querySelector('.dropdown-with-search__list .citylist__option.citylist__option--selected');
       const isOpend = dropdownSelect.classList.contains('open');
 
       let buttonPressed = true;

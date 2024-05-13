@@ -1,24 +1,25 @@
-<dialog class="my-dialog" id="myDialog">
-    <div class="close-icon ">
-        <div class="line line1"></div>
-        <div class="line line2"></div>
+<dialog class="blacklist-dialog" id="myDialog">
+    <div class="dialog-close">
+        <div class="dialog-close__btn">
+            &#10006;
+        </div>
     </div>
-    <div class="blacklist-container" id="myDiv">
-        <div class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="header-text">
+    <div class="blacklist-dialog__container" id="myDiv">
+        <div class="blacklist-modal">
+            <div class="blacklist-modal__content">
+                <div class="blacklist-modal__header">
+                    <div class="blacklist-modal__text">
                         <div>Внести пользователя в чёрный список?</div>
-                        <div class="header-subtext">
+                        <div class="blacklist-modal__subtext">
                             <div>Пользователь не сможет писать вам в чатах и не увидит ваш номер телефона.</div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-buttons">
-                    <div class="common-button-blacklist action-button-blacklist ">
+                <div class="blacklist-modal__buttons">
+                    <div class="blacklist-modal__button blacklist-modal__button--action">
                         <div>Внести</div>
                     </div>
-                    <div class="common-button-blacklist cancel-button-blacklist ">
+                    <div class="blacklist-modal__button blacklist-modal__button--cancel">
                         <div>Отмена</div>
                     </div>
                 </div>

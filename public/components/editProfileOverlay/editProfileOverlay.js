@@ -158,6 +158,7 @@ class EditProfileOverlay {
       if (
         // eslint-disable-next-line no-invalid-this
         !reg.test(this.value) ||
+        // eslint-disable-next-line no-invalid-this
         this.value.length < 5 ||
         (keyCode > 47 && keyCode < 58)
       ) {

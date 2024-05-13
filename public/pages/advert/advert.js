@@ -68,9 +68,9 @@ export class Advert {
   #addCarouselListeners() {
     const carousel = this.#element.querySelector('.carousel');
     const imagesContainer = this.#element.querySelector('.post-images');
-    const prevBtn = this.#element.querySelector('.btn-container__prev-btn');
-    const nextBtn = this.#element.querySelector('.btn-container__next-btn');
-    const images = imagesContainer.querySelectorAll('.img-carousel');
+    const prevBtn = this.#element.querySelector('.post-images__prev-btn');
+    const nextBtn = this.#element.querySelector('.post-images__next-btn');
+    const images = imagesContainer.querySelectorAll('.images__item');
 
     let currentIndex = 0;
     const elemsOnPage = images.length;
@@ -144,7 +144,7 @@ export class Advert {
    * Event listener on advert close.
    */
   #addCloseListener() {
-    const closeBtn = this.#element.querySelector('.close');
+    const closeBtn = this.#element.querySelector('.seller-block__btn--close');
 
     if (closeBtn !== null) {
       closeBtn.addEventListener('click', (ev) => {
@@ -167,7 +167,7 @@ export class Advert {
    * @param {*} overlayContainer
    */
   async #addAddCartDialogListener() {
-    const addCartButton = this.#element.querySelector('.cart');
+    const addCartButton = this.#element.querySelector('.seller-block__btn--cart');
     if (addCartButton == null) {
       return;
     }
@@ -180,7 +180,7 @@ export class Advert {
    *
    */
   #addEditListener() {
-    const editAddress = this.#element.querySelector('.btn-edit');
+    const editAddress = this.#element.querySelector('.favourite__btn--edit');
     if (editAddress === null) {
       return;
     }
@@ -195,7 +195,7 @@ export class Advert {
    * @param {*} overlayContainer
    */
   #addFavoritesListener() {
-    const addFavoritesButton = this.#element.querySelector('.btn-favourite');
+    const addFavoritesButton = this.#element.querySelector('.favourite__btn--favourite');
     if (addFavoritesButton === null) {
       return;
     }
@@ -208,7 +208,7 @@ export class Advert {
 
       const result = await favoritesModel.changeFavorites(this.id);
       const message = this.#element.querySelector('.message');
-      addFavoritesButton.children[0].classList.toggle('active');
+      addFavoritesButton.children[0].classList.toggle('like-heart--active');
       if (result) {
         addFavoritesButton.children[1].innerHTML = 'Удалить из избранного';
         message.innerHTML = 'Объявление добавлено в избранное';

@@ -1,13 +1,12 @@
-.blacklist-container {
+.blacklist-dialog__container {
   width: 100%;
   height: 100%;
 }
 
-.modal {
+.blacklist-modal {
   padding: 30px;
   left: 0px;
   top: 16px;
-  position: absolute;
   background: white;
   border-radius: 8px;
   overflow: hidden;
@@ -18,7 +17,7 @@
   gap: 10px;
 }
 
-.modal-content {
+.blacklist-modal__content {
   display: flex;
   width: 360px;
   flex-direction: column;
@@ -27,7 +26,7 @@
   gap: 24px;
 }
 
-.modal-header {
+.blacklist-modal__header {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -35,7 +34,7 @@
   gap: 8px;
 }
 
-.header-text {
+.blacklist-modal__text {
   color: #333333;
   width: 360px;
   font-size: 20px;
@@ -45,7 +44,7 @@
   word-wrap: break-word;
 }
 
-.header-subtext {
+.blacklist-modal__subtext {
   color: #858585;
   font-size: 14px;
   font-family: Open Sans;
@@ -54,89 +53,50 @@
   word-wrap: break-word;
 }
 
-.modal-buttons {
-  display: inline-flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+.blacklist-modal__buttons {
+  display: flex;
+  width: 100%;
   gap: 25px;
 }
 
-.common-button-blacklist {
+.blacklist-modal__button {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px 58.64px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  flex-grow: 1;
   border-radius: 8px;
   font-size: 16px;
-  font-family: Open Sans;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   line-height: 24px;
   word-wrap: break-word;
 }
 
-.action-button-blacklist {
+.blacklist-modal__button--action {
   background: #7092fe;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
   color: white;
 }
 
-.action-button-blacklist:hover {
+.blacklist-modal__button--action:hover {
   background: #7b9afe;
 }
 
-.cancel-button-blacklist {
+.blacklist-modal__button--cancel {
   background: #ebebeb;
   box-shadow: 0px 2px 4px rgba(51, 51, 51, 0.02);
   color: #333333;
 }
 
-.cancel-button-blacklist:hover {
+.blacklist-modal__button--cancel:hover {
   background: #f0f0f0;
-}
-
-.close-icon {
-  width: 32px;
-  height: 32px;
-  padding-top: 9px;
-  padding-bottom: 7.96px;
-  padding-left: 8px;
-  padding-right: 8.96px;
-  left: 380px;
-  top: -5px;
-  position: absolute;
-  background: white;
-  box-shadow: 0px 4px 12px rgba(51, 51, 51, 0.13);
-  border-radius: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-}
-
-.line {
-  position: absolute;
-  width: 21.26px;
-  height: 0px;
-  border: 1px #858585 solid;
-}
-
-.line1 {
-  left: 15px;
-  top: 31px;
-  transform: rotate(-45deg);
-  transform-origin: 0 0;
-}
-
-.line2 {
-  left: 16px;
-  top: 16px;
-  transform: rotate(45deg);
-  transform-origin: 0 0;
 }
 
 #myDialog {
   width: 420px;
-  height: 250px;
+  height: 150px;
   z-index: 5;
   padding: 0;
 }

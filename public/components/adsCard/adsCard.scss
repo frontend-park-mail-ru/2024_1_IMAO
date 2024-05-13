@@ -22,12 +22,12 @@
   margin: min(5px, 0.5vw) 0;
 }
 
-.card .cost {
+.card .card__cost {
   font-size: clamp(14px, 4vw, 20px);
   font-weight: bold;
 }
 
-.description {
+.card__description {
   height: 21px;
   white-space: nowrap;
   overflow: hidden;
@@ -46,11 +46,11 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-.card .container {
+.card .card__container {
   padding: 2px 16px;
 }
 
-.container p {
+.card__container p {
   text-decoration: none;
   color: black;
 }
