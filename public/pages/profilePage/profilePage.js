@@ -107,12 +107,15 @@ export class ProfilePage {
 
     const profileCard = this.#element.querySelector('.merchant-card');
     const sectionHeader = this.#element.querySelector('.profile-page__header');
+    const profilePage = this.#element.querySelector('.profile-page');
     if (found.categoryLabelValue === 'settings') {
       profileCard.classList.add('disable-card');
       sectionHeader.classList.add('disable-card');
+      profilePage.classList.add('disable-padding');
     } else {
       profileCard.classList.remove('disable-card');
       sectionHeader.classList.remove('disable-card');
+      profilePage.classList.remove('disable-padding');
     }
 
     if (isRendered) {

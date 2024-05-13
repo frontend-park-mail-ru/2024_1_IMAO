@@ -242,10 +242,11 @@
   align-items: flex-start;
   flex-direction: column;
 
-  .actions-container__button {
+  &__button {
     margin-top: 15px;
     font-size: 14px;
     font-weight: 400;
+    cursor: pointer;
   }
 }
 

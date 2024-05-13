@@ -4,13 +4,12 @@
         <div class="settings-block">
             <div class="settings-block__header">Профиль</div>
             <div class="settings-block__details">
-                <div class="merchant-profile">
-                    <div class="merchant-profile__name">
-                        {{merchantsName}}
-                    </div>
-                </div>
+                {{merchantsName}}
             </div>
-            <button class="settings-block__set-or-edit-label">Редактировать</button>
+            <button class="settings-block__set-or-edit-label">
+                <span>Редактировать</span>
+                <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+            </button>
         </div>
         <div class="settings-block">
             <div class="settings-block__header">Телефон</div>
@@ -18,12 +17,18 @@
                     <div class="settings-block__hint">
                         Укажите номер телефона, по которому с вами смогут связаться покупатели
                     </div>
-                    <button class="settings-block__set-or-edit-label">Указать</button>
+                    <button class="settings-block__set-or-edit-label">
+                        <span>Указать</span>
+                        <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                    </button>
                 {{^}}
                     <div class="settings-block__details">
                         {{phone}}
                     </div>
-                    <button class="settings-block__set-or-edit-label">Редактировать</button>
+                    <button class="settings-block__set-or-edit-label">
+                        <span>Редактировать</span>
+                        <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                    </button>
                 {{/if}}
         </div>
         <div class="settings-block">
@@ -31,7 +36,10 @@
             <div class="settings-block__details">
                 {{email}}
             </div>
-            <button class="settings-block__set-or-edit-label">Редактировать</button>
+            <button class="settings-block__set-or-edit-label">
+                <span>Редактировать</span>
+                <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+            </button>
         </div>
         <div class="settings-block">
             <div class="settings-block__header">Город</div>
@@ -39,12 +47,18 @@
                     <div class="settings-block__hint">
                         Не указано
                     </div>
-                    <button class="settings-block__set-or-edit-label">Указать</button>
+                    <button class="settings-block__set-or-edit-label">
+                        <span>Указать</span>
+                        <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                    </button>
                 {{^}}
                     <div class="settings-block__details">
                         {{city}}
                     </div>
-                    <button class="settings-block__set-or-edit-label">Редактировать</button>
+                    <button class="settings-block__set-or-edit-label">
+                        <span>Редактировать</span>
+                        <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                    </button>
                 {{/if}}
         </div>
     </div>
