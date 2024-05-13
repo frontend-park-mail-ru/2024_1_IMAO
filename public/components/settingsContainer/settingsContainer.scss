@@ -10,40 +10,6 @@
     margin: 0;
   }
 
-  @media (max-width: 800px) {
-    .settings-block {
-      flex-wrap: wrap;
-      flex-direction: row;
-      border-radius: 0px !important;
-      margin-top: 10px !important;
-
-      &:not(:last-child) {
-        border-bottom: 1px solid #e0e0e0 !important;
-        padding-bottom: 1%;
-      }
-
-      &__set-or-edit-label {
-        margin-left: 0 !important;
-        width: 30% !important;
-        flex-grow: 1;
-      }
-
-      &__header {
-        width: 100% !important;
-        margin-bottom: 3px;
-      }
-
-      &__details {
-        flex-grow: 1;
-      }
-
-      &__hint {
-        color: #c0c0c0 !important;
-        flex-grow: 1;
-      }
-    }
-  }
-
   .settings-block {
     background: white;
     border-radius: 8px;
@@ -79,14 +45,11 @@
       font-size: 14px;
       width: 15%;
       margin-left: auto;
-    }
-  }
 
-  img {
-    width: 24px;
-    height: 24px;
-    position: relative;
-    border-radius: 12px;
+      img {
+        display: none;
+      }
+    }
   }
 
   .atribute-list {
@@ -105,24 +68,74 @@
     cursor: pointer;
   }
 
-  .merchant-profile {
-    display: flex;
-    align-items: center;
-    gap: 2%;
-
-    &__name {
-      width: 90%;
-    }
-  }
-
   .merchant-avatar {
     width: 5%;
   }
 }
 
 @media (max-width: 800px) {
+  .settings-block {
+    flex-wrap: wrap;
+    flex-direction: row;
+    border-radius: 0px !important;
+    margin-top: 10px !important;
+    padding-bottom: 20px !important;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #e0e0e0 !important;
+    }
+
+    &__set-or-edit-label {
+      margin-left: 0 !important;
+      width: 10% !important;
+      flex-grow: 1;
+
+      span {
+        display: none;
+      }
+
+      img {
+        height: 18px;
+        width: 18px;
+        display: flex !important;
+        align-items: center;
+        padding-left: 10px;
+      }
+    }
+
+    &__header {
+      width: 30% !important;
+      margin-bottom: 3px;
+      color: black !important;
+    }
+
+    &__details {
+      flex-grow: 1;
+      justify-content: flex-end;
+      display: flex;
+      align-items: center;
+    }
+
+    &__hint {
+      color: #c0c0c0 !important;
+      flex-grow: 1;
+    }
+  }
+
   .personal-data-list {
     box-shadow: none !important;
     margin-top: 0px !important;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0;
+    padding-bottom: 0;
+
+    h3 {
+      margin-bottom: 25px;
+    }
+  }
+
+  .disable-padding {
+    padding: 0;
   }
 }

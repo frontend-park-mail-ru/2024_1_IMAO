@@ -106,8 +106,8 @@
     width: 100vw;
     flex-direction: row;
     justify-content: space-evenly;
-    padding-bottom: 15px;
-    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
     border-radius: 8px 8px;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
     z-index: 10;
@@ -123,8 +123,8 @@
 
   .icon {
     img {
-      width: 36px;
-      height: 36px;
+      width: 28px;
+      height: 28px;
     }
 
     &-text {

@@ -105,14 +105,17 @@ export class ProfilePage {
 
     document.title = 'Профиль - ' + found.categoryLabel;
 
-    const profileCard = this.#element.querySelector('.merchant-card__section');
+    const profileCard = this.#element.querySelector('.merchant-card');
     const sectionHeader = this.#element.querySelector('.profile-page__header');
+    const profilePage = this.#element.querySelector('.profile-page');
     if (found.categoryLabelValue === 'settings') {
       profileCard.classList.add('disable-card');
       sectionHeader.classList.add('disable-card');
+      profilePage.classList.add('disable-padding');
     } else {
       profileCard.classList.remove('disable-card');
       sectionHeader.classList.remove('disable-card');
+      profilePage.classList.remove('disable-padding');
     }
 
     if (isRendered) {
@@ -452,7 +455,7 @@ export class ProfilePage {
       phone: profile.phoneNumber,
       email: ajax.auth.email,
       city: profile.city.name,
-      location: profile.city.translation,
+      location: profile.city.name,
       registrationDate: formatDate(profile.regTime),
       isProfileVerified: profile.approved,
       reviewCount: profile.reactionsCount,
