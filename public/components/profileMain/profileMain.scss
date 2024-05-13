@@ -12,8 +12,12 @@
     display: none !important;
   }
 
-  .merchant-card__section {
+  .merchant-card {
     display: flex;
     flex-direction: column;
+  }
+
+  .profile-page__header {
+    margin: 20px 0;
   }
 }

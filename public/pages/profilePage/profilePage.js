@@ -105,7 +105,7 @@ export class ProfilePage {
 
     document.title = 'Профиль - ' + found.categoryLabel;
 
-    const profileCard = this.#element.querySelector('.merchant-card__section');
+    const profileCard = this.#element.querySelector('.merchant-card');
     const sectionHeader = this.#element.querySelector('.profile-page__header');
     if (found.categoryLabelValue === 'settings') {
       profileCard.classList.add('disable-card');
@@ -452,7 +452,7 @@ export class ProfilePage {
       phone: profile.phoneNumber,
       email: ajax.auth.email,
       city: profile.city.name,
-      location: profile.city.translation,
+      location: profile.city.name,
       registrationDate: formatDate(profile.regTime),
       isProfileVerified: profile.approved,
       reviewCount: profile.reactionsCount,

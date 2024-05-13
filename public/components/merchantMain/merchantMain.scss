@@ -4,6 +4,11 @@
   flex-direction: row;
   justify-content: space-between;
 
+  &__main {
+    width: 22%;
+    padding-right: 0px;
+  }
+
   .labels-group__icon:hover {
     cursor: pointer;
     color: #7092fe;
@@ -15,6 +20,10 @@
     padding: 0px 20px 0px 20px;
     flex-direction: column;
     justify-content: space-between;
+
+    &__main {
+      width: 100%;
+    }
   }
 
   .profile-page__cards-container {
@@ -50,19 +59,11 @@
   margin-top: 2%;
 }
 
-// .profile-page .:hover {
-//   cursor: pointer;
-// }
-
 .profile-page .text-underline-hover:hover {
   text-decoration: underline;
   text-decoration-color: #7092fe;
   color: #7092fe;
 }
-
-// .profile-page . :hover {
-//   color: #7092fe;
-// }
 
 .profile-page label {
   cursor: pointer;
