@@ -53,9 +53,11 @@ class ImagesUploadPreview {
         const byteArray = new Uint8Array(byteNumbers);
         const file = new File([byteArray], `photo${index}.png`, {type: 'image/png'});
         dataTransfer.items.add(file);
-        fileInput.files = dataTransfer.files;
-        this.#element.appendChild(fileForm);
-        this.#curPhotos++;
+        if (fileInput) {
+          fileInput.files = dataTransfer.files;
+          this.#element.appendChild(fileForm);
+          this.#curPhotos++;
+        }
       });
     }
     if (this.#curPhotos < this.#MAX_PHOTOS) {
