@@ -126,6 +126,8 @@
 
   &__carousel {
     overflow: hidden;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .carousel {
@@ -287,6 +289,19 @@
   .post-images {
     margin-top: 10px;
     order: 1;
+
+    &__carousel {
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+
+    &__next-container {
+      padding-right: 8px;
+    }
+
+    &__prev-container {
+      padding-left: 8px;
+    }
   }
 
   .seller-block,

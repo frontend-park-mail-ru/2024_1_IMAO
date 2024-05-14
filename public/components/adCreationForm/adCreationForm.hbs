@@ -57,8 +57,12 @@
             <div class="form__description-error error"></div>
         </div>
         <label class="form__label" for="photos">Фотографии<span class="asterisk">*</span></label>
-        <input class="form__input" type="file" id="photos" name="photos" accept=".png, .jpg, .jpeg" multiple required>
-
+        {{!-- <input class="form__input" type="file" id="photos" name="photos" accept=".png, .jpg, .jpeg" multiple required> --}}
+        <div class="form__input--description">
+            <div class=" form__upload"></div>
+            <div class="form__description">Первое фото будет отображаться в результатах поиска, выберите наиболее удачное. Вы можете загрузить до 10 фотографий в формате JPG или PNG.</div>
+            <div class="form__file-error error"></div>
+        </div>
         <label class="form__label" for="location">Местоположение<span class="asterisk">*</span></label>
         {{!-- <input class="form__input" type="text" id="location" name="city" value="{{city}}" required> --}}
         <div class="location-place"></div>
