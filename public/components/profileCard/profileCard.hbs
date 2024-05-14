@@ -2,7 +2,11 @@
     <div class="merchant-card">
         <div class="card-container">
             <div class="merchant-card__profile-name" id="{{id}}" href="{{path}}">
-                {{merchantsName}}
+                {{#if (is_null merchantsName)}}
+                    Пользователь №{{id}}
+                {{^}}
+                    {{merchantsName}}
+                {{/if}} 
             </div>
             <div class="card-container__content">
                 {{#if (is_null avatar)}}

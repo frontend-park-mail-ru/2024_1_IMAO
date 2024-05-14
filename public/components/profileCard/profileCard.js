@@ -59,6 +59,7 @@ class ProfileCard {
    */
   #renderTemplate() {
     const context = {
+      id: this.items.id,
       merchantsName: this.items.merchantsName,
       location: this.items.location,
       registrationDate: this.items.registrationDate,

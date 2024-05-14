@@ -448,6 +448,7 @@ export class ProfilePage {
     const ratingValue = profile.rating;
 
     this.profile = {
+      id: profile.id,
       merchantsName: profile.merchantsName,
       ratingValue: profile.rating,
       name: profile.name,

@@ -3,33 +3,43 @@
     <div class="atribute-list">
         <div class="settings-block">
             <div class="settings-block__header">Профиль</div>
-            <div class="settings-block__details">
-                {{merchantsName}}
-            </div>
-            <button class="settings-block__set-or-edit-label">
-                <span>Редактировать</span>
-                <img src="images/right-arrow-backup-2-svgrepo-com.svg">
-            </button>
+            {{#if (is_null merchantsName)}}
+                <div class="settings-block__hint">
+                    Укажите данные профиля, так другим пользователям будет проще вас узнать
+                </div>
+                <button class="settings-block__set-or-edit-label">
+                    <span>Указать</span>
+                    <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                </button>
+            {{^}}
+                <div class="settings-block__details">
+                    {{merchantsName}}
+                </div>
+                <button class="settings-block__set-or-edit-label">
+                    <span>Редактировать</span>
+                    <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                </button>
+            {{/if}}
         </div>
         <div class="settings-block">
             <div class="settings-block__header">Телефон</div>
-                {{#if (is_null phone)}}
-                    <div class="settings-block__hint">
-                        Укажите номер телефона, по которому с вами смогут связаться покупатели
-                    </div>
-                    <button class="settings-block__set-or-edit-label">
-                        <span>Указать</span>
-                        <img src="images/right-arrow-backup-2-svgrepo-com.svg">
-                    </button>
-                {{^}}
-                    <div class="settings-block__details">
-                        {{phone}}
-                    </div>
-                    <button class="settings-block__set-or-edit-label">
-                        <span>Редактировать</span>
-                        <img src="images/right-arrow-backup-2-svgrepo-com.svg">
-                    </button>
-                {{/if}}
+            {{#if (is_null phone)}}
+                <div class="settings-block__hint">
+                    Укажите номер телефона, по которому с вами смогут связаться покупатели
+                </div>
+                <button class="settings-block__set-or-edit-label">
+                    <span>Указать</span>
+                    <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                </button>
+            {{^}}
+                <div class="settings-block__details">
+                    {{phone}}
+                </div>
+                <button class="settings-block__set-or-edit-label">
+                    <span>Редактировать</span>
+                    <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                </button>
+            {{/if}}
         </div>
         <div class="settings-block">
             <div class="settings-block__header">E-mail</div>
@@ -43,23 +53,23 @@
         </div>
         <div class="settings-block">
             <div class="settings-block__header">Город</div>
-                {{#if (is_null city)}}
-                    <div class="settings-block__hint">
-                        Не указано
-                    </div>
-                    <button class="settings-block__set-or-edit-label">
-                        <span>Указать</span>
-                        <img src="images/right-arrow-backup-2-svgrepo-com.svg">
-                    </button>
-                {{^}}
-                    <div class="settings-block__details">
-                        {{city}}
-                    </div>
-                    <button class="settings-block__set-or-edit-label">
-                        <span>Редактировать</span>
-                        <img src="images/right-arrow-backup-2-svgrepo-com.svg">
-                    </button>
-                {{/if}}
+            {{#if (is_null city)}}
+                <div class="settings-block__hint">
+                    Не указано
+                </div>
+                <button class="settings-block__set-or-edit-label">
+                    <span>Указать</span>
+                    <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                </button>
+            {{^}}
+                <div class="settings-block__details">
+                    {{city}}
+                </div>
+                <button class="settings-block__set-or-edit-label">
+                    <span>Редактировать</span>
+                    <img src="images/right-arrow-backup-2-svgrepo-com.svg">
+                </button>
+            {{/if}}
         </div>
     </div>
 </div>

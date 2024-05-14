@@ -125,6 +125,7 @@ export class MerchantsPage {
    * Render advert cards by codition.
    * @param {*} merchantsPageRightSection
    * @param {*} alreadyRendered
+   * @param {*} section
    */
   #renderCards(merchantsPageRightSection, alreadyRendered, section) {
     const cards = document.getElementsByClassName('card');
@@ -206,9 +207,14 @@ export class MerchantsPage {
     await ajax.get(path, (body) => {
       const profile = body['profile'];
 
+      const id = profile.id;
       const merchantsName = profile.merchantsName;
       const ratingValue = profile.rating;
-      document.title += ' ' + trimString(merchantsName, 40);
+      if (merchantsName) {
+        document.title += ' ' + trimString(merchantsName, 40);
+      } else {
+        document.title += ' ' + 'Пользователь №' + id;
+      }
 
       const paths = [
         {
@@ -226,6 +232,7 @@ export class MerchantsPage {
       content.insertBefore(adPathElement, content.lastChild);
 
       const merchantCartItems = {
+        id: id,
         merchantsName: merchantsName,
         location: profile.city.name,
         registrationDate: formatDate(profile.regTime),
