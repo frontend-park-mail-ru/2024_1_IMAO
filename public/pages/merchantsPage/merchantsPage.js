@@ -211,9 +211,9 @@ export class MerchantsPage {
       const merchantsName = profile.merchantsName;
       const ratingValue = profile.rating;
       if (merchantsName) {
-        document.title += ' ' + trimString(merchantsName, 40);
+        document.title += ` ${trimString(merchantsName, 40)}`;
       } else {
-        document.title += ' ' + 'Пользователь №' + id;
+        document.title += ` Пользователь №${id}`;
       }
 
       const paths = [

@@ -124,9 +124,6 @@ $base-color: rgb(245, 245, 245);
   &.js--no-default::after {
     display: none;
   }
-  &:nth-child(2) {
-    background-image: url('http://bastianandre.at/giphy.gif');
-  }
 }
 
 i.material-icons {

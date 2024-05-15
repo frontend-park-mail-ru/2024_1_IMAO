@@ -84,7 +84,7 @@
     padding: 0;
   }
 
-  .post-description__property--name {
+  .post-description__property--primary {
     color: #858585;
     flex: 0 0 30%;
   }
@@ -190,10 +190,9 @@
 
     display: table-cell;
     vertical-align: middle;
-    z-index: 10 !important;
+    z-index: 10;
 
     &:hover {
-      z-index: 10 !important;
       box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
     }
 
@@ -426,7 +425,7 @@
         padding-bottom: 15px;
         line-height: 24px;
 
-        .post-description__property--name {
+        .post-description__property--primary {
           display: none;
         }
       }
@@ -441,7 +440,7 @@
         margin-right: 15px;
       }
 
-      .post-description__property--name {
+      .post-description__property--primary {
         display: none;
       }
     }
