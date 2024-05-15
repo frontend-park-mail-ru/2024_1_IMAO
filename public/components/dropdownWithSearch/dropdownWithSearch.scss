@@ -11,18 +11,17 @@
   }
 }
 
-.select-display-none {
+.dropdown-with-search--none {
   display: none !important;
 }
 
-.dropdown-select {
+.dropdown-with-search--select {
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40FFFFFF', endColorstr='#00FFFFFF', GradientType=0);
   background-color: #fff;
-  border-radius: 6px;
-  border: solid 1px #eee;
-  box-shadow: 0px 2px 5px 0px rgba(155, 155, 155, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgb(219, 218, 218);
   box-sizing: border-box;
   cursor: pointer;
   display: block;
@@ -45,22 +44,22 @@
   width: auto;
 }
 
-.dropdown-select:focus {
+.dropdown-with-search--select:focus {
   background-color: #fff;
 }
 
-.dropdown-select:hover {
+.dropdown-with-search--select:hover {
   background-color: #fff;
 }
 
-.dropdown-select:active,
-.dropdown-select.open {
+.dropdown-with-search--select:active,
+.dropdown-with-search--select.open {
   background-color: #fff !important;
   border-color: #bbb;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) inset;
 }
 
-.dropdown-select:after {
+.dropdown-with-search--select:after {
   height: 0;
   width: 0;
   border-left: 4px solid transparent;
@@ -78,32 +77,32 @@
   top: 50%;
 }
 
-.dropdown-select.open:after {
+.dropdown-with-search--select.open:after {
   -webkit-transform: rotate(-180deg);
   transform: rotate(-180deg);
 }
 
-.dropdown-select.open .list {
+.dropdown-with-search--select.open .dropdown-with-search__list {
   -webkit-transform: scale(1);
   transform: scale(1);
   opacity: 1;
   pointer-events: auto;
 }
 
-.dropdown-select.open .option {
+.dropdown-with-search--select.open .citylist__option {
   cursor: pointer;
 }
 
-.dropdown-select.wide {
+.dropdown-with-search--select.wide {
   width: 100%;
 }
 
-.dropdown-select.wide .list {
+.dropdown-with-search--select.wide .dropdown-with-search__list {
   left: 0 !important;
   right: 0 !important;
 }
 
-.dropdown-select .list {
+.dropdown-with-search--select .dropdown-with-search__list {
   box-sizing: border-box;
   transition:
     all 0.15s cubic-bezier(0.25, 0, 0.25, 1.75),
@@ -128,11 +127,11 @@
   border: 1px solid #ddd;
 }
 
-.dropdown-select .list:hover .option:not(:hover) {
+.dropdown-with-search--select .dropdown-with-search__list:hover .citylist__option:not(:hover) {
   background-color: transparent !important;
 }
 
-.dropdown-select .dd-search {
+.dropdown-with-search--select .search {
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -140,7 +139,7 @@
   margin-top: 0.5rem;
 }
 
-.dropdown-select .dd-searchbox {
+.dropdown-with-search--select .search__box {
   width: 90%;
   padding: 0.2rem;
   font-size: 16px;
@@ -148,15 +147,15 @@
   outline: none;
 }
 
-.dropdown-select .dd-searchbox:focus {
+.dropdown-with-search--select .search__box:focus {
   border-color: #7092fe;
 }
 
-.dropdown-select .list ul {
+.dropdown-with-search--select .dropdown-with-search__list ul {
   padding: 0;
 }
 
-.dropdown-select .option {
+.dropdown-with-search--select .citylist__option {
   cursor: default;
   font-weight: 400;
   line-height: 40px;
@@ -168,31 +167,31 @@
   list-style: none;
 }
 
-.dropdown-select .option:hover,
-.dropdown-select .option:focus {
+.dropdown-with-search--select .citylist__option:hover,
+.dropdown-with-search--select .citylist__option:focus {
   background-color: #f6f6f6 !important;
 }
 
-.dropdown-select .option.selected {
+.dropdown-with-search--select .citylist__option.citylist__option--selected {
   font-weight: 600;
   color: #7092fe;
 }
 
-.dropdown-select .option.selected:focus {
+.dropdown-with-search--select .citylist__option.citylist__option--selected:focus {
   background: #f6f6f6;
 }
 
-.dropdown-select a {
+.dropdown-with-search--select a {
   color: #aaa;
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
 
-.dropdown-select a:hover {
+.dropdown-with-search--select a:hover {
   color: #666;
 }
 
-.dd-citylist{
+.citylist {
   overflow: auto scroll;
   height: 200px;
   border-top: 2px solid #ddd;

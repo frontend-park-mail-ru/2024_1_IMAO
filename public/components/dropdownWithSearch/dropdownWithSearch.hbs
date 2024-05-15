@@ -1,19 +1,19 @@
 <div class="dropdown-with-search">
-    <select class="select-display-none" name="">
+    <select class="dropdown-with-search--none" name="">
         {{#each items}}
             <option value="{{value}}">{{label}}</option>
         {{/each}}
     </select>
-    <div class="dropdown-select wide" tabindex="0">
-        <span class="current">{{current}}</span>
-        <div class="list">
-            <div class="dd-search">
+    <div class="dropdown-with-search--select wide" tabindex="0">
+        <span class="dropdown-with-search__current">{{current}}</span>
+        <div class="dropdown-with-search__list">
+            <div class="search">
                 <input id="txtSearchValue" placeholder="Введите название города" autocomplete="off"
-                    class="dd-searchbox txtSearchValue" type="text">
+                    class="search__box txtSearchValue" type="text">
             </div>
-            <ul class="dd-citylist">
+            <ul class="citylist">
                 {{#each items}}
-                    <li class="option {{#if isSelected}}selected{{/if}}" data-value="{{value}}" data-id="{{this.id}}" data-display-text="">{{label}}</li>
+                    <li class="citylist__option {{#if isSelected}}citylist__option--selected{{/if}}" data-value="{{value}}" data-id="{{this.id}}" data-display-text="">{{label}}</li>
                 {{/each}}
             </ul>
         </div>

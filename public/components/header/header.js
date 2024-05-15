@@ -214,7 +214,7 @@ export class Header {
     });
 
     const avatarImg = this.#header.querySelector('.profile-icon');
-    const optionList = this.#header.querySelector('.dropdown-content-right');
+    const optionList = this.#header.querySelector('.dropdown__content--right');
     if (avatarImg) {
       avatarImg.addEventListener('click', (ev) => {
         optionList.classList.toggle('display-block');

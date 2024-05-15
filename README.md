@@ -1,4 +1,5 @@
 # 2024_1_IMAO
+
 Фронтенд проекта "Юла" команды IMAO
 
 ### Разработчики:
@@ -20,25 +21,37 @@
 Анастасия Шишова: https://t.me/nellin_lin
 
 ### Репозиторий бэкенда:
+
 https://github.com/go-park-mail-ru/2024_1_IMAO
 
 ### Ссылка на Фигму:
+
 https://www.figma.com/file/QP3qZTavTZYL8aOlzWzkkl/IMAO-(%D0%AE%D0%BB%D0%B0)
 
 ### Деплой приложения:
-http://109.120.183.3:8008
+
+http://www.vol-4-ok.ru
 
 ### Установка пакетов Node.js
+
 ```
-npm install 
+npm install
 ```
 
 ### Запуск сервера на Node.js
+
 ```
 npm start
 ```
 
 ### Запуск линтера
+
 ```
 npm run eslint
+```
+
+### Запуск сборки
+
+```
+npm run build
 ```

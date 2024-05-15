@@ -82,13 +82,13 @@ class AddCartOverlay {
     const myDiv = this.#element.querySelector('.add-to-cart-dialog__container');
     myDiv.addEventListener('click', (event) => event.stopPropagation());
 
-    const blockBtn = this.#element.querySelector('.add-to-cart-dialog__modal-buttons-button--action');
+    const blockBtn = this.#element.querySelector('.add-to-cart-modal__button--action');
     blockBtn.addEventListener('click', (event) => {
       myDialog.close();
       router.pushPage(event, router.routes.cartPage.href.href);
     });
 
-    const cancelBtn = this.#element.querySelector('.add-to-cart-dialog__modal-buttons-button--cancel');
+    const cancelBtn = this.#element.querySelector('.add-to-cart-modal__button--cancel');
     cancelBtn.addEventListener('click', (event) => myDialog.close());
   }
 }

@@ -5,6 +5,7 @@ import renderOrderMain from '../../components/orderMain/orderMain.js';
 import renderSidebar from '../../components/sidebar/sidebar.js';
 import {serverHost} from '../../config/config.js';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
+import addDynamicPhoneForm from '../../modules/dynamicPhone.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -48,6 +49,9 @@ export class Order {
     const form = this.#element.querySelector('.recipient-form');
 
     this.#addSubmitListener(submit, form);
+
+    const phoneInput = this.#element.querySelector('[type="tel"]');
+    addDynamicPhoneForm(phoneInput);
   }
 
   /**

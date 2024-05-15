@@ -1,0 +1,20 @@
+<div class="upload-box">
+    <div class="upload-box__image-preview {{#if photo}} {{^}}upload-box__image-preview--none{{/if}}"
+    {{#if photo}} 
+        style="background-image: url('data: image/png;base64,{{photo}}');" 
+    {{/if}}>
+        <div class="dialog-close">
+            <div class="dialog-close__btn">
+                &#10006;
+            </div>
+        </div>
+        <div class="error"></div>
+    </div>
+    <div class="upload-box__upload-options {{#if photo}} upload-box__upload-options--none {{/if}}">
+        <label>
+            <img src="images/camera_outline_56.svg" alt="upload_icon">
+            <input type="file" class="upload-box__image-upload" id="photos" {{#if photo}} data-image="{{index}}" {{/if}} name="photos" accept=".png, .jpg, .jpeg"/>
+        </label>
+    </div>
+</div>
+

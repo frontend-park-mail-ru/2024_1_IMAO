@@ -56,7 +56,7 @@ class EditProfileOverlay {
     if (context.fields[0].isCitySearch) {
       const pathCity = ajax.routes.CITY.GET_CITY_LIST;
       ajax.get(pathCity, (body) => {
-        const dropdownWithSearchDiv = this.#element.querySelector('.ddws-div');
+        const dropdownWithSearchDiv = this.#element.querySelector('.profile-modal__ddws');
         const dropdownWithSearch = new DropdownWithSearch(body, this.currentCity);
         dropdownWithSearchDiv.appendChild(dropdownWithSearch.render());
       });
@@ -82,7 +82,7 @@ class EditProfileOverlay {
       myDialog.close();
     });
 
-    const myDiv = this.#element.querySelector('.profile-container');
+    const myDiv = this.#element.querySelector('.profile-edit-dialog__container');
     myDiv.addEventListener('click', (event) => event.stopPropagation());
 
     if (this.data.hasAvatar) {
@@ -158,6 +158,7 @@ class EditProfileOverlay {
       if (
         // eslint-disable-next-line no-invalid-this
         !reg.test(this.value) ||
+        // eslint-disable-next-line no-invalid-this
         this.value.length < 5 ||
         (keyCode > 47 && keyCode < 58)
       ) {

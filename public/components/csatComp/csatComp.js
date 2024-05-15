@@ -42,7 +42,7 @@ class CsatComp {
    * Add listener for close button.
    */
   #addlistenerCloseCsat() {
-    const closeBtn = this.#element.querySelector('.add-to-cart-dialog__close-icon');
+    const closeBtn = this.#element.querySelector('.dialog-close');
     closeBtn.addEventListener('click', () => {
       window.top.postMessage('reply', '*');
     });
@@ -59,11 +59,11 @@ class CsatComp {
 
     /**
      * Saves answers' results.
-    */
+     */
     function readAnswers() {
-      inputFields.forEach((input)=>{
+      inputFields.forEach((input) => {
         if (input.checked) {
-          questionary[input.name]=input.value;
+          questionary[input.name] = input.value;
           questionaryContent[input.name] = input.dataset.content;
         }
       });
@@ -78,8 +78,8 @@ class CsatComp {
       question.nextElementSibling.classList.add('interactive-widget__body--active');
     }
 
-    radioBtns.forEach((btn)=>{
-      btn.addEventListener('click', ()=>{
+    radioBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
         const question = btn.parentNode.parentNode.parentNode;
         if (question.nextElementSibling.nextElementSibling) {
           readAnswers();
@@ -89,7 +89,7 @@ class CsatComp {
         }
         readAnswers();
         turnQuestion(question);
-        this.#element.querySelector('.interactive-widget__header h3').innerHTML ='Завершение';
+        this.#element.querySelector('.interactive-widget__header h3').innerHTML = 'Завершение';
         if (this.items.questions.length != Object.keys(questionary).length) {
           return;
         }
@@ -109,15 +109,11 @@ class CsatComp {
 
         const apiRoute = ajax.routes.SURVEY.CREATE;
 
-        ajax.post(
-            apiRoute,
-            data,
-            (body) => {
-              if (body) {
-                return;
-              }
-            },
-        );
+        ajax.post(apiRoute, data, (body) => {
+          if (body) {
+            return;
+          }
+        });
         setTimeout(() => window.top.postMessage('reply', '*'), 2000);
       });
     });

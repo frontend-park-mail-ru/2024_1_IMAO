@@ -2,6 +2,7 @@
 
 import renderAdCreationForm from '../../components/adCreationForm/adCreationForm.js';
 import DropdownWithSearch from '../../components/dropdownWithSearch/dropdownWithSearch.js';
+import ImagesUploadPreview from '../../components/imagesUploadPreview/imagesUploadPreview.js';
 import {buildURL, parsePathParams, getURLFromLocation} from '../../modules/parsePathParams.js';
 import {validateInput, inputError} from '../../modules/validate.js';
 import trimString from '../../modules/trimString.js';
@@ -61,7 +62,7 @@ export class AdCreation {
       let flag = true;
 
       const phoneInput = this.#element.querySelector('[type="tel"]');
-      const phoneInputError = this.#element.querySelector('.phone__error');
+      const phoneInputError = this.#element.querySelector('.form__phone-error');
       phoneInput.classList.remove('input__error');
       phoneInputError.innerHTML = '';
       const phone = phoneInput.value;
@@ -76,7 +77,7 @@ export class AdCreation {
       }
 
       const titleInput = this.#element.querySelector('[id="title"]');
-      const titleInputError = this.#element.querySelector('.title__error');
+      const titleInputError = this.#element.querySelector('.form__title-error');
       titleInput.classList.remove('input__error');
       titleInputError.innerHTML = '';
       const title = titleInput.value;
@@ -87,7 +88,7 @@ export class AdCreation {
       }
 
       const descriptionInput = this.#element.querySelector('[id="description"]');
-      const descriptionInputError = this.#element.querySelector('.description__error');
+      const descriptionInputError = this.#element.querySelector('.form__description-error');
       descriptionInput.classList.remove('input__error');
       descriptionInputError.innerHTML = '';
       const description = descriptionInput.value;
@@ -97,14 +98,23 @@ export class AdCreation {
         flag = false;
       }
 
+      const imagesUpload = this.#element.querySelectorAll('[type="file"]');
+      const fileInputError = this.#element.querySelector('.form__file-error');
+      fileInputError.innerHTML = '';
+      if (imagesUpload.length <= 1) {
+        fileInputError.innerHTML = 'Добавьте хотя бы одно изображение';
+        flag = false;
+      }
+
       if (!flag) {
         submit.disabled = false;
 
         return;
       }
 
-      const city = this.#element.querySelector('.selected').innerHTML;
+      const city = this.#element.querySelector('.citylist__option--selected').innerHTML;
       const data = new FormData(form);
+
       data.append('userId', ajax.auth.id);
       data.append('city', city);
       if (!this.#create) {
@@ -221,6 +231,7 @@ export class AdCreation {
       CSRFToken = body['tokenBody'];
     });
 
+    this.photos = [];
     if (this.#create) {
       form.appendChild(renderAdCreationForm(true, CSRFToken));
     } else {
@@ -241,6 +252,7 @@ export class AdCreation {
         const items = body['items'];
         const advert = items['advert'];
         const city = items['city'];
+        this.photos = items.photosIMG;
         categoryTr = items.category.translation;
         isUsed = advert.isUsed;
 
@@ -285,5 +297,9 @@ export class AdCreation {
       // dropdownWithSearchTempl.setProperty('height', '');
       dropdownWithSearchDiv.appendChild(dropdownWithSearchTempl);
     });
+
+    const imagesUpload = new ImagesUploadPreview(this.photos);
+    const imagesUploadContainer = this.#element.querySelector('.form__upload');
+    imagesUploadContainer.appendChild(imagesUpload.render());
   }
 }
