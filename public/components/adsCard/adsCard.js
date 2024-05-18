@@ -29,6 +29,7 @@ class AdsCard {
    * @param {*} inFavorites
    * @param {*} path
    * @param {*} photosIMG
+   * @param {*} isPromoted
    */
   constructor(title, price, id, inFavorites, path, photosIMG, isPromoted) {
     this.title = title;
@@ -37,7 +38,7 @@ class AdsCard {
     this.path = path;
     this.photosIMG = photosIMG;
     this.inFavorites = inFavorites;
-    this.isPromoted = isPromoted
+    this.isPromoted = isPromoted;
   }
 
   /**
@@ -57,7 +58,7 @@ class AdsCard {
     likeButton.appendChild(likeButtonInstance.render());
 
     this.#addFavoritesListener();
-   
+
     return this.#element;
   }
 

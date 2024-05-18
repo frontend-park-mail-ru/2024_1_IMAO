@@ -11,7 +11,7 @@ import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
 const ADVERTS_SEND_COUNT = 20;
-// Показывает за сколько пикселей до конца стрвницы начинается подгрузка новых объявлений.
+// Показывает за сколько пикселей до конца страницы начинается подгрузка новых объявлений.
 const LOADING_GAP = 200;
 
 /** Class representing a main page. */

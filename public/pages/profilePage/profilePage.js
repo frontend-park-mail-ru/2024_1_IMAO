@@ -16,6 +16,9 @@ import router from '../../router/router.js';
 import {serverHost} from '../../config/config.js';
 import {buildURL, buildURLBySegments, getURLFromLocation, parsePathParams} from '../../modules/parsePathParams.js';
 
+// Показывает за сколько пикселей до конца страницы начинается подгрузка новых объявлений.
+const LOADING_GAP = 200;
+
 /** Class representing a main page. */
 export class ProfilePage {
   #element;
@@ -341,7 +344,7 @@ export class ProfilePage {
       const winHeight = window.innerHeight;
       const docHeight = document.body.scrollHeight;
 
-      if (position + winHeight >= docHeight - 200 && !this.#isBottomReached) {
+      if (position + winHeight >= docHeight - LOADING_GAP && !this.#isBottomReached) {
         const merchantsCardContainer = this.#element.querySelector('.profile-page__cards-container');
         const currentState = this.sectionState.getSectionState('active', 'isRendered');
         this.#renderCards(merchantsCardContainer, currentState);
