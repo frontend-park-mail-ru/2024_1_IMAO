@@ -167,7 +167,6 @@ class Histogram {
           rowData.push(k);
         }
       }
-      console.log(rowData);
 
       const color = '#B6DCFE';
 

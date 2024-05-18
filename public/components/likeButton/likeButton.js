@@ -45,7 +45,7 @@ class LikeButton {
    */
   #addEventListener() {
     const el = this.#element;
-    this.#element.addEventListener('click', () => el.classList.toggle('active'));
+    this.#element.addEventListener('click', () => el.classList.toggle('like-heart--active'));
   }
 }
 export default LikeButton;

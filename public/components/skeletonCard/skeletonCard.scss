@@ -1,4 +1,4 @@
-.skeleton-advert-vector-item {
+.skeleton-advert {
   width: clamp(129px, 37.5vw, 215px);
   height: clamp(177px, 51vw, 295px);
 
@@ -42,7 +42,7 @@
   }
 }
 
-.card__image__skeleton {
+.skeleton-advert__image {
   border-bottom: 1px solid white;
   @include skeleton-loader;
   position: relative;
@@ -51,7 +51,7 @@
   background-color: #ebebeb;
 }
 
-.card__content__skeleton {
+.skeleton-advert__content {
   padding: 1rem;
   flex: 2;
   display: flex;
@@ -61,7 +61,7 @@
   background-color: #ffffff;
 }
 
-.card__content__skeleton-item {
+.skeleton-advert__content-item {
   overflow: hidden;
   position: relative;
   width: 100%;

@@ -30,7 +30,7 @@
     width: 35%;
   }
 
-  .btn-edit {
+  .favourite__btn--edit {
     text-decoration: none;
     padding: 0;
     cursor: pointer;
@@ -41,14 +41,14 @@
       text-decoration: underline;
     }
 
-    .edit-pencil {
+    .favourite__edit-pencil {
       display: none;
       height: 18px;
       width: auto;
     }
   }
 
-  .btn-favourite {
+  .favourite__btn--favourite {
     text-decoration: none;
     padding: 0;
     cursor: pointer;
@@ -59,7 +59,7 @@
     }
   }
 
-  .btn-favourite__text {
+  .favourite__text {
     margin-left: 5px;
   }
 
@@ -84,21 +84,21 @@
     padding: 0;
   }
 
-  .property-name {
+  .post-description__property--primary {
     color: #858585;
     flex: 0 0 30%;
   }
 
-  .end-of-block {
+  .post-description__end-of-block {
     margin-bottom: 25px;
   }
 
-  .top-panel {
+  .post-block__top-panel {
     display: flex;
     justify-content: space-between;
   }
 
-  .price-mobile {
+  .post-block__price--mobile {
     display: none;
   }
 }
@@ -123,7 +123,12 @@
   margin-top: 20px;
   position: relative;
   width: 100%;
-  overflow: hidden;
+
+  &__carousel {
+    overflow: hidden;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 
   .carousel {
     display: flex;
@@ -144,26 +149,54 @@
     padding-right: 3px;
   }
 
-  .btn-container {
+  .post-images__btn-container {
     position: absolute;
+    overflow: visible;
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
     display: flex;
     justify-content: space-between;
+
+    &__prev-container {
+      position: relative !important;
+      overflow: visible;
+    }
+
+    &__next-container {
+      position: relative !important;
+    }
+
+    &__prev-btn {
+      position: fixed;
+      left: -8px;
+    }
+
+    &__next-btn {
+      position: absolute;
+      left: -24px;
+    }
   }
 
   button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     background-color: #ffffff;
     border: 2px solid #ffffff;
+    padding: 4px;
+    transition: 0.3s;
     cursor: pointer;
-    position: relative;
-    margin: 1%;
+
+    display: table-cell;
+    vertical-align: middle;
+    z-index: 10;
 
     &:hover {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
+    }
+
+    &:active {
       background-color: #dfdfdf;
       border: 0px;
     }
@@ -195,12 +228,12 @@
   #{$property}: #{$value};
 }
 
-.btn-favourite {
+.favourite__btn--favourite {
   display: flex;
   align-items: center;
 
   &:hover {
-    .like-heart:not(.active) svg {
+    .like-heart:not(.like-heart--active) svg {
       stroke: gray;
     }
   }
@@ -229,14 +262,14 @@
       height: auto;
     }
 
-    .img-carousel {
+    .images__item {
       padding: 0;
     }
   }
 }
 
 @media (max-width: 900px) {
-  .top-panel,
+  .post-block__top-panel,
   .post-description {
     margin: 0 10px;
   }
@@ -255,12 +288,41 @@
   .post-images {
     margin-top: 10px;
     order: 1;
+
+    &__carousel {
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+
+    &__next-container {
+      padding-right: 8px;
+    }
+
+    &__prev-container {
+      padding-left: 8px;
+    }
   }
 
   .seller-block,
   .post-block {
     width: 100%;
     padding-left: 0;
+
+    .post-images__btn-container {
+      &__prev-btn {
+        position: fixed;
+        left: 8px;
+      }
+
+      &__next-btn {
+        position: absolute;
+        left: -40px;
+      }
+    }
+
+    button {
+      border-radius: 50%;
+    }
   }
 
   .seller-block {
@@ -285,7 +347,7 @@
     flex-direction: column;
   }
 
-  .top-panel {
+  .post-block__top-panel {
     order: 2;
     margin-top: 15px;
     display: flex;
@@ -297,7 +359,7 @@
       font-size: 20px !important;
     }
 
-    .price-mobile {
+    .post-block__price--mobile {
       display: flex;
       width: 100%;
       justify-content: flex-start;
@@ -306,8 +368,8 @@
       font-size: 20px;
     }
 
-    .btn-edit {
-      .edit-pencil {
+    .favourite__btn--edit {
+      .favourite__edit-pencil {
         display: block;
       }
 
@@ -316,7 +378,7 @@
       }
     }
 
-    .btn-favourite {
+    .favourite__btn--favourite {
       span {
         display: none;
       }
@@ -363,7 +425,7 @@
         padding-bottom: 15px;
         line-height: 24px;
 
-        .property-name {
+        .post-description__property--primary {
           display: none;
         }
       }
@@ -378,7 +440,7 @@
         margin-right: 15px;
       }
 
-      .property-name {
+      .post-description__property--primary {
         display: none;
       }
     }

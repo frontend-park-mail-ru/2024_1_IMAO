@@ -1,0 +1,15 @@
+<div class="order-block" data-id="{{id}}">
+    {{#if photo}}
+        <img class="order-block__item-image" src="data:image/png;base64,{{photo}}">
+    {{^}}
+        <img class="order-block__item-image" src="images/cart_placeholder_image.png">
+    {{/if}}
+    <div class="order-block__info">
+        <div class="order-block__price ruble">{{price}}<span class="ruble">&nbsp;₽</span></div>
+        <div class="order-block__title">{{title}}</div>
+        <div class="order-block__status">Статус заказа: {{status}}</div>
+        <div class="order-block__name">Имя получателя: {{name}}</div>
+        <div class="order-block__phone">Телефон: {{phone}}</div>
+        <div class="order-block__adress">Адрес доставки: {{address}}</div>
+    </div>
+</div>

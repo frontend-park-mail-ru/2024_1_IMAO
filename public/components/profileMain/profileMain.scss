@@ -1,10 +1,12 @@
-.profile-page-right-section-header {
+.profile-page__header {
   font-size: 24px;
   font-weight: bold;
 }
 
+
+
 @media (max-width: 900px) {
-  .profile-page-right-section-content {
+  .profile-page__content {
     padding-bottom: 100px;
   }
 
@@ -12,8 +14,12 @@
     display: none !important;
   }
 
-  .merchant-card__section {
+  .merchant-card {
     display: flex;
     flex-direction: column;
+  }
+
+  .profile-page__header {
+    display: none;
   }
 }

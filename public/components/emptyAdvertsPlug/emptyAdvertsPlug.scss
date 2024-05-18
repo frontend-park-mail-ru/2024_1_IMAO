@@ -1,4 +1,4 @@
-.empty-adverts-main-container {
+.empty-adverts {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -8,19 +8,19 @@
   padding: 10% 0;
 }
 
-.empty-adverts-inner-container {
+.empty-adverts__inner {
   justify-content: center;
   align-items: center;
   display: inline-flex;
   gap: 6px;
 }
 
-.empty-adverts-vector-item {
+.empty-adverts__item {
   width: 72px;
   height: 100px;
 }
 
-.empty-adverts-message-container {
+.empty-adverts__message {
   height: 48px;
   padding-left: 35.55px;
   padding-right: 35.55px;
@@ -30,7 +30,7 @@
   display: flex;
 }
 
-.empty-adverts-message-header {
+.empty-adverts__header {
   text-align: center;
   color: #333333;
   font-size: 20px;
@@ -39,7 +39,7 @@
   word-wrap: break-word;
 }
 
-.empty-adverts-message-text {
+.empty-adverts__text {
   text-align: center;
   color: #858585;
   font-size: 14px;

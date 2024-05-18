@@ -84,10 +84,8 @@ export class Signup {
 
       const apiRoute = ajax.routes.AUTH.SIGNUP;
 
-      ajax.post(
-          apiRoute,
-          data,
-          (body) => {
+      ajax
+          .post(apiRoute, data, (body) => {
             if (body?.isAuth === true) {
               history.go(-2);
 
@@ -95,8 +93,10 @@ export class Signup {
             }
             submit.disabled = false;
             divError.innerHTML = userAlreadyExistError;
-          },
-      );
+          })
+          .catch(() => {
+            submit.disabled = false;
+          });
     });
   }
 

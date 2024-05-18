@@ -1,42 +1,60 @@
-.merchant-page {
+.profile-page {
   margin-top: 2%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  &__main {
+    width: 22%;
+    padding-right: 0px;
+  }
+
+  .labels-group__icon:hover {
+    cursor: pointer;
+    color: #7092fe;
+  }
 }
 
 @media (max-width: 900px) {
-  .merchant-page {
+  .profile-page {
     padding: 0px 20px 0px 20px;
     flex-direction: column;
     justify-content: space-between;
+
+    &__main {
+      width: 100%;
+    }
+
+    .stats-container {
+      border: none;
+    }
   }
 
-  .cards-container-merchant {
+  .profile-page__cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, clamp(129px, 37.5vw, 215px));
     justify-content: space-evenly;
     gap: 16px 36px;
   }
 
-  .merchant-page-right-section {
+  .profile-page__right-section {
     width: 100% !important;
   }
 }
 
 @media (max-width: 1219px) and (min-width: 900px) {
-  .user-card-main-div {
+  .profile-page__main {
     margin: 0 15px;
   }
 }
 
-.merchant-page .merchant-page-right-section {
+.profile-page .profile-page__right-section {
   display: flex;
   flex-direction: column;
   width: 75%;
 }
 
-.merchant-page .cards-container-merchant {
+.profile-page .profile-page__cards-container {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -45,20 +63,12 @@
   margin-top: 2%;
 }
 
-.merchant-page .cursor-hand-hover:hover {
-  cursor: pointer;
-}
-
-.merchant-page .text-underline-hover:hover {
+.profile-page .text-underline-hover:hover {
   text-decoration: underline;
   text-decoration-color: #7092fe;
   color: #7092fe;
 }
 
-.merchant-page .text-highlighting-hover:hover {
-  color: #7092fe;
-}
-
-.merchant-page label {
+.profile-page label {
   cursor: pointer;
 }

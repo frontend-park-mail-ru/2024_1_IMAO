@@ -137,7 +137,7 @@ class SettingsContainer {
     const btns = this.#element.querySelectorAll('.settings-block__set-or-edit-label');
 
     btns.forEach(async (_, i) => {
-      const form = this.#element.querySelectorAll('.profile-modal-content')[i];
+      const form = this.#element.querySelectorAll('.profile-modal__content')[i];
       form.addEventListener('submit', async (ev) => {
         ev.preventDefault();
         const submit = form.querySelector('.submit-btn');
@@ -163,7 +163,6 @@ class SettingsContainer {
           }
 
           const avatar = formData.get('avatar');
-          console.log(avatar);
 
           let profile = {};
           await ajax.postMultipart(forms[i].apiRoute, formData, (body) => {
@@ -202,7 +201,7 @@ class SettingsContainer {
             'images/img_avatar.png';
           headerAvatar.src = profileAvatar.src;
 
-          const profilePageContentContainer = document.querySelector('.profile-page-right-section-content');
+          const profilePageContentContainer = document.querySelector('.profile-page__content');
           const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
           profilePageContentContainer.lastElementChild.replaceWith(await settingsContainer.render());
           this.#addListenersForOverlays(settingsContainer.getForms());
@@ -278,12 +277,12 @@ class SettingsContainer {
             avatarImg: profile.avatarImg,
           };
         }
-        console.log(dataBody);
+
         if (dataBody.user) {
           this.profile.email = dataBody.user.email;
         }
 
-        const profilePageContentContainer = document.querySelector('.profile-page-right-section-content');
+        const profilePageContentContainer = document.querySelector('.profile-page__content');
         const settingsContainer = new SettingsContainer(this.profile, this.CSRFToken);
         profilePageContentContainer.lastElementChild.replaceWith(await settingsContainer.render());
       });

@@ -1,5 +1,5 @@
 <div class="ad-creation-container">
-    <div class="form__title">
+    <div class="ad-creation-container__title">
         {{#if create}}
         Размещение объявления
         {{^}}
@@ -38,11 +38,11 @@
         </select>
 
         <label class="form__label" for="title">Название товара<span class="asterisk">*</span></label>
-        <div class="form__input--description">
-            <input class="form__input form__input--description" type="text" id="title" name="title" value="{{title}}"
-                required>
-            <div class="form__description">Название не должно превышать 50 символов</div>
-            <div class="title__error error"></div>
+        <div class="form__input--secondary">
+            <input class="form__input form__input--secondary" type="text" id="title" name="title" value="{{title}}"
+                maxlength="70" required>
+            <div class="form__description">Название не должно превышать 70 символов</div>
+            <div class="form__title-error error"></div>
         </div>
         <label class="form__label" for="price">Цена<span class="asterisk">*</span></label>
         <div>
@@ -50,20 +50,25 @@
                 required>
             <span class="ruble">&nbsp;₽</span>
         </div>
-        <label class="form__label" for="description">Описание</label>
+        <label class="form__label" for="description">Описание<span class="asterisk">*</span></label>
         <div>
-            <textarea class="form__textarea form__input--description" id="description" name="description">{{description}}</textarea>
+            <textarea class="form__textarea form__input--secondary" id="description" name="description" maxlength="3000" required>{{description}}</textarea>
             <div class="form__description">До 3000 символов</div>
-            <div class="description__error error"></div>
+            <div class="form__description-error error"></div>
         </div>
         <label class="form__label" for="photos">Фотографии<span class="asterisk">*</span></label>
-        <input class="form__input" type="file" id="photos" name="photos" accept=".png, .jpg, .jpeg" multiple required>
-
+        <div class="form__input--secondary">
+            <div class=" form__upload"></div>
+            <div class="form__description">Первое фото будет отображаться в результатах поиска, выберите наиболее удачное. Вы можете загрузить до 10 фотографий в формате JPG или PNG.</div>
+            <div class="form__file-error error"></div>
+        </div>
         <label class="form__label" for="location">Местоположение<span class="asterisk">*</span></label>
-        {{!-- <input class="form__input" type="text" id="location" name="city" value="{{city}}" required> --}}
         <div class="location-place"></div>
         <label class="form__label" for="phone">Телефон<span class="asterisk">*</span></label>
-        <input class="form__input form__input--min" type="tel" id="phone" name="phone" min="0" value="{{phone}}" required>
+        <div>
+            <input class="form__input form__input--min" type="tel" id="phone" name="phone" {{#if phone}}value="{{phone}}"{{/if}}>
+            <div class="form__phone-error error"></div>
+        </div>
         {{#if create}}
             <input type="submit" class="form__button" value="Разместить объявление">
         {{^}}

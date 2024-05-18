@@ -3,6 +3,9 @@
 import renderOrderItem from '../../components/orderItem/orderItem.js';
 import renderOrderMain from '../../components/orderMain/orderMain.js';
 import renderSidebar from '../../components/sidebar/sidebar.js';
+import {serverHost} from '../../config/config.js';
+import {buildURLBySegments} from '../../modules/parsePathParams.js';
+import addDynamicPhoneForm from '../../modules/dynamicPhone.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
@@ -46,6 +49,9 @@ export class Order {
     const form = this.#element.querySelector('.recipient-form');
 
     this.#addSubmitListener(submit, form);
+
+    const phoneInput = this.#element.querySelector('[type="tel"]');
+    addDynamicPhoneForm(phoneInput);
   }
 
   /**
@@ -68,7 +74,7 @@ export class Order {
       const name = inputs[1].trim();
       const phone = inputs[2].trim();
       const email = inputs[3].trim();
-      const adress = inputs[4];
+      const address = inputs[4];
 
       const orderItems = {adverts: []};
       const order = JSON.parse(sessionStorage.getItem(ajax.auth.id));
@@ -81,7 +87,7 @@ export class Order {
             phone,
             name,
             email,
-            adress,
+            address,
             deliveryPrice,
           });
         }
@@ -90,12 +96,11 @@ export class Order {
         const {isCreated} = body;
 
         if (isCreated !== undefined) {
-          router.go(router.routes.cartPage.href);
+          const slugProfileOrders = ['profile', 'orders'];
+          const urlProfileOrders = buildURLBySegments(serverHost, slugProfileOrders);
+          router.go(urlProfileOrders);
         }
       });
-      //
-      // Поставить редирект на страницу заказов в профиле
-      //
       sessionStorage.removeItem(ajax.auth.id);
     });
   }

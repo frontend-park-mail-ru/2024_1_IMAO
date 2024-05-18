@@ -1,26 +1,26 @@
-.empty-orders-main-container {
+.empty-orders {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 8px;
+  gap: 20px;
   display: inline-flex;
   width: 100%;
-  padding: 10% 0px;
+  padding: 5% 10px 10% 0px;
 }
 
-.empty-orders-inner-container {
+.empty-orders__inner {
   justify-content: center;
   align-items: center;
   display: inline-flex;
   gap: 6px;
 }
 
-.empty-orders-vector-item {
+.empty-orders__item {
   width: 169px;
   height: 113px;
 }
 
-.empty-order-message-header {
+.empty-orders__header {
   text-align: center;
   color: #333333;
   font-size: 20px;
@@ -29,7 +29,7 @@
   word-wrap: break-word;
 }
 
-.empty-orders-message-container {
+.empty-orders__message {
   height: 48px;
   padding-left: 35.55px;
   padding-right: 35.55px;
@@ -39,7 +39,7 @@
   display: flex;
 }
 
-.empty-orders-message-text {
+.empty-orders__text {
   text-align: center;
   color: #858585;
   font-size: 14px;

@@ -2,6 +2,7 @@
 
 import renderProfileMain from '../../components/profileMain/profileMain.js';
 import AdsCard from '../../components/adsCard/adsCard.js';
+import renderOrderBlock from '../../components/orderBlock/orderBlock.js';
 import SettingsContainer from '../../components/settingsContainer/settingsContainer';
 import ProfileCard from '../../components/profileCard/profileCard.js';
 import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
@@ -14,6 +15,9 @@ import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import {serverHost} from '../../config/config.js';
 import {buildURL, buildURLBySegments, getURLFromLocation, parsePathParams} from '../../modules/parsePathParams.js';
+
+// Показывает за сколько пикселей до конца страницы начинается подгрузка новых объявлений.
+const LOADING_GAP = 200;
 
 /** Class representing a main page. */
 export class ProfilePage {
@@ -67,7 +71,7 @@ export class ProfilePage {
    * Add listener for section switching.
    */
   #addListeners() {
-    const verticalInputs = this.#element.querySelectorAll('.vertical-group input[type="radio"]');
+    const verticalInputs = this.#element.querySelectorAll('.radio-group-vertical input[type="radio"]');
 
     verticalInputs.forEach((input) => {
       input.addEventListener('click', (event) => {
@@ -93,8 +97,8 @@ export class ProfilePage {
 
     const found =
       this.labelsAndValues.find((item) => item.categoryLabelValue === targetValue) || this.labelsAndValues[0];
-    this.#element.querySelector('.profile-page-right-section-header').innerText = found.categoryLabel;
-    const profilePageContentContainer = this.#element.querySelector('.profile-page-right-section-content');
+    this.#element.querySelector('.profile-page__header').innerText = found.categoryLabel;
+    const profilePageContentContainer = this.#element.querySelector('.profile-page__content');
     const isRendered = this.sectionStateV.getSectionState(found.categoryLabelValue, 'isRendered');
 
     const currentButtonChecked = this.sectionStateV.getSectionState('serviceField', 'isChecked');
@@ -104,14 +108,17 @@ export class ProfilePage {
 
     document.title = 'Профиль - ' + found.categoryLabel;
 
-    const profileCard = this.#element.querySelector('.merchant-card__section');
-    const sectionHeader = this.#element.querySelector('.profile-page-right-section-header');
+    const profileCard = this.#element.querySelector('.merchant-card');
+    const sectionHeader = this.#element.querySelector('.profile-page__header');
+    const profilePage = this.#element.querySelector('.profile-page');
     if (found.categoryLabelValue === 'settings') {
       profileCard.classList.add('disable-card');
       sectionHeader.classList.add('disable-card');
+      profilePage.classList.add('disable-padding');
     } else {
       profileCard.classList.remove('disable-card');
       sectionHeader.classList.remove('disable-card');
+      profilePage.classList.remove('disable-padding');
     }
 
     if (isRendered) {
@@ -122,7 +129,7 @@ export class ProfilePage {
     }
 
     const newProfilePageContentContainer = document.createElement('div');
-    newProfilePageContentContainer.classList.add('profile-page-right-section-content');
+    newProfilePageContentContainer.classList.add('profile-page__content');
     profilePageContentContainer.replaceWith(newProfilePageContentContainer);
     this.sectionStateV.setSectionState(found.categoryLabelValue, 'isRendered', true);
 
@@ -149,7 +156,7 @@ export class ProfilePage {
         );
 
         const merchantsCardContainer = document.createElement('div');
-        merchantsCardContainer.classList.add('cards-container-merchant');
+        merchantsCardContainer.classList.add('profile-page__cards-container');
         this.#renderCards(merchantsCardContainer, currentState, found.categoryLabelValue);
         newProfilePageContentContainer.appendChild(merchantsCardContainer);
         break;
@@ -168,17 +175,40 @@ export class ProfilePage {
         );
 
         const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
-        const header = isPerchasesChecked ? 'Нет покупок' : 'Не продаж';
-        const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
 
-        const emptyOrderPlug = new EmptyOrderPlug(header, content);
-        newProfilePageContentContainer.appendChild(emptyOrderPlug.render());
+        let adverts = [];
+        if (isPerchasesChecked) {
+          await ajax.get(ajax.routes.ORDER.GET_ORDERS_LIST, (body) => {
+            adverts = body['items'];
+          });
+
+          const merchantsCardContainer = document.createElement('div');
+          merchantsCardContainer.classList.add('empty-orders');
+
+          if (adverts.length == 0) {
+            const header = isPerchasesChecked ? 'Нет покупок' : 'Не продаж';
+            const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
+            const emptyOrderPlug = new EmptyOrderPlug(header, content);
+            merchantsCardContainer.appendChild(emptyOrderPlug.render());
+          } else if (adverts && Array.isArray(adverts)) {
+            adverts.forEach((inner) => {
+              const {orderItem, advert} = inner;
+              const {status, address, phone, name} = orderItem;
+              const ad = advert.advert;
+              const photo = advert.photosIMG?.[0];
+              const {id, title, price} = ad;
+              const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name);
+              merchantsCardContainer.appendChild(orderBlockInstance);
+            });
+          }
+          newProfilePageContentContainer.appendChild(merchantsCardContainer);
+        }
+
         break;
 
       case 'favorites':
         const favoritesCardContainer = document.createElement('div');
-        favoritesCardContainer.classList.add('cards-container-merchant');
-        console.log(found.categoryLabelValue);
+        favoritesCardContainer.classList.add('profile-page__cards-container');
         this.#renderCards(favoritesCardContainer, currentState, found.categoryLabelValue);
         newProfilePageContentContainer.appendChild(favoritesCardContainer);
         break;
@@ -231,7 +261,7 @@ export class ProfilePage {
    * @param {*} event
    */
   advertsHandleClick(event) {
-    const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
+    const merchantsCardContainer = this.#element.querySelector('.profile-page__cards-container');
     const isRendered = this.sectionState.getSectionState(event.target.value, 'isRendered');
 
     const currentButtonChecked = this.sectionState.getSectionState('serviceField', 'isChecked');
@@ -241,7 +271,7 @@ export class ProfilePage {
 
     if (!isRendered) {
       const newMerchantsCardContainer = document.createElement('div');
-      newMerchantsCardContainer.classList.add('cards-container-merchant');
+      newMerchantsCardContainer.classList.add('profile-page__cards-container');
       merchantsCardContainer.replaceWith(newMerchantsCardContainer);
       this.sectionState.setSectionState(event.target.value, 'isRendered', true);
       this.#renderCards(newMerchantsCardContainer, isRendered, 'adverts');
@@ -255,8 +285,8 @@ export class ProfilePage {
    * Adds orders states.
    * @param {*} event
    */
-  orderHandleClick(event) {
-    const merchantsCardContainer = this.#element.querySelector('.empty-orders-main-container');
+  async orderHandleClick(event) {
+    const merchantsCardContainer = this.#element.querySelector('.empty-orders');
     const isRendered = this.sectionStateS.getSectionState(event.target.value, 'isRendered');
 
     const currentButtonChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked');
@@ -266,13 +296,36 @@ export class ProfilePage {
 
     if (!isRendered) {
       this.sectionStateS.setSectionState(event.target.value, 'isRendered', true);
+      const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
+      const header = isPerchasesChecked ? 'Нет покупок' : 'Не продаж';
+      const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
+      if (isPerchasesChecked) {
+        let adverts = {};
+        await ajax.get(ajax.routes.ORDER.GET_ORDERS_LIST, (body) => {
+          adverts = body['items'];
+        });
 
-      const header =
-        this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ? 'Нет покупок' : 'Нет продаж';
-      const content =
-        this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases' ?
-          'Заказы по купленным товарам' :
-          'Заказы по проданным товарам';
+        if (adverts.length == 0) {
+          const emptyOrderPlug = new EmptyOrderPlug(header, content);
+          merchantsCardContainer.replaceWith(emptyOrderPlug.render());
+        }
+        if (adverts && Array.isArray(adverts)) {
+          const newMerchantsCardContainer = document.createElement('div');
+          newMerchantsCardContainer.classList.add('empty-orders');
+          adverts.forEach((inner) => {
+            const {orderItem, advert} = inner;
+            const {status, address, phone, name} = orderItem;
+            const ad = advert.advert;
+            const photo = advert.photosIMG?.[0];
+            const {id, title, price} = ad;
+            const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name);
+            newMerchantsCardContainer.appendChild(orderBlockInstance);
+          });
+          merchantsCardContainer.replaceWith(newMerchantsCardContainer);
+        }
+
+        return;
+      }
 
       const emptyOrderPlug = new EmptyOrderPlug(header, content);
       merchantsCardContainer.replaceWith(emptyOrderPlug.render());
@@ -291,8 +344,8 @@ export class ProfilePage {
       const winHeight = window.innerHeight;
       const docHeight = document.body.scrollHeight;
 
-      if (position + winHeight >= docHeight && !this.#isBottomReached) {
-        const merchantsCardContainer = this.#element.querySelector('.cards-container-merchant');
+      if (position + winHeight >= docHeight - LOADING_GAP && !this.#isBottomReached) {
+        const merchantsCardContainer = this.#element.querySelector('.profile-page__cards-container');
         const currentState = this.sectionState.getSectionState('active', 'isRendered');
         this.#renderCards(merchantsCardContainer, currentState);
         if (!currentState) {
@@ -347,11 +400,20 @@ export class ProfilePage {
       return;
     }
 
+    if (adverts.length == 0) {
+      const content = {
+        header: 'В избранном пусто',
+        content: 'избранные',
+      };
+      const emptyAdvertsPlug = new EmptyAdvertsPlug(content);
+      merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
+    }
+
     const cardsContainer = !alreadyRendered ?
       document.createElement('div') :
-      document.querySelector('.cards-container-merchant');
+      document.querySelector('.profile-page__cards-container');
     if (!alreadyRendered) {
-      cardsContainer.classList.add('cards-container-merchant');
+      cardsContainer.classList.add('profile-page__cards-container');
     }
 
     adverts.forEach((inner) => {
@@ -389,6 +451,7 @@ export class ProfilePage {
     const ratingValue = profile.rating;
 
     this.profile = {
+      id: profile.id,
       merchantsName: profile.merchantsName,
       ratingValue: profile.rating,
       name: profile.name,
@@ -396,7 +459,7 @@ export class ProfilePage {
       phone: profile.phoneNumber,
       email: ajax.auth.email,
       city: profile.city.name,
-      location: profile.city.translation,
+      location: profile.city.name,
       registrationDate: formatDate(profile.regTime),
       isProfileVerified: profile.approved,
       reviewCount: profile.reactionsCount,
@@ -407,7 +470,7 @@ export class ProfilePage {
       soldAddsCount: profile.soldAddsCount,
     };
 
-    const merchantsCardSection = this.#element.querySelector('.user-card-main-div');
+    const merchantsCardSection = this.#element.querySelector('.profile-page__main');
     const profileCardInstance = new ProfileCard(this.profile);
     merchantsCardSection.appendChild(profileCardInstance.render());
 

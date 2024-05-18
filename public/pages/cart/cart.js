@@ -3,6 +3,7 @@
 import renderCartBlock from '../../components/cartBlock/cartBlock.js';
 import renderCartMain from '../../components/cartMain/cartMain.js';
 import renderSidebar from '../../components/sidebar/sidebar.js';
+import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
 import {buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
@@ -140,6 +141,9 @@ export class Cart {
         headQuantity.innerHTML = quantity.innerHTML;
       }
       this.#model.deleteFromCart(advertIDs);
+      if (!Number(quantity.innerHTML)) {
+        this.#renderEmptyPlug();
+      }
     });
   }
 
@@ -163,6 +167,9 @@ export class Cart {
         headQuantity.innerHTML = quantity.innerHTML;
         const advertIDs = [Number(id)];
         this.#model.deleteFromCart(advertIDs);
+        if (Number(quantity.innerHTML) == 0) {
+          this.#renderEmptyPlug();
+        }
       });
     }
   }
@@ -177,7 +184,7 @@ export class Cart {
         const id = Number(element.dataset.id);
         const result = await favoritesModel.changeFavorites(id);
         const message = this.#element.querySelector('.message');
-        element.children[0].classList.toggle('active');
+        element.children[0].classList.toggle('like-heart--active');
         if (result) {
           message.innerHTML = 'Объявление добавлено в избранное';
         } else {
@@ -194,11 +201,23 @@ export class Cart {
   }
 
   /**
+   *
+   */
+  #renderEmptyPlug() {
+    const selectPanel = this.#element.querySelector('.selection-panel');
+    const header = 'Корзина пуста';
+    const content = 'Добавленные в корзину объявления';
+    const emptyPlugInstance = new EmptyOrderPlug(header, content);
+    selectPanel.appendChild(emptyPlugInstance.render());
+  }
+
+  /**
    * Render a template for a cart page.
    */
   async #renderTemplate() {
     this.#element.appendChild(this.header.render());
     const adverts = await this.#model.getCart();
+
     const quantity = adverts.length;
     this.#element.appendChild(renderCartMain(quantity));
 
@@ -230,6 +249,10 @@ export class Cart {
         router.pushPage(ev, address.href);
       });
     });
+
+    if (quantity == 0) {
+      this.#renderEmptyPlug();
+    }
 
     const mainCont = this.#element.querySelector('.main-content');
 

@@ -19,7 +19,7 @@ import styles from './adContainer.scss';
  * @param {Array} photos
  * @param {*} inFavorites
  * @param {*} views
- * @param {*} favoritesNum
+ * @param {*} favouritesNum
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the advert.
  */
 export default function renderAdContainerTemplate(

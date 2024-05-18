@@ -51,13 +51,13 @@ class BlackListOverlay {
       myDialog.close();
     });
 
-    const myDiv = this.#element.querySelector('.blacklist-container');
+    const myDiv = this.#element.querySelector('.blacklist-dialog__container');
     myDiv.addEventListener('click', (event) => event.stopPropagation());
 
-    const blockBtn = this.#element.querySelector('.action-button-blacklist');
+    const blockBtn = this.#element.querySelector('.blacklist-modal__button--action');
     blockBtn.addEventListener('click', (event) => myDialog.close());
 
-    const cancelBtn = this.#element.querySelector('.cancel-button-blacklist');
+    const cancelBtn = this.#element.querySelector('.blacklist-modal__button--cancel');
     cancelBtn.addEventListener('click', (event) => myDialog.close());
   }
 }

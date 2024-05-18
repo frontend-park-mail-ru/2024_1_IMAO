@@ -82,10 +82,8 @@ export class Login {
 
       const apiRoute = ajax.routes.AUTH.LOGIN;
 
-      ajax.post(
-          apiRoute,
-          data,
-          (body) => {
+      ajax
+          .post(apiRoute, data, (body) => {
             if (body?.isAuth === true) {
               history.back();
 
@@ -93,8 +91,10 @@ export class Login {
             }
             submit.disabled = false;
             divError.innerHTML = authError;
-          },
-      );
+          })
+          .catch(() => {
+            submit.disabled = false;
+          });
     });
   }
 

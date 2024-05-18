@@ -2,6 +2,7 @@
 
 import {CATEGORIES} from '../../config/config.js';
 import AdsCard from '../../components/adsCard/adsCard.js';
+import renderLoadingSpinner from '../../components/loadingSpinner/loadingSpinner.js';
 import SkeletonCard from '../../components/skeletonCard/skeletonCard.js';
 import renderIframe from '../../components/iframe/iframe.js';
 import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug.js';
@@ -9,12 +10,19 @@ import {getURLFromLocation, buildURL, parsePathParams, buildURLBySegments} from 
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
+const ADVERTS_SEND_COUNT = 20;
+// Показывает за сколько пикселей до конца страницы начинается подгрузка новых объявлений.
+const LOADING_GAP = 200;
+
 /** Class representing a main page. */
 export class Main {
   #slug;
   #element;
   #isBottomReached;
   #title;
+  #path;
+  #queryStartId;
+  #scrollHandler;
 
   /**
    * Initialize a main page.
@@ -26,6 +34,9 @@ export class Main {
     this.header = header;
     this.#isBottomReached = false;
     this.#title = null;
+    this.#path = null;
+    this.#queryStartId = NaN;
+    this.#addListeners();
   }
 
   /**
@@ -35,7 +46,6 @@ export class Main {
   render() {
     this.#getSlug();
     this.#renderTemplate();
-    this.#addListeners();
 
     return this.#element;
   }
@@ -47,19 +57,20 @@ export class Main {
     this.#addScrollListener();
   }
 
+  #scrollhandler;
   /**
    * Add event listener for scrolling main page.
    */
   #addScrollListener() {
     const scrollHandler = () => {
-      if (document.querySelector('.cards-container') != null) {
+      if (this.#element.querySelector('.cards-container') != null) {
         const position = window.scrollY;
         const winHeight = window.innerHeight;
         const docHeight = document.body.scrollHeight;
 
-        if (position + winHeight >= docHeight && !this.#isBottomReached) {
-          this.#renderTemplate();
+        if (position + winHeight >= docHeight - LOADING_GAP && !this.#isBottomReached) {
           this.#isBottomReached = true;
+          this.#renderTemplate();
         }
       }
     };
@@ -71,7 +82,8 @@ export class Main {
    * Get slug parameters from URL.
    */
   #getSlug() {
-    const url = getURLFromLocation(window.location.href, router.host);
+    this.#path = window.location.href;
+    const url = getURLFromLocation(this.#path, router.host);
     this.#slug = parsePathParams(router.routes.adsListByCategory.href, url);
   }
 
@@ -102,7 +114,7 @@ export class Main {
     apiRoute.searchParams.delete('count');
     apiRoute.searchParams.delete('startId');
 
-    apiRoute.searchParams.append('count', 30);
+    apiRoute.searchParams.append('count', ADVERTS_SEND_COUNT);
     apiRoute.searchParams.append('startId', startID);
 
     return apiRoute;
@@ -123,13 +135,18 @@ export class Main {
   /**
    * Render a template for a main page.
    */
-  #renderTemplate() {
-    const alreadyRendered = document.querySelector('.page-content') != null;
-    const content = alreadyRendered ? document.querySelector('.page-content') : document.createElement('div');
+  async #renderTemplate() {
+    const alreadyRendered = this.#element.querySelector('.page-content') != null;
+    const content = alreadyRendered ? this.#element.querySelector('.page-content') : document.createElement('div');
     const cardsContainerSkeleton = alreadyRendered ? null : document.createElement('div');
-    const cards = document.getElementsByClassName('card');
-    const startID = cards.length == 0 ? 1 : parseInt(cards[cards.length - 1].dataset['id']) + 1;
+    const cards = this.#element.getElementsByClassName('card');
+    const startID = cards.length == 0 ? 1 : cards.length + 1;
+    if (this.#queryStartId === startID) {
+      return;
+    }
+    this.#queryStartId = startID;
     const apiRoute = this.#getRoute(startID);
+    let contentLoaderSpinner = null;
 
     if (!alreadyRendered) {
       this.#element.appendChild(this.header.render());
@@ -156,7 +173,7 @@ export class Main {
 
       cardsContainerSkeleton.classList.add('cards-container-skeleton');
 
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < ADVERTS_SEND_COUNT; i++) {
         const adsCardSkeletonInstance = new SkeletonCard();
         cardsContainerSkeleton.appendChild(adsCardSkeletonInstance.render());
       }
@@ -179,18 +196,34 @@ export class Main {
         }, 120000);
         this.#closeIframe();
       });
+    } else {
+      contentLoaderSpinner = renderLoadingSpinner();
+      this.#element.appendChild(contentLoaderSpinner);
     }
 
-    ajax.get(apiRoute, (body) => {
+    await ajax.get(apiRoute, (body) => {
       const adverts = body['items'];
 
+      if (contentLoaderSpinner !== null) {
+        this.#element.removeChild(contentLoaderSpinner);
+      }
+
       if (!(adverts && Array.isArray(adverts))) {
-        const content = {
+        if (!cardsContainerSkeleton) {
+          const endMessage = document.createElement('div');
+          endMessage.classList.add('page-content__end-message');
+          endMessage.innerHTML = 'Попробуйте изменить условие поиска или категорию.';
+          content.appendChild(endMessage);
+
+          return;
+        }
+
+        const context = {
           header: 'Ничего не найдено',
           content: '',
         };
-        const emptyAdvertsPlug = new EmptyAdvertsPlug(content).render();
-        const plugText = emptyAdvertsPlug.querySelector('.empty-adverts-message-text');
+        const emptyAdvertsPlug = new EmptyAdvertsPlug(context).render();
+        const plugText = emptyAdvertsPlug.querySelector('.empty-adverts__text');
         plugText.innerHTML = 'Мы не нашли то, что вы искали.<br/>Попробуйте изменить условие поиска или категорию.';
         cardsContainerSkeleton.replaceWith(emptyAdvertsPlug);
 
@@ -199,15 +232,15 @@ export class Main {
 
       const cardsContainer = !alreadyRendered ?
         document.createElement('div') :
-        document.querySelector('.cards-container');
+        this.#element.querySelector('.cards-container');
       cardsContainer.classList.add('cards-container');
 
       const ids = [];
       adverts.forEach((inner) => {
-        const {price, title, id, inFavourites, city, category, photosIMG} = inner;
+        const {price, title, id, inFavourites, city, category, photosIMG, isPromoted} = inner;
         ids.push(id);
         const path = buildURLBySegments(router.host, [city, category, id]);
-        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
+        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted);
         cardsContainer.appendChild(adsCardInstance.render());
       });
 

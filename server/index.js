@@ -6,14 +6,20 @@ const path = require('path');
 const app = express();
 
 app.use(morgan('dev'));
-app.use('*/public', express.static(path.resolve(__dirname, '..', 'public'), {
-  maxAge: '60000', // uses milliseconds per docs
-}));
-app.use('*/images', express.static(path.resolve(__dirname, 'images'), {
-  maxAge: '60000', // uses milliseconds per docs
-}));
+app.use(
+    '*/public',
+    express.static(path.resolve(__dirname, '..', 'public'), {
+      maxAge: '60000', // uses milliseconds per docs
+    }),
+);
+app.use(
+    '*/images',
+    express.static(path.resolve(__dirname, 'images'), {
+      maxAge: '60000', // uses milliseconds per docs
+    }),
+);
 
-const port = process.env.PORT || 8008;
+const port = process.env.PORT || 80;
 
 app.get(/^\/(?!.*\.(js|ttf)$).*$/, function(request, response) {
   response.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
