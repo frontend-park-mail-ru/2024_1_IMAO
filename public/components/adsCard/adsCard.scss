@@ -6,10 +6,27 @@
   border-radius: 10px;
   position: relative;
   display: inline-block;
-  background: white;
+  background-color: rgb(255, 255, 255);
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.card__wrapper{
+  width: clamp(133px, 37.5vw, 219px); /* Increased min by 4px and max by 4px */
+  height: clamp(181px, 51vw, 299px); /* Increased min by 4px and max by 4px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.card__wrapper-promoted {
+  background-image: linear-gradient(to left bottom, rgb(72, 204, 254), rgb(212, 99, 254)), 
+                   linear-gradient(to right top, transparent, transparent),
+                   linear-gradient(to left top, transparent, transparent);
+}
+
+
 
 .card img {
   border-radius: 10px 10px 0 0;

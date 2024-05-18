@@ -1,17 +1,19 @@
 <a id="{{id}}" href="{{path}}">
-    <div class="card" title="{{title}}" data-id={{id}}>
-        <div class="card__container">
-            <p class="card__cost">{{price}} ₽</p>
-            <p class="card__description">{{titleTrim}}</p>
+    <div class="card__wrapper {{#if isPromoted}}card__wrapper-promoted{{/if}}">
+        <div class="card" title="{{title}}" data-id={{id}}>
+            <div class="card__container">
+                <p class="card__cost">{{price}} ₽</p>
+                <p class="card__description">{{titleTrim}}</p>
+            </div>
+            <svg width="30" height="9" viewBox="0 0 30 9" fill="white" class="vector-arch"><path d="M27.865 8H0v-.004A3.002 3.002 0 0 0 2.67 6h.007c1.407-3.617 4.88-6 9.165-6h6.316c4.285 0 7.758 2.383 9.165 6h.008A3.002 3.002 0 0 0 30 7.996V8h-2.135zM15.088 24h-.18.18zM0 8h30v1H0V8z"></path></svg>
+            {{#if inFavorites}}
+                <div class="like-icon" data-tooltip="Удалить
+    из избранного"></div>
+            {{^}}
+                <div class="like-icon" data-tooltip="Добавить
+    в избранное"></div>
+            {{/if}} 
         </div>
-        <svg width="30" height="9" viewBox="0 0 30 9" fill="white" class="vector-arch"><path d="M27.865 8H0v-.004A3.002 3.002 0 0 0 2.67 6h.007c1.407-3.617 4.88-6 9.165-6h6.316c4.285 0 7.758 2.383 9.165 6h.008A3.002 3.002 0 0 0 30 7.996V8h-2.135zM15.088 24h-.18.18zM0 8h30v1H0V8z"></path></svg>
-        {{#if inFavorites}}
-            <div class="like-icon" data-tooltip="Удалить
-из избранного"></div>
-        {{^}}
-            <div class="like-icon" data-tooltip="Добавить
-в избранное"></div>
-        {{/if}} 
     </div>
     <div class="message message--hidden"></div>
 </a>

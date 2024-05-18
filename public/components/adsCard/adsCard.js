@@ -30,13 +30,14 @@ class AdsCard {
    * @param {*} path
    * @param {*} photosIMG
    */
-  constructor(title, price, id, inFavorites, path, photosIMG) {
+  constructor(title, price, id, inFavorites, path, photosIMG, isPromoted) {
     this.title = title;
     this.price = price;
     this.id = id;
     this.path = path;
     this.photosIMG = photosIMG;
     this.inFavorites = inFavorites;
+    this.isPromoted = isPromoted
   }
 
   /**
@@ -56,7 +57,7 @@ class AdsCard {
     likeButton.appendChild(likeButtonInstance.render());
 
     this.#addFavoritesListener();
-
+   
     return this.#element;
   }
 
@@ -107,6 +108,7 @@ class AdsCard {
       path: this.path,
       photo: this.photosIMG,
       inFavorites: this.inFavorites,
+      isPromoted: this.isPromoted,
     };
 
     this.#element = stringToHtmlElement(template(context));

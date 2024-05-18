@@ -140,7 +140,7 @@ export class Main {
     const content = alreadyRendered ? this.#element.querySelector('.page-content') : document.createElement('div');
     const cardsContainerSkeleton = alreadyRendered ? null : document.createElement('div');
     const cards = this.#element.getElementsByClassName('card');
-    const startID = cards.length == 0 ? 1 : parseInt(cards[cards.length - 1].dataset['id']) + 1;
+    const startID = cards.length == 0 ? 1 : cards.length + 1;
     if (this.#queryStartId === startID) {
       return;
     }
@@ -237,10 +237,10 @@ export class Main {
 
       const ids = [];
       adverts.forEach((inner) => {
-        const {price, title, id, inFavourites, city, category, photosIMG} = inner;
+        const {price, title, id, inFavourites, city, category, photosIMG, isPromoted} = inner;
         ids.push(id);
         const path = buildURLBySegments(router.host, [city, category, id]);
-        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
+        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted);
         cardsContainer.appendChild(adsCardInstance.render());
       });
 
