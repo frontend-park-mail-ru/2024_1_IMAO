@@ -12,8 +12,7 @@
 }
 
 .card__wrapper{
-  width: clamp(133px, 37.5vw, 219px); /* Increased min by 4px and max by 4px */
-  height: clamp(181px, 51vw, 299px); /* Increased min by 4px and max by 4px */
+  padding: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
