@@ -6,6 +6,7 @@ import styles from './adContainer.scss';
 
 /**
  * Render ad page.
+ * @param {boolean} active
  * @param {string} title - Advert title.
  * @param {string} city - Advert city.
  * @param {string} category - Advert category.
@@ -23,6 +24,7 @@ import styles from './adContainer.scss';
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the advert.
  */
 export default function renderAdContainerTemplate(
+    active,
     title,
     city,
     category,
@@ -40,6 +42,7 @@ export default function renderAdContainerTemplate(
 ) {
   return stringToHtmlElement(
       template({
+        active,
         title,
         city,
         category,

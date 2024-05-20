@@ -30,8 +30,9 @@ class AdsCard {
    * @param {*} path
    * @param {*} photosIMG
    * @param {*} isPromoted
+   * @param {*} isActive
    */
-  constructor(title, price, id, inFavorites, path, photosIMG, isPromoted) {
+  constructor(title, price, id, inFavorites, path, photosIMG, isPromoted, isActive) {
     this.title = title;
     this.price = price;
     this.id = id;
@@ -39,6 +40,7 @@ class AdsCard {
     this.photosIMG = photosIMG;
     this.inFavorites = inFavorites;
     this.isPromoted = isPromoted;
+    this.isActive = isActive;
   }
 
   /**
@@ -110,6 +112,7 @@ class AdsCard {
       photo: this.photosIMG,
       inFavorites: this.inFavorites,
       isPromoted: this.isPromoted,
+      isActive: this.isActive,
     };
 
     this.#element = stringToHtmlElement(template(context));

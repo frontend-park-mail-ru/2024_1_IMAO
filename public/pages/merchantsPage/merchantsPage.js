@@ -173,10 +173,10 @@ export class MerchantsPage {
       }
 
       adverts.forEach((inner) => {
-        const {price, title, id, inFavourites, city, category, photosIMG} = inner;
+        const {price, title, id, inFavourites, city, category, photosIMG, isPromoted, isActive} = inner;
 
         const path = buildURLBySegments(router.host, [city, category, id]);
-        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
+        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted, isActive);
         merchantsPageRightSection.appendChild(adsCardInstance.render());
       });
 

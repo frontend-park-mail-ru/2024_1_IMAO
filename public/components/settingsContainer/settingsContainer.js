@@ -242,7 +242,7 @@ class SettingsContainer {
             break;
 
           default:
-            const id = this.#element.querySelector('.selected').dataset.id;
+            const id = this.#element.querySelector('.citylist__option--selected').dataset.id;
             data = {id: parseInt(id)};
             break;
         }

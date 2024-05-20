@@ -11,7 +11,7 @@
   text-overflow: ellipsis;
 }
 
-.card__wrapper{
+.card__wrapper {
   padding: 2px;
   display: flex;
   justify-content: center;
@@ -20,12 +20,9 @@
 }
 
 .card__wrapper-promoted {
-  background-image: linear-gradient(to left bottom, rgb(72, 204, 254), rgb(212, 99, 254)), 
-                   linear-gradient(to right top, transparent, transparent),
-                   linear-gradient(to left top, transparent, transparent);
+  background-image: linear-gradient(to left bottom, rgb(72, 204, 254), rgb(212, 99, 254)),
+    linear-gradient(to right top, transparent, transparent), linear-gradient(to left top, transparent, transparent);
 }
-
-
 
 .card img {
   border-radius: 10px 10px 0 0;
@@ -40,6 +37,18 @@
 
 .card .card__cost {
   font-size: clamp(14px, 4vw, 20px);
+  font-weight: bold;
+}
+
+.card .card__status {
+  position: absolute;
+  background-color: #b9e28c;
+  color: rgba(0, 0, 0, 0.9);
+  border-radius: 5px;
+  padding: 5px;
+  right: 10px;
+  top: 10px;
+  font-size: clamp(12px, 4vw, 16px);
   font-weight: bold;
 }
 

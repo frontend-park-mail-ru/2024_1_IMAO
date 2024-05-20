@@ -83,6 +83,10 @@ main {
   justify-content: space-evenly;
   gap: 16px 36px;
   text-decoration: none;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 .cards-container-skeleton {

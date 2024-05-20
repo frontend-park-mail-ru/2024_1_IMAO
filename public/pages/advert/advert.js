@@ -255,7 +255,8 @@ export class Advert {
       const {items} = body;
       const {advert, city, category, photosIMG} = items;
 
-      const {id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} = advert;
+      const {active, id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} =
+        advert;
       this.id = id;
       const createdDate = formatDate(created);
       const cityName = city.name;
@@ -293,6 +294,7 @@ export class Advert {
       content.appendChild(adPathElement);
 
       const adContainer = renderAdContainerTemplate(
+          active,
           title,
           cityName,
           categoryName,
@@ -312,7 +314,7 @@ export class Advert {
       content.appendChild(adContainer);
 
       document.title += ' ' + trimString(title, 40);
-      const addCartButton = this.#element.querySelector('.cart');
+      const addCartButton = this.#element.querySelector('.seller-block__btn--cart');
       if (addCartButton !== null) {
         if (inCart) {
           addCartButton.innerHTML = 'Удалить из корзины';
