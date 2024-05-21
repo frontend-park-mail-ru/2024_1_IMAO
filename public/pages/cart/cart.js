@@ -141,7 +141,7 @@ export class Cart {
         headQuantity.innerHTML = quantity.innerHTML;
       }
       this.#model.deleteFromCart(advertIDs);
-      if (Number(quantity.innerHTML) == 0) {
+      if (!Number(quantity.innerHTML)) {
         this.#renderEmptyPlug();
       }
     });

@@ -55,7 +55,7 @@ class DropdownWithSearch {
 
       if (!dropdownSelect) {
         allDropdownSelects.forEach((ds) => {
-          ds.classList.remove('open');
+          ds.classList.remove('dropdown-with-search--open');
           ds.querySelectorAll('.citylist__option').forEach((option) => option.removeAttribute('tabindex'));
         });
 
@@ -68,14 +68,14 @@ class DropdownWithSearch {
 
       allDropdownSelects.forEach((ds) => {
         if (ds !== dropdownSelect) {
-          ds.classList.remove('open');
+          ds.classList.remove('dropdown-with-search--open');
         }
       });
 
-      dropdownSelect.classList.toggle('open');
+      dropdownSelect.classList.toggle('dropdown-with-search--open');
       const allOptions = dropdownSelect.querySelectorAll('.citylist__option');
 
-      if (dropdownSelect.classList.contains('open')) {
+      if (dropdownSelect.classList.contains('dropdown-with-search--open')) {
         allOptions.forEach((option) => option.setAttribute('tabindex', '0'));
         dropdownSelect.querySelector('.citylist__option--selected').focus();
 
@@ -112,7 +112,7 @@ class DropdownWithSearch {
       const focusedOption =
         dropdownSelect.querySelector('.dropdown-with-search__list .citylist__option:focus') ||
         dropdownSelect.querySelector('.dropdown-with-search__list .citylist__option.citylist__option--selected');
-      const isOpend = dropdownSelect.classList.contains('open');
+      const isOpend = dropdownSelect.classList.contains('dropdown-with-search--open');
 
       let buttonPressed = true;
       switch (event.code) {

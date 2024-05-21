@@ -82,6 +82,11 @@ main {
   grid-template-columns: repeat(auto-fit, clamp(129px, 37.5vw, 215px));
   justify-content: space-evenly;
   gap: 16px 36px;
+  text-decoration: none;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 .cards-container-skeleton {

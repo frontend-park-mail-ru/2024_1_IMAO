@@ -61,6 +61,10 @@
   flex-wrap: wrap;
   gap: 16px;
   margin-top: 2%;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 .profile-page .text-underline-hover:hover {

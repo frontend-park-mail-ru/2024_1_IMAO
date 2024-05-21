@@ -10,6 +10,10 @@ import {getURLFromLocation, buildURL, parsePathParams, buildURLBySegments} from 
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
+const ADVERTS_SEND_COUNT = 20;
+// Показывает за сколько пикселей до конца страницы начинается подгрузка новых объявлений.
+const LOADING_GAP = 200;
+
 /** Class representing a main page. */
 export class Main {
   #slug;
@@ -64,7 +68,7 @@ export class Main {
         const winHeight = window.innerHeight;
         const docHeight = document.body.scrollHeight;
 
-        if (position + winHeight >= docHeight - 200 && !this.#isBottomReached) {
+        if (position + winHeight >= docHeight - LOADING_GAP && !this.#isBottomReached) {
           this.#isBottomReached = true;
           this.#renderTemplate();
         }
@@ -110,7 +114,7 @@ export class Main {
     apiRoute.searchParams.delete('count');
     apiRoute.searchParams.delete('startId');
 
-    apiRoute.searchParams.append('count', 20);
+    apiRoute.searchParams.append('count', ADVERTS_SEND_COUNT);
     apiRoute.searchParams.append('startId', startID);
 
     return apiRoute;
@@ -136,7 +140,7 @@ export class Main {
     const content = alreadyRendered ? this.#element.querySelector('.page-content') : document.createElement('div');
     const cardsContainerSkeleton = alreadyRendered ? null : document.createElement('div');
     const cards = this.#element.getElementsByClassName('card');
-    const startID = cards.length == 0 ? 1 : parseInt(cards[cards.length - 1].dataset['id']) + 1;
+    const startID = cards.length == 0 ? 1 : cards.length + 1;
     if (this.#queryStartId === startID) {
       return;
     }
@@ -169,7 +173,7 @@ export class Main {
 
       cardsContainerSkeleton.classList.add('cards-container-skeleton');
 
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < ADVERTS_SEND_COUNT; i++) {
         const adsCardSkeletonInstance = new SkeletonCard();
         cardsContainerSkeleton.appendChild(adsCardSkeletonInstance.render());
       }
@@ -233,10 +237,10 @@ export class Main {
 
       const ids = [];
       adverts.forEach((inner) => {
-        const {price, title, id, inFavourites, city, category, photosIMG} = inner;
+        const {price, title, id, inFavourites, city, category, photosIMG, isPromoted, isActive} = inner;
         ids.push(id);
         const path = buildURLBySegments(router.host, [city, category, id]);
-        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
+        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted, isActive);
         cardsContainer.appendChild(adsCardInstance.render());
       });
 

@@ -173,10 +173,10 @@ export class MerchantsPage {
       }
 
       adverts.forEach((inner) => {
-        const {price, title, id, inFavourites, city, category, photosIMG} = inner;
+        const {price, title, id, inFavourites, city, category, photosIMG, isPromoted, isActive} = inner;
 
         const path = buildURLBySegments(router.host, [city, category, id]);
-        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
+        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted, isActive);
         merchantsPageRightSection.appendChild(adsCardInstance.render());
       });
 
@@ -211,9 +211,9 @@ export class MerchantsPage {
       const merchantsName = profile.merchantsName;
       const ratingValue = profile.rating;
       if (merchantsName) {
-        document.title += ' ' + trimString(merchantsName, 40);
+        document.title += ` ${trimString(merchantsName, 40)}`;
       } else {
-        document.title += ' ' + 'Пользователь №' + id;
+        document.title += ` Пользователь №${id}`;
       }
 
       const paths = [
