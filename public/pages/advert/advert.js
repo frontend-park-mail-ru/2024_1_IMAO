@@ -66,42 +66,21 @@ export class Advert {
    * Add listeners for images carousel.
    */
   #addCarouselListeners() {
-    const carousel = this.#element.querySelector('.carousel');
-    const imagesContainer = this.#element.querySelector('.post-images');
     const prevBtn = this.#element.querySelector('.post-images__prev-btn');
     const nextBtn = this.#element.querySelector('.post-images__next-btn');
-    const images = imagesContainer.querySelectorAll('.images__item');
-
-    let currentIndex = 0;
-    const elemsOnPage = images.length;
+    const imagesList = this.#element.querySelector('.images');
 
     prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1) % elemsOnPage;
-      updateCarousel(currentIndex, elemsOnPage);
+      const lastElement = imagesList.lastElementChild;
+      imagesList.removeChild(lastElement);
+      imagesList.insertBefore(lastElement, imagesList.firstElementChild);
     });
 
     nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % elemsOnPage;
-      updateCarousel(currentIndex, elemsOnPage);
+      const firstElement = imagesList.firstElementChild;
+      imagesList.removeChild(firstElement);
+      imagesList.appendChild(firstElement);
     });
-
-    const updateCarousel = (currentIndex, elemsOnPage) => {
-      const index = (currentIndex + elemsOnPage) % elemsOnPage;
-
-      const carouselWidth = carousel.offsetWidth;
-      const currentWidth = images[index].offsetWidth;
-
-      let newPosition = 0;
-      if (index !== elemsOnPage - 1) {
-        newPosition = (-index * 100 * currentWidth) / carouselWidth;
-      } else {
-        const lastWidth = images[images.length - 1].offsetWidth;
-        const offset = lastWidth - (carouselWidth - currentWidth);
-        newPosition = (-index * 100 * offset) / carouselWidth;
-      }
-
-      carousel.style.transform = `translateX(${newPosition}%)`;
-    };
   }
 
   /**
