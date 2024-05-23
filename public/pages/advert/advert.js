@@ -323,6 +323,7 @@ export class Advert {
         subscribersCount: profile.subersCount,
         subscribtionsCount: profile.subonsCount,
         avatarImg: profile.avatarImg,
+        notIsAuthor: ajax.auth.id !== profile.userId,
       };
 
       const merchantCardInstance = new MerchantCard(merchantCartItems);
