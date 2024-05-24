@@ -66,25 +66,69 @@ export class Advert {
    * Add listeners for images carousel.
    */
   #addCarouselListeners() {
+    const carousel = this.#element.querySelector('.carousel');
+    const imagesContainer = this.#element.querySelector('.post-images');
     const prevBtn = this.#element.querySelector('.post-images__prev-btn');
     const nextBtn = this.#element.querySelector('.post-images__next-btn');
-    const imagesList = this.#element.querySelector('.images');
+    const images = imagesContainer.querySelectorAll('.images__item');
+
+    let currentTranslate = 0;
+    let currentIndex = 0;
+    const elemsOnPage = images.length;
 
     prevBtn.addEventListener('click', () => {
-      const lastElement = imagesList.lastElementChild;
-      imagesList.removeChild(lastElement);
-      imagesList.insertBefore(lastElement, imagesList.firstElementChild);
+      currentIndex = (currentIndex - 1) % elemsOnPage;
+      updateCarousel(currentIndex, elemsOnPage, movePrev);
     });
 
     nextBtn.addEventListener('click', () => {
-      const firstElement = imagesList.firstElementChild;
-      imagesList.removeChild(firstElement);
-      imagesList.appendChild(firstElement);
+      updateCarousel(currentIndex, elemsOnPage, moveNext);
+      currentIndex = (currentIndex + 1) % elemsOnPage;
     });
+
+    const updateCarousel = (currentIndex, elemsOnPage, moveFunc) => {
+      const index = (currentIndex + elemsOnPage) % elemsOnPage;
+      let imagesWidth = 0;
+      images.forEach((image) => {
+        imagesWidth += image.offsetWidth;
+      });
+
+      const carouselWidth = carousel.offsetWidth;
+      const tolerance = (carouselWidth / 100) * 5;
+      const currentWidth = images[index].offsetWidth;
+      moveFunc(imagesWidth, currentWidth, carouselWidth, tolerance);
+      carousel.style.transform = `translateX(${currentTranslate}px)`;
+    };
+
+    const moveNext = (imagesWidth, currentWidth, carouselWidth, tolerance) => {
+      if (imagesWidth + currentTranslate > carouselWidth + tolerance) {
+        if (imagesWidth + currentTranslate - currentWidth < carouselWidth) {
+          currentTranslate += carouselWidth - (imagesWidth + currentTranslate);
+        } else {
+          currentTranslate -= currentWidth;
+        }
+      } else {
+        currentTranslate = 0;
+        currentIndex = -1;
+      }
+    };
+
+    const movePrev = (imagesWidth, currentWidth, carouselWidth, tolerance) => {
+      if (currentTranslate < 0) {
+        if (currentTranslate + currentWidth > 0 + tolerance) {
+          currentTranslate = 0;
+        } else {
+          currentTranslate += currentWidth;
+        }
+      } else {
+        currentTranslate = carouselWidth - imagesWidth;
+        currentIndex = elemsOnPage;
+      }
+    };
   }
 
   /**
-   *
+   * Event listener on button in mobile mode.
    */
   #addScrollListener() {
     const button = this.#element.querySelector('.seller-block__btn');
