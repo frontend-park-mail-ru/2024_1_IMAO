@@ -72,40 +72,63 @@ export class Advert {
     const nextBtn = this.#element.querySelector('.post-images__next-btn');
     const images = imagesContainer.querySelectorAll('.images__item');
 
+    let currentTranslate = 0;
     let currentIndex = 0;
     const elemsOnPage = images.length;
 
     prevBtn.addEventListener('click', () => {
       currentIndex = (currentIndex - 1) % elemsOnPage;
-      updateCarousel(currentIndex, elemsOnPage);
+      updateCarousel(currentIndex, elemsOnPage, movePrev);
     });
 
     nextBtn.addEventListener('click', () => {
+      updateCarousel(currentIndex, elemsOnPage, moveNext);
       currentIndex = (currentIndex + 1) % elemsOnPage;
-      updateCarousel(currentIndex, elemsOnPage);
     });
 
-    const updateCarousel = (currentIndex, elemsOnPage) => {
+    const updateCarousel = (currentIndex, elemsOnPage, moveFunc) => {
       const index = (currentIndex + elemsOnPage) % elemsOnPage;
+      let imagesWidth = 0;
+      images.forEach((image) => {
+        imagesWidth += image.offsetWidth;
+      });
 
       const carouselWidth = carousel.offsetWidth;
+      const tolerance = (carouselWidth / 100) * 5;
       const currentWidth = images[index].offsetWidth;
+      moveFunc(imagesWidth, currentWidth, carouselWidth, tolerance);
+      carousel.style.transform = `translateX(${currentTranslate}px)`;
+    };
 
-      let newPosition = 0;
-      if (index !== elemsOnPage - 1) {
-        newPosition = (-index * 100 * currentWidth) / carouselWidth;
+    const moveNext = (imagesWidth, currentWidth, carouselWidth, tolerance) => {
+      if (imagesWidth + currentTranslate > carouselWidth + tolerance) {
+        if (imagesWidth + currentTranslate - currentWidth < carouselWidth) {
+          currentTranslate += carouselWidth - (imagesWidth + currentTranslate);
+        } else {
+          currentTranslate -= currentWidth;
+        }
       } else {
-        const lastWidth = images[images.length - 1].offsetWidth;
-        const offset = lastWidth - (carouselWidth - currentWidth);
-        newPosition = (-index * 100 * offset) / carouselWidth;
+        currentTranslate = 0;
+        currentIndex = -1;
       }
+    };
 
-      carousel.style.transform = `translateX(${newPosition}%)`;
+    const movePrev = (imagesWidth, currentWidth, carouselWidth, tolerance) => {
+      if (currentTranslate < 0) {
+        if (currentTranslate + currentWidth > 0 + tolerance) {
+          currentTranslate = 0;
+        } else {
+          currentTranslate += currentWidth;
+        }
+      } else {
+        currentTranslate = carouselWidth - imagesWidth;
+        currentIndex = elemsOnPage;
+      }
     };
   }
 
   /**
-   *
+   * Event listener on button in mobile mode.
    */
   #addScrollListener() {
     const button = this.#element.querySelector('.seller-block__btn');
