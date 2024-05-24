@@ -3,6 +3,7 @@
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import renderAdContainerTemplate from '../../components/adContainer/adContainer.js';
 import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
+import PromotionOverlay from '../../components/promotionOverlay/promotionOverlay.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {parsePathParams, buildURL, getURLFromLocation, buildURLBySegments} from '../../modules/parsePathParams.js';
@@ -55,6 +56,7 @@ export class Advert {
     this.#addCarouselListeners();
     this.#addPathListener();
     await this.#addAddCartDialogListener();
+    this.#addPromotionDialogListener();
     this.#addMerchantPageListener();
     this.#addCloseListener();
     this.#addFavoritesListener();
@@ -142,8 +144,6 @@ export class Advert {
 
   /**
    * Adds cart dialog listener.
-   * @param {*} addToBlackListButton
-   * @param {*} overlayContainer
    */
   async #addAddCartDialogListener() {
     const addCartButton = this.#element.querySelector('.seller-block__btn--cart');
@@ -170,8 +170,6 @@ export class Advert {
 
   /**
    * Adds add to favorites listener.
-   * @param {*} addToBlackListButton
-   * @param {*} overlayContainer
    */
   #addFavoritesListener() {
     const addFavoritesButton = this.#element.querySelector('.favourite__btn--favourite');
@@ -212,6 +210,20 @@ export class Advert {
     merchantAddress.addEventListener('click', (ev) => {
       router.pushPage(ev, merchantAddress.href);
     });
+  }
+
+  /**
+   * Advert promotion dialog listener
+   */
+  #addPromotionDialogListener() {
+    const promotionButton = this.#element.querySelector('.seller-block__btn--promote');
+    if (promotionButton == null) {
+      return;
+    }
+    const promotionOverlay = new PromotionOverlay(promotionButton);
+    const advertBlock = this.#element.querySelector('.post-block');
+    console.log(promotionOverlay.render());
+    advertBlock.appendChild(promotionOverlay.render());
   }
 
   /**
