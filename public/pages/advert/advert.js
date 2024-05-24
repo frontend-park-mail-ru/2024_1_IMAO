@@ -222,7 +222,6 @@ export class Advert {
     }
     const promotionOverlay = new PromotionOverlay(promotionButton);
     const advertBlock = this.#element.querySelector('.post-block');
-    console.log(promotionOverlay.render());
     advertBlock.appendChild(promotionOverlay.render());
   }
 

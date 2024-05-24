@@ -22,10 +22,10 @@ class PromotionOverlay {
    * Renders promotion overlay.
    * @return {HTMLElement} - Promotion overlay.
    */
-  async render() {
+  render() {
     this.#renderTemplate();
 
-    //await this.#addListeners();
+    this.#addListeners();
 
     return this.#element;
   }
@@ -40,8 +40,21 @@ class PromotionOverlay {
   /**
    * Add event listeners for promotion overlay.
    */
-  async #addListeners() {
+  #addListeners() {
+    const myDialog = this.#element;
+    const myButton = this.button;
 
+    myButton.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      myDialog.showModal();
+    });
+
+    myDialog.addEventListener('click', () => {
+      myDialog.close();
+    });
+
+    const myDiv = this.#element.querySelector('.promotion-dialog__container');
+    myDiv.addEventListener('click', (event) => event.stopPropagation());
   }
 }
 
