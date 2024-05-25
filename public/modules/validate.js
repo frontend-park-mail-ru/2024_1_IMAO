@@ -92,18 +92,19 @@ export function validatePassword(password) {
     return false;
   }
 
-  let hasUpper = false;
+  const hasUpper = /[A-Z]/.test(password);
   const hasLower = /[a-z]/.test(password);
   let hasDigit = false;
 
   for (const letter of password) {
     if (isDigit(letter)) {
       hasDigit = true;
-      // } else if (isLower(letter)) {
-      //   hasLower = true;
-    } else if (isUpper(letter)) {
-      hasUpper = true;
     }
+    // } else if (isLower(letter)) {
+    //   hasLower = true;
+    // } else if (isUpper(letter)) {
+    //   hasUpper = true;
+    // }
   }
 
   return hasUpper && hasLower && hasDigit;
