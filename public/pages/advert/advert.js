@@ -7,7 +7,7 @@ import PromotionOverlay from '../../components/promotionOverlay/promotionOverlay
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {parsePathParams, buildURL, getURLFromLocation, buildURLBySegments} from '../../modules/parsePathParams.js';
-import formatDate from '../../modules/formatDate.js';
+import {formatDate, calculateLeftTime} from '../../modules/formatDate.js';
 import trimString from '../../modules/trimString.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
@@ -243,7 +243,7 @@ export class Advert {
 
     await ajax.get(apiRoute, (body) => {
       const {items} = body;
-      const {advert, city, category, photosIMG} = items;
+      const {advert, city, category, photosIMG, promotion} = items;
 
       const {active, id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} =
         advert;
@@ -252,6 +252,7 @@ export class Advert {
       const cityName = city.name;
       const categoryName = category.name;
       const isAuthor = ajax.auth.id === advert.userId;
+      const isPromoted = promotion.isPromoted;
 
       let state = '';
       if (isUsed) {
@@ -283,6 +284,63 @@ export class Advert {
       adPathElement.appendChild(renderAdPathTemplate({paths}));
       content.appendChild(adPathElement);
 
+      let promotionData;
+      if (isPromoted) {
+        const promotionDays = promotion.promotionDuration.Days;
+        const promotionStart = promotion.promotionStart;
+        const duration = 24 * promotionDays;
+
+        let tariff;
+        switch (promotionDays) {
+          case 1:
+            tariff = 'Поднятие';
+            break;
+          case 3:
+            tariff = 'Премиум';
+            break;
+          default:
+            tariff = 'Максимум';
+            break;
+        }
+
+        const leftTime = calculateLeftTime(duration, promotionStart);
+        let timeTitle;
+        if (leftTime >= 24) {
+          const leftDays = Math.round(leftTime / 24);
+          switch (leftDays) {
+            case 1:
+              timeTitle = 'Остался 1 день';
+              break;
+            case 2:
+            case 3:
+            case 4:
+              timeTitle = `Осталось ${leftDays} дня`;
+              break;
+            default:
+              timeTitle = `Осталось ${leftDays} дней`;
+              break;
+          }
+        } else {
+          switch (leftTime) {
+            case 1:
+            case 21:
+              timeTitle = `Остался ${leftTime} час`;
+              break;
+            case 2:
+            case 3:
+            case 4:
+            case 22:
+            case 23:
+              timeTitle = `Осталось ${leftTime} часа`;
+              break;
+            default:
+              timeTitle = `Осталось ${leftTime} часов`;
+          }
+        }
+
+        promotionData = {tariff, duration, leftTime, timeTitle};
+      }
+
       const adContainer = renderAdContainerTemplate(
           active,
           title,
@@ -299,6 +357,8 @@ export class Advert {
           inFavourites,
           views,
           favouritesNum,
+          isPromoted,
+          promotionData,
       );
       adContainer.classList.add('post-container');
       content.appendChild(adContainer);

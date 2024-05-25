@@ -21,6 +21,8 @@ import styles from './adContainer.scss';
  * @param {*} inFavorites
  * @param {*} views
  * @param {*} favouritesNum
+ * @param {bool} isPromoted
+ * @param {Object} promotionData
  * @return {Handlebars.TemplateDelegate} - The tmeplate of the advert.
  */
 export default function renderAdContainerTemplate(
@@ -39,6 +41,8 @@ export default function renderAdContainerTemplate(
     inFavorites,
     views,
     favouritesNum,
+    isPromoted,
+    promotionData,
 ) {
   return stringToHtmlElement(
       template({
@@ -57,6 +61,8 @@ export default function renderAdContainerTemplate(
         inFavorites,
         views,
         favouritesNum,
+        isPromoted,
+        promotionData,
       }),
   );
 }

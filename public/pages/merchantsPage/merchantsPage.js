@@ -7,7 +7,7 @@ import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
-import formatDate from '../../modules/formatDate.js';
+import {formatDate} from '../../modules/formatDate.js';
 import SkeletonCard from '../../components/skeletonCard/skeletonCard.js';
 import StageStorage from '../../modules/stateStorage.js';
 import trimString from '../../modules/trimString.js';
