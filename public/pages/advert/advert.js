@@ -220,7 +220,7 @@ export class Advert {
     if (promotionButton == null) {
       return;
     }
-    const promotionOverlay = new PromotionOverlay(promotionButton);
+    const promotionOverlay = new PromotionOverlay(promotionButton, promotionButton.dataset['id']);
     const advertBlock = this.#element.querySelector('.post-block');
     advertBlock.appendChild(promotionOverlay.render());
   }

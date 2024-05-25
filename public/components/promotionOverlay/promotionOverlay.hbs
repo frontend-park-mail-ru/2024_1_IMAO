@@ -7,8 +7,8 @@
     <div class="promotion-dialog__container">
         <div class="promotion-modal">
             <h3>Услуги продвижения</h3>
-            <div class="tariff">
-                <input type="radio" class="tariff__radio" checked>
+            <div class="tariff tariff__selected">
+                <input type="radio" class="tariff__radio" name="tariffPlan" value="3" checked>
                 <div class="tariff__container">
                     <div class="tariff__icon">
                         <div class="tariff__icon--circle maximum">
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="tariff">
-                <input type="radio" class="tariff__radio">
+                <input type="radio" class="tariff__radio" name="tariffPlan" value="2">
                 <div class="tariff__container">
                     <div class="tariff__icon">
                         <div class="tariff__icon--circle premium">
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="tariff">
-                <input type="radio" class="tariff__radio">
+                <input type="radio" class="tariff__radio" name="tariffPlan" value="1">
                 <div class="tariff__container">
                     <div class="tariff__icon">
                         <div class="tariff__icon--circle lifting">
@@ -87,6 +87,7 @@
                     </div>
                 </div>
             </div>
+            <button class="promote-btn" data-id="{{id}}">Продвинуть за 199 ₽</button>
         </div>
     </div>
 </dialog>
