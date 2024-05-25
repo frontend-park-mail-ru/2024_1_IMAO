@@ -4,6 +4,7 @@ import template from './promotionOverlay.hbs';
 import './promotionOverlay.scss';
 import stringToHtmlElement from '../../modules/stringToHtmlElement';
 import ajax from '../../modules/ajax';
+import router from '../../router/router.js';
 
 /**
  * Class represented advert promotion overlay.
@@ -100,7 +101,11 @@ class PromotionOverlay {
 
       const body = {rate, advertId};
       ajax.post(ajax.routes.PAYMENTS.FORM, body, (data) => {
-        console.log(data);
+        if (data.code != 200) {
+          return;
+        }
+
+        document.location.href = data.paymentFormUrl;
       });
     });
   }
