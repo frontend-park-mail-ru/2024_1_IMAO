@@ -3,6 +3,7 @@
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import renderAdContainerTemplate from '../../components/adContainer/adContainer.js';
 import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
+import PriceHistoryOverlay from '../../components/priceHistoryOverlay/priceHistoryOverlay.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {parsePathParams, buildURL, getURLFromLocation, buildURLBySegments} from '../../modules/parsePathParams.js';
@@ -26,6 +27,7 @@ export class Advert {
     this.#element.classList.add('main-page');
     this.header = header;
     this.id = NaN;
+    this.priceHistory = [];
   }
 
   /**
@@ -55,6 +57,7 @@ export class Advert {
     this.#addCarouselListeners();
     this.#addPathListener();
     await this.#addAddCartDialogListener();
+    this.#addPriceHistoryListener();
     this.#addMerchantPageListener();
     this.#addCloseListener();
     this.#addFavoritesListener();
@@ -186,8 +189,6 @@ export class Advert {
 
   /**
    * Adds cart dialog listener.
-   * @param {*} addToBlackListButton
-   * @param {*} overlayContainer
    */
   async #addAddCartDialogListener() {
     const addCartButton = this.#element.querySelector('.seller-block__btn--cart');
@@ -197,6 +198,21 @@ export class Advert {
     const addCartOverlay = new AddCartOverlay(addCartButton);
     const advertBlock = this.#element.querySelector('.post-block');
     advertBlock.appendChild(await addCartOverlay.render());
+  }
+
+  /**
+   * Adds a price history dialog listener.
+   */
+  async #addPriceHistoryListener() {
+    const priceHistoryButtons = this.#element.querySelectorAll('.history-btn');
+    priceHistoryButtons.forEach((priceHistoryButton) => {
+      if (priceHistoryButton == null) {
+        return;
+      }
+      const priceHistoryOverlay = new PriceHistoryOverlay(priceHistoryButton);
+      const advertBlock = this.#element.querySelector('.post-block');
+      advertBlock.appendChild(priceHistoryOverlay.render());
+    });
   }
 
   /**
@@ -377,5 +393,27 @@ export class Advert {
       const ratingBar = ratingBarInstance.render();
       rating.appendChild(ratingBar);
     });
+    const array = Array.from({length: 10}, () => Math.floor(Math.random() * (2000 - 200 + 1)) + 200);
+    const canvas = this.#element.querySelector('.history-btn__canvas');
+    const context = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    const step = width / (array.length - 1);
+    const middleData = (Math.max(...array) + Math.min(...array)) / 2;
+    const middleCanvas = height / 2;
+    context.beginPath();
+    context.moveTo(0, middleCanvas);
+    let currentX = 0;
+    array.forEach((val) => {
+      const currentY = height - (val * middleCanvas) / middleData;
+      if (currentX !== 0) {
+        context.lineTo(currentX, currentY);
+      }
+      context.moveTo(currentX, currentY);
+      currentX += step;
+    });
+
+    context.closePath();
+    context.stroke();
   }
 }

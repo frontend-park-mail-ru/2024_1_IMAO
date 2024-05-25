@@ -98,8 +98,48 @@
     justify-content: space-between;
   }
 
+  .post-block__price-block--mobile {
+    display: none;
+  }
+
   .post-block__price--mobile {
     display: none;
+  }
+
+  .history-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    height: 44px;
+    text-decoration: none;
+    color: black;
+    font-size: large;
+    font-weight: 600;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 20px;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #d7d7d7;
+    }
+
+    &__price-deff {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    &__sign {
+      font-size: 2ch;
+    }
+
+    &__canvas {
+      height: 24px;
+      width: 55px;
+    }
   }
 }
 
@@ -357,6 +397,10 @@
 
     h1 {
       font-size: 20px !important;
+    }
+
+    .post-block__price-block--mobile {
+      display: flex;
     }
 
     .post-block__price--mobile {

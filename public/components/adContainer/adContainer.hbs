@@ -1,7 +1,10 @@
 <div>
     <div class="post-block">
         <div class="post-block__top-panel">
-            <h3 class="post-block__price--mobile">{{price}} ₽</h3>
+            <div class="post-block__price-block--mobile">
+                <h3 class="post-block__price--mobile">{{price}} ₽</h3>
+                <a class="history-btn" href="#" data-id="{{id}}">Снять с продажи</a>
+            </div>
             <div class="title">
                 <h1>{{title}}</h1>
             </div>
@@ -93,7 +96,16 @@
         </ul>
     </div>
     <div class="seller-block">
-        <h1 class="price title">{{price}} ₽</h1>
+        <div class="post-block__price-block">
+            <h1 class="price title">{{price}} ₽</h1>
+            <a class="history-btn" href="#" data-id="{{id}}"> 
+                <div class="history-btn__price-deff" style="display: flex;">
+                    <div class="history-btn__price">&uArr; 100 ₽ </div>
+                    <canvas class="history-btn__canvas" width="55" height="24"></canvas>
+                </div>
+                <div class="history-btn__sign">&#8250;</div>
+            </a>
+        </div>
         {{#if active}}
             {{#if isAuthor}}
                 <a class="seller-block__btn seller-block__btn--close" href="#" data-id="{{id}}" >Снять с продажи</a>
