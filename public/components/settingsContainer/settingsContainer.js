@@ -4,7 +4,7 @@ import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './settingsContainer.hbs';
 import styles from './settingsContainer.scss';
 import EditProfileOverlay from '../../components/editProfileOverlay/editProfileOverlay.js';
-import formatDate from '../../modules/formatDate.js';
+import {formatDate} from '../../modules/formatDate.js';
 import {validateEmail, validateName, validatePhone} from '../../modules/validate.js';
 import ajax from '../../modules/ajax.js';
 
