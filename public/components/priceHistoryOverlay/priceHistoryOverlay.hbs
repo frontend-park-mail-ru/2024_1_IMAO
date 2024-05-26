@@ -7,25 +7,22 @@
     <div class="price-history-dialog__container">
         <div class="price-history-modal">
             <div class="price-history-modal__content">
-                </div class="price-history-modal__price"></div>
-                </div class="price-history-modal__range"></div>
-                <canvas class="price-history-modal__canvas"></canvas>
-                {{!-- <div class="price-history-modal__header">
-                    <div class="price-history-modal__text">
-                        <div class="price-history-dialog__text-to-change">Товар добавлен в корзину</div>
-                        <div class="price-history-modal__subtext">
-                            <div>Перейти в корзину?</div>
-                        </div>
-                    </div>
+                <div class="price-history-modal__price">{{price}} ₽</div>
+                <div class="price-history-modal__range">Диапазон: {{priceMin}} ₽ — {{priceMax}} ₽</div>
+                <canvas class="price-history-modal__canvas" width="360" height="180"></canvas>
+                <div class="price-history-modal__slider">
+                    {{#each points}}
+                        <div class="price-history-modal__element" data-point="{{this.index}}"></div>
+                    {{/each}}
                 </div>
-                <div class="price-history-modal__buttons">
-                    <div class="price-history-modal__button price-history-modal__button--action">
-                        В&nbsp;корзину
-                    </div>
-                    <div class="price-history-modal__button price-history-modal__button--cancel">
-                        <div>Отмена</div>
-                    </div>
-                </div> --}}
+                <div class="price-history-modal__date">
+                    <div class="price-history-modal__begin-date">{{beginDate}}</div>
+                    <div class="price-history-modal__end-date">{{endDate}}</div>
+                </div>
+                <div class="message message--hidden">
+                    <div class="message__date"></div>
+                    <div class="message__price"></div>
+                </div>
             </div>
         </div>
     </div>

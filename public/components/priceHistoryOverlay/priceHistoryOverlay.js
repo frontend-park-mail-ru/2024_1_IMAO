@@ -3,23 +3,27 @@
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './priceHistoryOverlay.hbs';
 import './priceHistoryOverlay.scss';
-import router from '../../router/router.js';
-import ajax from '../../modules/ajax.js';
-import cartModel from '../../models/cart.js';
+import formatDate from '../../modules/formatDate.js';
+import {renderChartGradient, COLOR} from '../../modules/chartRender.js';
 
 /**
- * Class represented an overlay to add into cart.
+ * Class represented an overlay with price history.
  */
 class PriceHistoryOverlay {
   #element;
-  #model;
+
   /**
    * Constructor for overlay.
    * @param {HTMLElement} button
+   * @param {Array} dataArray
    */
-  constructor(button) {
+  constructor(button, dataArray) {
     this.button = button;
-    this.#model = cartModel;
+    this.dataArray = dataArray;
+    if (dataArray.length == 1) {
+      dataArray.push(dataArray[0]);
+    }
+    this.priceArray = this.dataArray.map((value) => value.newPrice);
   }
 
   /**
@@ -28,8 +32,9 @@ class PriceHistoryOverlay {
    */
   render() {
     this.#renderTemplate();
-
+    this.#renderChart();
     this.#addListeners();
+    this.#addSliderListeners();
 
     return this.#element;
   }
@@ -38,7 +43,77 @@ class PriceHistoryOverlay {
    * Renders an overlay.
    */
   #renderTemplate() {
-    this.#element = stringToHtmlElement(template());
+    const pointsArray = this.priceArray.map((value, index) => {
+      return {value, index};
+    });
+    const context = {
+      price: this.priceArray[this.priceArray.length - 1],
+      priceMin: Math.min(...this.priceArray),
+      priceMax: Math.max(...this.priceArray),
+      beginDate: formatDate(this.dataArray[0].updatedTime),
+      endDate: formatDate(this.dataArray[this.dataArray.length - 1].updatedTime),
+      points: pointsArray,
+    };
+    this.#element = stringToHtmlElement(template(context));
+  }
+
+  /**
+   * Renders a chart with price history.
+   */
+  #renderChart() {
+    this.canvas = this.#element.querySelector('.price-history-modal__canvas');
+    this.context = this.canvas.getContext('2d');
+    this.coordinatesArray = renderChartGradient(this.canvas, this.context, this.priceArray);
+  }
+
+  /**
+   * Add listeners for chart slider.
+   */
+  #addSliderListeners() {
+    const sections = this.#element.querySelectorAll('[data-point]');
+
+    sections.forEach((element) => {
+      element.addEventListener('mouseenter', () => {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        renderChartGradient(this.canvas, this.context, this.priceArray);
+        const {x, y} = this.coordinatesArray[element.dataset.point];
+        this.context.beginPath();
+        this.context.arc(x, y, 10, 0, 2 * Math.PI, false);
+        this.context.fillStyle = COLOR.GRADIENT;
+        this.context.fill();
+        const message = this.#element.querySelector('.message');
+        this.#createTooltip(message, element.dataset.point);
+      });
+
+      element.addEventListener('mouseleave', () => {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        renderChartGradient(this.canvas, this.context, this.priceArray);
+        const message = this.#element.querySelector('.message');
+        message.classList.add('message--hidden');
+      });
+    });
+  }
+
+  /**
+   * Creates a tooltip with price and date.
+   * @param {HTMLElement} message
+   * @param {Number} index
+   */
+  #createTooltip(message, index) {
+    message.classList.remove('message--hidden');
+    const date = message.querySelector('.message__date');
+    date.innerHTML = `${formatDate(this.dataArray[index].updatedTime)}`;
+    const price = message.querySelector('.message__price');
+    price.innerHTML = `${this.priceArray[index]} ₽`;
+    console.log(this.coordinatesArray[index].y);
+    message.style.top = `${this.coordinatesArray[index].y + 90}px`;
+    if (index == this.coordinatesArray.length - 1) {
+      message.style.left = `${this.canvas.offsetWidth - 40}px`;
+    } else if (this.coordinatesArray[index].x > 100) {
+      message.style.left = `${this.coordinatesArray[index].x - 20}px`;
+    } else {
+      message.style.left = '100px';
+    }
   }
 
   /**
@@ -50,22 +125,6 @@ class PriceHistoryOverlay {
       myDialog.showModal();
       ev.preventDefault();
       const advertId = Number(myButton.dataset['id']);
-
-      // const isAppended = await this.#model.changeCart(advertId);
-
-      // if (isAppended === undefined) {
-      //   return;
-      // }
-
-      // const textToChange = this.#element.querySelector('.price-history-dialog__text-to-change');
-
-      // if (isAppended) {
-      //   myButton.innerHTML = 'Удалить из корзины';
-      //   textToChange.innerHTML = 'Товар добавлен в корзину';
-      // } else {
-      //   myButton.innerHTML = 'Добавить в корзину';
-      //   textToChange.innerHTML = 'Товар удалён из корзины';
-      // }
     });
 
     const myDialog = this.#element;
@@ -75,15 +134,6 @@ class PriceHistoryOverlay {
 
     const myDiv = this.#element.querySelector('.price-history-dialog__container');
     myDiv.addEventListener('click', (event) => event.stopPropagation());
-
-    // const blockBtn = this.#element.querySelector('.price-history-modal__button--action');
-    // blockBtn.addEventListener('click', (event) => {
-    //   myDialog.close();
-    //   // router.pushPage(event, router.routes.cartPage.href.href);
-    // });
-
-    // const cancelBtn = this.#element.querySelector('.price-history-modal__button--cancel');
-    // cancelBtn.addEventListener('click', (event) => myDialog.close());
   }
 }
 

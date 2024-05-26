@@ -26,6 +26,7 @@ export const API_ROUTES = {
     CLOSE_ADVERT: new URL('/api/adverts/close/:id', api),
     GET_SUGGESTIONS: new URL('/api/adverts/suggestions', api),
     SEARCH: new URL('api/adverts/search', api),
+    GET_PRICE_HISTORY: new URL('/api/adverts/price_history/:id', api),
   },
   PROFILE: {
     GET_PROFILE: new URL('/api/profile/:id', api),

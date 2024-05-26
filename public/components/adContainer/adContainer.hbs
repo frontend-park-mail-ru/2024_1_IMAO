@@ -3,7 +3,12 @@
         <div class="post-block__top-panel">
             <div class="post-block__price-block--mobile">
                 <h3 class="post-block__price--mobile">{{price}} ₽</h3>
-                <a class="history-btn" href="#" data-id="{{id}}">Снять с продажи</a>
+                <a class="history-btn history-btn--mobile" href="#" data-id="{{id}}"> 
+                <div class="history-btn__price-deff">
+                    <div class="history-btn__price"></div>
+                </div>
+                <div class="history-btn__sign">&#8250;</div>
+            </a>
             </div>
             <div class="title">
                 <h1>{{title}}</h1>
@@ -99,8 +104,8 @@
         <div class="post-block__price-block">
             <h1 class="price title">{{price}} ₽</h1>
             <a class="history-btn" href="#" data-id="{{id}}"> 
-                <div class="history-btn__price-deff" style="display: flex;">
-                    <div class="history-btn__price">&uArr; 100 ₽ </div>
+                <div class="history-btn__price-deff">
+                    <div class="history-btn__price"></div>
                     <canvas class="history-btn__canvas" width="55" height="24"></canvas>
                 </div>
                 <div class="history-btn__sign">&#8250;</div>

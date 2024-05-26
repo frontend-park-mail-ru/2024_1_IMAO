@@ -29,6 +29,44 @@
       flex-direction: column;
       justify-content: flex-start;
       gap: 24px;
+
+      .message {
+        position: absolute;
+        width: 120px;
+      }
+    }
+
+    &__price {
+      font-size: 1.7em;
+      font-weight: bold;
+    }
+
+    &__range {
+      color: #868695;
+    }
+
+    &__slider {
+      display: flex;
+      flex-direction: row;
+      z-index: 1000;
+    }
+
+    &__element {
+      height: clamp(130px, calc(75vw / 2.5), 180px);
+      flex-grow: 1;
+    }
+
+    &__canvas {
+      position: absolute;
+      top: 137px;
+      width: clamp(200px, 75vw, 360px);
+    }
+
+    &__date {
+      color: #868695;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
     }
 
     @media (max-width: 800px) {
@@ -36,73 +74,5 @@
         width: 100%;
       }
     }
-
-    //   &__header {
-    //     display: flex;
-    //     flex-direction: column;
-    //     justify-content: flex-start;
-    //     align-items: flex-start;
-    //     gap: 8px;
-    //   }
-
-    //   &__text {
-    //     color: #333333;
-
-    //     font-size: 20px;
-    //     font-family: 'Fira Sans', sans-serif;
-    //     font-weight: 500;
-    //     line-height: 32px;
-    //     word-wrap: break-word;
-    //   }
-
-    //   &__subtext {
-    //     color: #858585;
-    //     font-size: 14px;
-    //     font-family: 'Open Sans', sans-serif;
-    //     font-weight: 400;
-    //     line-height: 24px;
-    //     word-wrap: break-word;
-    //   }
-
-    //   &__buttons {
-    //     display: flex;
-    //     flex-grow: 1;
-    //     gap: 25px;
-    //   }
-
-    //   &__button {
-    //     display: flex;
-    //     justify-content: center;
-    //     align-items: center;
-    //     padding-top: 8px;
-    //     padding-bottom: 8px;
-    //     flex-grow: 1;
-    //     border-radius: 8px;
-    //     font-size: 16px;
-    //     font-family: 'Open Sans', sans-serif;
-    //     font-weight: 400;
-    //     line-height: 24px;
-    //     word-wrap: break-word;
-
-    //     &--action {
-    //       background: #7092fe;
-    //       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
-    //       color: white;
-
-    //       &:hover {
-    //         background: #7b9afe;
-    //       }
-    //     }
-
-    //     &--cancel {
-    //       background: #ebebeb;
-    //       box-shadow: 0px 2px 4px rgba(51, 51, 51, 0.02);
-    //       color: #333333;
-
-    //       &:hover {
-    //         background: #f0f0f0;
-    //       }
-    //     }
-    //   }
   }
 }

@@ -9,6 +9,7 @@ import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {parsePathParams, buildURL, getURLFromLocation, buildURLBySegments} from '../../modules/parsePathParams.js';
 import formatDate from '../../modules/formatDate.js';
 import trimString from '../../modules/trimString.js';
+import {renderChart} from '../../modules/chartRender.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import favoritesModel from '../../models/favorites.js';
@@ -209,14 +210,14 @@ export class Advert {
       if (priceHistoryButton == null) {
         return;
       }
-      const priceHistoryOverlay = new PriceHistoryOverlay(priceHistoryButton);
+      const priceHistoryOverlay = new PriceHistoryOverlay(priceHistoryButton, this.priceHistory);
       const advertBlock = this.#element.querySelector('.post-block');
       advertBlock.appendChild(priceHistoryOverlay.render());
     });
   }
 
   /**
-   *
+   * Adds listener for an edit button.
    */
   #addEditListener() {
     const editAddress = this.#element.querySelector('.favourite__btn--edit');
@@ -230,8 +231,6 @@ export class Advert {
 
   /**
    * Adds add to favorites listener.
-   * @param {*} addToBlackListButton
-   * @param {*} overlayContainer
    */
   #addFavoritesListener() {
     const addFavoritesButton = this.#element.querySelector('.favourite__btn--favourite');
@@ -393,27 +392,31 @@ export class Advert {
       const ratingBar = ratingBarInstance.render();
       rating.appendChild(ratingBar);
     });
-    const array = Array.from({length: 10}, () => Math.floor(Math.random() * (2000 - 200 + 1)) + 200);
-    const canvas = this.#element.querySelector('.history-btn__canvas');
-    const context = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
-    const step = width / (array.length - 1);
-    const middleData = (Math.max(...array) + Math.min(...array)) / 2;
-    const middleCanvas = height / 2;
-    context.beginPath();
-    context.moveTo(0, middleCanvas);
-    let currentX = 0;
-    array.forEach((val) => {
-      const currentY = height - (val * middleCanvas) / middleData;
-      if (currentX !== 0) {
-        context.lineTo(currentX, currentY);
-      }
-      context.moveTo(currentX, currentY);
-      currentX += step;
-    });
 
-    context.closePath();
-    context.stroke();
+    let priceHistoryRoute = new URL(ajax.routes.ADVERT.GET_PRICE_HISTORY);
+    priceHistoryRoute = buildURL(priceHistoryRoute, {id: this.id});
+    await ajax.get(priceHistoryRoute, (body) => {
+      if (body.code !== 200) {
+        return;
+      }
+      this.priceHistory = body.items;
+    });
+    const canvas = this.#element.querySelector('.history-btn__canvas');
+    const array = this.priceHistory.map((value) => value.newPrice);
+    renderChart(canvas, array);
+
+    const deffPrice = array[array.length - 2] - array[array.length - 1];
+    const deffPriceElements = this.#element.querySelectorAll('.history-btn__price');
+    deffPriceElements.forEach((deffPriceElement) => {
+      if (deffPrice > 0) {
+        deffPriceElement.classList.add('history-btn__price--positive');
+        deffPriceElement.innerHTML = `&dArr; ${deffPrice} ₽ `;
+      } else if (deffPrice < 0) {
+        deffPriceElement.classList.add('history-btn__price--negative');
+        deffPriceElement.innerHTML = `&uArr; ${Math.abs(deffPrice)} ₽ `;
+      } else {
+        deffPriceElement.innerHTML = `- ${deffPrice} ₽ `;
+      }
+    });
   }
 }
