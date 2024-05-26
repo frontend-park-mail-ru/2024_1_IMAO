@@ -172,9 +172,10 @@ export class MerchantsPage {
         cardsContainer.classList.add('profile-page__cards-container');
       }
 
+      const ids = [];
       adverts.forEach((inner) => {
         const {price, title, id, inFavourites, city, category, photosIMG, isPromoted, isActive} = inner;
-
+        ids.push(id);
         const path = buildURLBySegments(router.host, [city, category, id]);
         const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted, isActive);
         merchantsPageRightSection.appendChild(adsCardInstance.render());
@@ -183,7 +184,18 @@ export class MerchantsPage {
       if (this.#activeAdverts != 0) {
         cardsContainerSkeleton.replaceWith(merchantsPageRightSection);
       }
+
       this.#isBottomReached = false;
+
+      ids.forEach((id) => {
+        const address = this.#element.querySelector(`.card-address[id="${id}"]`);
+        address.addEventListener('click', (ev) => {
+          if (ev.target.matches('path') || ev.target.matches('svg') || ev.target.matches('.like-icon')) {
+            return;
+          }
+          router.pushPage(ev, address.href);
+        });
+      });
     });
   }
 

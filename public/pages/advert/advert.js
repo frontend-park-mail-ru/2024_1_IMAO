@@ -2,6 +2,7 @@
 
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import renderAdContainerTemplate from '../../components/adContainer/adContainer.js';
+import renderPromotionInfo from '../../components/promotionInfo/promotionInfo.js';
 import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
 import PromotionOverlay from '../../components/promotionOverlay/promotionOverlay.js';
 import PriceHistoryOverlay from '../../components/priceHistoryOverlay/priceHistoryOverlay.js';
@@ -66,6 +67,7 @@ export class Advert {
     this.#addFavoritesListener();
     this.#addEditListener();
     this.#addScrollListener();
+    this.#promotionInterval();
   }
 
   /**
@@ -289,6 +291,102 @@ export class Advert {
   }
 
   /**
+   *
+   * @param {*} promotion
+   * @return {object}
+   */
+  #getPromotionData(promotion) {
+    const promotionDays = promotion.promotionDuration.Days;
+    const promotionStart = promotion.promotionStart;
+    const duration = 24 * promotionDays;
+
+    let tariff;
+    switch (promotionDays) {
+      case 1:
+        tariff = 'Поднятие';
+        break;
+      case 3:
+        tariff = 'Премиум';
+        break;
+      default:
+        tariff = 'Максимум';
+        break;
+    }
+
+    const leftTime = calculateLeftTime(duration, promotionStart);
+    let timeTitle;
+    if (leftTime >= 24) {
+      const leftDays = Math.round(leftTime / 24);
+      switch (leftDays) {
+        case 1:
+          timeTitle = 'Остался 1 день';
+          break;
+        case 2:
+        case 3:
+        case 4:
+          timeTitle = `Осталось ${leftDays} дня`;
+          break;
+        default:
+          timeTitle = `Осталось ${leftDays} дней`;
+          break;
+      }
+    } else {
+      switch (leftTime) {
+        case 1:
+        case 21:
+          timeTitle = `Остался ${leftTime} час`;
+          break;
+        case 2:
+        case 3:
+        case 4:
+        case 22:
+        case 23:
+          timeTitle = `Осталось ${leftTime} часа`;
+          break;
+        default:
+          timeTitle = `Осталось ${leftTime} часов`;
+      }
+    }
+
+    return {tariff, duration, leftTime, timeTitle};
+  }
+
+  /**
+   *
+   */
+  #promotionInterval() {
+    const curPath = window.location.href;
+    let pingPromotion = new URL(ajax.routes.ADVERT.GET_PROMOTION);
+    pingPromotion = buildURL(pingPromotion, {id: this.id});
+    if (this.isAuthor && this.needPing) {
+      const newInterval = setInterval(() => {
+        if (curPath !== window.location.href) {
+          clearInterval(newInterval);
+        }
+
+        ajax.get(pingPromotion, (body) => {
+          if (body.code !== 200) {
+            return;
+          }
+
+          const promotion = body;
+          const isPromoted = promotion.isPromoted;
+          let promotionData;
+          if (isPromoted) {
+            promotionData = this.#getPromotionData(promotion);
+            const promBtn = this.#element.querySelector('.seller-block__btn--promote');
+            if (promBtn !== null) {
+              promBtn.replaceWith(renderPromotionInfo(promotionData));
+            }
+            clearInterval(newInterval);
+            this.needPing = false;
+          }
+        });
+      }, 1000);
+    }
+  }
+
+  /**
    * Render the advert page template.
    */
   async #renderTemplate() {
@@ -315,7 +413,9 @@ export class Advert {
       const cityName = city.name;
       const categoryName = category.name;
       const isAuthor = ajax.auth.id === advert.userId;
+      this.isAuthor = isAuthor;
       const isPromoted = promotion.isPromoted;
+      this.needPing = promotion.needPing;
 
       let state = '';
       if (isUsed) {
@@ -349,59 +449,7 @@ export class Advert {
 
       let promotionData;
       if (isPromoted) {
-        const promotionDays = promotion.promotionDuration.Days;
-        const promotionStart = promotion.promotionStart;
-        const duration = 24 * promotionDays;
-
-        let tariff;
-        switch (promotionDays) {
-          case 1:
-            tariff = 'Поднятие';
-            break;
-          case 3:
-            tariff = 'Премиум';
-            break;
-          default:
-            tariff = 'Максимум';
-            break;
-        }
-
-        const leftTime = calculateLeftTime(duration, promotionStart);
-        let timeTitle;
-        if (leftTime >= 24) {
-          const leftDays = Math.round(leftTime / 24);
-          switch (leftDays) {
-            case 1:
-              timeTitle = 'Остался 1 день';
-              break;
-            case 2:
-            case 3:
-            case 4:
-              timeTitle = `Осталось ${leftDays} дня`;
-              break;
-            default:
-              timeTitle = `Осталось ${leftDays} дней`;
-              break;
-          }
-        } else {
-          switch (leftTime) {
-            case 1:
-            case 21:
-              timeTitle = `Остался ${leftTime} час`;
-              break;
-            case 2:
-            case 3:
-            case 4:
-            case 22:
-            case 23:
-              timeTitle = `Осталось ${leftTime} часа`;
-              break;
-            default:
-              timeTitle = `Осталось ${leftTime} часов`;
-          }
-        }
-
-        promotionData = {tariff, duration, leftTime, timeTitle};
+        promotionData = this.#getPromotionData(promotion);
       }
 
       const adContainer = renderAdContainerTemplate(
@@ -420,11 +468,16 @@ export class Advert {
           inFavourites,
           views,
           favouritesNum,
-          isPromoted,
-          promotionData,
       );
       adContainer.classList.add('post-container');
       content.appendChild(adContainer);
+
+      if (isPromoted) {
+        const promBtn = content.querySelector('.seller-block__btn--promote');
+        if (promBtn !== null) {
+          promBtn.replaceWith(renderPromotionInfo(promotionData));
+        }
+      }
 
       document.title += ' ' + trimString(title, 40);
       const addCartButton = this.#element.querySelector('.seller-block__btn--cart');
