@@ -1,8 +1,10 @@
 const path = require('path');
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './public/index.js',
   devtool: 'eval-source-map',
   output: {
@@ -23,11 +25,10 @@ module.exports = {
         options: {
           presets: [
             ['@babel/env', {
-              'targets': {
-                'browsers': 'last 2 chrome versions',
+              targets: {
+                browsers: 'last 2 chrome versions',
               },
-            },
-            ],
+            }],
           ],
         },
       },
@@ -44,10 +45,21 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          // Creates `style` nodes from JS strings
-          'style-loader',
+          process.env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
           // Translates CSS into CommonJS
           'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  require('cssnano')({
+                    preset: 'default',
+                  }),
+                ],
+              },
+            },
+          },
           // Compiles Sass to CSS
           'sass-loader',
         ],
@@ -56,6 +68,62 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: 'asset',
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
+  optimization: {
+    minimize: true, // Включение минимизации
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          // eslint-disable-next-line camelcase
+          keep_fnames: true,
+          // eslint-disable-next-line camelcase
+          keep_classnames: true,
+          compress: {
+            // eslint-disable-next-line camelcase
+            keep_classnames: true,
+            // eslint-disable-next-line camelcase
+            keep_fnames: true,
+          },
+          mangle: false,
+        },
+      }),
+    ],
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+    new ImageMinimizerPlugin({
+      minimizer: {
+        implementation: ImageMinimizerPlugin.imageminMinify,
+        options: {
+          plugins: [
+            ['mozjpeg', {quality: 75}],
+            ['pngquant', {quality: [0.65, 0.90], speed: 4}],
+            ['svgo', {
+              plugins: [
+                {
+                  removeViewBox: false,
+                },
+              ],
+            }],
+          ],
+        },
+      },
+    }),
+  ],
 };
