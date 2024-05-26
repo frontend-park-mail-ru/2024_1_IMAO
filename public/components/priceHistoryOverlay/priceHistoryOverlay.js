@@ -3,7 +3,7 @@
 import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './priceHistoryOverlay.hbs';
 import './priceHistoryOverlay.scss';
-import formatDate from '../../modules/formatDate.js';
+import {formatDate} from '../../modules/formatDate.js';
 import {renderChartGradient, COLOR} from '../../modules/chartRender.js';
 
 /**
