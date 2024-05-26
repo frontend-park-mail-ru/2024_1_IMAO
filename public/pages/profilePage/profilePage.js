@@ -9,7 +9,7 @@ import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug
 import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
-import formatDate from '../../modules/formatDate.js';
+import {formatDate} from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';

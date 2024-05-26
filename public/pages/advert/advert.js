@@ -3,11 +3,12 @@
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import renderAdContainerTemplate from '../../components/adContainer/adContainer.js';
 import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
+import PromotionOverlay from '../../components/promotionOverlay/promotionOverlay.js';
 import PriceHistoryOverlay from '../../components/priceHistoryOverlay/priceHistoryOverlay.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {parsePathParams, buildURL, getURLFromLocation, buildURLBySegments} from '../../modules/parsePathParams.js';
-import formatDate from '../../modules/formatDate.js';
+import {formatDate, calculateLeftTime} from '../../modules/formatDate.js';
 import trimString from '../../modules/trimString.js';
 import {renderChart} from '../../modules/chartRender.js';
 import ajax from '../../modules/ajax.js';
@@ -58,6 +59,7 @@ export class Advert {
     this.#addCarouselListeners();
     this.#addPathListener();
     await this.#addAddCartDialogListener();
+    this.#addPromotionDialogListener();
     this.#addPriceHistoryListener();
     this.#addMerchantPageListener();
     this.#addCloseListener();
@@ -274,6 +276,19 @@ export class Advert {
   }
 
   /**
+   * Advert promotion dialog listener
+   */
+  #addPromotionDialogListener() {
+    const promotionButton = this.#element.querySelector('.seller-block__btn--promote');
+    if (promotionButton == null) {
+      return;
+    }
+    const promotionOverlay = new PromotionOverlay(promotionButton, promotionButton.dataset['id']);
+    const advertBlock = this.#element.querySelector('.post-block');
+    advertBlock.appendChild(promotionOverlay.render());
+  }
+
+  /**
    * Render the advert page template.
    */
   async #renderTemplate() {
@@ -291,7 +306,7 @@ export class Advert {
 
     await ajax.get(apiRoute, (body) => {
       const {items} = body;
-      const {advert, city, category, photosIMG} = items;
+      const {advert, city, category, photosIMG, promotion} = items;
 
       const {active, id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} =
         advert;
@@ -300,6 +315,7 @@ export class Advert {
       const cityName = city.name;
       const categoryName = category.name;
       const isAuthor = ajax.auth.id === advert.userId;
+      const isPromoted = promotion.isPromoted;
 
       let state = '';
       if (isUsed) {
@@ -331,6 +347,63 @@ export class Advert {
       adPathElement.appendChild(renderAdPathTemplate({paths}));
       content.appendChild(adPathElement);
 
+      let promotionData;
+      if (isPromoted) {
+        const promotionDays = promotion.promotionDuration.Days;
+        const promotionStart = promotion.promotionStart;
+        const duration = 24 * promotionDays;
+
+        let tariff;
+        switch (promotionDays) {
+          case 1:
+            tariff = 'Поднятие';
+            break;
+          case 3:
+            tariff = 'Премиум';
+            break;
+          default:
+            tariff = 'Максимум';
+            break;
+        }
+
+        const leftTime = calculateLeftTime(duration, promotionStart);
+        let timeTitle;
+        if (leftTime >= 24) {
+          const leftDays = Math.round(leftTime / 24);
+          switch (leftDays) {
+            case 1:
+              timeTitle = 'Остался 1 день';
+              break;
+            case 2:
+            case 3:
+            case 4:
+              timeTitle = `Осталось ${leftDays} дня`;
+              break;
+            default:
+              timeTitle = `Осталось ${leftDays} дней`;
+              break;
+          }
+        } else {
+          switch (leftTime) {
+            case 1:
+            case 21:
+              timeTitle = `Остался ${leftTime} час`;
+              break;
+            case 2:
+            case 3:
+            case 4:
+            case 22:
+            case 23:
+              timeTitle = `Осталось ${leftTime} часа`;
+              break;
+            default:
+              timeTitle = `Осталось ${leftTime} часов`;
+          }
+        }
+
+        promotionData = {tariff, duration, leftTime, timeTitle};
+      }
+
       const adContainer = renderAdContainerTemplate(
           active,
           title,
@@ -347,6 +420,8 @@ export class Advert {
           inFavourites,
           views,
           favouritesNum,
+          isPromoted,
+          promotionData,
       );
       adContainer.classList.add('post-container');
       content.appendChild(adContainer);
@@ -382,6 +457,7 @@ export class Advert {
         subscribersCount: profile.subersCount,
         subscribtionsCount: profile.subonsCount,
         avatarImg: profile.avatarImg,
+        notIsAuthor: ajax.auth.id !== profile.userId,
       };
 
       const merchantCardInstance = new MerchantCard(merchantCartItems);

@@ -61,6 +61,9 @@ export const API_ROUTES = {
     CHECK: new URL('/api/survey/check/1', api),
     STATISTICS: new URL('/api/survey/statistics', api),
   },
+  PAYMENTS: {
+    FORM: new URL('/api/payments/form', api),
+  },
 };
 
 /**
