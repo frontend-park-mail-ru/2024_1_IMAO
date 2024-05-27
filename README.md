@@ -30,7 +30,7 @@ https://www.figma.com/file/QP3qZTavTZYL8aOlzWzkkl/IMAO-(%D0%AE%D0%BB%D0%B0)
 
 ### Деплой приложения:
 
-http://www.vol-4-ok.ru
+https://www.vol-4-ok.ru
 
 ### Установка пакетов Node.js
 

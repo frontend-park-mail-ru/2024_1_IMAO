@@ -105,7 +105,6 @@ class PriceHistoryOverlay {
     date.innerHTML = `${formatDate(this.dataArray[index].updatedTime)}`;
     const price = message.querySelector('.message__price');
     price.innerHTML = `${this.priceArray[index]} ₽`;
-    console.log(this.coordinatesArray[index].y);
     message.style.top = `${this.coordinatesArray[index].y + 90}px`;
     if (index == this.coordinatesArray.length - 1) {
       message.style.left = `${this.canvas.offsetWidth - 40}px`;
