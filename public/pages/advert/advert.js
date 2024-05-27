@@ -361,8 +361,8 @@ export class Advert {
     pingPromotion = buildURL(pingPromotion, {id: this.id});
     if (this.isAuthor && this.needPing) {
       const promBtn = this.#element.querySelector('.seller-block__btn--promote');
+      const waiting = document.createElement('div');
       if (promBtn) {
-        const waiting = document.createElement('div');
         waiting.classList.add('waiting-section');
 
         const waitingText = document.createElement('div');
@@ -389,8 +389,8 @@ export class Advert {
           let promotionData;
           if (isPromoted) {
             promotionData = this.#getPromotionData(promotion);
-            if (promBtn !== null) {
-              promBtn.replaceWith(renderPromotionInfo(promotionData));
+            if (waiting !== null) {
+              waiting.replaceWith(renderPromotionInfo(promotionData));
             }
             clearInterval(newInterval);
             this.needPing = false;
