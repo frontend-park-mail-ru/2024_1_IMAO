@@ -365,10 +365,6 @@ export class Advert {
         }
 
         ajax.get(pingPromotion, (body) => {
-          if (body.code !== 200) {
-            return;
-          }
-
           const promotion = body;
           const isPromoted = promotion.isPromoted;
           let promotionData;
