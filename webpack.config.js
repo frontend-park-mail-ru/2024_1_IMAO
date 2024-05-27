@@ -84,11 +84,11 @@ module.exports = {
     minimizer: [
       new TerserPlugin({
         terserOptions: {
-          keep_fnames: true,
-          keep_classnames: true,
+          keep_fnames: false,
+          keep_classnames: false,
           compress: {
-            keep_classnames: true,
-            keep_fnames: true,
+            keep_classnames: false,
+            keep_fnames: false,
           },
           mangle: false,
         },
