@@ -9,7 +9,7 @@
         </a>
         <div class="card-container__content">
             {{#if (is_null avatar)}}
-            <img class="avatar-image" src="public/images/img_avatar.png" />
+            <img class="avatar-image" src="/images/img_avatar.webp" />
             {{^}}
             <img class="avatar-image" src="data:image/png;base64,{{avatar}}" />
             {{/if}}
@@ -59,11 +59,11 @@
         </div>
     </div>
     {{/if}}
-
+    {{#if notIsAuthor}}
     <div class="subscribe-button">
         Подписаться
     </div>
-
+    {{/if}}
     <div class="stats-container">
         <div class="stats-container__item">
             <div class="stats-button">
@@ -84,6 +84,7 @@
             </div>
         </div>
     </div>
+    {{#if notIsAuthor}}
     <div class="actions-container">
         <div class="blacklist-button actions-container__button" href="https://www.dnd.su">
             Заблокировать
@@ -93,4 +94,5 @@
         </div>
         <div class="actions-container__blacklist-overlay"></div>
     </div>
+    {{/if}}
 </div>

@@ -1,39 +1,49 @@
 <div>
     <div class="post-block">
         <div class="post-block__top-panel">
-            <h3 class="post-block__price--mobile">{{price}} ₽</h3>
+            <div class="post-block__price-block--mobile">
+                <h3 class="post-block__price--mobile">{{price}} ₽</h3>
+                <a class="history-btn history-btn--mobile" href="#" data-id="{{id}}"> 
+                <div class="history-btn__price-deff">
+                    <div class="history-btn__price"></div>
+                </div>
+                <div class="history-btn__sign">&#8250;</div>
+            </a>
+            </div>
             <div class="title">
                 <h1>{{title}}</h1>
             </div>
-            <div class="favourite">
-                {{#if isAuthor}}
-                    <a class="favourite__btn--edit" href="{{editPath}}">
-                        <img src="images/pencil_12.svg" class="favourite__edit-pencil">
-                        <span>Редактировать объявление</span>
-                    </a>
-                {{^}}
-                    {{#if inFavorites}}
-                        <a class="favourite__btn--favourite">
-                            <div class="like-heart like-heart--active">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176.104 176.104">
-                                    <path d="M150.383 18.301a49.633 49.633 0 0 0-24.033-6.187c-15.394 0-29.18 7.015-38.283 18.015-9.146-11-22.919-18.015-38.334-18.015-8.704 0-16.867 2.259-24.013 6.187C10.388 26.792 0 43.117 0 61.878 0 67.249.874 72.4 2.457 77.219c8.537 38.374 85.61 86.771 85.61 86.771s77.022-48.396 85.571-86.771a49.09 49.09 0 0 0 2.466-15.341c0-18.754-10.388-35.074-25.721-43.577z"/>
-                                </svg>
-                            </div>
-                            <span class="favourite__text">Удалить из избранного</span>
+            {{#if active}}
+                <div class="favourite">
+                    {{#if isAuthor}}
+                        <a class="favourite__btn--edit" href="{{editPath}}">
+                            <img src="/images/pencil_12.svg" class="favourite__edit-pencil">
+                            <span>Редактировать объявление</span>
                         </a>
                     {{^}}
-                        <a class="favourite__btn--favourite">
-                            <div class="like-heart">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176.104 176.104">
-                                    <path d="M150.383 18.301a49.633 49.633 0 0 0-24.033-6.187c-15.394 0-29.18 7.015-38.283 18.015-9.146-11-22.919-18.015-38.334-18.015-8.704 0-16.867 2.259-24.013 6.187C10.388 26.792 0 43.117 0 61.878 0 67.249.874 72.4 2.457 77.219c8.537 38.374 85.61 86.771 85.61 86.771s77.022-48.396 85.571-86.771a49.09 49.09 0 0 0 2.466-15.341c0-18.754-10.388-35.074-25.721-43.577z"/>
-                                </svg>
-                            </div>
-                            <span class="favourite__text">Добавить в избранное</span>
-                        </a>
-                    {{/if}} 
-                {{/if}}
-                <div class="message message--hidden"></div>
-            </div>
+                        {{#if inFavorites}}
+                            <a class="favourite__btn--favourite">
+                                <div class="like-heart like-heart--active">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176.104 176.104">
+                                        <path d="M150.383 18.301a49.633 49.633 0 0 0-24.033-6.187c-15.394 0-29.18 7.015-38.283 18.015-9.146-11-22.919-18.015-38.334-18.015-8.704 0-16.867 2.259-24.013 6.187C10.388 26.792 0 43.117 0 61.878 0 67.249.874 72.4 2.457 77.219c8.537 38.374 85.61 86.771 85.61 86.771s77.022-48.396 85.571-86.771a49.09 49.09 0 0 0 2.466-15.341c0-18.754-10.388-35.074-25.721-43.577z"/>
+                                    </svg>
+                                </div>
+                                <span class="favourite__text">Удалить из избранного</span>
+                            </a>
+                        {{^}}
+                            <a class="favourite__btn--favourite">
+                                <div class="like-heart">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176.104 176.104">
+                                        <path d="M150.383 18.301a49.633 49.633 0 0 0-24.033-6.187c-15.394 0-29.18 7.015-38.283 18.015-9.146-11-22.919-18.015-38.334-18.015-8.704 0-16.867 2.259-24.013 6.187C10.388 26.792 0 43.117 0 61.878 0 67.249.874 72.4 2.457 77.219c8.537 38.374 85.61 86.771 85.61 86.771s77.022-48.396 85.571-86.771a49.09 49.09 0 0 0 2.466-15.341c0-18.754-10.388-35.074-25.721-43.577z"/>
+                                    </svg>
+                                </div>
+                                <span class="favourite__text">Добавить в избранное</span>
+                            </a>
+                        {{/if}} 
+                    {{/if}}
+                    <div class="message message--hidden"></div>
+                </div>
+            {{/if}}
         </div>
         <div class="post-images">
             <div class="post-images__carousel">
@@ -47,17 +57,17 @@
             </div>
             <div class="post-images__btn-container">
                 <div class="post-images__prev-container">
-                    <button class="post-images__prev-btn"><img src="images/left-arrow-backup-2-svgrepo-com.svg"></button>
+                    <button class="post-images__prev-btn"><img src="/images/left-arrow-backup-2-svgrepo-com.svg"></button>
                 </div>
                 <div class="post-images__next-container">
-                    <button class="post-images__next-btn"><img src="images/right-arrow-backup-2-svgrepo-com.svg"></button>
+                    <button class="post-images__next-btn"><img src="/images/right-arrow-backup-2-svgrepo-com.svg"></button>
                 </div>
             </div>
         </div>
         <ul class="post-description">
             <div class="post-description__section">
                 <li class="location">
-                    <img src="images/location_map_outline_20.svg">
+                    <img src="/images/location_map_outline_20.svg">
                     <span class="post-description__property--primary">Местоположение</span>
                     <span class="post-description__property--secondary">{{city}}</span>
                 </li>
@@ -91,11 +101,23 @@
         </ul>
     </div>
     <div class="seller-block">
-        <h1 class="price title">{{price}} ₽</h1>
-        {{#if isAuthor}}
-            <a class="seller-block__btn seller-block__btn--close" href="#" data-id="{{id}}" >Снять с продажи</a>
-        {{^}}
-            <a class="seller-block__btn seller-block__btn--cart" href="#" data-id="{{id}}" >Добавить в корзину</a>
+        <div class="post-block__price-block">
+            <h1 class="price title">{{price}} ₽</h1>
+            <a class="history-btn" href="#" data-id="{{id}}"> 
+                <div class="history-btn__price-deff">
+                    <div class="history-btn__price"></div>
+                    <canvas class="history-btn__canvas" width="55" height="24"></canvas>
+                </div>
+                <div class="history-btn__sign">&#8250;</div>
+            </a>
+        </div>
+        {{#if active}}
+            {{#if isAuthor}}
+            <a class="seller-block__btn seller-block__btn--close" data-id="{{id}}" >Снять с продажи</a>
+            <a class="seller-block__btn seller-block__btn--promote" data-id="{{id}}">Продвинуть объявление</a>
+            {{^}}
+             <a class="seller-block__btn seller-block__btn--cart" data-id="{{id}}" >Добавить в корзину</a>
+            {{/if}}
         {{/if}}
     </div>
 </div>

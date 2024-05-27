@@ -7,7 +7,7 @@ import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
-import formatDate from '../../modules/formatDate.js';
+import {formatDate} from '../../modules/formatDate.js';
 import SkeletonCard from '../../components/skeletonCard/skeletonCard.js';
 import StageStorage from '../../modules/stateStorage.js';
 import trimString from '../../modules/trimString.js';
@@ -172,18 +172,30 @@ export class MerchantsPage {
         cardsContainer.classList.add('profile-page__cards-container');
       }
 
+      const ids = [];
       adverts.forEach((inner) => {
-        const {price, title, id, inFavourites, city, category, photosIMG} = inner;
-
+        const {price, title, id, inFavourites, city, category, photosIMG, isPromoted, isActive} = inner;
+        ids.push(id);
         const path = buildURLBySegments(router.host, [city, category, id]);
-        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG);
+        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted, isActive);
         merchantsPageRightSection.appendChild(adsCardInstance.render());
       });
 
       if (this.#activeAdverts != 0) {
         cardsContainerSkeleton.replaceWith(merchantsPageRightSection);
       }
+
       this.#isBottomReached = false;
+
+      ids.forEach((id) => {
+        const address = this.#element.querySelector(`.card-address[id="${id}"]`);
+        address.addEventListener('click', (ev) => {
+          if (ev.target.matches('path') || ev.target.matches('svg') || ev.target.matches('.like-icon')) {
+            return;
+          }
+          router.pushPage(ev, address.href);
+        });
+      });
     });
   }
 
@@ -241,6 +253,7 @@ export class MerchantsPage {
         subscribersCount: profile.subersCount,
         subscribtionsCount: profile.subonsCount,
         avatarImg: profile.avatarImg,
+        notIsAuthor: ajax.auth.id !== profile.userId,
       };
       const merchantsCardSection = this.#element.querySelector('.profile-page__main');
       const merchantCardInstance = new MerchantCard(merchantCartItems);

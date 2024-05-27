@@ -42,26 +42,26 @@
     <div class="navbar">
         <div class="navbar__logo">
             <a href="{{urlMain}}" data-url="{{urlMain}}">
-                <img class="logo" src="images/vol4ok.svg">
+                <img class="logo" src="/images/vol4ok.svg">
             </a>
             <a class="name" href="{{urlMain}}" data-url="{{urlMain}}">ВОЛЧОК</a>
         </div>
         <div class="navbar__dropdown dropdown">
             <button class="dropdown__button">
-                <img class="dropdown__icon" src="images/profile_adverts_icon.svg" alt="profile_adverts_icon">
+                <img class="dropdown__icon" src="/images/profile_adverts_icon.svg" alt="profile_adverts_icon">
                 <span>Категории</span>
             </button>
             <div class="dropdown__content dropdown-content-left">
                 {{#each CategoriesWithUrl}}
                     <a href="{{this.url}}" data-url="{{this.url}}">
-                        <img src="images/icons/{{this.translation}}.png" class="category-icon">
+                        <img src="/images/icons/{{this.translation}}.webp" class="category-icon">
                         <span>{{this.name}}</span>
                     </a>
                 {{/each}}
             </div>
         </div>
         <form class="navbar__search search">
-            <img class="search__logo" src="images/search_28.svg">
+            <img class="search__logo" src="/images/search_28.svg">
             <input class="search__input" type="text" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="Поиск по объявлениям" name="search">
             <button class="search__button" type="submit">Найти</button>
             <ul class="results" >
@@ -71,7 +71,7 @@
         {{#if flag}}
         <div class="navbar__dropdown navbar__dropdown-avatar">
             {{#if (is_null avatar)}}
-                <img class="profile-icon" src="images/img_avatar.png">
+                <img class="profile-icon" src="/images/img_avatar.webp">
             {{^}}
                 <img class="profile-icon" src="data:image/png;base64,{{avatar}}">
             {{/if}}
@@ -84,7 +84,7 @@
         </div>
         {{^}}
         <a class="btn-secondary" href="{{urlLogin}}" data-url="{{urlLogin}}">
-            <img class="unlogged-user" src="images/unlogged_user.svg">
+            <img class="unlogged-user" src="/images/unlogged_user.svg">
             <span>Войти</span>
         </a>
         {{/if}}

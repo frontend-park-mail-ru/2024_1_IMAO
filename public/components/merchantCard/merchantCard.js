@@ -27,7 +27,9 @@ class MerchantCard {
     this.#renderTemplate();
     const addToBlackListButton = this.#element.querySelector('.blacklist-button');
     const overlayContainer = this.#element.querySelector('.actions-container__blacklist-overlay');
-    this.#addBlackListEventListener(addToBlackListButton, overlayContainer);
+    if (addToBlackListButton) {
+      this.#addBlackListEventListener(addToBlackListButton, overlayContainer);
+    }
 
     return this.#element;
   }
@@ -47,6 +49,7 @@ class MerchantCard {
       subscribersCount: this.items.subscribersCount,
       subscribtionsCount: this.items.subscribtionsCount,
       avatar: this.items.avatarImg,
+      notIsAuthor: this.items.notIsAuthor,
     };
 
     this.#element = stringToHtmlElement(template(context));

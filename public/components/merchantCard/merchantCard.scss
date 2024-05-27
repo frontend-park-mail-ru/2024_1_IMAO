@@ -78,7 +78,7 @@
     }
 
     .stats-container__item {
-      align-items: flex-start !important;
+      align-items: flex-start;
       justify-content: flex-start !important;
     }
 
@@ -203,7 +203,7 @@
 .stats-container {
   margin-top: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb !important;
   display: inline-flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -239,7 +239,7 @@
 
 .actions-container {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
 
   &__button {

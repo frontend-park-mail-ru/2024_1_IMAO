@@ -2,12 +2,16 @@
 
 import renderAdPathTemplate from '../../components/adPath/adPath.js';
 import renderAdContainerTemplate from '../../components/adContainer/adContainer.js';
+import renderPromotionInfo from '../../components/promotionInfo/promotionInfo.js';
 import AddCartOverlay from '../../components/addCartOverlay/addCartOverlay.js';
+import PromotionOverlay from '../../components/promotionOverlay/promotionOverlay.js';
+import PriceHistoryOverlay from '../../components/priceHistoryOverlay/priceHistoryOverlay.js';
 import MerchantCard from '../../components/merchantCard/merchantCard.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
 import {parsePathParams, buildURL, getURLFromLocation, buildURLBySegments} from '../../modules/parsePathParams.js';
-import formatDate from '../../modules/formatDate.js';
+import {formatDate, calculateLeftTime} from '../../modules/formatDate.js';
 import trimString from '../../modules/trimString.js';
+import {renderChart} from '../../modules/chartRender.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import favoritesModel from '../../models/favorites.js';
@@ -26,6 +30,7 @@ export class Advert {
     this.#element.classList.add('main-page');
     this.header = header;
     this.id = NaN;
+    this.priceHistory = [];
   }
 
   /**
@@ -55,11 +60,14 @@ export class Advert {
     this.#addCarouselListeners();
     this.#addPathListener();
     await this.#addAddCartDialogListener();
+    this.#addPromotionDialogListener();
+    this.#addPriceHistoryListener();
     this.#addMerchantPageListener();
     this.#addCloseListener();
     this.#addFavoritesListener();
     this.#addEditListener();
     this.#addScrollListener();
+    this.#promotionInterval();
   }
 
   /**
@@ -72,40 +80,63 @@ export class Advert {
     const nextBtn = this.#element.querySelector('.post-images__next-btn');
     const images = imagesContainer.querySelectorAll('.images__item');
 
+    let currentTranslate = 0;
     let currentIndex = 0;
     const elemsOnPage = images.length;
 
     prevBtn.addEventListener('click', () => {
       currentIndex = (currentIndex - 1) % elemsOnPage;
-      updateCarousel(currentIndex, elemsOnPage);
+      updateCarousel(currentIndex, elemsOnPage, movePrev);
     });
 
     nextBtn.addEventListener('click', () => {
+      updateCarousel(currentIndex, elemsOnPage, moveNext);
       currentIndex = (currentIndex + 1) % elemsOnPage;
-      updateCarousel(currentIndex, elemsOnPage);
     });
 
-    const updateCarousel = (currentIndex, elemsOnPage) => {
+    const updateCarousel = (currentIndex, elemsOnPage, moveFunc) => {
       const index = (currentIndex + elemsOnPage) % elemsOnPage;
+      let imagesWidth = 0;
+      images.forEach((image) => {
+        imagesWidth += image.offsetWidth;
+      });
 
       const carouselWidth = carousel.offsetWidth;
+      const tolerance = (carouselWidth / 100) * 5;
       const currentWidth = images[index].offsetWidth;
+      moveFunc(imagesWidth, currentWidth, carouselWidth, tolerance);
+      carousel.style.transform = `translateX(${currentTranslate}px)`;
+    };
 
-      let newPosition = 0;
-      if (index !== elemsOnPage - 1) {
-        newPosition = (-index * 100 * currentWidth) / carouselWidth;
+    const moveNext = (imagesWidth, currentWidth, carouselWidth, tolerance) => {
+      if (imagesWidth + currentTranslate > carouselWidth + tolerance) {
+        if (imagesWidth + currentTranslate - currentWidth < carouselWidth) {
+          currentTranslate += carouselWidth - (imagesWidth + currentTranslate);
+        } else {
+          currentTranslate -= currentWidth;
+        }
       } else {
-        const lastWidth = images[images.length - 1].offsetWidth;
-        const offset = lastWidth - (carouselWidth - currentWidth);
-        newPosition = (-index * 100 * offset) / carouselWidth;
+        currentTranslate = 0;
+        currentIndex = -1;
       }
+    };
 
-      carousel.style.transform = `translateX(${newPosition}%)`;
+    const movePrev = (imagesWidth, currentWidth, carouselWidth, tolerance) => {
+      if (currentTranslate < 0) {
+        if (currentTranslate + currentWidth > 0 + tolerance) {
+          currentTranslate = 0;
+        } else {
+          currentTranslate += currentWidth;
+        }
+      } else {
+        currentTranslate = carouselWidth - imagesWidth;
+        currentIndex = elemsOnPage;
+      }
     };
   }
 
   /**
-   *
+   * Event listener on button in mobile mode.
    */
   #addScrollListener() {
     const button = this.#element.querySelector('.seller-block__btn');
@@ -163,8 +194,6 @@ export class Advert {
 
   /**
    * Adds cart dialog listener.
-   * @param {*} addToBlackListButton
-   * @param {*} overlayContainer
    */
   async #addAddCartDialogListener() {
     const addCartButton = this.#element.querySelector('.seller-block__btn--cart');
@@ -177,7 +206,22 @@ export class Advert {
   }
 
   /**
-   *
+   * Adds a price history dialog listener.
+   */
+  async #addPriceHistoryListener() {
+    const priceHistoryButtons = this.#element.querySelectorAll('.history-btn');
+    priceHistoryButtons.forEach((priceHistoryButton) => {
+      if (priceHistoryButton == null) {
+        return;
+      }
+      const priceHistoryOverlay = new PriceHistoryOverlay(priceHistoryButton, this.priceHistory);
+      const advertBlock = this.#element.querySelector('.post-block');
+      advertBlock.appendChild(priceHistoryOverlay.render());
+    });
+  }
+
+  /**
+   * Adds listener for an edit button.
    */
   #addEditListener() {
     const editAddress = this.#element.querySelector('.favourite__btn--edit');
@@ -191,8 +235,6 @@ export class Advert {
 
   /**
    * Adds add to favorites listener.
-   * @param {*} addToBlackListButton
-   * @param {*} overlayContainer
    */
   #addFavoritesListener() {
     const addFavoritesButton = this.#element.querySelector('.favourite__btn--favourite');
@@ -236,6 +278,115 @@ export class Advert {
   }
 
   /**
+   * Advert promotion dialog listener
+   */
+  #addPromotionDialogListener() {
+    const promotionButton = this.#element.querySelector('.seller-block__btn--promote');
+    if (promotionButton == null) {
+      return;
+    }
+    const promotionOverlay = new PromotionOverlay(promotionButton, promotionButton.dataset['id']);
+    const advertBlock = this.#element.querySelector('.post-block');
+    advertBlock.appendChild(promotionOverlay.render());
+  }
+
+  /**
+   *
+   * @param {*} promotion
+   * @return {object}
+   */
+  #getPromotionData(promotion) {
+    const promotionDays = promotion.promotionDuration.Days;
+    const promotionStart = promotion.promotionStart;
+    const duration = 24 * promotionDays;
+
+    let tariff;
+    switch (promotionDays) {
+      case 1:
+        tariff = 'Поднятие';
+        break;
+      case 3:
+        tariff = 'Премиум';
+        break;
+      default:
+        tariff = 'Максимум';
+        break;
+    }
+
+    const leftTime = calculateLeftTime(duration, promotionStart);
+    let timeTitle;
+    if (leftTime >= 24) {
+      const leftDays = Math.round(leftTime / 24);
+      switch (leftDays) {
+        case 1:
+          timeTitle = 'Остался 1 день';
+          break;
+        case 2:
+        case 3:
+        case 4:
+          timeTitle = `Осталось ${leftDays} дня`;
+          break;
+        default:
+          timeTitle = `Осталось ${leftDays} дней`;
+          break;
+      }
+    } else {
+      switch (leftTime) {
+        case 1:
+        case 21:
+          timeTitle = `Остался ${leftTime} час`;
+          break;
+        case 2:
+        case 3:
+        case 4:
+        case 22:
+        case 23:
+          timeTitle = `Осталось ${leftTime} часа`;
+          break;
+        default:
+          timeTitle = `Осталось ${leftTime} часов`;
+      }
+    }
+
+    return {tariff, duration, leftTime, timeTitle};
+  }
+
+  /**
+   *
+   */
+  #promotionInterval() {
+    const curPath = window.location.href;
+    let pingPromotion = new URL(ajax.routes.ADVERT.GET_PROMOTION);
+    pingPromotion = buildURL(pingPromotion, {id: this.id});
+    if (this.isAuthor && this.needPing) {
+      const newInterval = setInterval(() => {
+        if (curPath !== window.location.href) {
+          clearInterval(newInterval);
+        }
+
+        ajax.get(pingPromotion, (body) => {
+          if (body.code !== 200) {
+            return;
+          }
+
+          const promotion = body;
+          const isPromoted = promotion.isPromoted;
+          let promotionData;
+          if (isPromoted) {
+            promotionData = this.#getPromotionData(promotion);
+            const promBtn = this.#element.querySelector('.seller-block__btn--promote');
+            if (promBtn !== null) {
+              promBtn.replaceWith(renderPromotionInfo(promotionData));
+            }
+            clearInterval(newInterval);
+            this.needPing = false;
+          }
+        });
+      }, 1000);
+    }
+  }
+
+  /**
    * Render the advert page template.
    */
   async #renderTemplate() {
@@ -253,14 +404,18 @@ export class Advert {
 
     await ajax.get(apiRoute, (body) => {
       const {items} = body;
-      const {advert, city, category, photosIMG} = items;
+      const {advert, city, category, photosIMG, promotion} = items;
 
-      const {id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} = advert;
+      const {active, id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} =
+        advert;
       this.id = id;
       const createdDate = formatDate(created);
       const cityName = city.name;
       const categoryName = category.name;
       const isAuthor = ajax.auth.id === advert.userId;
+      this.isAuthor = isAuthor;
+      const isPromoted = promotion.isPromoted;
+      this.needPing = promotion.needPing;
 
       let state = '';
       if (isUsed) {
@@ -292,7 +447,13 @@ export class Advert {
       adPathElement.appendChild(renderAdPathTemplate({paths}));
       content.appendChild(adPathElement);
 
+      let promotionData;
+      if (isPromoted) {
+        promotionData = this.#getPromotionData(promotion);
+      }
+
       const adContainer = renderAdContainerTemplate(
+          active,
           title,
           cityName,
           categoryName,
@@ -311,8 +472,15 @@ export class Advert {
       adContainer.classList.add('post-container');
       content.appendChild(adContainer);
 
+      if (isPromoted) {
+        const promBtn = content.querySelector('.seller-block__btn--promote');
+        if (promBtn !== null) {
+          promBtn.replaceWith(renderPromotionInfo(promotionData));
+        }
+      }
+
       document.title += ' ' + trimString(title, 40);
-      const addCartButton = this.#element.querySelector('.cart');
+      const addCartButton = this.#element.querySelector('.seller-block__btn--cart');
       if (addCartButton !== null) {
         if (inCart) {
           addCartButton.innerHTML = 'Удалить из корзины';
@@ -342,6 +510,7 @@ export class Advert {
         subscribersCount: profile.subersCount,
         subscribtionsCount: profile.subonsCount,
         avatarImg: profile.avatarImg,
+        notIsAuthor: ajax.auth.id !== profile.userId,
       };
 
       const merchantCardInstance = new MerchantCard(merchantCartItems);
@@ -351,6 +520,32 @@ export class Advert {
       const ratingBarInstance = new RatingBar(ratingValue);
       const ratingBar = ratingBarInstance.render();
       rating.appendChild(ratingBar);
+    });
+
+    let priceHistoryRoute = new URL(ajax.routes.ADVERT.GET_PRICE_HISTORY);
+    priceHistoryRoute = buildURL(priceHistoryRoute, {id: this.id});
+    await ajax.get(priceHistoryRoute, (body) => {
+      if (body.code !== 200) {
+        return;
+      }
+      this.priceHistory = body.items;
+    });
+    const canvas = this.#element.querySelector('.history-btn__canvas');
+    const array = this.priceHistory.map((value) => value.newPrice);
+    renderChart(canvas, array);
+
+    const deffPrice = array[array.length - 2] - array[array.length - 1];
+    const deffPriceElements = this.#element.querySelectorAll('.history-btn__price');
+    deffPriceElements.forEach((deffPriceElement) => {
+      if (deffPrice > 0) {
+        deffPriceElement.classList.add('history-btn__price--positive');
+        deffPriceElement.innerHTML = `&dArr; ${deffPrice} ₽ `;
+      } else if (deffPrice < 0) {
+        deffPriceElement.classList.add('history-btn__price--negative');
+        deffPriceElement.innerHTML = `&uArr; ${Math.abs(deffPrice)} ₽ `;
+      } else {
+        deffPriceElement.innerHTML = `- ${deffPrice} ₽ `;
+      }
     });
   }
 }

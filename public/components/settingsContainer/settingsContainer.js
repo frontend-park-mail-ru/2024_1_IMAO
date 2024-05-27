@@ -4,7 +4,7 @@ import stringToHtmlElement from '../../modules/stringToHtmlElement.js';
 import template from './settingsContainer.hbs';
 import styles from './settingsContainer.scss';
 import EditProfileOverlay from '../../components/editProfileOverlay/editProfileOverlay.js';
-import formatDate from '../../modules/formatDate.js';
+import {formatDate} from '../../modules/formatDate.js';
 import {validateEmail, validateName, validatePhone} from '../../modules/validate.js';
 import ajax from '../../modules/ajax.js';
 
@@ -198,7 +198,7 @@ class SettingsContainer {
           profileName.innerHTML = profile.merchantsName;
           profileAvatar.src = profile.avatarImg ?
             `data:image/png;base64,${profile.avatarImg}` :
-            'images/img_avatar.png';
+            '/images/img_avatar.webp';
           headerAvatar.src = profileAvatar.src;
 
           const profilePageContentContainer = document.querySelector('.profile-page__content');
@@ -242,7 +242,7 @@ class SettingsContainer {
             break;
 
           default:
-            const id = this.#element.querySelector('.selected').dataset.id;
+            const id = this.#element.querySelector('.citylist__option--selected').dataset.id;
             data = {id: parseInt(id)};
             break;
         }

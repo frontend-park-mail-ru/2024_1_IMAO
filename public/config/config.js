@@ -1,7 +1,7 @@
 'use strict';
 
 const api = 'http://127.0.0.1:8080';
-export const serverHost = 'http://127.0.0.1';
+export const serverHost = 'http://127.0.0.1:8008';
 
 /**
  * Routes for API.
@@ -26,6 +26,8 @@ export const API_ROUTES = {
     CLOSE_ADVERT: new URL('/api/adverts/close/:id', api),
     GET_SUGGESTIONS: new URL('/api/adverts/suggestions', api),
     SEARCH: new URL('api/adverts/search', api),
+    GET_PRICE_HISTORY: new URL('/api/adverts/price_history/:id', api),
+    GET_PROMOTION: new URL('/api/adverts/promotion/:id', api),
   },
   PROFILE: {
     GET_PROFILE: new URL('/api/profile/:id', api),
@@ -59,6 +61,9 @@ export const API_ROUTES = {
     CREATE: new URL('/api/survey/create', api),
     CHECK: new URL('/api/survey/check/1', api),
     STATISTICS: new URL('/api/survey/statistics', api),
+  },
+  PAYMENTS: {
+    FORM: new URL('/api/payments/form', api),
   },
 };
 
