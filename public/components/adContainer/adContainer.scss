@@ -19,7 +19,8 @@
   box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 2px 0px;
 
   .title {
-    width: 65%;
+    max-width: 700px;
+    display: flex;
   }
 
   .favourite {
@@ -27,7 +28,7 @@
     align-items: center;
     justify-content: flex-end;
     font-size: 14px;
-    width: 35%;
+    width: 40%;
   }
 
   .favourite__btn--edit {
@@ -335,30 +336,30 @@
       align-items: flex-start;
 
       .maximum {
-        background-color: #EA3939;
-  
+        background-color: #ea3939;
+
         path {
-            stroke: #EA3939;
-            fill: white;
+          stroke: #ea3939;
+          fill: white;
         }
       }
-    
+
       .premium {
-          background-color: #FF7222;
-    
-          path {
-              stroke: #FF7222;
-              fill: white;
-          }
+        background-color: #ff7222;
+
+        path {
+          stroke: #ff7222;
+          fill: white;
+        }
       }
-    
+
       .lifting {
-          background-color: #039AD3;
-    
-          path {
-              stroke: #039AD3;
-              fill: white;
-          }
+        background-color: #039ad3;
+
+        path {
+          stroke: #039ad3;
+          fill: white;
+        }
       }
     }
 
@@ -495,6 +496,16 @@
     margin: 0;
     width: 56%;
     left: 22%;
+    z-index: 20;
+
+    &--promote {
+      position: relative;
+      order: -1;
+      top: auto;
+      width: auto;
+      left: auto;
+      z-index: 10;
+    }
   }
 
   .post-block {
