@@ -6,6 +6,11 @@ import './priceHistoryOverlay.scss';
 import {formatDate} from '../../modules/formatDate.js';
 import {renderChartGradient, COLOR} from '../../modules/chartRender.js';
 
+const MESSAGE_TOP_CORRECTOR = 90;
+const MESSAGE_LEFT_FIRST = 40;
+const MESSAGE_LEFT_OTHER = 20;
+const MESSAGE_BOUNDARY = 100;
+
 /**
  * Class represented an overlay with price history.
  */
@@ -105,13 +110,13 @@ class PriceHistoryOverlay {
     date.innerHTML = `${formatDate(this.dataArray[index].updatedTime)}`;
     const price = message.querySelector('.message__price');
     price.innerHTML = `${this.priceArray[index]} ₽`;
-    message.style.top = `${this.coordinatesArray[index].y + 90}px`;
+    message.style.top = `${this.coordinatesArray[index].y + MESSAGE_TOP_CORRECTOR}px`;
     if (index == this.coordinatesArray.length - 1) {
-      message.style.left = `${this.canvas.offsetWidth - 40}px`;
-    } else if (this.coordinatesArray[index].x > 100) {
-      message.style.left = `${this.coordinatesArray[index].x - 20}px`;
+      message.style.left = `${this.canvas.offsetWidth - MESSAGE_LEFT_FIRST}px`;
+    } else if (this.coordinatesArray[index].x > MESSAGE_BOUNDARY) {
+      message.style.left = `${this.coordinatesArray[index].x - MESSAGE_LEFT_OTHER}px`;
     } else {
-      message.style.left = '100px';
+      message.style.left = `${MESSAGE_BOUNDARY}px`;
     }
   }
 

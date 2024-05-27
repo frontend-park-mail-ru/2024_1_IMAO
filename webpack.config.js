@@ -15,28 +15,25 @@ module.exports = {
     rules: [
       {
         test: /.jsx?$/,
-        include: [
-          path.resolve(__dirname, 'public'),
-        ],
-        exclude: [
-          path.resolve(__dirname, 'node_modules'),
-        ],
+        include: [path.resolve(__dirname, 'public')],
+        exclude: [path.resolve(__dirname, 'node_modules')],
         loader: 'babel-loader',
         options: {
           presets: [
-            ['@babel/env', {
-              targets: {
-                browsers: 'last 2 chrome versions',
+            [
+              '@babel/env',
+              {
+                targets: {
+                  browsers: 'last 2 chrome versions',
+                },
               },
-            }],
+            ],
           ],
         },
       },
       {
         test: /\.hbs$/,
-        include: [
-          path.resolve(__dirname, 'public'),
-        ],
+        include: [path.resolve(__dirname, 'public')],
         loader: 'handlebars-loader',
         options: {
           runtime: path.resolve(__dirname, 'server/handlebars'),
@@ -87,14 +84,10 @@ module.exports = {
     minimizer: [
       new TerserPlugin({
         terserOptions: {
-          // eslint-disable-next-line camelcase
           keep_fnames: true,
-          // eslint-disable-next-line camelcase
           keep_classnames: true,
           compress: {
-            // eslint-disable-next-line camelcase
             keep_classnames: true,
-            // eslint-disable-next-line camelcase
             keep_fnames: true,
           },
           mangle: false,
@@ -112,15 +105,18 @@ module.exports = {
         implementation: ImageMinimizerPlugin.imageminMinify,
         options: {
           plugins: [
-            ['mozjpeg', {quality: 75}],
-            ['pngquant', {quality: [0.65, 0.90], speed: 4}],
-            ['svgo', {
-              plugins: [
-                {
-                  removeViewBox: false,
-                },
-              ],
-            }],
+            ['mozjpeg', { quality: 75 }],
+            ['pngquant', { quality: [0.65, 0.9], speed: 4 }],
+            [
+              'svgo',
+              {
+                plugins: [
+                  {
+                    removeViewBox: false,
+                  },
+                ],
+              },
+            ],
           ],
         },
       },
