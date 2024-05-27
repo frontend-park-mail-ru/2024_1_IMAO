@@ -1,7 +1,7 @@
 'use strict';
 
-const api = 'http://www.vol-4-ok.ru:8080';
-export const serverHost = 'http://www.vol-4-ok.ru:80';
+const api = 'https://www.vol-4-ok.ru';
+export const serverHost = 'https://www.vol-4-ok.ru';
 
 /**
  * Routes for API.
