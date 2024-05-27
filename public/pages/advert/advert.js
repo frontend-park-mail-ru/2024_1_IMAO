@@ -15,6 +15,7 @@ import {renderChart} from '../../modules/chartRender.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import favoritesModel from '../../models/favorites.js';
+import renderLoadingSpinner from '../../components/loadingSpinner/loadingSpinner.js';
 
 /** Class representing advert page. */
 export class Advert {
@@ -359,6 +360,24 @@ export class Advert {
     let pingPromotion = new URL(ajax.routes.ADVERT.GET_PROMOTION);
     pingPromotion = buildURL(pingPromotion, {id: this.id});
     if (this.isAuthor && this.needPing) {
+      const promBtn = this.#element.querySelector('.seller-block__btn--promote');
+      if (promBtn) {
+        const waiting = document.createElement('div');
+        waiting.classList.add('waiting-section');
+
+        const waitingText = document.createElement('div');
+        waitingText.classList.add('waiting-section__text');
+        waitingText.innerHTML = 'Платеж в обработке';
+
+        const spinner = document.createElement('div');
+        spinner.classList.add('waiting-section__spinner');
+        spinner.appendChild(renderLoadingSpinner());
+
+        waiting.appendChild(waitingText);
+        waiting.appendChild(spinner);
+        promBtn.replaceWith(waiting);
+      }
+
       const newInterval = setInterval(() => {
         if (curPath !== window.location.href) {
           clearInterval(newInterval);
@@ -370,7 +389,6 @@ export class Advert {
           let promotionData;
           if (isPromoted) {
             promotionData = this.#getPromotionData(promotion);
-            const promBtn = this.#element.querySelector('.seller-block__btn--promote');
             if (promBtn !== null) {
               promBtn.replaceWith(renderPromotionInfo(promotionData));
             }

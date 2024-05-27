@@ -638,3 +638,32 @@
     }
   }
 }
+
+.waiting-section {
+  display: flex;
+  height: 20px;
+  margin-bottom: 20px;
+  justify-content: flex-start;
+  width: 100%;
+
+  &__text {
+    width: auto;
+    display: flex;
+    font-size: 16px;
+    margin-right: 20px;
+  }
+
+  &__spinner {
+    width: auto;
+    display: flex;
+    
+    .loading-spinner {
+      height: 20px;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
