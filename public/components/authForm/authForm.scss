@@ -137,7 +137,32 @@
   color: red;
 }
 
+@media (max-width: 900px) {
+  .auth-form__info {
+    .labels-group {
+      position: relative;
+      background-color: #f9f9f9;
+      flex-direction: column;
+      width: auto;
+      justify-content: unset;
+      box-shadow: none;
+
+      &__icon {
+        flex-direction: row;
+      }
+    }
+  }
+}
+
 @media (max-width: 800px) {
+  .auth-page {
+    position: absolute;
+    height: 100%;
+    top: -1px;
+  }
+  .auth-form {
+    box-shadow: none;
+  }
   .auth-form__info {
     display: none;
   }

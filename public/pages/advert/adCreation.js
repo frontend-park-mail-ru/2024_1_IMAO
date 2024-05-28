@@ -164,7 +164,7 @@ export class AdCreation {
     const apiCSRF = ajax.routes.AUTH.CSRF;
 
     await ajax.get(apiCSRF, (body) => {
-      CSRFToken = body['tokenBody'];
+      CSRFToken = body['items'];
     });
 
     this.photos = [];
@@ -181,7 +181,7 @@ export class AdCreation {
       const apiCSRF = ajax.routes.AUTH.CSRF;
 
       await ajax.get(apiCSRF, (body) => {
-        CSRFToken = body['tokenBody'];
+        CSRFToken = body['items'];
       });
 
       await ajax.get(apiRoute, (body) => {
@@ -227,7 +227,7 @@ export class AdCreation {
     const pathCity = ajax.routes.CITY.GET_CITY_LIST;
     await ajax.get(pathCity, (body) => {
       const dropdownWithSearchDiv = this.#element.querySelector('.location-place');
-      const dropdownWithSearch = new DropdownWithSearch(body, 'Москва');
+      const dropdownWithSearch = new DropdownWithSearch(body?.items, 'Москва');
       const dropdownWithSearchTempl = dropdownWithSearch.render();
       dropdownWithSearchTempl.classList.remove('dropdown-with-search');
       // dropdownWithSearchTempl.setProperty('height', '');

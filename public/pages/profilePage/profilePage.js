@@ -450,12 +450,12 @@ export class ProfilePage {
     const apiCSRF = ajax.routes.AUTH.CSRF;
 
     await ajax.get(apiCSRF, (body) => {
-      this.CSRFToken = body['tokenBody'];
+      this.CSRFToken = body['items'];
     });
 
     let profile = {};
     await ajax.get(path, (body) => {
-      profile = body['profile'];
+      profile = body['items'];
     });
 
     const merchantsName = profile.merchantsName;

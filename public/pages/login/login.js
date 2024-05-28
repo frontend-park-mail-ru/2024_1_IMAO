@@ -6,6 +6,7 @@ import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
 const authError = 'Неверный логин или пароль!';
+const unknownError = 'Ошибка! Повторите попытку позже!';
 
 /** Class representing a login page. */
 export class Login {
@@ -84,13 +85,16 @@ export class Login {
 
       ajax
           .post(apiRoute, data, (body) => {
-            if (body?.isAuth === true) {
-              history.back();
+            if (body?.code !== 200) {
+              divError.innerHTML = unknownError;
+            } else if (body?.items?.isAuth === true) {
+              history.go(-1);
 
               return;
+            } else {
+              divError.innerHTML = authError;
             }
             submit.disabled = false;
-            divError.innerHTML = authError;
           })
           .catch(() => {
             submit.disabled = false;

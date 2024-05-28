@@ -166,8 +166,8 @@ class SettingsContainer {
 
           let profile = {};
           await ajax.postMultipart(forms[i].apiRoute, formData, (body) => {
-            if (body.profile != null) {
-              profile = body['profile'];
+            if (body.items != null) {
+              profile = body['items'];
 
               return;
             }
@@ -248,7 +248,7 @@ class SettingsContainer {
         }
         let dataBody = {};
         await ajax.post(forms[i].apiRoute, data, (body) => {
-          dataBody = body;
+          dataBody = body.items;
         });
 
         if (dataBody.status === 'This email is already in use') {

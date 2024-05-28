@@ -507,7 +507,7 @@ export class Advert {
     const id = userId;
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
     await ajax.get(path, (body) => {
-      const profile = body['profile'];
+      const profile = body?.items;
       const merchantsName = profile.merchantsName;
       const ratingValue = profile.rating;
       const id = profile.id;

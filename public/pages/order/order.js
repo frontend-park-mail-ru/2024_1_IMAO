@@ -93,7 +93,7 @@ export class Order {
         }
       }
       ajax.post(ajax.routes.ORDER.CREATE_ORDERS, orderItems, (body) => {
-        const {isCreated} = body;
+        const isCreated = body?.items?.isCreated;
 
         if (isCreated !== undefined) {
           const slugProfileOrders = ['profile', 'orders'];

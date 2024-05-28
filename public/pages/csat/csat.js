@@ -1,9 +1,6 @@
 'use strict';
 
 import CsatComp from '../../components/csatComp/csatComp.js';
-import ajax from '../../modules/ajax.js';
-import router from '../../router/router.js';
-
 
 /** Class representing a Csat survey page. */
 export class Csat {
