@@ -384,7 +384,7 @@ export class Advert {
         }
 
         ajax.get(pingPromotion, (body) => {
-          const promotion = body;
+          const promotion = body?.items;
           const isPromoted = promotion.isPromoted;
           let promotionData;
           if (isPromoted) {

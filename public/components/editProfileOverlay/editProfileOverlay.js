@@ -57,7 +57,7 @@ class EditProfileOverlay {
       const pathCity = ajax.routes.CITY.GET_CITY_LIST;
       ajax.get(pathCity, (body) => {
         const dropdownWithSearchDiv = this.#element.querySelector('.profile-modal__ddws');
-        const dropdownWithSearch = new DropdownWithSearch(body.items.CityItems, this.currentCity);
+        const dropdownWithSearch = new DropdownWithSearch(body, this.currentCity);
         dropdownWithSearchDiv.appendChild(dropdownWithSearch.render());
       });
     }
