@@ -8,7 +8,8 @@
     "start": "node server",
     "build-prod": "webpack",
     "build-and-start": "npm run build-prod && npm start",
-    "eslint": "npx eslint 'public/**/*.{js,jsx,ts,tsx}'"
+    "eslint": "npx eslint 'public/**/*.{js,jsx,ts,tsx}'",
+    "prepare": "husky install"
   },
   "author": "IMAO",
   "license": "MIT",
@@ -56,7 +57,7 @@
   },
   "lint-staged": {
     "*.{js, jsx}": [
-      "git add"
+      "npm run eslint"
     ]
   }
 }

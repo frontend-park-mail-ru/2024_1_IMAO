@@ -20,7 +20,7 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['*.precompiled.js', '**/handlebars/*.js', 'webpack.config.js'],
+  ignorePatterns: ['*.precompiled.js', '**/handlebars/*.js', 'webpack.config.js', 'public/bundle.js'],
   rules: {
     'max-len': ['error', {code: 120}],
     'camelcase': ['error', {ignoreDestructuring: true}],
@@ -28,7 +28,7 @@ module.exports = {
     'eol-last': ['error', 'always'], // Пустая строка в конце файла
     'quotes': ['error', 'single'], // Одинарные кавычки
     'no-unused-vars': 'off', // Запрет неиспользуемых переменных
-    // 'no-undef': 'error', // Запрет использования необъявленных переменных
+    'no-undef': 'error', // Запрет использования необъявленных переменных
     'no-trailing-spaces': 'error', // Запрет завершающих пробелов
     'no-var': 'error', // Запрет использования var
     'prefer-const': 'error', // Предпочтение const
