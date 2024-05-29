@@ -217,7 +217,7 @@ export class MerchantsPage {
 
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, this.#slug);
     await ajax.get(path, (body) => {
-      const profile = body['profile'];
+      const profile = body['items'];
 
       const id = profile.id;
       const merchantsName = profile.merchantsName;

@@ -183,12 +183,12 @@ class DropdownWithSearch {
    */
   transformData(input, selectedName) {
     // Проверяем, что входные данные имеют ожидаемый формат
-    if (!input || !input.city_list || !input.city_list.CityItems) {
+    if (!input || !input.items || !input.items.CityItems) {
       return;
     }
 
     // Преобразуем входные данные в выходной формат
-    return input.city_list.CityItems.map((item) => ({
+    return input.items.CityItems.map((item) => ({
       value: item.translation,
       label: item.name,
       id: item.id,

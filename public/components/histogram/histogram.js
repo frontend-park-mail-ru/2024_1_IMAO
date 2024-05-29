@@ -158,7 +158,7 @@ class Histogram {
     let results = [];
     const apiRoute = ajax.routes.SURVEY.STATISTICS;
     ajax.get(apiRoute, (body) => {
-      results = body.body.results;
+      results = body.items.results;
       const rowData = [];
 
       for (const i of results) {

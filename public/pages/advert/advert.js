@@ -15,6 +15,7 @@ import {renderChart} from '../../modules/chartRender.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import favoritesModel from '../../models/favorites.js';
+import renderLoadingSpinner from '../../components/loadingSpinner/loadingSpinner.js';
 
 /** Class representing advert page. */
 export class Advert {
@@ -359,24 +360,37 @@ export class Advert {
     let pingPromotion = new URL(ajax.routes.ADVERT.GET_PROMOTION);
     pingPromotion = buildURL(pingPromotion, {id: this.id});
     if (this.isAuthor && this.needPing) {
+      const promBtn = this.#element.querySelector('.seller-block__btn--promote');
+      const waiting = document.createElement('div');
+      if (promBtn) {
+        waiting.classList.add('waiting-section');
+
+        const waitingText = document.createElement('div');
+        waitingText.classList.add('waiting-section__text');
+        waitingText.innerHTML = 'Платеж в обработке';
+
+        const spinner = document.createElement('div');
+        spinner.classList.add('waiting-section__spinner');
+        spinner.appendChild(renderLoadingSpinner());
+
+        waiting.appendChild(waitingText);
+        waiting.appendChild(spinner);
+        promBtn.replaceWith(waiting);
+      }
+
       const newInterval = setInterval(() => {
         if (curPath !== window.location.href) {
           clearInterval(newInterval);
         }
 
         ajax.get(pingPromotion, (body) => {
-          if (body.code !== 200) {
-            return;
-          }
-
-          const promotion = body;
+          const promotion = body?.items;
           const isPromoted = promotion.isPromoted;
           let promotionData;
           if (isPromoted) {
             promotionData = this.#getPromotionData(promotion);
-            const promBtn = this.#element.querySelector('.seller-block__btn--promote');
-            if (promBtn !== null) {
-              promBtn.replaceWith(renderPromotionInfo(promotionData));
+            if (waiting !== null) {
+              waiting.replaceWith(renderPromotionInfo(promotionData));
             }
             clearInterval(newInterval);
             this.needPing = false;
@@ -493,7 +507,7 @@ export class Advert {
     const id = userId;
     const path = buildURL(ajax.routes.PROFILE.GET_PROFILE, {id});
     await ajax.get(path, (body) => {
-      const profile = body['profile'];
+      const profile = body?.items;
       const merchantsName = profile.merchantsName;
       const ratingValue = profile.rating;
       const id = profile.id;

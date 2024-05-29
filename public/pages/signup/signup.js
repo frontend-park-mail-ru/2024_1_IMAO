@@ -7,6 +7,7 @@ import router from '../../router/router.js';
 
 const passwordMatchError = 'Пароли не совпадают!';
 const userAlreadyExistError = 'Такой пользователь уже существует!';
+const unknownError = 'Ошибка! Повторите попытку позже!';
 
 /** Class representing a signup page. */
 export class Signup {
@@ -86,13 +87,16 @@ export class Signup {
 
       ajax
           .post(apiRoute, data, (body) => {
-            if (body?.isAuth === true) {
+            if (body?.code !== 200) {
+              divError.innerHTML = unknownError;
+            } else if (body?.items?.isAuth === true) {
               history.go(-2);
 
               return;
+            } else {
+              divError.innerHTML = userAlreadyExistError;
             }
             submit.disabled = false;
-            divError.innerHTML = userAlreadyExistError;
           })
           .catch(() => {
             submit.disabled = false;

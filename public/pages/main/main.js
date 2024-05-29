@@ -182,10 +182,10 @@ export class Main {
 
       const apiRoute = ajax.routes.SURVEY.CHECK;
       ajax.get(apiRoute, (body) => {
-        if (body?.isChecked === undefined) {
+        if (body?.items?.isChecked === undefined) {
           return;
         }
-        if (body.isChecked) {
+        if (body?.items?.isChecked) {
           return;
         }
         const iframeRoute = router.routes.csatPage.href.href;

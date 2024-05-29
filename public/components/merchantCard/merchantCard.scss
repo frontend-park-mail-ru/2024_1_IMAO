@@ -66,6 +66,7 @@
 
   .actions-container {
     margin: 10px 0;
+    align-items: center !important;
   }
 
   .post-container {
@@ -239,7 +240,7 @@
 
 .actions-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
 
   &__button {
