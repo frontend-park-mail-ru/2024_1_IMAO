@@ -42,7 +42,7 @@ class Favorites {
   async changeFavorites(advertId) {
     let result = false;
     await ajax.post(ajax.routes.FAVORITES.CHANGE_FAVORITES_ITEM_STATUS, {advertId}, (body) => {
-      const {isAppended} = body;
+      const isAppended = body?.items?.isAppended;
       if (isAppended) {
         ajax.auth.favNum++;
       } else {

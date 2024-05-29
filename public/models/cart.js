@@ -38,7 +38,7 @@ class Cart {
   async changeCart(advertId) {
     let result = false;
     await ajax.post(ajax.routes.CART.CHANGE_CART_ITEM_STATUS, {advertId}, (body) => {
-      const {isAppended} = body;
+      const isAppended = body?.items;
       if (isAppended) {
         ajax.auth.cartNum++;
       } else {

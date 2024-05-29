@@ -166,8 +166,8 @@ class SettingsContainer {
 
           let profile = {};
           await ajax.postMultipart(forms[i].apiRoute, formData, (body) => {
-            if (body.profile != null) {
-              profile = body['profile'];
+            if (body.items != null) {
+              profile = body['items'];
 
               return;
             }
@@ -258,8 +258,8 @@ class SettingsContainer {
           return;
         }
 
-        if (dataBody.profile) {
-          const profile = dataBody.profile;
+        if (dataBody?.items?.merchantsName) {
+          const profile = dataBody.items;
           this.profile = {
             merchantsName: profile.merchantsName,
             ratingValue: profile.rating,
@@ -278,8 +278,9 @@ class SettingsContainer {
           };
         }
 
-        if (dataBody.user) {
-          this.profile.email = dataBody.user.email;
+        if (dataBody?.items?.user) {
+          this.profile.email = dataBody.items.user.email;
+          ajax.auth.email = dataBody.items.user.email;
         }
 
         const profilePageContentContainer = document.querySelector('.profile-page__content');

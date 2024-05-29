@@ -1,5 +1,4 @@
 import StatsContainer from '../../components/stats/stats';
-import ajax from '../../modules/ajax';
 
 /**
  * Class represents a Csas statistics page.

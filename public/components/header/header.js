@@ -258,7 +258,7 @@ export class Header {
       ev.preventDefault();
       ajax.post(ajax.routes.AUTH.LOGOUT, null, (body) => {
         // eslint-disable-next-line camelcase
-        ajax.auth.isAuth = body.isAuth;
+        ajax.auth.isAuth = body.items.isAuth;
         this.#renderHeaderTemplate('Москва');
         this.#addListeners();
         const main = document.querySelector('main');

@@ -73,12 +73,15 @@ class Ajax {
    */
   async checkAuth() {
     await this.get(this.routes.AUTH.CHECKAUTH, (body) => {
-      this.auth.isAuth = body.isAuth;
-      this.auth.id = body.user.id;
-      this.auth.email = body.user.email;
-      this.auth.avatar = body.avatarImg;
-      this.auth.cartNum = Number(body.cartNum);
-      this.auth.favNum = Number(body.favNum);
+      if (body?.code !== 200) {
+        return;
+      }
+      this.auth.isAuth = body?.items?.isAuth;
+      this.auth.id = body?.items?.user.id;
+      this.auth.email = body?.items?.user.email;
+      this.auth.avatar = body?.items?.avatarImg;
+      this.auth.cartNum = Number(body?.items?.cartNum);
+      this.auth.favNum = Number(body?.items?.favNum);
     });
   }
 

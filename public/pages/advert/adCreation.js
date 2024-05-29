@@ -164,7 +164,7 @@ export class AdCreation {
     const apiCSRF = ajax.routes.AUTH.CSRF;
 
     await ajax.get(apiCSRF, (body) => {
-      CSRFToken = body['tokenBody'];
+      CSRFToken = body['items'];
     });
 
     this.photos = [];
@@ -181,7 +181,7 @@ export class AdCreation {
       const apiCSRF = ajax.routes.AUTH.CSRF;
 
       await ajax.get(apiCSRF, (body) => {
-        CSRFToken = body['tokenBody'];
+        CSRFToken = body['items'];
       });
 
       await ajax.get(apiRoute, (body) => {
