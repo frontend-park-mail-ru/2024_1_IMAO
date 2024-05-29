@@ -20,7 +20,7 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['*.precompiled.js', '**/handlebars/*.js', 'webpack.config.js', 'public/bundle.js'],
+  ignorePatterns: ['*.precompiled.js', '**/handlebars/*.js', 'webpack.config.js', 'public/build/*'],
   rules: {
     'max-len': ['error', {code: 120}],
     'camelcase': ['error', {ignoreDestructuring: true}],
