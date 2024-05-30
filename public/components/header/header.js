@@ -107,7 +107,6 @@ export class Header {
         searchResults.classList.add('display-none');
       } else {
         searchButton.disabled = false;
-        searchResults.classList.remove('display-none');
       }
     });
 
@@ -174,6 +173,8 @@ export class Header {
     }
 
     ajax.get(apiRoute, (body) => {
+      results.classList.remove('display-none');
+
       while (results.firstChild) {
         results.removeChild(results.firstChild);
       }
