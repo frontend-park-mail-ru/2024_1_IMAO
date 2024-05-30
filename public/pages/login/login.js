@@ -86,17 +86,16 @@ export class Login {
       ajax
           .post(apiRoute, data, (body) => {
             if (body?.code !== 200) {
-              divError.innerHTML = unknownError;
+              divError.innerHTML = authError;
             } else if (body?.items?.isAuth === true) {
               history.go(-1);
 
               return;
-            } else {
-              divError.innerHTML = authError;
             }
             submit.disabled = false;
           })
           .catch(() => {
+            divError.innerHTML = unknownError;
             submit.disabled = false;
           });
     });

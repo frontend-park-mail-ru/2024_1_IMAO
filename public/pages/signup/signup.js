@@ -88,17 +88,16 @@ export class Signup {
       ajax
           .post(apiRoute, data, (body) => {
             if (body?.code !== 200) {
-              divError.innerHTML = unknownError;
+              divError.innerHTML = userAlreadyExistError;
             } else if (body?.items?.isAuth === true) {
               history.go(-2);
 
               return;
-            } else {
-              divError.innerHTML = userAlreadyExistError;
             }
             submit.disabled = false;
           })
           .catch(() => {
+            divError.innerHTML = unknownError;
             submit.disabled = false;
           });
     });
