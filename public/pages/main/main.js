@@ -237,10 +237,12 @@ export class Main {
 
       const ids = [];
       adverts.forEach((inner) => {
-        const {price, title, id, inFavourites, city, category, photosIMG, isPromoted, isActive} = inner;
+        const {price, title, id, inFavourites, city, category, photos, isPromoted, isActive} = inner;
+        const photosFix = photos.map((value) => value.slice(1));
+
         ids.push(id);
         const path = buildURLBySegments(router.host, [city, category, id]);
-        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted, isActive);
+        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosFix, isPromoted, isActive);
         cardsContainer.appendChild(adsCardInstance.render());
       });
 

@@ -1,7 +1,7 @@
 <div class="order-item" id="{{id}}" >
     <div class="order-item__heading" >Заказ №{{num}}, {{title}}</div>
     {{#if photo}}
-        <img class="order-item__image" src="data:image/png;base64,{{photo}}">
+        <img class="order-item__image" src="{{photo}}">
     {{^}}
         <img class="order-item__image" src="/images/cart_placeholder_image.webp">
     {{/if}}

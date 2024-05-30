@@ -12,7 +12,7 @@
                 {{#if (is_null avatar)}}
                 <img class="avatar-image" src="/images/img_avatar.webp" />
                 {{^}}
-                <img class="avatar-image" src="data:image/png;base64,{{avatar}}" />
+                <img class="avatar-image" src="{{avatar}}" />
                 {{/if}}
                 <div class="user-info">
                     <div class="location">

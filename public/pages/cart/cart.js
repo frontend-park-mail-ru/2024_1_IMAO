@@ -230,14 +230,14 @@ export class Cart {
 
     adverts.forEach((item) => {
       let {city, category} = item;
-      const {advert, photosIMG} = item;
+      const {advert, photos} = item;
       city = city.translation;
       category = category.translation;
       const {id, price, title, inFavourites} = advert;
-      this.#items[ajax.auth.id][id] = {advert, photosIMG};
+      this.#items[ajax.auth.id][id] = {advert, photos};
       ids.push(id);
       priceSum += Number(price);
-      const photo = photosIMG?.[0] ? photosIMG[0] : null;
+      const photo = photos?.[0] ? photos[0].slice(1) : null;
       const path = buildURLBySegments(router.host, [city, category, id]);
       selectPanel.appendChild(renderCartBlock(id, title, price, path, photo, inFavourites));
     });

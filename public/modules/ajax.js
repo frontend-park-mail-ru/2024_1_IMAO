@@ -79,7 +79,7 @@ class Ajax {
       this.auth.isAuth = body?.items?.isAuth;
       this.auth.id = body?.items?.user.id;
       this.auth.email = body?.items?.user.email;
-      this.auth.avatar = body?.items?.avatarImg;
+      this.auth.avatar = body?.items?.avatar.slice(1);
       this.auth.cartNum = Number(body?.items?.cartNum);
       this.auth.favNum = Number(body?.items?.favNum);
     });

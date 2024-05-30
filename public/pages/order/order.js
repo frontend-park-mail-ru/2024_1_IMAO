@@ -148,10 +148,10 @@ export class Order {
 
     for (const orderItem in order) {
       if (Object.hasOwn(order, orderItem)) {
-        const {advert, photosIMG} = order[orderItem];
+        const {advert, photos} = order[orderItem];
         const {id, title, price} = advert;
         priceSum += Number(price) + this.#deliveriPrice;
-        selectPanel.appendChild(renderOrderItem(num, id, title, price, photosIMG?.[0]));
+        selectPanel.appendChild(renderOrderItem(num, id, title, price, photos?.[0].slice(1)));
         num++;
       }
     }

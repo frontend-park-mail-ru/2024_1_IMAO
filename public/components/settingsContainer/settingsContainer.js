@@ -192,13 +192,11 @@ class SettingsContainer {
             reviewCount: profile.reactionsCount,
             subscribersCount: profile.subersCount,
             subscribtionsCount: profile.subonsCount,
-            avatarImg: profile.avatarImg,
+            avatarImg: profile.avatar.slice(1),
           };
 
           profileName.innerHTML = profile.merchantsName;
-          profileAvatar.src = profile.avatarImg ?
-            `data:image/png;base64,${profile.avatarImg}` :
-            '/images/img_avatar.webp';
+          profileAvatar.src = profile.avatar ? `${profile.avatar.slice(1)}` : '/images/img_avatar.webp';
           headerAvatar.src = profileAvatar.src;
 
           const profilePageContentContainer = document.querySelector('.profile-page__content');

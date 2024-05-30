@@ -230,7 +230,6 @@ export class AdCreation {
       const dropdownWithSearch = new DropdownWithSearch(body, 'Москва');
       const dropdownWithSearchTempl = dropdownWithSearch.render();
       dropdownWithSearchTempl.classList.remove('dropdown-with-search');
-      // dropdownWithSearchTempl.setProperty('height', '');
       dropdownWithSearchDiv.appendChild(dropdownWithSearchTempl);
     });
 

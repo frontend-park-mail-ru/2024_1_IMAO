@@ -418,7 +418,8 @@ export class Advert {
 
     await ajax.get(apiRoute, (body) => {
       const {items} = body;
-      const {advert, city, category, photosIMG, promotion} = items;
+      const {advert, city, category, photos, promotion} = items;
+      const photosFix = photos.map((value) => value.slice(1));
 
       const {active, id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} =
         advert;
@@ -478,7 +479,7 @@ export class Advert {
           editPath,
           id,
           state,
-          photosIMG,
+          photosFix,
           inFavourites,
           views,
           favouritesNum,
@@ -523,7 +524,7 @@ export class Advert {
         reviewCount: profile.reactionsCount,
         subscribersCount: profile.subersCount,
         subscribtionsCount: profile.subonsCount,
-        avatarImg: profile.avatarImg,
+        avatarImg: profile.avatar.slice(1),
         notIsAuthor: ajax.auth.id !== profile.userId,
       };
 

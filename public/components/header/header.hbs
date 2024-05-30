@@ -73,7 +73,7 @@
             {{#if (is_null avatar)}}
                 <img class="profile-icon" src="/images/img_avatar.webp">
             {{^}}
-                <img class="profile-icon" src="data:image/png;base64,{{avatar}}">
+                <img class="profile-icon" src="{{avatar}}">
             {{/if}}
             <div class="dropdown__content dropdown__content--right">
                 <a href="{{urlProfile}}" data-url="{{urlProfile}}">Профиль</a>
