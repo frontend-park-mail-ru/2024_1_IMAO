@@ -1,7 +1,7 @@
 'use strict';
 
 const api = 'http://127.0.0.1:8080';
-export const serverHost = 'http://127.0.0.1';
+export const serverHost = 'http://127.0.0.1:8008';
 
 /**
  * Routes for API.
@@ -41,7 +41,8 @@ export const API_ROUTES = {
     EDIT_USER_EMAIL: new URL('/api/auth/edit/email', api),
   },
   CITY: {
-    GET_CITY_LIST: new URL('/api/city', api),
+    GET_CITY_LIST: new URL('/api/city/list', api),
+    GET_CITY_NAME: new URL('/api/city/name', api),
   },
   CART: {
     GET_CART_LIST: new URL('/api/cart/list', api),

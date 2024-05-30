@@ -319,10 +319,9 @@ export class Header {
   /**
    * Renders a template for a header.
    * @private
-   * @param {URL} location - The location to be displayed in the header.
    * @return {void}
    */
-  #renderHeaderTemplate(location) {
+  #renderHeaderTemplate() {
     const urlMain = router.routes.mainPage.href.href;
     const urlLogin = router.routes.loginPage.href.href;
     const urlCreate = router.routes.adCreationPage.href.href;
@@ -336,6 +335,7 @@ export class Header {
     const avatar = router.auth.avatar;
     const cartQuantity = router.auth.cartNum;
     const favoritesQuantity = router.auth.favNum;
+    const location = router.auth.cityName;
     while (this.#header.firstChild) {
       this.#header.removeChild(this.#header.lastChild);
     }
