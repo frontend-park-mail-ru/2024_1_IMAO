@@ -23,5 +23,13 @@
             <div class="order-block__item--hint">Адрес доставки:</div> 
             <div class="order-block__item--desc">{{address}}</div>
         </div>
+        {{#if notRated}}
+        <div class="order-block__rating">
+            <div class="order-block__rating--text" data-id="{{id}}">Пожалуйста, оцените заказ:</div>
+            <div class="order-block__rating--stars"></div>
+        </div>
+        {{^}}
+        <div class="order-block__has-rating"></div>
+        {{/if}}
     </div>
 </div>

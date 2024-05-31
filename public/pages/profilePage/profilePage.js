@@ -9,6 +9,7 @@ import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug
 import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
+import SetRatingBar from '../../components/setRatingBar/setRatingBar.js';
 import {formatDate} from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
 import ajax from '../../modules/ajax.js';
@@ -191,13 +192,26 @@ export class ProfilePage {
             const emptyOrderPlug = new EmptyOrderPlug(header, content);
             merchantsCardContainer.appendChild(emptyOrderPlug.render());
           } else if (adverts && Array.isArray(adverts)) {
+            let unratedCount = 0;
             adverts.forEach((inner) => {
               const {orderItem, advert} = inner;
               const {status, address, phone, name} = orderItem;
               const ad = advert.advert;
               const photo = advert.photosIMG?.[0];
               const {id, title, price} = ad;
-              const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name);
+              const notRated = orderItem.rating === 0;
+              const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name,
+                  notRated);
+              if (notRated) {
+                const rating = orderBlockInstance.querySelector('.order-block__rating--stars');
+                const setRatingBar = new SetRatingBar();
+                rating.appendChild(setRatingBar.render(unratedCount));
+                unratedCount++;
+              } else {
+                const rating = orderBlockInstance.querySelector('.order-block__has-rating');
+                const ratingBar = new RatingBar(orderItem.rating);
+                rating.append(ratingBar.render());
+              }
               merchantsCardContainer.appendChild(orderBlockInstance);
             });
           }

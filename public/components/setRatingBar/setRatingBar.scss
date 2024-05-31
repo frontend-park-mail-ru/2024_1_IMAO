@@ -1,0 +1,36 @@
+.set-rating {
+    width: auto;
+    font-size: 30px;
+    overflow:hidden;
+}
+
+.set-rating a {
+    float:right;
+    color: #aaa;
+    text-decoration: none;
+    -webkit-transition: color .4s;
+    -moz-transition: color .4s;
+    -o-transition: color .4s;
+    transition: color .4s;
+}
+
+.set-rating a:hover,
+.set-rating a:hover ~ a,
+.set-rating a:focus,
+.set-rating a:focus ~ a		{
+    color: orange;
+    cursor: pointer;
+}
+
+.set-rating {
+    direction: rtl;
+}
+
+.setted-star {
+    color: orange !important;
+}
+
+.disabled-star {
+    pointer-events: none;
+    cursor: default;
+}

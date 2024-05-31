@@ -57,6 +57,7 @@ export const API_ROUTES = {
   ORDER: {
     GET_ORDERS_LIST: new URL('/api/order/list', api),
     CREATE_ORDERS: new URL('/api/order/create', api),
+    CREATE_REVIEW: new URL('/api/order/rate', api),
   },
   SURVEY: {
     CREATE: new URL('/api/survey/create', api),
