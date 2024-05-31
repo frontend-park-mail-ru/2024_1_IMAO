@@ -97,7 +97,7 @@ class Ajax {
           'path': '/',
         };
 
-        setCookie('location', this.auth.cityName, options);
+        setCookie('location', body.items.updateName, options);
       }
     });
   }

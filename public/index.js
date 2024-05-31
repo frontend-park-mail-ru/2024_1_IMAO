@@ -27,7 +27,7 @@ rootElement.appendChild(mainElement);
 ajax.initialize(AUTH, API_ROUTES);
 router.initialize(AUTH, PAGES_ROUTES, serverHost);
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
-navigator.geolocation.getCurrentPosition(setLocationSuccess, setLocationErr, {timeout: 1, enableHighAccuracy: true});
+navigator.geolocation.getCurrentPosition(setLocationSuccess, setLocationErr, {timeout: 1000, enableHighAccuracy: true});
 
 const header = new Header(cartModel, favoritesModel);
 cartModel.on('cartChange', header.changeCartQuantity.bind(header));

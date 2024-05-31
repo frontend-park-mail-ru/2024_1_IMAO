@@ -17,8 +17,9 @@ export function setLocationSuccess(pos) {
   const crd = pos.coords;
   const lat = crd.latitude;
   const lon = crd.longitude;
+  const language = 'en';
 
-  const data = {lat, lon};
+  const data = {lat, lon, language};
 
   ajax.post(ajax.routes.CITY.GET_CITY_NAME, data, (body) => {
     if (body.items) {

@@ -8,6 +8,7 @@ import {buildURLBySegments, getURLFromLocation} from '../../modules/parsePathPar
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import debounce from '../../modules/debouncer.js';
+import {getCookie} from '../../modules/cookie.js';
 
 /** Class representing a header component. */
 export class Header {
@@ -138,6 +139,7 @@ export class Header {
       ev.preventDefault();
       const searchUrl = new URL(router.routes.mainPage.href.href);
       searchUrl.searchParams.set('title', searchValue);
+      searchUrl.searchParams.set('city', getCookie('location'));
       router.pushPage(ev, searchUrl.href);
     });
   }
@@ -152,6 +154,7 @@ export class Header {
       ev.preventDefault();
       const searchUrl = new URL(router.routes.mainPage.href.href);
       searchUrl.searchParams.set('title', title);
+      searchUrl.searchParams.set('city', getCookie('location'));
       router.pushPage(ev, searchUrl.href);
     });
   }
@@ -340,7 +343,7 @@ export class Header {
       this.#header.removeChild(this.#header.lastChild);
     }
     const CategoriesWithUrl = CATEGORIES.map((category) => {
-      const temp = ['Moscow', String(category.translation)];
+      const temp = [getCookie('location'), String(category.translation)];
       const urlurl = buildURLBySegments(serverHost, temp);
       const url = urlurl.href;
       const {name} = category;
