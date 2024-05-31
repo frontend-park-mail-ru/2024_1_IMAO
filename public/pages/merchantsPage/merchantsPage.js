@@ -255,6 +255,7 @@ export class MerchantsPage {
         subscribtionsCount: profile.subonsCount,
         avatarImg: profile.avatar.slice(1),
         notIsAuthor: ajax.auth.id !== profile.userId,
+        isSubscribed: profile.isSubscribed,
       };
       const merchantsCardSection = this.#element.querySelector('.profile-page__main');
       const merchantCardInstance = new MerchantCard(merchantCartItems);

@@ -61,7 +61,11 @@
     {{/if}}
     {{#if notIsAuthor}}
     <div class="subscribe-button">
-        Подписаться
+        {{#if isSubscribed}}
+            Отписаться
+        {{^}}
+            Подписаться
+        {{/if}}  
     </div>
     {{/if}}
     <div class="stats-container">
@@ -84,15 +88,5 @@
             </div>
         </div>
     </div>
-    {{#if notIsAuthor}}
-    <div class="actions-container">
-        <div class="blacklist-button actions-container__button" href="https://www.dnd.su">
-            Заблокировать
-        </div>
-        <div class="actions-container__button" href="https://www.dnd.su">
-            Сообщить о нарушении
-        </div>
-        <div class="actions-container__blacklist-overlay"></div>
-    </div>
-    {{/if}}
+    <div class="message message--hidden"></div>
 </div>

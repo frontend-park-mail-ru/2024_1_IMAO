@@ -167,5 +167,7 @@ export class Order {
       const phone = this.#element.querySelector('input[type="tel"]');
       phone.value = ajax.auth.phone;
     }
+
+    this.#addListeners();
   }
 }

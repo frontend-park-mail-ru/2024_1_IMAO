@@ -213,7 +213,6 @@ export class AdCreation {
         const price = advert['price'];
         cityName = city['name'];
         const phone = advert['phone'];
-        console.log(cityName);
 
         form.appendChild(renderAdCreationForm(false, CSRFToken, adTitle, price, description, cityName, phone));
 
