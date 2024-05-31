@@ -48,9 +48,11 @@ export class Header {
 
     apiRoute.searchParams.delete('num');
     apiRoute.searchParams.delete('title');
+    apiRoute.searchParams.delete('city');
 
     apiRoute.searchParams.append('num', 8);
     apiRoute.searchParams.append('title', title);
+    apiRoute.searchParams.append('city', getCookie('location'));
 
     return apiRoute;
   }

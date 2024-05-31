@@ -115,9 +115,11 @@ export class Main {
 
     apiRoute.searchParams.delete('count');
     apiRoute.searchParams.delete('startId');
+    apiRoute.searchParams.delete('city');
 
     apiRoute.searchParams.append('count', ADVERTS_SEND_COUNT);
     apiRoute.searchParams.append('startId', startID);
+    apiRoute.searchParams.append('city', getCookie('location'));
 
     return apiRoute;
   }
