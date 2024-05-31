@@ -52,5 +52,5 @@ export function setLocationErr(err) {
     'path': '/',
   };
 
-  setCookie('location', 'Москва', options);
+  setCookie('location', 'Moscow', options);
 }
