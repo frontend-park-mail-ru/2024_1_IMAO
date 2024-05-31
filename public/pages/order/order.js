@@ -156,11 +156,16 @@ export class Order {
       }
     }
 
-    // eslint-disable-next-line max-len
     const mainCont = this.#element.querySelector('.order-page__container__sidebar');
     mainCont.appendChild(renderSidebar(quantity, priceSum));
     this.#element.querySelector('.sidebar__description').innerHTML = 'Цена с доставкой';
 
-    this.#addListeners();
+    const email = this.#element.querySelector('input[type="email"]');
+    email.value = ajax.auth.email;
+
+    if (ajax.auth.phone) {
+      const phone = this.#element.querySelector('input[type="tel"]');
+      phone.value = ajax.auth.phone;
+    }
   }
 }

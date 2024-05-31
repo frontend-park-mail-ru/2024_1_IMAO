@@ -10,6 +10,8 @@ import addDynamicPhoneForm from '../../modules/dynamicPhone.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 
+const DEFAULT_CITY = 'Москва';
+
 /** Class represented advert creation/editing page. */
 export class AdCreation {
   #element;
@@ -167,9 +169,17 @@ export class AdCreation {
       CSRFToken = body['items'];
     });
 
+    let cityName = DEFAULT_CITY;
+    if (ajax.auth.city) {
+      cityName = ajax.auth.city;
+    }
     this.photos = [];
     if (this.#create) {
       form.appendChild(renderAdCreationForm(true, CSRFToken));
+      if (ajax.auth.phone) {
+        const phone = form.querySelector('input[type="tel"]');
+        phone.value = ajax.auth.phone;
+      }
     } else {
       this.#getSlug();
       const apiRoute = buildURL(ajax.routes.ADVERT.GET_ADVERT_BY_ID, this.#slug);
@@ -201,8 +211,9 @@ export class AdCreation {
         const adTitle = advert['title'];
         const description = advert['description'];
         const price = advert['price'];
-        const cityName = city['name'];
+        cityName = city['name'];
         const phone = advert['phone'];
+        console.log(cityName);
 
         form.appendChild(renderAdCreationForm(false, CSRFToken, adTitle, price, description, cityName, phone));
 
@@ -227,7 +238,7 @@ export class AdCreation {
     const pathCity = ajax.routes.CITY.GET_CITY_LIST;
     await ajax.get(pathCity, (body) => {
       const dropdownWithSearchDiv = this.#element.querySelector('.location-place');
-      const dropdownWithSearch = new DropdownWithSearch(body, 'Москва');
+      const dropdownWithSearch = new DropdownWithSearch(body, cityName);
       const dropdownWithSearchTempl = dropdownWithSearch.render();
       dropdownWithSearchTempl.classList.remove('dropdown-with-search');
       dropdownWithSearchDiv.appendChild(dropdownWithSearchTempl);

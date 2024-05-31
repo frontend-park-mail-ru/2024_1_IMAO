@@ -82,6 +82,8 @@ class Ajax {
       this.auth.avatar = body?.items?.avatar.slice(1);
       this.auth.cartNum = Number(body?.items?.cartNum);
       this.auth.favNum = Number(body?.items?.favNum);
+      this.auth.phone = body?.items?.phoneNumber;
+      this.auth.city = body?.items?.cityName;
     });
   }
 

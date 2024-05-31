@@ -195,7 +195,7 @@ export class ProfilePage {
               const {orderItem, advert} = inner;
               const {status, address, phone, name} = orderItem;
               const ad = advert.advert;
-              const photo = advert.photosIMG?.[0];
+              const photo = advert.photos?.[0].slice(1);
               const {id, title, price} = ad;
               const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name);
               merchantsCardContainer.appendChild(orderBlockInstance);
@@ -316,7 +316,7 @@ export class ProfilePage {
             const {orderItem, advert} = inner;
             const {status, address, phone, name} = orderItem;
             const ad = advert.advert;
-            const photo = advert.photosIMG?.[0];
+            const photo = advert.photos?.[0].slice(1);
             const {id, title, price} = ad;
             const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name);
             newMerchantsCardContainer.appendChild(orderBlockInstance);

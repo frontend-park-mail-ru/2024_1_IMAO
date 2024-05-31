@@ -134,7 +134,7 @@ header {
     transition: 0.3s;
 
     &:hover {
-      background-color: #abd282cb;
+      background-color: #acd680;
     }
   }
 
@@ -514,6 +514,10 @@ header {
       max-width: 1000px;
       transition: bottom 0.3s;
 
+      &:hover {
+        background-color: #acd680;
+      }
+
       &--disabled {
         display: none !important;
       }
@@ -532,6 +536,10 @@ header {
       margin: 0;
       padding: 0;
       justify-content: flex-end;
+
+      &:hover {
+        background-color: #dad9d9;
+      }
 
       span {
         display: none;
@@ -585,6 +593,10 @@ header {
       background-color: white;
       color: black;
       padding: 0;
+
+      &:hover {
+        background-color: rgb(213, 211, 211);
+      }
 
       span {
         display: none;

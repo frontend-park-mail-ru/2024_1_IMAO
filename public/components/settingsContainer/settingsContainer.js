@@ -256,7 +256,7 @@ class SettingsContainer {
           return;
         }
 
-        if (dataBody?.items?.merchantsName) {
+        if (dataBody?.items?.id) {
           const profile = dataBody.items;
           this.profile = {
             merchantsName: profile.merchantsName,
