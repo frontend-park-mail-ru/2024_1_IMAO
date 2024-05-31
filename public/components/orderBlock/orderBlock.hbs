@@ -5,11 +5,23 @@
         <img class="order-block__item-image" src="/images/cart_placeholder_image.webp">
     {{/if}}
     <div class="order-block__info">
-        <div class="order-block__price ruble">{{price}}<span class="ruble">&nbsp;₽</span></div>
+        <div class="order-block__price">{{price}}&nbsp;₽</div>
         <div class="order-block__title">{{title}}</div>
-        <div class="order-block__status">Статус заказа: {{status}}</div>
-        <div class="order-block__name">Имя получателя: {{name}}</div>
-        <div class="order-block__phone">Телефон: {{phone}}</div>
-        <div class="order-block__adress">Адрес доставки: {{address}}</div>
+        <div class="order-block__item">
+            <div class="order-block__item--hint">Статус заказа:</div> 
+            <div class="order-block__item--desc">{{status}}</div>
+        </div>
+        <div class="order-block__item">
+            <div class="order-block__item--hint">Имя получателя:</div> 
+            <div class="order-block__item--desc">{{name}}</div>
+        </div>
+        <div class="order-block__item">
+            <div class="order-block__item--hint">Телефон:</div> 
+            <div class="order-block__item--desc">{{phone}}</div>
+        </div>
+        <div class="order-block__item">
+            <div class="order-block__item--hint">Адрес доставки:</div> 
+            <div class="order-block__item--desc">{{address}}</div>
+        </div>
     </div>
 </div>
