@@ -116,7 +116,7 @@ export class AdCreation {
         return;
       }
 
-      const city = this.#element.querySelector('.citylist__option--selected').innerHTML;
+      const city = this.#element.querySelectorAll('.citylist__option--selected')[1].innerHTML;
       const data = new FormData(form);
 
       data.append('userId', ajax.auth.id);

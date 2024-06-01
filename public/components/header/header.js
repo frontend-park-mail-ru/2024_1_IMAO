@@ -9,6 +9,7 @@ import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import debounce from '../../modules/debouncer.js';
 import {getCookie} from '../../modules/cookie.js';
+import CityOverlay from '../cityOverlay/cityOverlay.js';
 
 /** Class representing a header component. */
 export class Header {
@@ -122,6 +123,8 @@ export class Header {
     if (this.#isMainPage(AdCreationButton)) {
       this.#addScrollListener(AdCreationButton);
     }
+
+    this.#addCityDialogListener();
   }
 
   /**
@@ -320,6 +323,18 @@ export class Header {
       }
       prevScrollpos = currentScrollPos;
     };
+  }
+
+  /**
+   * Advert city dialog listener
+   */
+  #addCityDialogListener() {
+    const cityButton = this.#header.querySelector('.location-name');
+    if (cityButton == null) {
+      return;
+    }
+    const cityOverlay = new CityOverlay(cityButton, null, ajax.auth.cityName);
+    this.#header.appendChild(cityOverlay.render());
   }
 
   /**

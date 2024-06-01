@@ -44,6 +44,14 @@ header {
     word-wrap: break-word;
   }
 
+  .location-name {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   .internal-div {
     flex: 1 1 0;
     height: 16px;

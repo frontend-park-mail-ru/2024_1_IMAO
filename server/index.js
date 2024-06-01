@@ -29,7 +29,7 @@ app.use(
     }),
 );
 
-const port = process.env.PORT || 8008;
+const port = process.env.PORT || 80;
 
 app.get(/^\/(?!.*\.(js|ttf)$).*$/, function(request, response) {
   response.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
