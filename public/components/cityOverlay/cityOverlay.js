@@ -48,7 +48,6 @@ class CityOverlay {
     const pathCity = ajax.routes.CITY.GET_CITY_LIST;
     ajax.get(pathCity, (body) => {
       this.cities = body.items.CityItems;
-      console.log(this.cities);
       const dropdownWithSearchDiv = this.#element.querySelector('.city-modal__ddws');
       const dropdownWithSearch = new DropdownWithSearch(body, this.currentCity);
       dropdownWithSearchDiv.appendChild(dropdownWithSearch.render());
