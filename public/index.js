@@ -18,6 +18,7 @@ import cartModel from './models/cart.js';
 import favoritesModel from './models/favorites.js';
 import ajax from './modules/ajax.js';
 import router from './router/router.js';
+import {setLocationErr, setLocationSuccess} from './modules/geo.js';
 
 const rootElement = document.getElementById('root');
 const mainElement = document.createElement('main');
@@ -26,6 +27,7 @@ rootElement.appendChild(mainElement);
 ajax.initialize(AUTH, API_ROUTES);
 router.initialize(AUTH, PAGES_ROUTES, serverHost);
 router.on('checkAuth', ajax.checkAuth.bind(ajax));
+navigator.geolocation.getCurrentPosition(setLocationSuccess, setLocationErr, {timeout: 1000, enableHighAccuracy: true});
 
 const header = new Header(cartModel, favoritesModel);
 cartModel.on('cartChange', header.changeCartQuantity.bind(header));

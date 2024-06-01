@@ -1,5 +1,7 @@
 'use strict';
 
+import {getCookie, setCookie, deleteCookie} from './cookie';
+
 const GET = 'GET';
 const POST = 'POST';
 
@@ -72,6 +74,8 @@ class Ajax {
    * Checks auth and user's data.
    */
   async checkAuth() {
+    const checkRoute = this.routes.AUTH.CHECKAUTH;
+    checkRoute.searchParams.set('location', getCookie('location'));
     await this.get(this.routes.AUTH.CHECKAUTH, (body) => {
       if (body?.code !== 200) {
         return;
@@ -84,6 +88,19 @@ class Ajax {
       this.auth.favNum = Number(body?.items?.favNum);
       this.auth.phone = body?.items?.phoneNumber;
       this.auth.city = body?.items?.cityName;
+      this.auth.cityName = body?.items?.cityName;
+
+      if (body.items.needUpdate) {
+        deleteCookie('location');
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 1);
+        const options = {
+          expires: currentDate,
+          path: '/',
+        };
+
+        setCookie('location', body.items.updateName, options);
+      }
     });
   }
 

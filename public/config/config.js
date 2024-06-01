@@ -43,6 +43,7 @@ export const API_ROUTES = {
   },
   CITY: {
     GET_CITY_LIST: new URL('/api/city/list', api),
+    GET_CITY_NAME: new URL('/api/city/name', api),
   },
   CART: {
     GET_CART_LIST: new URL('/api/cart/list', api),
@@ -58,6 +59,7 @@ export const API_ROUTES = {
   ORDER: {
     GET_ORDERS_LIST: new URL('/api/order/list', api),
     CREATE_ORDERS: new URL('/api/order/create', api),
+    CREATE_REVIEW: new URL('/api/order/rate', api),
   },
   SURVEY: {
     CREATE: new URL('/api/survey/create', api),

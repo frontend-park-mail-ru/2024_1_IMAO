@@ -9,6 +9,7 @@ import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug
 import {getURLFromLocation, buildURL, parsePathParams, buildURLBySegments} from '../../modules/parsePathParams.js';
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
+import {getCookie} from '../../modules/cookie.js';
 
 const ADVERTS_SEND_COUNT = 20;
 // Показывает за сколько пикселей до конца страницы начинается подгрузка новых объявлений.
@@ -104,6 +105,7 @@ export class Main {
       this.#slug = parsePathParams(router.routes.adsListByCategory.href, url);
       if (this.#slug.city === '') {
         apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST, this.#slug);
+        apiRoute.searchParams.append('city', getCookie('location'));
       } else if (this.#slug.category === undefined) {
         apiRoute = buildURL(ajax.routes.ADVERT.GET_ADS_LIST_BY_CITY, this.#slug);
       } else {
@@ -113,9 +115,11 @@ export class Main {
 
     apiRoute.searchParams.delete('count');
     apiRoute.searchParams.delete('startId');
+    apiRoute.searchParams.delete('city');
 
     apiRoute.searchParams.append('count', ADVERTS_SEND_COUNT);
     apiRoute.searchParams.append('startId', startID);
+    apiRoute.searchParams.append('city', getCookie('location'));
 
     return apiRoute;
   }

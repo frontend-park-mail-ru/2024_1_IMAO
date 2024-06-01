@@ -9,6 +9,7 @@ import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug
 import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
+import SetRatingBar from '../../components/setRatingBar/setRatingBar.js';
 import {formatDate} from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
 import ajax from '../../modules/ajax.js';
@@ -177,9 +178,14 @@ export class ProfilePage {
 
         const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
 
+        const apiRoute = new URL(ajax.routes.ORDER.GET_ORDERS_LIST);
+        if (!isPerchasesChecked) {
+          apiRoute.searchParams.append('type', 'sold');
+        }
+
         let adverts = [];
         if (isPerchasesChecked) {
-          await ajax.get(ajax.routes.ORDER.GET_ORDERS_LIST, (body) => {
+          await ajax.get(apiRoute, (body) => {
             adverts = body?.items;
           });
 
@@ -192,13 +198,36 @@ export class ProfilePage {
             const emptyOrderPlug = new EmptyOrderPlug(header, content);
             merchantsCardContainer.appendChild(emptyOrderPlug.render());
           } else if (adverts && Array.isArray(adverts)) {
+            let unratedCount = 0;
             adverts.forEach((inner) => {
               const {orderItem, advert} = inner;
               const {status, address, phone, name} = orderItem;
               const ad = advert.advert;
               const photo = advert.photos?.[0].slice(1);
               const {id, title, price} = ad;
-              const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name);
+              const notRated = orderItem.rating === 0;
+              const orderBlockInstance = renderOrderBlock(
+                  id,
+                  title,
+                  price,
+                  status,
+                  photo,
+                  address,
+                  phone,
+                  name,
+                  notRated,
+                  isPerchasesChecked,
+              );
+              if (notRated && isPerchasesChecked) {
+                const rating = orderBlockInstance.querySelector('.order-block__rating--stars');
+                const setRatingBar = new SetRatingBar();
+                rating.appendChild(setRatingBar.render(unratedCount));
+                unratedCount++;
+              } else {
+                const rating = orderBlockInstance.querySelector('.order-block__has-rating');
+                const ratingBar = new RatingBar(orderItem.rating);
+                rating.append(ratingBar.render());
+              }
               merchantsCardContainer.appendChild(orderBlockInstance);
             });
           }
@@ -342,36 +371,58 @@ export class ProfilePage {
       const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
       const header = isPerchasesChecked ? 'Нет покупок' : 'Нет продаж';
       const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
-      if (isPerchasesChecked) {
-        let adverts = {};
-        await ajax.get(ajax.routes.ORDER.GET_ORDERS_LIST, (body) => {
-          adverts = body?.items;
-        });
 
-        if (adverts.length == 0) {
-          const emptyOrderPlug = new EmptyOrderPlug(header, content);
-          merchantsCardContainer.replaceWith(emptyOrderPlug.render());
-        }
-        if (adverts && Array.isArray(adverts)) {
-          const newMerchantsCardContainer = document.createElement('div');
-          newMerchantsCardContainer.classList.add('empty-orders');
-          adverts.forEach((inner) => {
-            const {orderItem, advert} = inner;
-            const {status, address, phone, name} = orderItem;
-            const ad = advert.advert;
-            const photo = advert.photos?.[0].slice(1);
-            const {id, title, price} = ad;
-            const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name);
-            newMerchantsCardContainer.appendChild(orderBlockInstance);
-          });
-          merchantsCardContainer.replaceWith(newMerchantsCardContainer);
-        }
-
-        return;
+      const apiRoute = new URL(ajax.routes.ORDER.GET_ORDERS_LIST);
+      if (!isPerchasesChecked) {
+        apiRoute.searchParams.append('type', 'sold');
       }
+      let adverts = {};
+      await ajax.get(apiRoute, (body) => {
+        adverts = body?.items;
+      });
 
-      const emptyOrderPlug = new EmptyOrderPlug(header, content);
-      merchantsCardContainer.replaceWith(emptyOrderPlug.render());
+      if (adverts.length == 0) {
+        const emptyOrderPlug = new EmptyOrderPlug(header, content);
+        merchantsCardContainer.replaceWith(emptyOrderPlug.render());
+      }
+      if (adverts && Array.isArray(adverts)) {
+        const newMerchantsCardContainer = document.createElement('div');
+        newMerchantsCardContainer.classList.add('empty-orders');
+        let unratedCount = 0;
+        adverts.forEach((inner) => {
+          const {orderItem, advert} = inner;
+          const {status, address, phone, name} = orderItem;
+          const ad = advert.advert;
+          const photo = advert.photos?.[0].slice(1);
+          const {id, title, price} = ad;
+          const notRated = orderItem.rating === 0;
+
+          const orderBlockInstance = renderOrderBlock(
+              id,
+              title,
+              price,
+              status,
+              photo,
+              address,
+              phone,
+              name,
+              notRated,
+              isPerchasesChecked,
+          );
+          if (notRated && isPerchasesChecked) {
+            const rating = orderBlockInstance.querySelector('.order-block__rating--stars');
+            const setRatingBar = new SetRatingBar();
+            rating.appendChild(setRatingBar.render(unratedCount));
+            unratedCount++;
+          } else {
+            const rating = orderBlockInstance.querySelector('.order-block__has-rating');
+            const ratingBar = new RatingBar(orderItem.rating);
+            rating.append(ratingBar.render());
+          }
+          newMerchantsCardContainer.appendChild(orderBlockInstance);
+        });
+        merchantsCardContainer.replaceWith(newMerchantsCardContainer);
+      }
     } else {
       const stashedMerchantsCardContainer = this.sectionStateS.getSectionState(event.target.value, 'render');
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
