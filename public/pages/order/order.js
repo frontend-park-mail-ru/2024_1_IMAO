@@ -148,18 +148,25 @@ export class Order {
 
     for (const orderItem in order) {
       if (Object.hasOwn(order, orderItem)) {
-        const {advert, photosIMG} = order[orderItem];
+        const {advert, photos} = order[orderItem];
         const {id, title, price} = advert;
         priceSum += Number(price) + this.#deliveriPrice;
-        selectPanel.appendChild(renderOrderItem(num, id, title, price, photosIMG?.[0]));
+        selectPanel.appendChild(renderOrderItem(num, id, title, price, photos?.[0].slice(1)));
         num++;
       }
     }
 
-    // eslint-disable-next-line max-len
     const mainCont = this.#element.querySelector('.order-page__container__sidebar');
     mainCont.appendChild(renderSidebar(quantity, priceSum));
     this.#element.querySelector('.sidebar__description').innerHTML = 'Цена с доставкой';
+
+    const email = this.#element.querySelector('input[type="email"]');
+    email.value = ajax.auth.email;
+
+    if (ajax.auth.phone) {
+      const phone = this.#element.querySelector('input[type="tel"]');
+      phone.value = ajax.auth.phone;
+    }
 
     this.#addListeners();
   }

@@ -2,7 +2,7 @@
     <div class="cart-block__item">
         <div class="cart-block__item-checkbox"><input type="checkbox" name="product" value="{{id}}" checked></div>
         {{#if photo}}
-            <img class="cart-block__item-image" src="data:image/png;base64,{{photo}}">
+            <img class="cart-block__item-image" src="{{photo}}">
         {{^}}
             <img class="cart-block__item-image" src="/images/cart_placeholder_image.webp">
         {{/if}}

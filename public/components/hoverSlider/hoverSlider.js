@@ -15,6 +15,11 @@ class HoverSlider {
    * @param {Array} photos
    */
   constructor(photos) {
+    if (photos.length > 4) {
+      this.photos = photos.slice(0, 4);
+
+      return;
+    }
     this.photos = photos;
   }
 

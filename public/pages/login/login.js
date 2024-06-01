@@ -35,9 +35,9 @@ export class Login {
    * Add event listeners for a login page.
    */
   #addListeners() {
-    const anchor = this.#element.getElementsByTagName('a')[0];
+    const anchors = this.#element.querySelectorAll('a');
 
-    this.#addSignupFollowListener(anchor);
+    this.#addSignupFollowListener(anchors);
 
     const form = this.#element.getElementsByClassName('form')[0];
 
@@ -46,11 +46,14 @@ export class Login {
 
   /**
    * Add event listeners for a signup follow.
-   * @param {HTMLElement} anchor - The signup follow element.
+   * @param {HTMLElement} anchors - The signup follow element.
    */
-  #addSignupFollowListener(anchor) {
-    anchor.addEventListener('click', (ev) => {
-      router.pushPage(ev, anchor.dataset.url);
+  #addSignupFollowListener(anchors) {
+    anchors.forEach((anchor) => {
+      anchor.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        router.pushPage(ev, anchor.dataset.url);
+      });
     });
   }
 
@@ -86,17 +89,16 @@ export class Login {
       ajax
           .post(apiRoute, data, (body) => {
             if (body?.code !== 200) {
-              divError.innerHTML = unknownError;
+              divError.innerHTML = authError;
             } else if (body?.items?.isAuth === true) {
               history.go(-1);
 
               return;
-            } else {
-              divError.innerHTML = authError;
             }
             submit.disabled = false;
           })
           .catch(() => {
+            divError.innerHTML = unknownError;
             submit.disabled = false;
           });
     });
@@ -139,6 +141,7 @@ export class Login {
       ],
       buttonText: 'Войти',
       url: router.routes.signupPage.href,
+      urlMain: router.routes.mainPage.href,
       askText: 'Нет аккаунта?',
       anchorText: 'Зарегистрируйтесь',
     };

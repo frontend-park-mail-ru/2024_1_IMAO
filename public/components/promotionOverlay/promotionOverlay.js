@@ -104,7 +104,6 @@ class PromotionOverlay {
         if (data.code != 200) {
           return;
         }
-        console.log(data);
 
         document.location.href = data.items.paymentFormUrl;
       });
