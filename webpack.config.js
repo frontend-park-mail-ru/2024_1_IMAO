@@ -8,7 +8,7 @@ module.exports = {
   entry: './public/index.js',
   devtool: 'eval-source-map',
   output: {
-    path: path.resolve(__dirname, 'public/build'),
+    path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
   },
   module: {
@@ -105,8 +105,8 @@ module.exports = {
         implementation: ImageMinimizerPlugin.imageminMinify,
         options: {
           plugins: [
-            ['mozjpeg', { quality: 75 }],
-            ['pngquant', { quality: [0.65, 0.9], speed: 4 }],
+            ['mozjpeg', {quality: 75}],
+            ['pngquant', {quality: [0.65, 0.9], speed: 4}],
             [
               'svgo',
               {
