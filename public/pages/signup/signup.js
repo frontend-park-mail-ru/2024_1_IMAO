@@ -36,9 +36,9 @@ export class Signup {
    * Add event listeners for a signup page.
    */
   #addListeners() {
-    const anchor = this.#element.getElementsByTagName('a')[0];
+    const anchors = this.#element.querySelectorAll('a');
 
-    this.#addLoginFollowListener(anchor);
+    this.#addSignupFollowListener(anchors);
 
     const form = this.#element.getElementsByClassName('form')[0];
 
@@ -47,11 +47,14 @@ export class Signup {
 
   /**
    * Add event listeners for a login follow.
-   * @param {HTMLElement} anchor - The login follow element.
+   * @param {HTMLElement} anchors - The login follow element.
    */
-  #addLoginFollowListener(anchor) {
-    anchor.addEventListener('click', (ev) => {
-      router.pushPage(ev, anchor.dataset.url);
+  #addSignupFollowListener(anchors) {
+    anchors.forEach((anchor) => {
+      anchor.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        router.pushPage(ev, anchor.dataset.url);
+      });
     });
   }
 
@@ -97,6 +100,7 @@ export class Signup {
             submit.disabled = false;
           })
           .catch(() => {
+            divError.innerHTML = unknownError;
             submit.disabled = false;
           });
     });
@@ -157,6 +161,7 @@ export class Signup {
       ],
       buttonText: 'Зарегистрироваться',
       url: router.routes.loginPage.href,
+      urlMain: router.routes.mainPage.href,
       askText: 'Есть аккаунт?',
       anchorText: 'Авторизируйтесь',
     };

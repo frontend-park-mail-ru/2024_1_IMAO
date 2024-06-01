@@ -174,10 +174,11 @@ export class MerchantsPage {
 
       const ids = [];
       adverts.forEach((inner) => {
-        const {price, title, id, inFavourites, city, category, photosIMG, isPromoted, isActive} = inner;
+        const {price, title, id, inFavourites, city, category, photos, isPromoted, isActive} = inner;
+        const photosFix = photos.map((value) => value.slice(1));
         ids.push(id);
         const path = buildURLBySegments(router.host, [city, category, id]);
-        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted, isActive);
+        const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosFix, isPromoted, isActive);
         merchantsPageRightSection.appendChild(adsCardInstance.render());
       });
 
@@ -252,8 +253,9 @@ export class MerchantsPage {
         reviewCount: profile.reactionsCount,
         subscribersCount: profile.subersCount,
         subscribtionsCount: profile.subonsCount,
-        avatarImg: profile.avatarImg,
+        avatarImg: profile.avatar.slice(1),
         notIsAuthor: ajax.auth.id !== profile.userId,
+        isSubscribed: profile.isSubscribed,
       };
       const merchantsCardSection = this.#element.querySelector('.profile-page__main');
       const merchantCardInstance = new MerchantCard(merchantCartItems);

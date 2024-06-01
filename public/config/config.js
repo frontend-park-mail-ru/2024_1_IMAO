@@ -39,9 +39,11 @@ export const API_ROUTES = {
     SET_PROFILE_CITY: new URL('/api/profile/city', api),
     SET_PROFILE_CITY_BY_ID: new URL('/api/profile/:id/adverts', api),
     EDIT_USER_EMAIL: new URL('/api/auth/edit/email', api),
+    SUBSCRIPTION_CHANGE: new URL('/api/profile/change', api),
   },
   CITY: {
-    GET_CITY_LIST: new URL('/api/city', api),
+    GET_CITY_LIST: new URL('/api/city/list', api),
+    GET_CITY_NAME: new URL('/api/city/name', api),
   },
   CART: {
     GET_CART_LIST: new URL('/api/cart/list', api),
@@ -52,10 +54,12 @@ export const API_ROUTES = {
     GET_FAVORITES_LIST: new URL('/api/favourites/list', api),
     CHANGE_FAVORITES_ITEM_STATUS: new URL('/api/favourites/change', api),
     DELETE_FAVORITES_ITEM: new URL('/api/favourites/delete', api),
+    GET_SUBSCRIBED_LIST: new URL('/api/favourites/subscribed', api),
   },
   ORDER: {
     GET_ORDERS_LIST: new URL('/api/order/list', api),
     CREATE_ORDERS: new URL('/api/order/create', api),
+    CREATE_REVIEW: new URL('/api/order/rate', api),
   },
   SURVEY: {
     CREATE: new URL('/api/survey/create', api),

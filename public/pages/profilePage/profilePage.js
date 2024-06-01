@@ -9,6 +9,7 @@ import EmptyAdvertsPlug from '../../components/emptyAdvertsPlug/emptyAdvertsPlug
 import EmptyOrderPlug from '../../components/emptyOrderPlug/emptyOrderPlug.js';
 import HorizontalButtonGroup from '../../components/horizontalButtonGroup/horizontalButtonGroup.js';
 import RatingBar from '../../components/ratingBar/ratingBar.js';
+import SetRatingBar from '../../components/setRatingBar/setRatingBar.js';
 import {formatDate} from '../../modules/formatDate.js';
 import StageStorage from '../../modules/stateStorage.js';
 import ajax from '../../modules/ajax.js';
@@ -36,6 +37,7 @@ export class ProfilePage {
     this.sectionState = new StageStorage();
     this.sectionStateV = new StageStorage();
     this.sectionStateS = new StageStorage();
+    this.sectionStateF = new StageStorage();
     this.#isBottomReached = false;
 
     this.labelsAndValues = [
@@ -133,6 +135,7 @@ export class ProfilePage {
     profilePageContentContainer.replaceWith(newProfilePageContentContainer);
     this.sectionStateV.setSectionState(found.categoryLabelValue, 'isRendered', true);
 
+    let merchantsCardContainer = null;
     let buttonGroupItemes = [];
     let currentState = '';
 
@@ -147,7 +150,6 @@ export class ProfilePage {
           },
           {categoryLabel: 'Проданные', count: this.profile.soldAddsCount, checked: false, categoryLabelValue: 'sold'},
         ];
-
         currentState = this.#addHorizontalSectionState(
             newProfilePageContentContainer,
             buttonGroupItemes,
@@ -155,7 +157,7 @@ export class ProfilePage {
             this.advertsHandleClick,
         );
 
-        const merchantsCardContainer = document.createElement('div');
+        merchantsCardContainer = document.createElement('div');
         merchantsCardContainer.classList.add('profile-page__cards-container');
         this.#renderCards(merchantsCardContainer, currentState, found.categoryLabelValue);
         newProfilePageContentContainer.appendChild(merchantsCardContainer);
@@ -176,13 +178,18 @@ export class ProfilePage {
 
         const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
 
+        const apiRoute = new URL(ajax.routes.ORDER.GET_ORDERS_LIST);
+        if (!isPerchasesChecked) {
+          apiRoute.searchParams.append('type', 'sold');
+        }
+
         let adverts = [];
         if (isPerchasesChecked) {
-          await ajax.get(ajax.routes.ORDER.GET_ORDERS_LIST, (body) => {
-            adverts = body['items'];
+          await ajax.get(apiRoute, (body) => {
+            adverts = body?.items;
           });
 
-          const merchantsCardContainer = document.createElement('div');
+          merchantsCardContainer = document.createElement('div');
           merchantsCardContainer.classList.add('empty-orders');
 
           if (adverts.length == 0) {
@@ -191,13 +198,36 @@ export class ProfilePage {
             const emptyOrderPlug = new EmptyOrderPlug(header, content);
             merchantsCardContainer.appendChild(emptyOrderPlug.render());
           } else if (adverts && Array.isArray(adverts)) {
+            let unratedCount = 0;
             adverts.forEach((inner) => {
               const {orderItem, advert} = inner;
               const {status, address, phone, name} = orderItem;
               const ad = advert.advert;
-              const photo = advert.photosIMG?.[0];
+              const photo = advert.photos?.[0].slice(1);
               const {id, title, price} = ad;
-              const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name);
+              const notRated = orderItem.rating === 0;
+              const orderBlockInstance = renderOrderBlock(
+                  id,
+                  title,
+                  price,
+                  status,
+                  photo,
+                  address,
+                  phone,
+                  name,
+                  notRated,
+                  isPerchasesChecked,
+              );
+              if (notRated && isPerchasesChecked) {
+                const rating = orderBlockInstance.querySelector('.order-block__rating--stars');
+                const setRatingBar = new SetRatingBar();
+                rating.appendChild(setRatingBar.render(unratedCount));
+                unratedCount++;
+              } else {
+                const rating = orderBlockInstance.querySelector('.order-block__has-rating');
+                const ratingBar = new RatingBar(orderItem.rating);
+                rating.append(ratingBar.render());
+              }
               merchantsCardContainer.appendChild(orderBlockInstance);
             });
           }
@@ -207,10 +237,27 @@ export class ProfilePage {
         break;
 
       case 'favorites':
-        const favoritesCardContainer = document.createElement('div');
-        favoritesCardContainer.classList.add('profile-page__cards-container');
-        this.#renderCards(favoritesCardContainer, currentState, found.categoryLabelValue);
-        newProfilePageContentContainer.appendChild(favoritesCardContainer);
+        buttonGroupItemes = [
+          {
+            categoryLabel: 'Избранное',
+            count: null,
+            checked: true,
+            categoryLabelValue: 'active',
+          },
+          {categoryLabel: 'Подписки', count: null, checked: false, categoryLabelValue: 'subscribe'},
+        ];
+
+        currentState = this.#addHorizontalSectionState(
+            newProfilePageContentContainer,
+            buttonGroupItemes,
+            this.sectionStateF,
+            this.favoriteHandleClick,
+        );
+
+        merchantsCardContainer = document.createElement('div');
+        merchantsCardContainer.classList.add('profile-page__cards-container');
+        this.#renderCards(merchantsCardContainer, currentState, found.categoryLabelValue);
+        newProfilePageContentContainer.appendChild(merchantsCardContainer);
         break;
 
       case 'settings':
@@ -282,6 +329,31 @@ export class ProfilePage {
   }
 
   /**
+   * Adds adverts states.
+   * @param {*} event
+   */
+  favoriteHandleClick(event) {
+    const merchantsCardContainer = this.#element.querySelector('.profile-page__cards-container');
+    const isRendered = this.sectionStateF.getSectionState(event.target.value, 'isRendered');
+
+    const currentButtonChecked = this.sectionStateF.getSectionState('serviceField', 'isChecked');
+    this.sectionStateF.setSectionState('serviceField', 'isChecked', event.target.value);
+
+    this.sectionStateF.setSectionState(currentButtonChecked, 'render', merchantsCardContainer);
+
+    if (!isRendered) {
+      const newMerchantsCardContainer = document.createElement('div');
+      newMerchantsCardContainer.classList.add('profile-page__cards-container');
+      merchantsCardContainer.replaceWith(newMerchantsCardContainer);
+      this.sectionStateF.setSectionState(event.target.value, 'isRendered', true);
+      this.#renderCards(newMerchantsCardContainer, isRendered, 'favorites');
+    } else {
+      const stashedMerchantsCardContainer = this.sectionStateF.getSectionState(event.target.value, 'render');
+      merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
+    }
+  }
+
+  /**
    * Adds orders states.
    * @param {*} event
    */
@@ -297,38 +369,60 @@ export class ProfilePage {
     if (!isRendered) {
       this.sectionStateS.setSectionState(event.target.value, 'isRendered', true);
       const isPerchasesChecked = this.sectionStateS.getSectionState('serviceField', 'isChecked') == 'purchases';
-      const header = isPerchasesChecked ? 'Нет покупок' : 'Не продаж';
+      const header = isPerchasesChecked ? 'Нет покупок' : 'Нет продаж';
       const content = isPerchasesChecked ? 'Заказы по купленным товарам' : 'Заказы по проданным товарам';
-      if (isPerchasesChecked) {
-        let adverts = {};
-        await ajax.get(ajax.routes.ORDER.GET_ORDERS_LIST, (body) => {
-          adverts = body['items'];
-        });
 
-        if (adverts.length == 0) {
-          const emptyOrderPlug = new EmptyOrderPlug(header, content);
-          merchantsCardContainer.replaceWith(emptyOrderPlug.render());
-        }
-        if (adverts && Array.isArray(adverts)) {
-          const newMerchantsCardContainer = document.createElement('div');
-          newMerchantsCardContainer.classList.add('empty-orders');
-          adverts.forEach((inner) => {
-            const {orderItem, advert} = inner;
-            const {status, address, phone, name} = orderItem;
-            const ad = advert.advert;
-            const photo = advert.photosIMG?.[0];
-            const {id, title, price} = ad;
-            const orderBlockInstance = renderOrderBlock(id, title, price, status, photo, address, phone, name);
-            newMerchantsCardContainer.appendChild(orderBlockInstance);
-          });
-          merchantsCardContainer.replaceWith(newMerchantsCardContainer);
-        }
-
-        return;
+      const apiRoute = new URL(ajax.routes.ORDER.GET_ORDERS_LIST);
+      if (!isPerchasesChecked) {
+        apiRoute.searchParams.append('type', 'sold');
       }
+      let adverts = {};
+      await ajax.get(apiRoute, (body) => {
+        adverts = body?.items;
+      });
 
-      const emptyOrderPlug = new EmptyOrderPlug(header, content);
-      merchantsCardContainer.replaceWith(emptyOrderPlug.render());
+      if (adverts.length == 0) {
+        const emptyOrderPlug = new EmptyOrderPlug(header, content);
+        merchantsCardContainer.replaceWith(emptyOrderPlug.render());
+      }
+      if (adverts && Array.isArray(adverts)) {
+        const newMerchantsCardContainer = document.createElement('div');
+        newMerchantsCardContainer.classList.add('empty-orders');
+        let unratedCount = 0;
+        adverts.forEach((inner) => {
+          const {orderItem, advert} = inner;
+          const {status, address, phone, name} = orderItem;
+          const ad = advert.advert;
+          const photo = advert.photos?.[0].slice(1);
+          const {id, title, price} = ad;
+          const notRated = orderItem.rating === 0;
+
+          const orderBlockInstance = renderOrderBlock(
+              id,
+              title,
+              price,
+              status,
+              photo,
+              address,
+              phone,
+              name,
+              notRated,
+              isPerchasesChecked,
+          );
+          if (notRated && isPerchasesChecked) {
+            const rating = orderBlockInstance.querySelector('.order-block__rating--stars');
+            const setRatingBar = new SetRatingBar();
+            rating.appendChild(setRatingBar.render(unratedCount));
+            unratedCount++;
+          } else {
+            const rating = orderBlockInstance.querySelector('.order-block__has-rating');
+            const ratingBar = new RatingBar(orderItem.rating);
+            rating.append(ratingBar.render());
+          }
+          newMerchantsCardContainer.appendChild(orderBlockInstance);
+        });
+        merchantsCardContainer.replaceWith(newMerchantsCardContainer);
+      }
     } else {
       const stashedMerchantsCardContainer = this.sectionStateS.getSectionState(event.target.value, 'render');
       merchantsCardContainer.replaceWith(stashedMerchantsCardContainer);
@@ -370,7 +464,12 @@ export class ProfilePage {
 
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('deleted');
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.delete('userId');
-    const state = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ? 0 : 1;
+    let state = 0;
+    if (sectionState == 'adverts') {
+      state = this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ? 0 : 1;
+    } else {
+      state = this.sectionStateF.getSectionState('serviceField', 'isChecked') == 'active' ? 0 : 1;
+    }
     const id = ajax.auth.id;
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('userId', id);
     ajax.routes.ADVERT.GET_ADS_LIST.searchParams.append('deleted', state);
@@ -382,16 +481,20 @@ export class ProfilePage {
         break;
 
       case 'favorites':
-        apiRoute = ajax.routes.FAVORITES.GET_FAVORITES_LIST;
+        if (!state) {
+          apiRoute = ajax.routes.FAVORITES.GET_FAVORITES_LIST;
+        } else {
+          apiRoute = ajax.routes.FAVORITES.GET_SUBSCRIBED_LIST;
+        }
         break;
     }
 
     let adverts = {};
     await ajax.get(apiRoute, (body) => {
-      adverts = body['items'];
+      adverts = body?.items;
     });
 
-    if (!(adverts && Array.isArray(adverts))) {
+    if (!(adverts && Array.isArray(adverts)) && sectionState == 'adverts') {
       const content =
         this.sectionState.getSectionState('serviceField', 'isChecked') == 'active' ? 'активные' : 'проданные';
       const emptyAdvertsPlug = new EmptyAdvertsPlug({content});
@@ -400,11 +503,19 @@ export class ProfilePage {
       return;
     }
 
-    if (adverts.length == 0) {
-      const content = {
-        header: 'В избранном пусто',
-        content: 'избранные',
-      };
+    if (adverts.length == 0 && sectionState == 'favorites') {
+      let content = null;
+      if (!state) {
+        content = {
+          header: 'В избранном пусто',
+          content: 'избранные',
+        };
+      } else {
+        content = {
+          header: 'В подписках пусто',
+          content: null,
+        };
+      }
       const emptyAdvertsPlug = new EmptyAdvertsPlug(content);
       merchantsPageRightSection.appendChild(emptyAdvertsPlug.render());
     }
@@ -418,10 +529,11 @@ export class ProfilePage {
 
     const ids = [];
     adverts.forEach((inner) => {
-      const {price, title, id, inFavourites, city, category, photosIMG, isPromoted, isActive} = inner;
+      const {price, title, id, inFavourites, city, category, photos, isPromoted, isActive} = inner;
+      const photosFix = photos.map((value) => value.slice(1));
       ids.push(id);
       const path = buildURLBySegments(router.host, [city, category, id]);
-      const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosIMG, isPromoted, isActive);
+      const adsCardInstance = new AdsCard(title, price, id, inFavourites, path, photosFix, isPromoted, isActive);
       merchantsPageRightSection.appendChild(adsCardInstance.render());
     });
 
@@ -450,12 +562,12 @@ export class ProfilePage {
     const apiCSRF = ajax.routes.AUTH.CSRF;
 
     await ajax.get(apiCSRF, (body) => {
-      this.CSRFToken = body['items'];
+      this.CSRFToken = body?.items;
     });
 
     let profile = {};
     await ajax.get(path, (body) => {
-      profile = body['items'];
+      profile = body?.items;
     });
 
     const merchantsName = profile.merchantsName;
@@ -476,7 +588,7 @@ export class ProfilePage {
       reviewCount: profile.reactionsCount,
       subscribersCount: profile.subersCount,
       subscribtionsCount: profile.subonsCount,
-      avatarImg: profile.avatarImg,
+      avatarImg: profile.avatar.slice(1),
       activeAddsCount: profile.activeAddsCount,
       soldAddsCount: profile.soldAddsCount,
     };

@@ -418,7 +418,8 @@ export class Advert {
 
     await ajax.get(apiRoute, (body) => {
       const {items} = body;
-      const {advert, city, category, photosIMG, promotion} = items;
+      const {advert, city, category, photos, promotion} = items;
+      const photosFix = photos.map((value) => value.slice(1));
 
       const {active, id, title, description, price, isUsed, created, inFavourites, inCart, views, favouritesNum} =
         advert;
@@ -478,7 +479,7 @@ export class Advert {
           editPath,
           id,
           state,
-          photosIMG,
+          photosFix,
           inFavourites,
           views,
           favouritesNum,
@@ -523,8 +524,9 @@ export class Advert {
         reviewCount: profile.reactionsCount,
         subscribersCount: profile.subersCount,
         subscribtionsCount: profile.subonsCount,
-        avatarImg: profile.avatarImg,
+        avatarImg: profile.avatar.slice(1),
         notIsAuthor: ajax.auth.id !== profile.userId,
+        isSubscribed: profile.isSubscribed,
       };
 
       const merchantCardInstance = new MerchantCard(merchantCartItems);
@@ -542,8 +544,24 @@ export class Advert {
       if (body.code !== 200) {
         return;
       }
-      this.priceHistory = body.items;
+      let newPrice = -1;
+      body.items.forEach((item) => {
+        if (item.newPrice !== newPrice) {
+          this.priceHistory.push(item);
+          newPrice = item.newPrice;
+        }
+      });
     });
+
+    if (this.priceHistory.length <= 1) {
+      const histBtnM = this.#element.querySelector('.history-btn--mobile');
+      this.#element.querySelector('.post-block__price-block--mobile').removeChild(histBtnM);
+      const histBtn = this.#element.querySelector('.history-btn');
+      this.#element.querySelector('.post-block__price-block').removeChild(histBtn);
+
+      return;
+    }
+
     const canvas = this.#element.querySelector('.history-btn__canvas');
     const array = this.priceHistory.map((value) => value.newPrice);
     renderChart(canvas, array);

@@ -10,12 +10,22 @@ app.use(
     '*/public',
     express.static(path.resolve(__dirname, '..', 'public'), {
       maxAge: '60000', // uses milliseconds per docs
+      lastModified: true,
     }),
 );
 app.use(
     '*/images',
     express.static(path.resolve(__dirname, 'images'), {
       maxAge: '60000', // uses milliseconds per docs
+      lastModified: true,
+    }),
+);
+
+app.use(
+    '/uploads',
+    express.static(path.resolve(__dirname, '..', '..', '..', 'Backend', '2024_1_IMAO', 'uploads'), {
+      maxAge: '60000', // uses milliseconds per docs
+      lastModified: true,
     }),
 );
 

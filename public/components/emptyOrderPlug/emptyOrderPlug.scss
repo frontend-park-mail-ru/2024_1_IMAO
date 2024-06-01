@@ -5,7 +5,7 @@
   gap: 20px;
   display: inline-flex;
   width: 100%;
-  padding: 5% 10px 10% 0px;
+  margin: 2% 10px 10% 0px;
 }
 
 .empty-orders__inner {
@@ -47,4 +47,10 @@
   font-weight: 400;
   line-height: 24px;
   word-wrap: break-word;
+}
+
+@media (max-width: 800px) {
+  .empty-orders {
+    margin-top: 20px;
+  }
 }

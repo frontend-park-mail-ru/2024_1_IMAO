@@ -8,6 +8,8 @@ import {buildURLBySegments, getURLFromLocation} from '../../modules/parsePathPar
 import ajax from '../../modules/ajax.js';
 import router from '../../router/router.js';
 import debounce from '../../modules/debouncer.js';
+import {getCookie} from '../../modules/cookie.js';
+import CityOverlay from '../cityOverlay/cityOverlay.js';
 
 /** Class representing a header component. */
 export class Header {
@@ -47,9 +49,11 @@ export class Header {
 
     apiRoute.searchParams.delete('num');
     apiRoute.searchParams.delete('title');
+    apiRoute.searchParams.delete('city');
 
     apiRoute.searchParams.append('num', 8);
     apiRoute.searchParams.append('title', title);
+    apiRoute.searchParams.append('city', getCookie('location'));
 
     return apiRoute;
   }
@@ -107,7 +111,6 @@ export class Header {
         searchResults.classList.add('display-none');
       } else {
         searchButton.disabled = false;
-        searchResults.classList.remove('display-none');
       }
     });
 
@@ -120,6 +123,8 @@ export class Header {
     if (this.#isMainPage(AdCreationButton)) {
       this.#addScrollListener(AdCreationButton);
     }
+
+    this.#addCityDialogListener();
   }
 
   /**
@@ -138,6 +143,7 @@ export class Header {
       ev.preventDefault();
       const searchUrl = new URL(router.routes.mainPage.href.href);
       searchUrl.searchParams.set('title', searchValue);
+      searchUrl.searchParams.set('city', getCookie('location'));
       router.pushPage(ev, searchUrl.href);
     });
   }
@@ -152,6 +158,7 @@ export class Header {
       ev.preventDefault();
       const searchUrl = new URL(router.routes.mainPage.href.href);
       searchUrl.searchParams.set('title', title);
+      searchUrl.searchParams.set('city', getCookie('location'));
       router.pushPage(ev, searchUrl.href);
     });
   }
@@ -174,6 +181,8 @@ export class Header {
     }
 
     ajax.get(apiRoute, (body) => {
+      results.classList.remove('display-none');
+
       while (results.firstChild) {
         results.removeChild(results.firstChild);
       }
@@ -317,12 +326,23 @@ export class Header {
   }
 
   /**
+   * Advert city dialog listener
+   */
+  #addCityDialogListener() {
+    const cityButton = this.#header.querySelector('.location-name');
+    if (cityButton == null) {
+      return;
+    }
+    const cityOverlay = new CityOverlay(cityButton, null, ajax.auth.cityName);
+    this.#header.appendChild(cityOverlay.render());
+  }
+
+  /**
    * Renders a template for a header.
    * @private
-   * @param {URL} location - The location to be displayed in the header.
    * @return {void}
    */
-  #renderHeaderTemplate(location) {
+  #renderHeaderTemplate() {
     const urlMain = router.routes.mainPage.href.href;
     const urlLogin = router.routes.loginPage.href.href;
     const urlCreate = router.routes.adCreationPage.href.href;
@@ -336,11 +356,12 @@ export class Header {
     const avatar = router.auth.avatar;
     const cartQuantity = router.auth.cartNum;
     const favoritesQuantity = router.auth.favNum;
+    const location = router.auth.cityName;
     while (this.#header.firstChild) {
       this.#header.removeChild(this.#header.lastChild);
     }
     const CategoriesWithUrl = CATEGORIES.map((category) => {
-      const temp = ['Moscow', String(category.translation)];
+      const temp = [getCookie('location'), String(category.translation)];
       const urlurl = buildURLBySegments(serverHost, temp);
       const url = urlurl.href;
       const {name} = category;

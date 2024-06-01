@@ -26,7 +26,7 @@ class RatingBar {
     this.items = ratingCalculation(this.ratingValue);
 
     const context = {
-      ratingValue: this.ratingValue,
+      ratingValue: this.ratingValue === 0 ? null : this.ratingValue,
       items: this.items,
     };
     const root = stringToHtmlElement(template(context));
